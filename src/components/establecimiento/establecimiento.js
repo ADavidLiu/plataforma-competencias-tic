@@ -30,15 +30,17 @@ class Establecimiento extends Component {
 		}
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.isCompletado !== prevProps.isCompletado) {
+			this.props.actualizarInfoSedes(this.state);
+		}
+	}
+
 	handleChange = e => {
         this.setState({
             ...this.state,
             [e.target.name]: e.target.value
 		});
-	}
-	
-	agregarSede = () => {
-		this.props.actualizarInfoSedes(this.state);
 	}
 
 	render = () => {
@@ -46,7 +48,7 @@ class Establecimiento extends Component {
 			<div className="mb-2">
 				<hr />
 				<Typography variant="body1">
-					<strong>Información del Establecimiento Educativo {this.props.id}</strong>
+					<strong>Información de la Sede {this.props.id}</strong>
 				</Typography>
 				<TextField
 					variant="outlined"
@@ -55,7 +57,8 @@ class Establecimiento extends Component {
 					fullWidth
 					id={"nombre-ee-" + this.props.id}
 					label="Nombre"
-					name={"nombre-ee-" + this.props.id}
+					name="nombre"
+					onChange={this.handleChange}
 				/>
 				<TextField
 					className="mb-2 mb-md-3"
@@ -65,7 +68,8 @@ class Establecimiento extends Component {
 					fullWidth
 					id={"direccion-ee-" + this.props.id}
 					label="Dirección"
-					name={"direccion-ee-" + this.props.id}
+					name="direccion"
+					onChange={this.handleChange}
 				/>
 				<Grid container spacing={2} className="mb-1">
 					<Grid item xs={12} md={6} className="py-0">
@@ -91,9 +95,8 @@ class Establecimiento extends Component {
 							fullWidth
 							id={"nombre-ubicacion-ee-" + this.props.id}
 							label="Nombre de la ubicación"
-							name={
-								"nombre-ubicacion-ee-" + this.props.id
-							}
+							name="nombreUbicacion"
+							onChange={this.handleChange}
 						/>
 					</Grid>
 					<Grid item xs={12} md={6} className="py-0">
@@ -133,7 +136,7 @@ class Establecimiento extends Component {
 					fullWidth
 					id={"telefono-ee-" + this.props.id}
 					label="Teléfono"
-					name={"telefono-ee-" + this.props.id}
+					name="telefono"
 					type="tel"
 				/>
 				<TextField
@@ -144,8 +147,9 @@ class Establecimiento extends Component {
 					fullWidth
 					id={"correo-electronico-institucional-ee-" + this.props.id}
 					label="Correo electrónico institucional"
-					name={"correo-electronico-institucional-ee-" + this.props.id}
-					type="tel"
+					name="correo"
+					type="email"
+					onChange={this.handleChange}
 				/>
 				<TextField
 					className="mt-3"
@@ -154,8 +158,9 @@ class Establecimiento extends Component {
 					fullWidth
 					id={"sitio-web-ee-" + this.props.id}
 					label="Sitio web"
-					name={"sitio-web-ee-" + this.props.id}
+					name="sitioWeb"
 					type="tel"
+					onChange={this.handleChange}
 				/>
 			</div>
 		);

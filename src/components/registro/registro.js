@@ -27,7 +27,8 @@ class Registro extends Component {
             municipio: "",
             nombreIE: "",
             numSedes: "",
-            sedes: []
+            sedes: [],
+            isCompletado: false
         }
     }
 
@@ -46,13 +47,15 @@ class Registro extends Component {
     }
 
     actualizarInfoSedes = nuevaInfoSede => {
-        console.log(nuevaInfoSede);
+        // Con setState sólo agrega los datos del último establecimiento si hay más de uno
+        this.state.sedes.push(nuevaInfoSede);
+    }
+
+    /* Simulando cuando el registro se haya completado, para traer los datos de cada sede al estado */
+    handleClick = () => {
         this.setState({
             ...this.state,
-            sedes: [
-                ...this.state.sedes,
-                nuevaInfoSede
-            ]
+            isCompletado: true
         });
     }
 
@@ -66,13 +69,13 @@ class Registro extends Component {
         let infoSedes = [];
 
         for (let i = 0; i < this.state.numSedes; i++) {
-            infoSedes.push(<Establecimiento key={"nombre-ee-" + i} id={(i + 1).toString()} actualizarInfoSedes={this.actualizarInfoSedes} />);
+            infoSedes.push(<Establecimiento actualizarInfoSedes={this.actualizarInfoSedes} isCompletado={this.state.isCompletado} key={"ee-" + i} id={(i + 1).toString()} />);
         }
 
         if (this.state.tipoPerfil === "Institucional") {
             formulario = (
                 <React.Fragment>
-                    <Typography variant="body1" className="mb-md-2"><strong>Datos del Establecimiento Educativo</strong></Typography>
+                    <Typography variant="body1" className="mb-md-2"><strong>Datos de la Institución Educativa</strong></Typography>
                     <form onSubmit={this.registrar}>
                         <Grid container spacing={2} className="mb-2">
                             <Grid item xs={12} md={4} className="py-0">
@@ -106,6 +109,7 @@ class Registro extends Component {
                                     id="departamento"
                                     label="Departamento"
                                     name="departamento"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} md={4} className="py-0">
@@ -117,6 +121,7 @@ class Registro extends Component {
                                     id="municipio"
                                     label="Municipio"
                                     name="municipio"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} md={8} className="py-0">
@@ -128,6 +133,7 @@ class Registro extends Component {
                                     id="nombreIE"
                                     label="Nombre de la Institución Educativa"
                                     name="nombreIE"
+                                    onChange={this.handleChange}
                                 />
                             </Grid>
                             <Grid item xs={12} md={4} className="py-0">
@@ -146,9 +152,7 @@ class Registro extends Component {
                                 />
                             </Grid>
                         </Grid>
-
                         {infoSedes}
-
                         <Button
                             type="submit"
                             fullWidth
@@ -156,6 +160,7 @@ class Registro extends Component {
                             color="primary"
                             className="mt-2"
                             size="large"
+                            onClick={this.handleClick}
                         >
                             Registrar Establecimiento Educativo
                         </Button>
