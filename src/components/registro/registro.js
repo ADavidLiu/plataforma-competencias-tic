@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from '@material-ui/core/FormLabel';
 import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from "@material-ui/core/Radio";
@@ -17,6 +15,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import Checkbox from '@material-ui/core/Checkbox';
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Establecimiento from "../establecimiento/establecimiento";
 
@@ -708,55 +708,75 @@ class Registro extends Component {
         }
 
 		return (
-			<Container component="main" maxWidth="sm">
-				<CssBaseline />
-                    <div className="text-center mb-2">
-					    <Typography component="h1" variant="h5" className="mb-4"><strong>Registro</strong></Typography>
-                        <FormControl component="fieldset" className="w-100">
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <hr/>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography variant="body1" className="mb-2"><strong>Seleccione su tipo de perfil</strong></Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <RadioGroup
-                                        aria-label="Perfil institucional"
-                                        name="tipoPerfil"
-                                        value={this.state.tipoPerfil}
-                                        onChange={this.handleChange}
-                                        >
-                                        <Grid container>
-                                            <Grid item xs={6}>
-                                                <FormControlLabel
-                                                    className="mb-0"
-                                                    value="Institucional"
-                                                    control={<Radio color="primary" />}
-                                                    label="Institucional"
-                                                    labelPlacement="end"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <FormControlLabel
-                                                    className="mb-0"
-                                                    value="Individual"
-                                                    control={<Radio color="primary" />}
-                                                    label="Individual"
-                                                    labelPlacement="end"
-                                                />
-                                            </Grid>
-                                        </Grid>
-                                    </RadioGroup>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <hr/>
-                                </Grid>
-                            </Grid>
-                        </FormControl>
-					{formulario}
-				</div>
-			</Container>
+			<div className="mb-2">
+				<Typography
+					component="h1"
+					variant="h5"
+					className="mb-4 text-center"
+				>
+					<strong>Registro</strong>
+				</Typography>
+				<FormControl
+					component="fieldset"
+					className="w-100 text-center"
+				>
+					<Grid container>
+						<Grid item xs={12}>
+							<hr />
+						</Grid>
+						<Grid item xs={12}>
+							<Typography
+								variant="body1"
+								className="mb-2"
+							>
+								<strong>
+									Seleccione su tipo de perfil
+								</strong>
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
+							<RadioGroup
+								aria-label="Perfil institucional"
+								name="tipoPerfil"
+								value={this.state.tipoPerfil}
+								onChange={this.handleChange}
+							>
+								<Grid container>
+									<Grid item xs={6}>
+										<FormControlLabel
+											className="mb-0"
+											value="Institucional"
+											control={
+												<Radio color="primary" />
+											}
+											label="Institucional"
+											labelPlacement="end"
+										/>
+									</Grid>
+									<Grid item xs={6}>
+										<FormControlLabel
+											className="mb-0"
+											value="Individual"
+											control={
+												<Radio color="primary" />
+											}
+											label="Individual"
+											labelPlacement="end"
+										/>
+									</Grid>
+								</Grid>
+							</RadioGroup>
+						</Grid>
+						<Grid item xs={12}>
+							<hr />
+						</Grid>
+					</Grid>
+				</FormControl>
+				{formulario}
+                <Link to="/login">
+                    <Typography variant="body2" className="mt-3 text-center" color="primary">¿Ya está registrado? Inicie sesión aquí.</Typography>
+                </Link>
+			</div>
 		);
 	};
 }
