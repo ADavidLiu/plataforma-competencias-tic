@@ -34,7 +34,7 @@ class Login extends Component {
 
     render() {
         return (
-			<div className="mb-2">
+			<div className="mb-2 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
 				<Typography
 					component="h1"
 					variant="h5"
@@ -68,6 +68,7 @@ class Login extends Component {
                                     id="contrasenia"
                                     label="Contraseña"
                                     name="contrasenia"
+                                    type="password"
                                     value={this.state.contrasenia}
                                     onChange={this.handleChange}
                                 />

@@ -301,9 +301,8 @@ class Registro extends Component {
                             color="primary"
                             className="mt-2"
                             size="large"
-                            onClick={this.handleClick}
                         >
-                            Registrar Establecimiento Educativo
+                            Registrar Insitución Educativa
                         </Button>
                     </form>
                 </React.Fragment>
@@ -708,7 +707,7 @@ class Registro extends Component {
         }
 
 		return (
-			<div className="mb-2">
+			<div className="mb-2 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
 				<Typography
 					component="h1"
 					variant="h5"

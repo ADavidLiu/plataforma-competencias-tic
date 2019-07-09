@@ -20,7 +20,7 @@ function App() {
           <Typography variant="h6" color="inherit">Plataforma de competencias TIC</Typography>
         </Toolbar>
       </AppBar>
-      <Container component="main" maxWidth="sm">
+      <Container component="main">
         <div className="py-5">
           <Route path="/" exact component={Login} />
           <Route path="/login/" component={Login} />
