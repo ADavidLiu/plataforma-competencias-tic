@@ -55,7 +55,7 @@ class Establecimiento extends Component {
 					margin="normal"
 					required
 					fullWidth
-					id={"nombre-ee-" + this.props.id}
+					id={"nombre-sede-" + this.props.id}
 					label="Nombre"
 					name="nombre"
 					onChange={this.handleChange}
@@ -66,7 +66,7 @@ class Establecimiento extends Component {
 					margin="normal"
 					required
 					fullWidth
-					id={"direccion-ee-" + this.props.id}
+					id={"direccion-sede-" + this.props.id}
 					label="Dirección"
 					name="direccion"
 					onChange={this.handleChange}
@@ -93,7 +93,7 @@ class Establecimiento extends Component {
 							margin="normal"
 							required
 							fullWidth
-							id={"nombre-ubicacion-ee-" + this.props.id}
+							id={"nombre-ubicacion-sede-" + this.props.id}
 							label="Nombre de la ubicación"
 							name="nombreUbicacion"
 							onChange={this.handleChange}
@@ -134,7 +134,7 @@ class Establecimiento extends Component {
 					margin="normal"
 					required
 					fullWidth
-					id={"telefono-ee-" + this.props.id}
+					id={"telefono-sede-" + this.props.id}
 					label="Teléfono"
 					name="telefono"
 					type="tel"
@@ -145,7 +145,7 @@ class Establecimiento extends Component {
 					margin="normal"
 					required
 					fullWidth
-					id={"correo-electronico-institucional-ee-" + this.props.id}
+					id={"correo-electronico-institucional-sede-" + this.props.id}
 					label="Correo electrónico institucional"
 					name="correo"
 					type="email"
@@ -156,7 +156,7 @@ class Establecimiento extends Component {
 					variant="outlined"
 					margin="normal"
 					fullWidth
-					id={"sitio-web-ee-" + this.props.id}
+					id={"sitio-web-sede-" + this.props.id}
 					label="Sitio web"
 					name="sitioWeb"
 					type="tel"
