@@ -29,7 +29,7 @@ class Login extends Component {
         console.log("Conectarse al backend");
 
         /* If success */
-        this.props.history.push("/registro");
+        this.props.history.push("/prueba");
     }
 
     render() {

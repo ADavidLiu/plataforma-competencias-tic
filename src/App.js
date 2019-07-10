@@ -10,6 +10,9 @@ import Container from "@material-ui/core/Container";
 
 import Registro from "./components/registro/registro";
 import Login from "./components/login/login";
+import Prueba from "./components/prueba/prueba";
+
+import "./styles/custom.css";
 
 function App() {
 	return (
@@ -25,6 +28,7 @@ function App() {
           <Route path="/" exact component={Login} />
           <Route path="/login/" component={Login} />
           <Route path="/registro/" component={Registro} />
+          <Route path="/prueba/" component={Prueba} />
         </div>
       </Container>
     </Router>

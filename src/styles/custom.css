@@ -1,0 +1,20 @@
+.MuiInputLabel-outlined.MuiInputLabel-shrink {
+    background-color: #FAFAFA;
+}
+
+.MuiInputLabel-outlined.MuiInputLabel-shrink:after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    width: calc(100% + 20px);
+    background-color: #FAFAFA;
+    transition: all .25s;
+}
+
+.MuiSelect-select:focus {
+    background-color: #FAFAFA !important;
+}
