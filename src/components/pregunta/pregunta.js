@@ -6,12 +6,17 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
+import shuffleArray from "../../utils/shuffleArray";
+
 class Pregunta extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        
         this.state = {
             staterespuestaseleccionada: ""
         }
+
+        this.shuffledOptions = shuffleArray(props.data.opciones);
     }
 
     handleChange = e => {
@@ -32,7 +37,7 @@ class Pregunta extends Component {
 
         return (
             <React.Fragment>
-                <Typography variant="body1" className="mb-3">{enunciado}</Typography>
+                <Typography variant="body1" className="mb-4"><strong>{enunciado}</strong></Typography>
                 <FormControl component="fieldset" className="mb-4">
                     <RadioGroup
                         aria-label="Respuesta Seleccionada"
@@ -41,16 +46,17 @@ class Pregunta extends Component {
                         value={this.state.staterespuestaseleccionada}
                         onChange={this.handleChange}
                     >
-                        {opciones.map((opcion, i) => {
+                        {this.shuffledOptions.map((opcion, i) => {
                             return <FormControlLabel
                                 key={i}
-                                value={i.toString()}
+                                value={opcion}
                                 control={<Radio required color="primary" />}
                                 label={opcion}
                             />;
                         })}
                     </RadioGroup>
                 </FormControl>
+                <hr className="mb-5"/>
             </React.Fragment>
         );
     }
