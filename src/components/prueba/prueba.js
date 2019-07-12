@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -9,6 +10,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+import Snackbar from '@material-ui/core/Snackbar';
 
 import preguntasPrueba from "../../models/preguntasPrueba";
 import shuffleArray from "../../utils/shuffleArray";
@@ -24,8 +27,13 @@ class Prueba extends Component {
             isPruebaTerminada: false,
             preguntas: preguntasPrueba,
             respuestas: [],
-            revision: {}
+            revision: {},
+            tiempoDisponible: 5400 * 1000,
+            tiempoRestante: "calculando..."
         }
+
+        this.countdown = "";
+        this.tiempoLimite = "";
 
         /* Para hacer las preguntas y el orden random */
         this.shuffledQuestions = shuffleArray(this.state.preguntas);
@@ -60,6 +68,11 @@ class Prueba extends Component {
         this.finalQuestions = [...this.selectedQuestions];
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.tiempoLimite);
+        clearInterval(this.countdown);
+    }
+
     actualizarRespuestas = preguntaRespondida => {
         const encontrado = this.state.respuestas.find(respuesta => respuesta.id === preguntaRespondida.id);
 
@@ -75,6 +88,10 @@ class Prueba extends Component {
     revisarRespuestas = e => {
         if (e) {
             e.preventDefault();
+            this.setState({
+                ...this.state,
+                isPruebaTerminada: true
+            });
         }
         
         const revision = {
@@ -119,22 +136,33 @@ class Prueba extends Component {
             isPruebaIniciada: true
         });
 
-        const duracion = 5400 * 1000; // 1 hora y media
-        /* const duracion = 3000; */
+        let duracion = this.state.tiempoDisponible;
 
-        const tiempoLimite = setTimeout(() => {
+        this.countdown = setInterval(() => {
+            const tempTime = moment.duration(duracion);
+            const nuevoTiempoRestante = `${tempTime.hours()}:${tempTime.minutes()}:${tempTime.seconds()}`;
+
+            this.setState({
+                tiempoRestante: nuevoTiempoRestante
+            });
+
+            duracion -= 1000;
+        }, 1000);
+
+        this.tiempoLimite = setTimeout(() => {
             this.revisarRespuestas();
             this.setState({
                 ...this.state,
                 isPruebaTerminada: true
             });
-            clearTimeout(tiempoLimite);
-        }, duracion);
+            clearTimeout(this.tiempoLimite);
+            clearInterval(this.countdown);
+        }, this.state.tiempoDisponible);
     }
 
     terminarPrueba = () => {
         /* Realmente, volver a la página de inicio de cada usuario */
-        this.props.history.push("/login");
+        this.props.history.push("/dashboard");
     }
 
     render() {
@@ -207,6 +235,13 @@ class Prueba extends Component {
                         <Button color="primary" onClick={this.terminarPrueba}>Volver a inicio</Button>
                     </DialogActions>
                 </Dialog>
+                <Snackbar
+                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                    key="tiempo-restante"
+                    open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
+                    ContentProps={{ 'aria-describedby': 'message-id' }}
+                    message={"Tiempo restante: " + this.state.tiempoRestante}
+                />
             </React.Fragment>
         );
     }

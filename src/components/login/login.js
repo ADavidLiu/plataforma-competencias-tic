@@ -7,13 +7,15 @@ import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
     constructor() {
         super();
         this.state = {
             usuario: "",
-            contrasenia: ""
+            contrasenia: "",
+            didSubmit: false
         }
     }
 
@@ -29,10 +31,17 @@ class Login extends Component {
         console.log("Conectarse al backend");
 
         /* If success */
-        this.props.history.push("/prueba");
+        this.setState({
+            didSubmit: true
+        });
+        this.props.actualizarLogeado(true);
     }
 
     render() {
+        if (this.state.didSubmit && this.props.isLogeado) {
+            return <Redirect to="/" />;
+        }
+
         return (
 			<div className="mb-2 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
 				<Typography
@@ -83,9 +92,9 @@ class Login extends Component {
                                     Ingresar
                                 </Button>
                             </form>
-                            <Link to="/registro">
+                            {/* <Link to="/registro">
                                 <Typography variant="body2" className="mt-3" color="primary">¿Aún no tiene cuenta? Regístrese aquí.</Typography>
-                            </Link>
+                            </Link> */}
 						</Grid>
 					</Grid>
 				</FormControl>

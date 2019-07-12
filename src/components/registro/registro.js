@@ -24,7 +24,7 @@ class Registro extends Component {
     constructor() {
         super();
         this.initialState = {
-            tipoPerfil: "Institucional",
+            tipoPerfil: "Individual",
             perfilIndividual: {
                 nombres: "",
                 apellidos: "",
@@ -697,7 +697,7 @@ class Registro extends Component {
                                     className="mt-2"
                                     size="large"
                                 >
-                                    Registrarme
+                                    Guardar datos
                                 </Button>
                             </React.Fragment>
                         ) : ""}
@@ -713,13 +713,14 @@ class Registro extends Component {
 					variant="h5"
 					className="mb-4 text-center"
 				>
-					<strong>Registro</strong>
+					<strong>Registro de datos</strong>
+                    <hr className="mt-5"/>
 				</Typography>
 				<FormControl
 					component="fieldset"
 					className="w-100 text-center"
 				>
-					<Grid container>
+					{/* <Grid container>
 						<Grid item xs={12}>
 							<hr />
 						</Grid>
@@ -769,12 +770,12 @@ class Registro extends Component {
 						<Grid item xs={12}>
 							<hr />
 						</Grid>
-					</Grid>
+					</Grid> */}
 				</FormControl>
 				{formulario}
-                <Link to="/login">
+                {/* <Link to="/login">
                     <Typography variant="body2" className="mt-3 text-center" color="primary">¿Ya está registrado? Inicie sesión aquí.</Typography>
-                </Link>
+                </Link> */}
 			</div>
 		);
 	};
