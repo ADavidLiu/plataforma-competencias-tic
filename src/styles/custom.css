@@ -1,3 +1,8 @@
+html,
+body {
+    overflow-x: hidden;
+}
+
 .MuiInputLabel-outlined.MuiInputLabel-shrink {
     background-color: #FAFAFA;
 }

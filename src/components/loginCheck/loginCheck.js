@@ -5,7 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/styles';
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -20,6 +19,7 @@ import Prueba from "../prueba/prueba";
 import Dashboard from "../dashboard/dashboard";
 import DashboardDocente from "../dashboard/dashboardDocente";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
+import Practicas from "../practicas/practicas";
 
 class LoginCheck extends Component {
     constructor() {
@@ -29,7 +29,7 @@ class LoginCheck extends Component {
 
         this.state = {
             isLogeado: true,
-            tipo: "establecimiento",
+            tipo: "docente",
             id: "loremipsum"
         }
 
@@ -102,6 +102,7 @@ class LoginCheck extends Component {
                         <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
                         <Route path="/dashboarddocente/" component={DashboardDocente} />
                         <Route path="/dashboardee/" component={DashboardEstablecimientoEducativo} />
+                        <Route path="/practicas/" component={Practicas} />
                     </div>
                 </Container>
             </Router>
