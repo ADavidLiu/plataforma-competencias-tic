@@ -23,7 +23,7 @@ class DashboardDocente extends Component {
 
         this.state = {
             datosID: "docente-1",
-            pasoActual: 2,
+            pasoActual: 3,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
             estadisticas: {

@@ -20,6 +20,8 @@ import Dashboard from "../dashboard/dashboard";
 import DashboardDocente from "../dashboard/dashboardDocente";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
 import Practicas from "../practicas/practicas";
+import Preentrevista from "../preentrevista/preentrevista";
+import Entrevista from "../entrevista/entrevista";
 
 class LoginCheck extends Component {
     constructor() {
@@ -103,6 +105,8 @@ class LoginCheck extends Component {
                         <Route path="/dashboarddocente/" component={DashboardDocente} />
                         <Route path="/dashboardee/" component={DashboardEstablecimientoEducativo} />
                         <Route path="/practicas/" component={Practicas} />
+                        <Route path="/preentrevista/" component={Preentrevista} />
+                        <Route path="/entrevista/" component={Entrevista} />
                     </div>
                 </Container>
             </Router>
