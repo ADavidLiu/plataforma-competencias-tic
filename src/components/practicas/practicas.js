@@ -50,7 +50,7 @@ class Practicas extends Component {
             necesidadOProblema: "",
             objetivoPrincipal: "",
             resultadosEsperados: "",
-            isFormActividadOpen: true,
+            isFormActividadOpen: false,
             numActividades: 0,
             actividades: [],
             formActividad: {
@@ -607,7 +607,7 @@ class Practicas extends Component {
                                         name="cantidadGrupos"
                                         type="number"
                                         inputProps={{"min": 1}}
-                                        value={this.state.cantidadPersonas}
+                                        value={this.state.cantidadGrupos}
                                         onInput={this.handleTextChange}
                                     />
                                 </Grid>
@@ -622,7 +622,7 @@ class Practicas extends Component {
                                         name="personasPorGrupo"
                                         type="number"
                                         inputProps={{"min": 1}}
-                                        value={this.state.cantidadPersonas}
+                                        value={this.state.personasPorGrupo}
                                         onInput={this.handleTextChange}
                                     />
                                 </Grid>
