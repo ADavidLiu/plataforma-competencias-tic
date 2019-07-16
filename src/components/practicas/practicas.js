@@ -193,7 +193,8 @@ class Practicas extends Component {
 
     cerrarFormActividad = () => {
         this.setState({
-            isFormActividadOpen: false
+            isFormActividadOpen: false,
+            formActividad: this.initialState.formActividad
         });
     }
 
@@ -788,9 +789,15 @@ class Practicas extends Component {
                             </FormGroup>
                             <Typography variant="body1" className="mb-3">A continuación, describa la o las actividades que propone para lograr el objetivo de aprendizaje.</Typography>
                             {
+                                this.state.actividades.length > 0 ? <Typography variant="body2"><strong>Actividades agregadas</strong></Typography> : ""
+                            }
+                            {
                                 this.state.actividades.map((actividad, i) => {
                                     return (
-                                        "Actividad " + (i + 1) + ": " + {/* {actividad.nombre} */}
+                                        <React.Fragment>
+                                            <hr/>
+                                            <Typography variant="body2" className="mb-2">{"Actividad " + (i + 1) + ": " + (actividad.nombre)}</Typography>
+                                        </React.Fragment>
                                     );
                                 })
                             }
@@ -977,6 +984,7 @@ class Practicas extends Component {
                                     onChange={this.actualizarDescripcionRetroalimentacion}
                                 />
                             </div>
+                            <hr/>
                         </DialogContent>
                         <DialogActions>
                             <Button type="button" onClick={this.cerrarFormActividad} color="primary">Cancelar</Button>

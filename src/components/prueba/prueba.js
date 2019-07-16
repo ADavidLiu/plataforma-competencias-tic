@@ -117,6 +117,7 @@ class Prueba extends Component {
                         revision.incorrectas.push(preguntaRevisada);   
                     }
                 }
+                return null;
             });
         });
 

@@ -33,7 +33,7 @@ class Pregunta extends Component {
     }
 
     render() {
-        const {id, codigoDescriptor, enunciado, opciones, respuesta} = this.props.data;
+        const {id, codigoDescriptor, enunciado} = this.props.data;
 
         return (
             <React.Fragment>
