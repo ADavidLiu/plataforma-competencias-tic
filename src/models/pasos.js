@@ -11,6 +11,14 @@ const pasos = {
         {
             nombre: "Prácticas educativas",
             index: 2
+        },
+        {
+            nombre: "Pre-entrevista",
+            index: 3
+        },
+        {
+            nombre: "Finalizado",
+            index: 4
         }
     ],
     avanzado: [
@@ -27,7 +35,7 @@ const pasos = {
             index: 2
         },
         {
-            nombre: "Preentrevista",
+            nombre: "Pre-entrevista",
             index: 3
         },
         {

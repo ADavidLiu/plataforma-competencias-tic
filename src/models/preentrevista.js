@@ -1,18 +1,18 @@
 const preguntas = [
     {
         label: "¿Ha propuesto cambios en otros escenarios educativos como consecuencia del uso de las TIC en su práctica educativa?",
-        type: "RADIO",
         options: [
             {
                 label: "Sí",
-                type: "INPUT",
                 options: [
                     {
                         label: "¿Cuáles? (máximo 400 caracteres)",
+                        typeOfAnswer: "INPUT",
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E1ub"]
+                                descriptoresEvaluados: ["E1ub"],
+                                tipoEvidencia: "Ejemplo de modificaciones de otros escenarios educativos."
                             }
                         ]
                     }
@@ -25,18 +25,18 @@ const preguntas = [
     },
     {
         label: "¿Utiliza las TIC para presentar contenidos y actividades conforme los ritmos y estilos de aprendizaje de los estudiantes?",
-        type: "RADIO",
         options: [
             {
                 label: "Sí",
-                type: "INPUT",
                 options: [
                     {
                         label: "¿Cómo lo hace? (Máximo 400 caracteres)",
+                        typeOfAnswer: "INPUT",
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E1ue"]
+                                descriptoresEvaluados: ["E1ue"],
+                                tipoEvidencia: "Presentación de contenidos y actividades conforme estilos y ritmos de aprendizaje."
                             }
                         ]
                     }
@@ -49,14 +49,13 @@ const preguntas = [
     },
     {
         label: "¿Ha realizado modificaciones al diseño de la práctica educativa apoyada en TIC que presentó?",
-        type: "RADIO",
         options: [
             {
                 label: "Sí",
-                type: "CHECKBOX",
                 options: [
                     {
                         label: "¿Para qué ha modificado el diseño de su práctica educativa apoyada en TIC? (Puede elegir más de una opción)",
+                        typeOfAnswer: "CHECKBOX",
                         options: [
                             {
                                 label: "Para facilitar la presentación, almacenamiento, transmisión o intercambio de información.",
@@ -66,7 +65,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I1ta"]
+                                                descriptoresEvaluados: ["I1ta"],
+                                                tipoEvidencia: "Cambios en (1) la manera de presentar los contenidos; (2) la forma de almacenar y compartir información; (3) manera de facilitar el acceso a información de calidad."
                                             }
                                         ]
                                     }
@@ -80,7 +80,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I1ta"]
+                                                descriptoresEvaluados: ["I1ta"],
+                                                tipoEvidencia: "Cambios en (1) la manera de presentar los contenidos; (2) la forma de almacenar y compartir información; (3) manera de facilitar el acceso a información de calidad."
                                             }
                                         ]
                                     }
@@ -94,7 +95,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R1tb"]
+                                                descriptoresEvaluados: ["R1tb"],
+                                                tipoEvidencia: "Modificaciones para aprovechar al máximo los recursos TIC en el escenario educativo"
                                             }
                                         ]
                                     }
@@ -108,7 +110,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R1tc"]
+                                                descriptoresEvaluados: ["R1tc"],
+                                                tipoEvidencia: "Ejemplo de introducción de TIC siguiendo criterios de novedad, estética y accesibilidad."
                                             }
                                         ]
                                     }
@@ -127,7 +130,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R1ta"]
+                                                descriptoresEvaluados: ["R1ta"],
+                                                tipoEvidencia: "Ejemplo de herramientas nuevas introducidas. Se compara la práctica actual con versiones previas."
                                             }
                                         ]
                                     }
@@ -141,7 +145,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["E1ta"]
+                                                descriptoresEvaluados: ["E1ta"],
+                                                tipoEvidencia: "Ejemplo de cambio introducido por características de los contenidos o realimentaciones de los estudiantes."
                                             }
                                         ]
                                     }
@@ -155,7 +160,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["E1tb", "E1tc"]
+                                                descriptoresEvaluados: ["E1tb", "E1tc"],
+                                                tipoEvidencia: "Muestra de modificación introducida a la práctica educativa apoyada en TIC a partir de la identificación de potencialidades de dichas herramientas."
                                             }
                                         ]
                                     }
@@ -181,7 +187,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E1td"]
+                                descriptoresEvaluados: ["E1td"],
+                                tipoEvidencia: "Demostración de cambios que otros profesores han introducido a su práctica educativa a partir del apoyo brindado por el docente."
                             }
                         ]
                     }
@@ -203,7 +210,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["I2ua"]
+                                descriptoresEvaluados: ["I2ua"],
+                                tipoEvidencia: "Demostración de uso de las TIC para la transmisión y comunicación de contenidos."
                             }
                         ]
                     }
@@ -225,7 +233,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["I2ub"]
+                                descriptoresEvaluados: ["I2ub"],
+                                tipoEvidencia: "Demostración de uso de las TIC para la gestión de la práctica educativa."
                             }
                         ]
                     }
@@ -269,7 +278,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E2ua"]
+                                descriptoresEvaluados: ["E2ua"],
+                                tipoEvidencia: "Certificado de conferencia, publicaciones, presentaciones expuestas en eventos, posters."
                             }
                         ]
                     }
@@ -291,7 +301,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E2ub"]
+                                descriptoresEvaluados: ["E2ub"],
+                                tipoEvidencia: "Demostración de implementación de TIC en otro escenario educativo."
                             }
                         ]
                     }
@@ -313,7 +324,8 @@ const preguntas = [
                         options: [
                             {
                                 label: "INPUT",
-                                descriptoresEvaluados: ["E2uc"]
+                                descriptoresEvaluados: ["E2uc"],
+                                tipoEvidencia: "¿Testimonio de colegas que han recibido apoyo?"
                             }
                         ]
                     }
@@ -341,7 +353,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I2ta"]
+                                                descriptoresEvaluados: ["I2ta"],
+                                                tipoEvidencia: 'Demostración de "ajustes realizados en la marcha" a la práctica educativo, relacionados con la presentación de contenidos, el intercambio de archivos, el acceso y la búsqueda de información de calidad.'
                                             }
                                         ]
                                     }
@@ -355,7 +368,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["E2ta"]
+                                                descriptoresEvaluados: ["E2ta"],
+                                                tipoEvidencia: 'Demostración de "cambios realizados en la marcha" a la práctica educativa para hacerla más significativa (trabajo colaborativo, andamiaje, contextualización, autorregulación, autonomía).'
                                             }
                                         ]
                                     }
@@ -369,7 +383,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["E2td", "E2tb"]
+                                                descriptoresEvaluados: ["E2td", "E2tb"],
+                                                tipoEvidencia: 'Demostración de "cambios realizados en la marcha" a la práctica educativa para hacerla más significativa (trabajo colaborativo, andamiaje, contextualización, autorregulación, autonomía).'
                                             }
                                         ]
                                     }
@@ -388,7 +403,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R2tb"]
+                                                descriptoresEvaluados: ["R2tb"],
+                                                tipoEvidencia: "Demostración de cambios introducidos a la práctica educativa por criterios estéticos y de accesibilidad."
                                             }
                                         ]
                                     }
@@ -402,7 +418,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R2ta"]
+                                                descriptoresEvaluados: ["R2ta"],
+                                                tipoEvidencia: "Información sistemáticamente recogida de práctica educativa."
                                             }
                                         ]
                                     }
@@ -416,7 +433,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["E2tc"]
+                                                descriptoresEvaluados: ["E2tc"],
+                                                tipoEvidencia: "Demostración de cambios introducidos en práctica educativa por Por el análisis sistemático de la implementación de las TIC en las prácticas educativas."
                                             }
                                         ]
                                     }
@@ -443,7 +461,7 @@ const preguntas = [
                             {
                                 label: "INPUT",
                                 descriptoresEvaluados: "NONE",
-                                needsEvidencia: true
+                                tipoEvidencia: "Demostración de método de evaluación de práctica educativa. Captura de pantalla, copia de formulario, copia de respuestas a formulario."
                             }
                         ]
                     }
@@ -466,7 +484,7 @@ const preguntas = [
                             {
                                 label: "INPUT",
                                 descriptoresEvaluados: "NONE",
-                                needsEvidencia: true
+                                tipoEvidencia: "Demostración de metodología de evaluación del impacto de práctica educativa apoyada en TIC en el contexto educativo - Artículo, ponencia, presentación."
                             }
                         ]
                     },
@@ -476,7 +494,7 @@ const preguntas = [
                             {
                                 label: "INPUT",
                                 descriptoresEvaluados: "NONE",
-                                needsEvidencia: true
+                                tipoEvidencia: 'Demostración de resultados de evaluación de práctica educativa - respuestas a formularios, formalización del "decir" de superiores, pares y estudiantes.'
                             }
                         ]
                     },
@@ -495,7 +513,7 @@ const preguntas = [
                                                     {
                                                         label: "INPUT",
                                                         descriptoresEvaluados: ["E3ta"],
-                                                        needsEvidencia: true
+                                                        tipoEvidencia: "Constancias de divulgación de  evaluación de práctica educativa apoyada en TIC - artículos, presentaciones, certificados, publicaciones."
                                                     }
                                                 ]
                                             }
@@ -532,7 +550,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I3ta"]
+                                                descriptoresEvaluados: ["I3ta"],
+                                                tipoEvidencia: "Demostración de ajustes de evaluación de práctica educativa en función de la efectividad para la transmisión de contenidos y el acceso a información de calidad."
                                             }
                                         ]
                                     }
@@ -546,7 +565,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I3ta"]
+                                                descriptoresEvaluados: ["I3ta"],
+                                                tipoEvidencia: "Demostración de ajustes de evaluación de práctica educativa en función de la efectividad para la transmisión de contenidos y el acceso a información de calidad."
                                             }
                                         ]
                                     }
@@ -560,7 +580,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["I3tb"]
+                                                descriptoresEvaluados: ["I3tb"],
+                                                tipoEvidencia: "Demostración de cambios en la evaluación de la práctica educativa  en términos de tiempo, recursos, acceso a la información, transmisión y almacenamiento de contenidos."
                                             }
                                         ]
                                     }
@@ -574,7 +595,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R3ta"]
+                                                descriptoresEvaluados: ["R3ta"],
+                                                tipoEvidencia: "Demostración de cambios en la evaluación de la práctica educativa en función del aporte de las TIC a la construcción de conocimiento."
                                             }
                                         ]
                                     }
@@ -588,7 +610,8 @@ const preguntas = [
                                         options: [
                                             {
                                                 label: "INPUT",
-                                                descriptoresEvaluados: ["R3tb"]
+                                                descriptoresEvaluados: ["R3tb"],
+                                                tipoEvidencia: "Ejemplo de nuevas formas de evidenciar el aporte de las TIC en el aprendizaje de los estudiantes."
                                             }
                                         ]
                                     }

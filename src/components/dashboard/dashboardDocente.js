@@ -149,7 +149,7 @@ class DashboardDocente extends Component {
         }
         
         this.pasosRoutes = ["registro", "prueba", "practicas", "preentrevista", "entrevista"];
-        this.pasosNames = ["Registro de datos", "Prueba de conocimiento", "Prácticas educativas", "Preentrevista", "Entrevista"];
+        this.pasosNames = ["Registro de datos", "Prueba de conocimiento", "Práctica educativa", "Pre-entrevista", "Entrevista"];
     }
 
     componentDidMount() {

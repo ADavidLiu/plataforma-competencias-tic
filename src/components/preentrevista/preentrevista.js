@@ -122,24 +122,26 @@ class Preentrevista extends Component {
             /* Primer nivel de las preguntas */
             /* const nuevaPregunta = this.crearPregunta(pregunta.label, pregunta.options);
             preguntasPreparadas.push(nuevaPregunta); */
+
+            /* Nivel inicial de "Sí" o "No" */
             preguntasPreparadas.push(
                 <div key={i}>
                     <Typography variant="body1">{pregunta.label}</Typography>
                     <FormControl key={i} variant="outlined" className="w-100">
                         <RadioGroup
                             name={pregunta.label}
-                            value={this.state.respuestas[i].respuesta}
+                            value={this.state.respuestas[i] === undefined ? "" : this.state.respuestas[i].respuesta}
                             onChange={e => { this.handlePreguntaChange(e, i) }}
                         >
                             <FormControlLabel
                                 key="Sí"
-                                value={true}
+                                value="Sí"
                                 control={<Radio required color="primary" />}
                                 label="Sí"
                             />
                             <FormControlLabel
                                 key="No"
-                                value={false}
+                                value="No"
                                 control={<Radio required color="primary" />}
                                 label="No"
                             />
@@ -147,20 +149,64 @@ class Preentrevista extends Component {
                     </FormControl>
                 </div>
             );
+            /*  Creación de preguntas internas
+                Sólo se le pasan las opciones del siguiente nivel del "Sí" actual
+            */
+            this.createInnerQuestions(preguntasPreparadas, pregunta.options[0].options, i);
         });
 
         return preguntasPreparadas;
     }
 
+    createInnerQuestions = (preguntasArray, options, rootIndex) => {
+        console.log(options, rootIndex);
+
+        options.forEach((option, i) => {
+            if (options.length === 1) {
+                /* Es el nivel final de la pregunta */
+                switch (option.typeOfAnswer) {
+                    case "INPUT":
+                        preguntasArray.push(
+                            <TextField
+                                key={`${rootIndex}-${i}`}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                multiline
+                                inputProps={{ maxLength: 400 }}
+                                rows="5"
+                                label={option.label}
+                            />
+                        );
+                        break;
+                    case "CHECKBOX":
+                        console.log("Checkbox");
+                        break;
+                    case "RADIO":
+                        console.log("Radio");
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                options.forEach((innerOption, j) => {
+                    console.log(innerOption);
+                });
+            }
+        });
+    }
+
     handlePreguntaChange = (e, i) => {
         const newRespuestas = this.state.respuestas;
-        if (newRespuestas[i]) {
 
+        if (newRespuestas[i]) {
+            newRespuestas[i].respuesta = e.target.value;
         } else {
-            /* newRespuestas[i] = {
+            newRespuestas[i] = {
                 label: e.target.name,
-                respuesta: 
-            } */
+                respuesta: e.target.value
+            }
         }
 
         this.setState({
