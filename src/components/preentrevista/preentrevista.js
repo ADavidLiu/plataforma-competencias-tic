@@ -157,10 +157,10 @@ class Preentrevista extends Component {
         if (newRespuestas[i]) {
 
         } else {
-            newRespuestas[i] = {
+            /* newRespuestas[i] = {
                 label: e.target.name,
                 respuesta: 
-            }
+            } */
         }
 
         this.setState({

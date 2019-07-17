@@ -455,7 +455,7 @@ class Practicas extends Component {
                         fullWidth
                     >
                         Seleccionar archivo
-                        <input type="file" required accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.xslx,.txt" onChange={e => { this.actualizarArchivoEvidencia(e, i) }} style={{ display: "none" }} />
+                        <input type="file" required accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.txt" onChange={e => { this.actualizarArchivoEvidencia(e, i) }} style={{ display: "none" }} />
                     </Button>
                     {
                         this.state.formActividad.evidencias[i] ? (
@@ -947,7 +947,7 @@ class Practicas extends Component {
                             </div>
                             <div className="mt-1">
                                 <Typography variant="body1" className="mb-1">Adjunte evidencia(s) de la(s) actividad(es) *</Typography>
-                                <em className="d-block mb-3"><strong>Sólo se aceptan archivos de imagen, video, audio, .doc, .docx, .xlsx, .pdf y .txt</strong></em>
+                                <em className="d-block mb-3"><strong>Sólo se aceptan archivos de imagen, video, audio, .doc, .docx, .xlsm, .pdf, .txt, .ppt y .pptx</strong></em>
                                 {itemsEvidencias}
                                 {
                                     this.state.formActividad.numEvidencias > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Evidencias") }} color="primary" variant="outlined">-</Button> : ""
@@ -957,7 +957,7 @@ class Practicas extends Component {
                             <div className="mt-4">
                                 <Typography variant="body1" className="mb-1">Adjunte la producción de un estudiante retroalimentada, si la tiene.</Typography>
                                 <strong className="d-block mb-2">Recuerde borrar cualquier referencia a la identidad del estudiante.</strong>
-                                <em className="d-block mb-3"><strong>Sólo se aceptan archivos de imagen, video, audio, .doc, .docx, .xlsx, .pdf y .txt</strong></em>
+                                <em className="d-block mb-3"><strong>Sólo se aceptan archivos de imagen, video, audio, .doc, .docx, .xlsm, .pdf, .txt, .ppt y .pptx</strong></em>
                                 <hr/>
                                 <Button
                                     variant="contained"
@@ -965,7 +965,7 @@ class Practicas extends Component {
                                     fullWidth
                                 >
                                     Seleccionar archivo
-                                    <input type="file" accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.xslx,.txt" onChange={this.actualizarArchivoRetroalimentacion} style={{ display: "none" }} />
+                                    <input type="file" accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.txt" onChange={this.actualizarArchivoRetroalimentacion} style={{ display: "none" }} />
                                 </Button>
                                 {
                                     this.state.formActividad.retroalimentacion.archivo.nombre !== "" ? (
