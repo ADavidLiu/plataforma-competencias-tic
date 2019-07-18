@@ -121,6 +121,7 @@ const preguntas = [
                     },
                     {
                         label: "¿Qué tuvo en cuenta para modificar el diseño de su práctica educativa apoyada en TIC? (Puede elegir más de una opción)",
+                        typeOfAnswer: "CHECKBOX",
                         options: [
                             {
                                 label: "Experiencias previas de diseño de prácticas educativas apoyadas en TIC.",

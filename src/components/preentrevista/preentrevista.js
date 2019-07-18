@@ -159,9 +159,9 @@ class Preentrevista extends Component {
     }
 
     createInnerQuestions = (preguntasArray, options, rootIndex) => {
-        console.log(options, rootIndex);
-
         options.forEach((option, i) => {
+            /* Este es el segundo nivel, después del "Sí/No" inicial */
+            console.log(option);
             if (options.length === 1) {
                 /* Es el nivel final de la pregunta */
                 switch (option.typeOfAnswer) {
@@ -190,9 +190,8 @@ class Preentrevista extends Component {
                         break;
                 }
             } else {
-                options.forEach((innerOption, j) => {
-                    console.log(innerOption);
-                });
+                /* No es el último nivel. Recursividad para seguir bajando... */
+                this.createInnerQuestions(preguntasArray, option.options, i);
             }
         });
     }
