@@ -47,6 +47,7 @@ class Preentrevista extends Component {
     }
 
     crearPregunta = pregunta => {
+        console.log(pregunta)
         if (!pregunta.typeOfAnswer) {
             return (
                 <Typography key={pregunta.label} variant="body1">{pregunta.label}</Typography>
@@ -78,7 +79,7 @@ class Preentrevista extends Component {
         }
 
         if (pregunta.options) {
-            this.crearPregunta(pregunta.options[0]);
+            this.crearPregunta(pregunta.options[0].options);
         }
     }
 

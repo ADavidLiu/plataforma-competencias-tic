@@ -4,7 +4,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -19,9 +19,12 @@ import Prueba from "../prueba/prueba";
 import Dashboard from "../dashboard/dashboard";
 import DashboardDocente from "../dashboard/dashboardDocente";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
+import DashboardGobierno from "../dashboard/dashboardGobierno";
 import Practicas from "../practicas/practicas";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
+import PreentrevistaNew from '../preentrevista/preentrevista-new'
+import Pagina404 from "../pagina404/pagina404";
 
 class LoginCheck extends Component {
     constructor() {
@@ -31,23 +34,32 @@ class LoginCheck extends Component {
 
         this.state = {
             isLogeado: true,
-            tipo: "docente",
+            tipo: "GOBIERNO",
             id: "loremipsum"
         }
 
         /* Conectarse al backend para obtener los datos personales del usuario o EE */
         this.datosPerfil = {};
 
-        if (this.state.tipo === "docente") {
-            this.datosPerfil = {
-                nombre: "Lorem Ipsum",
-                imgSrc: ""
-            }
-        } else {
-            this.datosPerfil = {
-                nombre: "Lorem Ipsum Dolor Sit Amet",
-                imgSrc: ""
-            }
+        switch (this.state.tipo) {
+            case "DOCENTE":
+                this.datosPerfil = {
+                    nombre: "John Doe",
+                    imgSrc: ""
+                }
+                break;
+            case "ESTABLECIMIENTO":
+                this.datosPerfil = {
+                    nombre: "Universidad Javeriana",
+                    imgSrc: ""
+                }
+                break;
+            case "GOBIERNO":
+                this.datosPerfil = {
+                    nombre: "Ministerio de Educación Nacional",
+                    imgSrc: ""
+                }
+                break;
         }
     }
 
@@ -91,22 +103,27 @@ class LoginCheck extends Component {
                 }
                 <Container component="main">
                     <div className="py-5">
-                        <Route path="/" exact render={(...routeProps) => {
-                            if (this.state.isLogeado) {
-                                return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
-                            } else {
-                                return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
-                            }
-                        }} />
-                        <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                        <Route path="/registro/" component={Registro} />
-                        <Route path="/prueba/" component={Prueba} />
-                        <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
-                        <Route path="/dashboarddocente/" component={DashboardDocente} />
-                        <Route path="/dashboardee/" component={DashboardEstablecimientoEducativo} />
-                        <Route path="/practicas/" component={Practicas} />
-                        <Route path="/preentrevista/" component={Preentrevista} />
-                        <Route path="/entrevista/" component={Entrevista} />
+                        <Switch>
+                            <Route path="/" exact render={(...routeProps) => {
+                                if (this.state.isLogeado) {
+                                    return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
+                                } else {
+                                    return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
+                                }
+                            }} />
+                            <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                            <Route path="/registro/" component={Registro} />
+                            <Route path="/prueba/" component={Prueba} />
+                            <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
+                            <Route path="/dashboard-docente/" component={DashboardDocente} />
+                            <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
+                            <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
+                            <Route path="/practicas/" component={Practicas} />
+                            <Route path="/preentrevista/" component={Preentrevista} />
+                            <Route path="/entrevista/" component={Entrevista} />
+                            <Route path="/preentrevistaNew/" component={PreentrevistaNew}/>
+                            <Route component={Pagina404} />
+                        </Switch>
                     </div>
                 </Container>
             </Router>

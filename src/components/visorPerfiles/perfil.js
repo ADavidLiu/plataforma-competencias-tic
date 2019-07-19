@@ -23,7 +23,7 @@ function Perfil(props) {
                     <Typography variant="body2">Último ingreso: {perfil.ultimoIngreso === "" ? <strong>nunca ha ingresado</strong> : moment.unix(perfil.ultimoIngreso).format("DD/MM/YYYY - h:mm:ss")}</Typography>
                 </Grid>
                 <Grid item xs={6} className="text-right">
-                    <Link to="/dashboarddocente" style={{textDecoration: "none"}}>
+                    <Link to="/dashboard-docente" style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             variant="outlined"

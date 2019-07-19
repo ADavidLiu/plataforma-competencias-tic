@@ -23,7 +23,7 @@ class DashboardDocente extends Component {
 
         this.state = {
             datosID: "docente-1",
-            pasoActual: 3,
+            pasoActual: 4,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
             estadisticas: {
@@ -358,7 +358,7 @@ class DashboardDocente extends Component {
                         </Step>
                     </Stepper>
                     {
-                        this.state.pasoActual < 4 ? 
+                        this.state.pasoActual < 5 ? 
                             <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>Continuar con:&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
                         : <Typography variant="body1" color="primary"><strong>Ha terminado todo su proceso exitosamente.</strong></Typography>
                     }
