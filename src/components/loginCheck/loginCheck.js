@@ -60,6 +60,8 @@ class LoginCheck extends Component {
                     imgSrc: ""
                 }
                 break;
+            default:
+                break;
         }
     }
 

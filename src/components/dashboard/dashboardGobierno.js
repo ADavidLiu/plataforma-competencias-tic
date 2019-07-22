@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Bar, Doughnut } from "react-chartjs-2";
+import { Bar, Doughnut, Radar } from "react-chartjs-2";
 
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -15,6 +15,12 @@ import Select from "@material-ui/core/Select";
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
+import cursos from "../../models/cursos";
+import { docentes, establecimientos } from "../../models/perfiles";
+
+import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
+import VisorPerfiles from "../visorPerfiles/visorperfiles";
 
 class DashboardGobierno extends Component {
     constructor() {
@@ -27,6 +33,8 @@ class DashboardGobierno extends Component {
             subdivisionesDisponibles: [],
             subdivisionSeleccionada: "",
             subdivisionSeleccionadaIndex: 0,
+            cursosSugeridos: [],
+            didRutaLoad: false,
             isLoading: true
         }
 
@@ -43,6 +51,9 @@ class DashboardGobierno extends Component {
                     data: [
                         {
                             titulo: "Colombia",
+                            indiceApropiacion: 1,
+                            numEE: 547,
+                            numDocentes: 9571,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -60,15 +71,18 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 40
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 50
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 10
                                 }
                             ]
                         }
@@ -79,6 +93,9 @@ class DashboardGobierno extends Component {
                     data: [
                         {
                             titulo: "Valle del Cauca",
+                            indiceApropiacion: 1,
+                            numEE: 108,
+                            numDocentes: 4165,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -96,20 +113,26 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 20
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 70
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 10
                                 }
                             ]
                         },
                         {
                             titulo: "Antioquia",
+                            indiceApropiacion: 1,
+                            numEE: 123,
+                            numDocentes: 1005,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -127,24 +150,30 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 35
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 50
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 15
                                 }
                             ]
                         },
                         {
                             titulo: "Cundinamarca",
+                            indiceApropiacion: 2,
+                            numEE: 241,
+                            numDocentes: 5612,
                             descriptores: [
                                 {
                                     label: "Incipiente",
-                                    items: ["I1c", "I3c", "R2c", "E3c"]
+                                    items: ["I1c", "I3c", "R2c", "E3c"],
                                 },
                                 {
                                     label: "En Desarrollo",
@@ -158,15 +187,18 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 20
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 75
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 5
                                 }
                             ]
                         }
@@ -177,6 +209,9 @@ class DashboardGobierno extends Component {
                     data: [
                         {
                             titulo: "Cali",
+                            numEE: 35,
+                            numDocentes: 1789,
+                            indiceApropiacion: 1,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -194,20 +229,26 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 30
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 30
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 40
                                 }
                             ]
                         },
                         {
                             titulo: "Medellín",
+                            indiceApropiacion: 2,
+                            numEE: 38,
+                            numDocentes: 2184,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -226,20 +267,26 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 50
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 25
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 25
                                 }
                             ]
                         },
                         {
                             titulo: "Bogotá",
+                            indiceApropiacion: 3,
+                            numEE: 51,
+                            numDocentes: 3470,
                             descriptores: [
                                 {
                                     label: "Incipiente",
@@ -257,15 +304,18 @@ class DashboardGobierno extends Component {
                             niveles: [
                                 {
                                     label: "Integracion",
-                                    estado: "Bajo"
+                                    estado: "Bajo",
+                                    porcentaje: 33
                                 },
                                 {
                                     label: "Reorientación",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 33
                                 },
                                 {
                                     label: "Evolución",
-                                    estado: "Medio"
+                                    estado: "Medio",
+                                    porcentaje: 34
                                 }
                             ]
                         }
@@ -275,10 +325,23 @@ class DashboardGobierno extends Component {
         });
 
         this.cargarDatosDivision(0);
+        this.cargarRuta();
     }
 
     componentDidUpdate = () => {
         this.updateCurrentData();
+    }
+
+    cargarRuta = () => {
+        const nuevosCursos = [];
+        cursos.forEach(curso => {
+            nuevosCursos.push(curso);
+        });
+
+        this.setState({
+            cursosSugeridos: nuevosCursos,
+            didRutaLoad: true
+        });
     }
 
     updateCurrentData = () => {
@@ -309,7 +372,8 @@ class DashboardGobierno extends Component {
             this.setState({
                 isLoading: false,
                 subdivisionesDisponibles: newSubdivisionesDisponibles,
-                subdivisionSeleccionada: this.state.divisiones[nuevaDivisionIndex].data[0].titulo
+                subdivisionSeleccionada: this.state.divisiones[nuevaDivisionIndex].data[0].titulo,
+                subdivisionSeleccionadaIndex: 0
             });
 
             clearTimeout(timeout);
@@ -376,6 +440,29 @@ class DashboardGobierno extends Component {
                             </div>
                             <hr/>
                         </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="h5" className="mb-4">Información general</Typography>
+                            <Grid container spacing={5}>
+                                <Grid item xs={12} sm={4}>
+                                    <Paper className="p-4 text-center">
+                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].indiceApropiacion}</Typography>
+                                        <Typography component="p">Índice de apropiación TIC</Typography>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={6} sm={4}>
+                                    <Paper className="p-4 text-center">
+                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numEE}</Typography>
+                                        <Typography component="p">Establecimientos Educativos</Typography>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={6} sm={4}>
+                                    <Paper className="p-4 text-center">
+                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numDocentes}</Typography>
+                                        <Typography component="p">Docentes</Typography>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <Typography variant="h6" className="mb-3">Estado de descriptores</Typography>
                             {
@@ -407,41 +494,78 @@ class DashboardGobierno extends Component {
                                     }
                                 })
                             }
-                            <Bar 
-                                data={{
-                                    labels: ["Estado de descriptores"],
-                                    datasets: [
-                                        {
-                                            label: "Incipiente",
-                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length],
-                                            borderWidth: 0,
-                                            backgroundColor: ["#3f51b5"]
-                                        },
-                                        {
-                                            label: "En Desarrollo",
-                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length],
-                                            borderWidth: 0,
-                                            backgroundColor: ["#3f51b5"]
-                                        },
-                                        {
-                                            label: "Establecido",
-                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
-                                            borderWidth: 0,
-                                            backgroundColor: ["#3f51b5"]
-                                        }
-                                    ]
-                                }}
-                                options={{
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                beginAtZero: true,
-                                                stepSize: 1
+                            <div className="mt-5">
+                                <Typography variant="body1" className="mb-3"><strong>Frecuencia absoluta</strong></Typography>
+                                <Bar 
+                                    data={{
+                                        labels: ["Estado de descriptores"],
+                                        datasets: [
+                                            {
+                                                label: "Incipiente",
+                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length],
+                                                borderWidth: 0,
+                                                backgroundColor: ["#3f51b5"]
+                                            },
+                                            {
+                                                label: "En Desarrollo",
+                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length],
+                                                borderWidth: 0,
+                                                backgroundColor: ["#3f51b5"]
+                                            },
+                                            {
+                                                label: "Establecido",
+                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
+                                                borderWidth: 0,
+                                                backgroundColor: ["#3f51b5"]
                                             }
-                                        }]
-                                    }
-                                }}
-                            />
+                                        ]
+                                    }}
+                                    options={{
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                    beginAtZero: true,
+                                                    stepSize: 1
+                                                }
+                                            }]
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className="mt-5">
+                                <Typography variant="body1" className="mb-3"><strong>Frecuencia relativa</strong></Typography>
+                                <Doughnut
+                                    data={() => {
+                                        return {
+                                            labels: ["Incipiente", "En Desarrollo", "Establecido"],
+                                            datasets: [
+                                                {
+                                                    data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
+                                                    backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"]
+                                                }
+                                            ]
+                                        }
+                                    }}
+                                    options={{
+                                        tooltips: {
+                                            callbacks: {
+                                                label: (tooltipItem, data) => {
+                                                    const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                    const label = data.labels[tooltipItem.index];
+                                                    const absoluteValue = dataset.data[tooltipItem.index];
+                                                    const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                        return previousValue + currentValue;
+                                                    });
+                                                    const currentValue = dataset.data[tooltipItem.index];
+                                                    const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+                                                    return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                }
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <Typography variant="h6" className="mb-3">Estado de niveles</Typography>
@@ -474,6 +598,58 @@ class DashboardGobierno extends Component {
                                     }
                                 })
                             }
+                            <div className="mt-5">
+                                <Typography variant="body1" className="mb-3"><strong>Distribución relativa</strong></Typography>
+                                <Radar height={300} data={{
+                                    labels: ["Integración", "Reorientación", "Evolución"],
+                                    datasets: [{
+                                        label: "Estado actual",
+                                        data: [this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[0].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[1].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[2].porcentaje],
+                                        backgroundColor: "rgba(63,81,181, .5)",
+                                        pointBackgroundColor: "#3f51b5",
+                                        borderColor: "#3f51b5"
+                                    }]
+                                }}
+                                    options={{
+                                        scale: {
+                                            ticks: {
+                                                stepSize: 20,
+                                                min: 0,
+                                                max: 100,
+                                                beginAtZero: false
+                                            }
+                                        },
+                                        tooltips: {
+                                        enabled: true,
+                                        callbacks: {
+                                            label: (tooltipItem, data) => {
+                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                            }
+                                        }
+                                    }
+                                }} />
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <hr className="mb-5" />
+                            <Typography variant="h5" className="mb-4">Información detallada</Typography>
+                            <Grid container spacing={5}>
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6" className="mb-1">Establecimientos educativos</Typography>
+                                    <hr className="mb-3" />
+                                    <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={establecimientos} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6" className="mb-1">Docentes</Typography>
+                                    <hr className="mb-3" />
+                                    <VisorPerfiles tipo="DOCENTES" numPorPagina={2} perfiles={docentes} />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <hr className="mb-5" />
+                            <Typography variant="h5" className="mb-4">Ruta de aprendizaje sugerida</Typography>
+                            <RutaAprendizaje cursos={cursos} />
                         </Grid>
                     </React.Fragment>
 				) : (

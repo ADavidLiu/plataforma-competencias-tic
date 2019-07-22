@@ -13,10 +13,11 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 function Perfil(props) {
-    const { perfil } = props;
+    const { tipo, perfil } = props;
+    let perfilMostrado = "";
 
-    return (
-		<React.Fragment>
+    if (tipo === "DOCENTES") {
+        perfilMostrado = (
             <Grid container alignItems="center">
                 <Grid item xs={6}>
                     <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
@@ -59,8 +60,32 @@ function Perfil(props) {
                     <hr/>
                 </Grid>
             </Grid>
-        </React.Fragment>
-	);
+        );
+    } else {
+        perfilMostrado = (
+            <Grid container alignItems="center">
+                <Grid item xs={6}>
+                    <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
+                    <Typography variant="body2">Número de docentes: {perfil.numDocentes}</Typography>
+                </Grid>
+                <Grid item xs={6} className="text-right">
+                    <Link to="/dashboard-ee" style={{textDecoration: "none"}}>
+                        <Button
+                            type="submit"
+                            variant="outlined"
+                            color="default"
+                            size="medium"
+                        >Ver detalles</Button>
+                    </Link>
+                </Grid>
+                <Grid item xs={12}>
+                    <hr/>
+                </Grid>
+            </Grid>
+        );
+    }
+
+    return perfilMostrado;
 }
 
 export default Perfil;

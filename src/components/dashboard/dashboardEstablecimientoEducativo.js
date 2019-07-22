@@ -10,8 +10,10 @@ import { Bar, Doughnut } from "react-chartjs-2";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
-import moment from "moment";
+
 import pasos from "../../models/pasos";
+import cursos from "../../models/cursos";
+import { docentes } from "../../models/perfiles";
 
 class DashboardExtablecimientoEducativo extends Component {
     constructor() {
@@ -34,84 +36,13 @@ class DashboardExtablecimientoEducativo extends Component {
         }
 
         /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
-        this.mockPerfiles = [
-            {
-                perfilID: "docente-1",
-                nombre: "Pariatur ea excepteur elit",
-                pasoActual: 2,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-2",
-                nombre: "Nulla labore velit est id",
-                pasoActual: 0,
-                imgSrc: "",
-                ultimoIngreso: ""
-            },
-            {
-                perfilID: "docente-3",
-                nombre: "Laborum adipisicing enim",
-                pasoActual: 3,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-4",
-                nombre: "Incididunt cupidatat irure",
-                pasoActual: 1,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-5",
-                nombre: "Sunt quis aute",
-                pasoActual: 4,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-6",
-                nombre: "Laborum culpa in",
-                pasoActual: 5,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-7",
-                nombre: "Pariatur ea excepteur elit",
-                pasoActual: 2,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-8",
-                nombre: "Pariatur ea excepteur elit",
-                pasoActual: 2,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-9",
-                nombre: "Pariatur ea excepteur elit",
-                pasoActual: 2,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            },
-            {
-                perfilID: "docente-10",
-                nombre: "Pariatur ea excepteur elit",
-                pasoActual: 5,
-                imgSrc: "",
-                ultimoIngreso: moment().unix()
-            }
-        ];
+        
     }
 
     componentDidMount() {
         this.setState({
             didPerfilesLoad: true,
-            perfiles: [...this.mockPerfiles],
+            perfiles: [...docentes],
             indiceApropiacion: 2
         });
 
@@ -122,7 +53,7 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     calcularNumDivisionesPerfiles = () => {
-        const numDivisiones = Math.ceil(this.mockPerfiles.length/4);
+        const numDivisiones = Math.ceil(docentes.length/4);
         
         this.setState({
             numDivisionesPerfiles: numDivisiones
@@ -137,48 +68,23 @@ class DashboardExtablecimientoEducativo extends Component {
 
     cargarRuta = () => {
         /* Realmente, conexión al backend */
-        const cursos = [
-            {
-                nombre: "Curso 1",
-                descripcion: "Sunt deserunt mollit aliquip culpa id duis esse commodo laboris irure ex reprehenderit occaecat. Minim sunt esse esse laborum eiusmod reprehenderit do consequat. Anim esse amet do enim dolor laborum labore irure culpa Lorem esse cupidatat consectetur. Incididunt qui esse dolor eu fugiat Lorem. Nisi commodo enim aliquip consectetur Lorem laborum labore laborum do duis ullamco sit officia sit. Tempor irure sit Lorem sint velit cillum exercitation occaecat enim. Esse occaecat voluptate incididunt consequat et aliqua consectetur cupidatat adipisicing.",
-                imgSrc: ""
-            },
-            {
-                nombre: "Curso 2",
-                descripcion: "Incididunt fugiat ad voluptate sunt incididunt. Excepteur labore ea consequat voluptate excepteur consequat veniam reprehenderit veniam officia sunt eu velit ex. Consequat velit aliqua dolore exercitation laboris cupidatat veniam magna magna. Consequat qui nisi dolor nisi dolore laboris tempor deserunt enim eu voluptate sint commodo quis. Consequat sit excepteur aliquip quis laboris. Consectetur fugiat cupidatat exercitation sunt dolore duis ullamco exercitation consectetur.",
-                imgSrc: ""
-            },
-            {
-                nombre: "Curso 3",
-                descripcion: "Dolore in mollit irure eu excepteur ullamco Lorem. Exercitation quis et cillum aliquip adipisicing eu exercitation proident id et amet. Do eu aliqua magna exercitation anim. Velit exercitation tempor veniam cupidatat minim ut aliqua mollit.",
-                imgSrc: ""
-            },
-            {
-                nombre: "Curso 4",
-                descripcion: "Elit commodo aute sint ex id mollit occaecat do non anim ad ullamco. Ullamco qui ut ipsum ea velit proident irure exercitation ipsum in ea. Nostrud ea voluptate nostrud enim tempor ad qui aliqua officia voluptate cupidatat commodo.",
-                imgSrc: ""
-            },
-            {
-                nombre: "Curso 5",
-                descripcion: "Est tempor laboris cupidatat consequat. Laboris dolore cupidatat tempor nulla qui consequat enim labore sit laboris laboris voluptate. Velit commodo elit dolore aute laboris enim esse. Consequat commodo mollit nostrud magna pariatur esse mollit pariatur exercitation excepteur nostrud nostrud cupidatat.",
-                imgSrc: ""
-            }
-        ];
-        
+        const nuevosCursos = [];
         cursos.forEach(curso => {
-            this.state.cursosSugeridos.push(curso);
+            nuevosCursos.push(curso);
         });
+
         this.setState({
+            cursosSugeridos: nuevosCursos,
             didRutaLoad: true
         });
     }
 
     dividirPerfiles = () => {
-        const numDivisiones = Math.ceil(this.mockPerfiles.length/4);
+        const numDivisiones = Math.ceil(docentes.length/4);
         for (let i = 0; i < numDivisiones; i++) {
-            const divisionArray = this.mockPerfiles.slice(0, 4);
+            const divisionArray = docentes.slice(0, 4);
             this.state.perfilesDivididos.push(divisionArray);
-            this.mockPerfiles.splice(0, 4);
+            docentes.splice(0, 4);
         }
 
         this.setState({
@@ -187,7 +93,7 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     calcularNoIngresos = () => {
-        this.mockPerfiles.forEach(perfil => {
+        docentes.forEach(perfil => {
 			if (perfil.ultimoIngreso === "") {
 				this.setState({
                     cuentaNoIngreso: this.state.cuentaNoIngreso += 1
@@ -215,8 +121,6 @@ class DashboardExtablecimientoEducativo extends Component {
                 hasNextPerfiles: true
             });
         }
-        /* console.log(this.state.currentDivisionPerfiles, this.state.numDivisionesPerfiles);
-        console.log(this.state.perfilesDivididos); */
     }
 
     cargarAnterioresPerfiles = () => {
@@ -251,48 +155,7 @@ class DashboardExtablecimientoEducativo extends Component {
 				<Grid item xs={12} md={7}>
 					{this.state.didPerfilesLoad ? (
                         <React.Fragment>
-                            <VisorPerfiles perfiles={this.state.perfilesMostrados} />
-                            <Grid container spacing={2}>
-                                <Grid item xs={6}>
-                                    {
-                                        this.state.perfiles.length > 4 ? (
-                                            <Button
-                                                type="button"
-                                                variant="outlined"
-                                                color="primary"
-                                                className="mt-3"
-                                                size="medium"
-                                            >Ver todos</Button>
-                                        ) : ""
-                                    }
-                                </Grid>
-                                <Grid item xs={6} className="text-right">
-                                    {
-                                        this.state.hasPreviousPerfiles ? (
-                                            <Button
-                                                type="button"
-                                                variant="contained"
-                                                color="primary"
-                                                className="mt-3"
-                                                size="medium"
-                                                onClick={this.cargarAnterioresPerfiles}
-                                            >◀ Anteriores</Button>
-                                        ) : ""
-                                    }
-                                    {
-                                        this.state.hasNextPerfiles ? (
-                                            <Button
-                                                type="button"
-                                                variant="contained"
-                                                color="primary"
-                                                className="mt-3 ml-3"
-                                                size="medium"
-                                                onClick={this.cargarSiguientesPerfiles}
-                                            >Siguientes ▶</Button>
-                                        ) : ""
-                                    }
-                                </Grid>
-                            </Grid>
+                            <VisorPerfiles tipo="DOCENTES" numPorPagina={4} perfiles={this.state.perfiles} />
                         </React.Fragment>
 					) : (
 						<CircularProgress color="primary" />

@@ -21,6 +21,8 @@ class Dashboard extends Component {
             case "GOBIERNO":
                 this.dashboard = <DashboardGobierno />;
                 break;
+            default:
+                break;
         }
 
         return (
