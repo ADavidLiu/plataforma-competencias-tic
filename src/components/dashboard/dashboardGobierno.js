@@ -49,9 +49,6 @@ class DashboardGobierno extends Component {
 
     componentDidMount = () => {
         /* Conectarse al backend para traer la información general de las divisiones */
-        const docentesCargadosCopy = docentesCargados;
-        const establecimientosCargadosCopy = establecimientosCargados;
-
         this.setState({
             divisiones: [
                 {
@@ -331,9 +328,9 @@ class DashboardGobierno extends Component {
                 }
             ],
             didDocentesLoad: true,
-            docentesSubdivision: [...docentesCargadosCopy],
+            docentesSubdivision: [...docentesCargados],
             didEstablecimientosLoad: true,
-            establecimientosSubdivision: [...establecimientosCargadosCopy]
+            establecimientosSubdivision: [...establecimientosCargados]
         });
 
         this.cargarDatosDivision(0);
@@ -342,7 +339,6 @@ class DashboardGobierno extends Component {
 
     componentDidUpdate = () => {
         this.updateCurrentData();
-        console.log(this.state.docentesSubdivision, this.state.establecimientosSubdivision);
     }
 
     componentWillUnmount = () => {
@@ -400,7 +396,7 @@ class DashboardGobierno extends Component {
             });
 
             clearTimeout(timeout);
-        }, 1000);
+        }, 500);
         this.timeouts.push(timeout);
     }
 
