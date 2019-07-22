@@ -17,7 +17,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import cursos from "../../models/cursos";
-import { docentes, establecimientos } from "../../models/perfiles";
+import { docentesCargados, establecimientosCargados } from "../../models/perfiles";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
@@ -35,15 +35,23 @@ class DashboardGobierno extends Component {
             subdivisionSeleccionadaIndex: 0,
             cursosSugeridos: [],
             didRutaLoad: false,
+            didDocentesLoad: false,
+            didEstablecimientosLoad: false,
+            docentesSubdivision: [],
+            establecimientosSubdivision: [],
             isLoading: true
         }
 
         this.timeouts = [];
+        this.intervals = [];
         this.currentData = {};
     }
 
     componentDidMount = () => {
         /* Conectarse al backend para traer la información general de las divisiones */
+        const docentesCargadosCopy = docentesCargados;
+        const establecimientosCargadosCopy = establecimientosCargados;
+
         this.setState({
             divisiones: [
                 {
@@ -321,7 +329,11 @@ class DashboardGobierno extends Component {
                         }
                     ]
                 }
-            ]
+            ],
+            didDocentesLoad: true,
+            docentesSubdivision: [...docentesCargadosCopy],
+            didEstablecimientosLoad: true,
+            establecimientosSubdivision: [...establecimientosCargadosCopy]
         });
 
         this.cargarDatosDivision(0);
@@ -330,6 +342,16 @@ class DashboardGobierno extends Component {
 
     componentDidUpdate = () => {
         this.updateCurrentData();
+        console.log(this.state.docentesSubdivision, this.state.establecimientosSubdivision);
+    }
+
+    componentWillUnmount = () => {
+        this.timeouts.forEach(timeout => {
+            clearTimeout(timeout);
+        });
+        this.intervals.forEach(interval => {
+            clearInterval(interval);
+        });
     }
 
     cargarRuta = () => {
@@ -356,6 +378,7 @@ class DashboardGobierno extends Component {
             }
         });
 
+        /* Conectarse al backend para traer los establecimientos y docentes */
         this.setState({
             subdivisionSeleccionada: e.target.value,
             subdivisionSeleccionadaIndex: newIndex
@@ -373,7 +396,7 @@ class DashboardGobierno extends Component {
                 isLoading: false,
                 subdivisionesDisponibles: newSubdivisionesDisponibles,
                 subdivisionSeleccionada: this.state.divisiones[nuevaDivisionIndex].data[0].titulo,
-                subdivisionSeleccionadaIndex: 0
+                subdivisionSeleccionadaIndex: 0,
             });
 
             clearTimeout(timeout);
@@ -637,12 +660,24 @@ class DashboardGobierno extends Component {
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h6" className="mb-1">Establecimientos educativos</Typography>
                                     <hr className="mb-3" />
-                                    <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={establecimientos} />
+                                    {
+                                        this.state.didEstablecimientosLoad ? (
+                                            <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={this.state.establecimientosSubdivision} />
+                                        ) : (
+                                            <CircularProgress color="primary" />
+                                        )
+                                    }
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                     <Typography variant="h6" className="mb-1">Docentes</Typography>
                                     <hr className="mb-3" />
-                                    <VisorPerfiles tipo="DOCENTES" numPorPagina={2} perfiles={docentes} />
+                                    {
+                                        this.state.didDocentesLoad ? (
+                                            <VisorPerfiles tipo="DOCENTES" numPorPagina={2} perfiles={this.state.docentesSubdivision} />
+                                        ) : (
+                                            <CircularProgress color="primary" />
+                                        )
+                                    }
                                 </Grid>
                             </Grid>
                         </Grid>

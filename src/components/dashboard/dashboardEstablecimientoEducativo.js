@@ -13,7 +13,7 @@ import VisorPerfiles from "../visorPerfiles/visorperfiles";
 
 import pasos from "../../models/pasos";
 import cursos from "../../models/cursos";
-import { docentes } from "../../models/perfiles";
+import { docentesCargados } from "../../models/perfiles";
 
 class DashboardExtablecimientoEducativo extends Component {
     constructor() {
@@ -42,7 +42,7 @@ class DashboardExtablecimientoEducativo extends Component {
     componentDidMount() {
         this.setState({
             didPerfilesLoad: true,
-            perfiles: [...docentes],
+            perfiles: [...docentesCargados],
             indiceApropiacion: 2
         });
 
@@ -53,7 +53,7 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     calcularNumDivisionesPerfiles = () => {
-        const numDivisiones = Math.ceil(docentes.length/4);
+        const numDivisiones = Math.ceil(docentesCargados.length/4);
         
         this.setState({
             numDivisionesPerfiles: numDivisiones
@@ -80,11 +80,11 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     dividirPerfiles = () => {
-        const numDivisiones = Math.ceil(docentes.length/4);
+        const numDivisiones = Math.ceil(docentesCargados.length/4);
         for (let i = 0; i < numDivisiones; i++) {
-            const divisionArray = docentes.slice(0, 4);
+            const divisionArray = docentesCargados.slice(0, 4);
             this.state.perfilesDivididos.push(divisionArray);
-            docentes.splice(0, 4);
+            docentesCargados.splice(0, 4);
         }
 
         this.setState({
@@ -93,7 +93,7 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     calcularNoIngresos = () => {
-        docentes.forEach(perfil => {
+        docentesCargados.forEach(perfil => {
 			if (perfil.ultimoIngreso === "") {
 				this.setState({
                     cuentaNoIngreso: this.state.cuentaNoIngreso += 1

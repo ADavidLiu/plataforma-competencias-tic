@@ -8,8 +8,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Perfil from "./perfil";
 
 class VisorPerfiles extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
             didPerfilesLoad: false,

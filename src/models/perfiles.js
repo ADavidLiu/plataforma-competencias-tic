@@ -1,6 +1,6 @@
 import moment from "moment";
 
-export const docentes = [
+export const docentesCargados = [
     {
         perfilID: "docente-1",
         nombre: "Pariatur ea excepteur elit",
@@ -73,7 +73,7 @@ export const docentes = [
     }
 ];
 
-export const establecimientos = [
+export const establecimientosCargados = [
     {
         perfilID: "establecimiento-1",
         nombre: "Lorem Ipsum Dolor Sit Amet",
