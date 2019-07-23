@@ -23,7 +23,7 @@ import DashboardGobierno from "../dashboard/dashboardGobierno";
 import Practicas from "../practicas/practicas";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
-import PreentrevistaNew from '../preentrevista/preentrevista-new'
+import PreentrevistaNew from '../preentrevista/preentrevista-new';
 import Pagina404 from "../pagina404/pagina404";
 
 class LoginCheck extends Component {
