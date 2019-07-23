@@ -116,7 +116,7 @@ class VisorPerfiles extends Component {
 					: ""}
 				<Grid container spacing={2}>
 					<Grid item xs={4}>
-						{this.state.perfiles.length > 4 ? (
+						{this.state.perfiles.length > this.props.numPorPagina ? (
 							<Button
 								type="button"
 								variant="outlined"

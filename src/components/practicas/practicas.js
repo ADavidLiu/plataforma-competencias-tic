@@ -900,7 +900,6 @@ class Practicas extends Component {
                                 <Button className="mt-2" onClick={() => { this.agregarItem("Procedimientos") }} color="primary" variant="outlined">+</Button>
                             </div>
                             <div className="mt-4">
-                                <Typography variant="body1" className="mb-2"><strong>Consigna</strong></Typography>
                                 <TextField
                                     variant="outlined"
                                     margin="normal"
@@ -916,6 +915,7 @@ class Practicas extends Component {
                                     value={this.state.formActividad.consigna}
                                     onChange={this.actualizarFormActividad}
                                 />
+                                <strong>Máximo 400 palabras</strong>
                             </div>
                             <div className="mt-4">
                                 <Typography variant="body1" className="mb-3">¿Evalúa las producciones de los estudiantes?</Typography>
