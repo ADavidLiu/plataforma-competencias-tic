@@ -3,6 +3,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
 import Stepper from "@material-ui/core/Stepper";
 import Step from '@material-ui/core/Step';
@@ -34,27 +35,30 @@ function Perfil(props) {
                     </Link>
                 </Grid>
                 <Grid item xs={12}>
-                    <Stepper
-                        activeStep={perfil.pasoActual}
-                        alternativeLabel
-                        className="my-4"
-                    >
-                        <Step key="Registro">
-                            <StepLabel>Registro de datos</StepLabel>
-                        </Step>
-                        <Step key="Prueba de conocimiento">
-                            <StepLabel>Prueba de conocimiento</StepLabel>
-                        </Step>
-                        <Step key="Prácticas educativas">
-                            <StepLabel>Prácticas educativas</StepLabel>
-                        </Step>
-                        <Step key="Preentrevista">
-                            <StepLabel>Preentrevista</StepLabel>
-                        </Step>
-                        <Step key="Entrevista">
-                            <StepLabel>Entrevista</StepLabel>
-                        </Step>
-                    </Stepper>
+                    <Paper>
+                        <Stepper
+                            activeStep={perfil.pasoActual}
+                            alternativeLabel
+                            className="my-4"
+                            style={{backgroundColor: "transparent"}}
+                        >
+                            <Step key="Registro">
+                                <StepLabel>Registro de datos</StepLabel>
+                            </Step>
+                            <Step key="Prueba de conocimiento">
+                                <StepLabel>Prueba de conocimiento</StepLabel>
+                            </Step>
+                            <Step key="Prácticas educativas">
+                                <StepLabel>Prácticas educativas</StepLabel>
+                            </Step>
+                            <Step key="Preentrevista">
+                                <StepLabel>Preentrevista</StepLabel>
+                            </Step>
+                            <Step key="Entrevista">
+                                <StepLabel>Entrevista</StepLabel>
+                            </Step>
+                        </Stepper>
+                    </Paper>
                 </Grid>
                 <Grid item xs={12}>
                     <hr/>

@@ -34,12 +34,10 @@ class DashboardExtablecimientoEducativo extends Component {
             indiceApropiacion: 0,
             cuentaNoIngreso: 0
         }
-
-        /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
-        
     }
 
     componentDidMount() {
+        /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
         this.setState({
             didPerfilesLoad: true,
             perfiles: [...docentesCargados],
@@ -80,11 +78,12 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     dividirPerfiles = () => {
+        const copiaDocentes = [...docentesCargados];
         const numDivisiones = Math.ceil(docentesCargados.length/4);
         for (let i = 0; i < numDivisiones; i++) {
             const divisionArray = docentesCargados.slice(0, 4);
             this.state.perfilesDivididos.push(divisionArray);
-            docentesCargados.splice(0, 4);
+            copiaDocentes.splice(0, 4);
         }
 
         this.setState({
@@ -184,6 +183,9 @@ class DashboardExtablecimientoEducativo extends Component {
                     </Grid>
 					{this.state.didPerfilesLoad ? (
                         <React.Fragment>
+                            <Typography variant="h6" className="mb-3">Estado general de procesos</Typography>
+                            <Typography variant="body1"><strong>Frecuencia absoluta</strong></Typography>
+                            <hr className="mt-2 mb-4"/>
                             <Bar
                                 data={() => {
                                     const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
@@ -220,7 +222,9 @@ class DashboardExtablecimientoEducativo extends Component {
                                     }
                                 }}
                             />
-                            <div className="mt-5">
+                            <div className="mt-4">
+                                <Typography variant="body1"><strong>Frecuencia relativa</strong></Typography>
+                                <hr className="mt-2 mb-4"/>
                                 <Doughnut height={200} data={() => {
                                     const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
                                     this.state.perfiles.forEach((perfil, i) => {
