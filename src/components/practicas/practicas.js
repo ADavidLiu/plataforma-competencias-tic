@@ -900,6 +900,24 @@ class Practicas extends Component {
                                 <Button className="mt-2" onClick={() => { this.agregarItem("Procedimientos") }} color="primary" variant="outlined">+</Button>
                             </div>
                             <div className="mt-4">
+                                <Typography variant="body1" className="mb-2"><strong>Consigna</strong></Typography>
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    multiline
+                                    rows={5}
+                                    inputProps={{ maxLength: 400 }}
+                                    fullWidth
+                                    id="consignaActividad"
+                                    label="Consigna"
+                                    name="consigna"
+                                    type="text"
+                                    value={this.state.formActividad.consigna}
+                                    onChange={this.actualizarFormActividad}
+                                />
+                            </div>
+                            <div className="mt-4">
                                 <Typography variant="body1" className="mb-3">¿Evalúa las producciones de los estudiantes?</Typography>
                                 <FormControl variant="outlined" className="w-100">
                                     <RadioGroup
