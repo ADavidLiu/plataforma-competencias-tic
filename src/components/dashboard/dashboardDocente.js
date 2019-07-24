@@ -22,7 +22,7 @@ class DashboardDocente extends Component {
         super();
 
         this.state = {
-            datosID: "docente-1",
+            datosID: "",
             pasoActual: 4,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
@@ -155,6 +155,22 @@ class DashboardDocente extends Component {
     componentDidMount() {
         /* Conexión al backend para almacenar timestamp del último ingreso */
         const timestamp = moment.now();
+
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                docenteID: this.props.location.state.docenteID
+            }
+        } else {
+            infoCargada = {
+                docenteID: ""
+            }
+        }
+
+        this.setState({
+            datosID: infoCargada.docenteID
+        });
 
         if (this.state.pasoActual > 1) {
             this.cargarEstadisticas();
@@ -333,7 +349,16 @@ class DashboardDocente extends Component {
 
     render() {
         if (this.state.irSiguientePaso) {
-            return <Redirect to={`/${this.pasosRoutes[this.state.pasoActual]}`} />;
+            return <Redirect to={{
+                pathname: `/${this.pasosRoutes[this.state.pasoActual]}`,
+                state: {
+                    tipoUsuario: "DOCENTE"
+                }
+            }} />;
+        }
+
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
         }
 
         return (
@@ -502,7 +527,12 @@ class DashboardDocente extends Component {
                 </Grid>
                 <Grid item xs={12} sm={4} lg={3}>
                     <Typography variant="h5" className="mb-1">Acciones</Typography>
-                    <Link to="/registro" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/registro",
+                        state: {
+                            tipoUsuario: "DOCENTE"
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             fullWidth
@@ -512,7 +542,12 @@ class DashboardDocente extends Component {
                             size="medium"
                         >Ver datos personales</Button>
                     </Link>
-                    <Link to="/prueba" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/prueba",
+                        state: {
+                            tipoUsuario: "DOCENTE"
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             fullWidth
@@ -522,7 +557,12 @@ class DashboardDocente extends Component {
                             size="medium"
                         >Ver prueba de conocimiento</Button>
                     </Link>
-                    <Link to="/practicas" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/practicas",
+                        state: {
+                            tipoUsuario: "DOCENTE"
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             fullWidth
@@ -530,9 +570,14 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver prácticas educativas</Button>
+                        >Ver práctica educativa</Button>
                     </Link>
-                    <Link to="/preentrevista" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/preentrevista",
+                        state: {
+                            tipoUsuario: "DOCENTE"
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             fullWidth
@@ -542,7 +587,12 @@ class DashboardDocente extends Component {
                             size="medium"
                         >Ver preentrevista</Button>
                     </Link>
-                    <Link to="/entrevista" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/entrevista",
+                        state: {
+                            tipoUsuario: "DOCENTE"
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             fullWidth

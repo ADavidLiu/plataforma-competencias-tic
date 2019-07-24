@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Redirect } from "react-router-dom";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -28,6 +30,7 @@ class Practicas extends Component {
         super();
 
         this.initialState = {
+            tipoUsuario: "",
             datosID: "docente-1",
             asegurarCorrecto: false,
             nombre: "",
@@ -87,8 +90,21 @@ class Practicas extends Component {
     }
 
     cargarDatos = datosID => {
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
+
         /* Conectarse al backend para recibir todos estos datos */
         this.setState({
+            tipoUsuario: infoCargada.tipoUsuario,
             nivelesEducativos: [
                 {
                     label: "No aplica",
@@ -393,6 +409,10 @@ class Practicas extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         const itemsMateriales = [];
         const itemsEscenarios = [];
         const itemsProcedimientos = [];

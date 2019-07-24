@@ -8,28 +8,30 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 function Curso(props) {
 	return (
-		<Card className="mb-4">
-			<CardActionArea>
-				<CardMedia
-                    height="140"
-                    component="img"
-					image={props.imgSrc === "" ? "https://via.placeholder.com/1000" : props.imgSrc}
-					title="Imagen relativa al curso"
-				/>
-				<CardContent>
-					<Typography gutterBottom variant="h5" component="h2">
-						{props.titulo}
-					</Typography>
-					<Typography
-						variant="body2"
-						color="textSecondary"
-						component="p"
-					>
-						{props.descripcion}
-					</Typography>
-				</CardContent>
-			</CardActionArea>
-		</Card>
+		<a href={props.link} target="_blank" style={{textDecoration: "none"}}>
+			<Card className="mb-4">
+				<CardActionArea>
+					<CardMedia
+						height="140"
+						component="img"
+						image={props.imgSrc === "" ? "https://via.placeholder.com/1000" : props.imgSrc}
+						title="Imagen relativa al curso"
+					/>
+					<CardContent>
+						<Typography gutterBottom variant="h5" component="h2">
+							{props.titulo}
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+						>
+							{props.descripcion}
+						</Typography>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+		</a>
 	);
 }
 

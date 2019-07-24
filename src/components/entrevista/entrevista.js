@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 
+import { Redirect } from "react-router-dom";
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,9 +14,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 class Entrevista extends Component {
     constructor() {
-        super();
+		super();
+		
         this.state = {
-            tipoVisualizacion: "docente",
+			tipoUsuario: "",
             isRequerida: true,
             isEvaluada: true,
             evidenciasNecesarias: []
@@ -22,7 +25,20 @@ class Entrevista extends Component {
     }
 
     componentDidMount = () => {
+		let infoCargada = {};
+
+		if (this.props.location && this.props.location.state !== undefined) {
+			infoCargada = {
+				tipoUsuario: this.props.location.state.tipoUsuario
+			}
+		} else {
+			infoCargada = {
+				tipoUsuario: ""
+			}
+		}
+
         this.setState({
+			tipoUsuario: infoCargada.tipoUsuario,
             evidenciasNecesarias: [
                 {
                     descriptoresAsociados: ["E1ub"],
@@ -37,10 +53,14 @@ class Entrevista extends Component {
                     tipoEvidencia: 'Demostración de "ajustes realizados en la marcha" a la práctica educativo, relacionados con la presentación de contenidos, el intercambio de archivos, el acceso y la búsqueda de información de calidad.'
                 }
             ]
-        });
+		});
     }
 
     render() {
+		if (this.props.location && this.props.location.state === undefined) {
+			return <Redirect to="/" />
+		}
+
         return (
 			<Grid container justify="center">
 				<Grid item xs={12} md={8} lg={9}>
@@ -59,7 +79,7 @@ class Entrevista extends Component {
 											Señor(a) docente, por favor
 											prepare los siguientes
 											recursos para presentar
-											durante su proceso de
+											durante su sesión de
 											entrevista.
 										</Typography>
 										<hr className="mt-4" />

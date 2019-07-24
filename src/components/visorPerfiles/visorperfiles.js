@@ -110,6 +110,7 @@ class VisorPerfiles extends Component {
 									key={perfil.perfilID}
 									tipo={this.props.tipo}
 									perfil={perfil}
+                                    userID={perfil.perfilID}
 								/>
 							);
 					  })

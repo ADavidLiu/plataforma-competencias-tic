@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { Redirect } from "react-router-dom";
+
 import preguntas from "../../models/preentrevista";
 
 import Typography from "@material-ui/core/Typography";
@@ -17,6 +19,7 @@ class Preentrevista extends Component {
     constructor() {
         super();
         this.state = {
+            tipoUsuario: "",
             respuestas: [],
             preguntasVisibles: []
         }
@@ -30,6 +33,22 @@ class Preentrevista extends Component {
             respuestas: respuestasArrayTemplate
         }); */
 
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
+
+        this.setState({
+            tipoUsuario: infoCargada.tipoUsuario
+        });
+        
         this.prepararPreguntas();
     }
 
@@ -84,6 +103,10 @@ class Preentrevista extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <Grid container justify="center">
                 <Grid item xs={12} sm={8} md={6}>

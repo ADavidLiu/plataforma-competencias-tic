@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import moment from "moment";
 
+import { Redirect } from "react-router-dom";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -23,6 +25,7 @@ class Prueba extends Component {
         super();
         
         this.state = {
+            tipoUsuario: "",
             isPruebaIniciada: false,
             isPruebaTerminada: false,
             preguntas: preguntasPrueba,
@@ -66,6 +69,23 @@ class Prueba extends Component {
 
         /* Se copian las preguntas seleccionadas al arreglo de preguntas finales */
         this.finalQuestions = [...this.selectedQuestions];
+    }
+
+    componentDidMount = () => {
+        let infoCargada = {};
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
+
+        this.setState({
+            tipoUsuario: infoCargada.tipoUsuario
+        });
     }
 
     componentWillUnmount() {
@@ -167,6 +187,10 @@ class Prueba extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <React.Fragment>
                 <Grid container justify="center">

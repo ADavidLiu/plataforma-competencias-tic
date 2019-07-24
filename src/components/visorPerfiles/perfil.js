@@ -14,7 +14,8 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 function Perfil(props) {
-    const { tipo, perfil } = props;
+    const { tipo, perfil, userID } = props;
+
     let perfilMostrado = "";
 
     if (tipo === "DOCENTES") {
@@ -25,7 +26,12 @@ function Perfil(props) {
                     <Typography variant="body2">Último ingreso: {perfil.ultimoIngreso === "" ? <strong>nunca ha ingresado</strong> : moment.unix(perfil.ultimoIngreso).format("DD/MM/YYYY - h:mm:ss")}</Typography>
                 </Grid>
                 <Grid item xs={6} className="text-right">
-                    <Link to="/dashboard-docente" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/dashboard-docente",
+                        state: {
+                            docenteID: userID
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             variant="outlined"
@@ -73,7 +79,12 @@ function Perfil(props) {
                     <Typography variant="body2">Número de docentes: {perfil.numDocentes}</Typography>
                 </Grid>
                 <Grid item xs={6} className="text-right">
-                    <Link to="/dashboard-ee" style={{textDecoration: "none"}}>
+                    <Link to={{
+                        pathname: "/dashboard-ee",
+                        state: {
+                            establecimientoID: userID
+                        }
+                    }} style={{textDecoration: "none"}}>
                         <Button
                             type="submit"
                             variant="outlined"

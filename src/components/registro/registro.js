@@ -17,6 +17,7 @@ import Select from "@material-ui/core/Select";
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import Establecimiento from "../establecimiento/establecimiento";
 
@@ -24,6 +25,7 @@ class Registro extends Component {
     constructor() {
         super();
         this.initialState = {
+            tipoUsuario: "",
             tipoPerfil: "Individual",
             perfilIndividual: {
                 nombres: "",
@@ -80,6 +82,19 @@ class Registro extends Component {
         }
 
         this.state = this.initialState;
+    }
+    componentDidMount = () => {
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
     }
 
     handleChange = e => {
@@ -203,6 +218,10 @@ class Registro extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         let formulario;
         let infoSedes = [];
 

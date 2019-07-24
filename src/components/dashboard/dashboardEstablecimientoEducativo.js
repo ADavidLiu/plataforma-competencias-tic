@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut } from "react-chartjs-2";
 
+import { Redirect } from "react-router-dom";
+
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
 
@@ -20,7 +22,7 @@ class DashboardExtablecimientoEducativo extends Component {
         super();
         
         this.state = {
-            datosID: "establecimiento-1",
+            datosID: "",
             didPerfilesLoad: false,
             perfiles: [],
             perfilesDivididos: [],
@@ -38,7 +40,20 @@ class DashboardExtablecimientoEducativo extends Component {
 
     componentDidMount() {
         /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                datosID: this.props.location.state.establecimientoID
+            }
+        } else {
+            infoCargada = {
+                datosID: ""
+            }
+        }
+
         this.setState({
+            datosID: infoCargada.datosID,
             didPerfilesLoad: true,
             perfiles: [...docentesCargados],
             indiceApropiacion: 2
@@ -143,6 +158,10 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
 			<Grid container spacing={5}>
 				<Grid item xs={12}>

@@ -13,6 +13,7 @@ function RutaAprendizaje(props) {
                             titulo={curso.nombre}
                             descripcion={curso.descripcion}
                             imgSrc={curso.imgSrc}
+                            link={curso.link}
                         />
                     </Grid>
 				);
