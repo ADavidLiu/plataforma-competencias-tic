@@ -115,15 +115,22 @@ class LoginCheck extends Component {
                             }} />
                             <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
                             <Route path="/registro/" component={Registro} />
-                            <Route path="/prueba/" component={Prueba} />
-                            <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
-                            <Route path="/dashboard-docente/" component={DashboardDocente} />
-                            <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
-                            <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
-                            <Route path="/practicas/" component={Practicas} />
-                            <Route path="/preentrevista/" component={Preentrevista} />
-                            <Route path="/entrevista/" component={Entrevista} />
-                            <Route path="/preentrevistaNew/" component={PreentrevistaNew}/>
+                            {
+                                this.state.isLogeado ? (
+                                    <Switch>
+                                        <Route path="/prueba/" component={Prueba} />
+                                        <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
+                                        <Route path="/dashboard-docente/" component={DashboardDocente} />
+                                        <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
+                                        <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
+                                        <Route path="/practicas/" component={Practicas} />
+                                        <Route path="/preentrevista/" component={Preentrevista} />
+                                        <Route path="/entrevista/" component={Entrevista} />
+                                        <Route path="/preentrevistaNew/" component={PreentrevistaNew}/>
+                                        <Route component={Pagina404} />
+                                    </Switch>
+                                ) : ""
+                            }
                             <Route component={Pagina404} />
                         </Switch>
                     </div>

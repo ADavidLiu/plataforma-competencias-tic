@@ -502,7 +502,7 @@ class DashboardGobierno extends Component {
                                                         </Grid>
                                                         <Grid item xs={6}>
                                                             <Typography variant="body1">
-                                                                {descriptor.items.map(item => item + ", ")}
+                                                                {descriptor.items.map(item => " • " + item)}
                                                             </Typography>
                                                         </Grid>
                                                     </Grid>
