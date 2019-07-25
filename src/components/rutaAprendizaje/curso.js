@@ -8,7 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 function Curso(props) {
 	return (
-		<a href={props.link} target="_blank" style={{textDecoration: "none"}}>
+		<a href={props.link} target="_blank" rel="noopener noreferrer" style={{textDecoration: "none"}}>
 			<Card className="mb-4">
 				<CardActionArea>
 					<CardMedia

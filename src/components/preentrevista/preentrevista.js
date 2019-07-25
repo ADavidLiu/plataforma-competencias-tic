@@ -23,6 +23,9 @@ class Preentrevista extends Component {
             respuestas: [],
             preguntasVisibles: []
         }
+
+        this.parentLabel = "";
+        this.arrayPreguntas = [];
     }
 
     componentDidMount = () => {
@@ -52,53 +55,101 @@ class Preentrevista extends Component {
         this.prepararPreguntas();
     }
 
+    handlePreguntaChange = (e, rootIndex) => {
+
+    }
+
     prepararPreguntas = () => {
-        const nuevasPreguntas = this.state.preguntasVisibles;
-        
-        preguntas.forEach(pregunta => {
-            this.setState({
-                preguntasVisibles: [
-                    ...this.state.preguntasVisibles,
-                    this.crearPregunta(pregunta)
-                ]
-            });
+        preguntas.map((pregunta, rootIndex) => {
+            /* Sólo para el primer nivel de cada pregunta. */
+            this.arrayPreguntas.push(
+                <div key={pregunta.label}>
+                    <Typography><strong>{pregunta.label}</strong></Typography>
+                    <RadioGroup
+                        name={pregunta.label}
+                        onChange={e => this.handlePreguntaChange(e, rootIndex)}
+                    >
+                        <FormControlLabel
+                            key="Sí"
+                            value="Sí"
+                            control={<Radio required name={`${pregunta.label}-radio`} color="primary" />}
+                            label="Sí"
+                        />
+                        <FormControlLabel
+                            key="No"
+                            value="No"
+                            control={<Radio required name={`${pregunta.label}-radio`} color="primary" />}
+                            label="No"
+                        />
+                    </RadioGroup>
+                </div>
+            );
+
+            /* Se crean las preguntas internas. */
+            if (pregunta.options[0].options) {
+                /* Sólo tomar en cuenta los "Sí" para seguir renderizando. */
+                this.crearPregunta(pregunta.options[0].options[0], []);
+            }
+        });
+
+        this.setState({
+            preguntasVisibles: this.arrayPreguntas
         });
     }
 
-    crearPregunta = pregunta => {
-        console.log(pregunta)
-        if (!pregunta.typeOfAnswer) {
-            return (
-                <Typography key={pregunta.label} variant="body1">{pregunta.label}</Typography>
-            );
-        } else {
-            switch (pregunta.typeOfAnswer) {
-                case "RADIO":
-                    return (
-                        <RadioGroup
-                            key={pregunta.label}
-                            name={pregunta.label}
-                        >
-                            <FormControlLabel
-                                key={pregunta.label}
-                                value={pregunta.label}
-                                control={<Radio required color="primary" />}
-                                label={pregunta.label}
-                            />
-                        </RadioGroup>
-                    );
-                    break;
-                case "INPUT":
-                    break;
-                case "CHECKBOX":
-                    break;
-                default:
-                    break;
-            }
+    crearPregunta = (pregunta, arrayBase) => {
+        const arrayPregunta = [...arrayBase];
+        let enunciado = "";
+        let opciones = "";
+
+        switch (pregunta.typeOfAnswer) {
+            case "RADIO":
+                break;
+            case "CHECKBOX":
+                enunciado = <Typography key={this.parentLabel}>{this.parentLabel}</Typography>;
+                opciones = <FormControlLabel
+                    className="mt-3"
+                    control={<Checkbox onChange={e => this.handlePreguntaChange(e)} color="primary" 
+                    value={pregunta.label} name={pregunta.label} />}
+                    label={pregunta.label}
+                />;
+                break;
+            case "INPUT":
+                enunciado = <Typography key={pregunta.label}>{pregunta.label}</Typography>;
+                opciones = <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    multiline
+                    inputProps={{ maxLength: 400 }}
+                    rows="5"
+                    label="Digite su respuesta..."
+                    name={pregunta.label}
+                    onChange={e => this.handlePreguntaChange(e)}
+                />;
+                break;
         }
 
+        this.parentLabel = pregunta.label;
+
+        arrayPregunta.push(
+            <React.Fragment>
+                {enunciado}
+                {opciones}
+            </React.Fragment>
+        );
+
         if (pregunta.options) {
-            this.crearPregunta(pregunta.options[0].options);
+            pregunta.options.forEach(subpregunta => {
+                this.crearPregunta(subpregunta, arrayPregunta);
+            });
+        } else {
+            /* console.log("Final");
+            console.log(arrayPregunta); */
+            arrayPregunta.push(<hr/>);
+            this.arrayPreguntas.push(arrayPregunta);
+            /* return arrayPregunta; */
         }
     }
 
@@ -115,9 +166,9 @@ class Preentrevista extends Component {
                             <Typography variant="h5" className="mb-5 text-center">Pre-entrevista</Typography>
                             <Typography variant="body1" className="mb-3">Por favor conteste las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.</Typography>
                         </div>
-                        <hr/>
+                        <hr className="mb-5" />
                         {this.state.preguntasVisibles}
-                        <Button type="submit" fullWidth className="mt-2" color="primary" variant="contained" size="large">Enviar</Button>
+                        <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large">Enviar</Button>
                     </form>
                 </Grid>
             </Grid>
