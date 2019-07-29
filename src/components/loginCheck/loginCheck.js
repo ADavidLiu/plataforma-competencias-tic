@@ -32,10 +32,19 @@ class LoginCheck extends Component {
 
         /* Aquí se debe verificar el login del usuario */
 
-        this.state = {
+        /* this.state = {
             isLogeado: true,
             tipo: "DOCENTE",
             id: "loremipsum"
+        } */
+
+
+        
+
+        this.state = {
+            isLogeado: false,
+            tipo: "",
+            id: ""
         }
 
         /* Conectarse al backend para obtener los datos personales del usuario o EE */

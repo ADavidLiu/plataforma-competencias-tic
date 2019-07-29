@@ -1,6 +1,7 @@
 const preguntas = [
     {
         id: "0",
+        group: "0",
         label: "¿Ha realizado modificaciones al diseño de la práctica educativa apoyada en TIC que presentó?",
         typeOfLevel: "ROOT",
         typeOfAnswer: "RADIO",
@@ -9,6 +10,7 @@ const preguntas = [
     },
     {
         id: "1",
+        group: "0",
         label: "¿Para qué ha modificado el diseño de su práctica educativa apoyada en TIC? (Puede elegir más de una opción)",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "CHECKBOX",
@@ -17,6 +19,7 @@ const preguntas = [
     },
     {
         id: "2",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -26,6 +29,7 @@ const preguntas = [
     },
     {
         id: "3",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -35,6 +39,7 @@ const preguntas = [
     },
     {
         id: "4",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -44,6 +49,7 @@ const preguntas = [
     },
     {
         id: "5",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -53,6 +59,7 @@ const preguntas = [
     },
     {
         id: "6",
+        group: "0",
         label: "¿Qué tuvo en cuenta para modificar el diseño de su práctica educativa apoyada en TIC? (Puede elegir más de una opción)",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "CHECKBOX",
@@ -61,6 +68,7 @@ const preguntas = [
     },
     {
         id: "7",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -70,6 +78,7 @@ const preguntas = [
     },
     {
         id: "8",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -79,6 +88,7 @@ const preguntas = [
     },
     {
         id: "9",
+        group: "0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",

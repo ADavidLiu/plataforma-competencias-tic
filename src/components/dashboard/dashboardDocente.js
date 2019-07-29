@@ -585,7 +585,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver preentrevista</Button>
+                        >Ver pre-entrevista</Button>
                     </Link>
                     <Link to={{
                         pathname: "/entrevista",

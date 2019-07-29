@@ -23,3 +23,15 @@ body {
 .MuiSelect-select:focus {
     background-color: #FAFAFA !important;
 }
+
+.preentrevista-checkbox {
+    margin-bottom: 0;
+}
+
+.preentrevista-checkbox:first-of-type {
+    margin-top: 1.25rem;
+}
+
+.preentrevista-checkbox + div {
+    margin-top: 1rem;
+}

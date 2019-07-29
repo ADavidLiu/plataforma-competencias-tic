@@ -9,6 +9,8 @@ import FormControl from "@material-ui/core/FormControl";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
+import axios from "axios";
+
 class Login extends Component {
     constructor() {
         super();
@@ -17,6 +19,11 @@ class Login extends Component {
             contrasenia: "",
             didSubmit: false
         }
+
+        this.endpoint = "http://192.168.0.185:3333/login";
+
+        console.log(process.env);
+        console.log(process.env.REACT_APP_BASE_ENDPOINT);
     }
 
     handleChange = e => {
@@ -29,6 +36,15 @@ class Login extends Component {
     login = e => {
         e.preventDefault();
         console.log("Conectarse al backend");
+
+        axios.post(this.endpoint, {
+            email: this.state.usuario,
+            password: this.state.contrasenia
+        }).then(res => {
+            console.log(res.data);
+        }).catch(err => {
+            console.log(err);
+        });
 
         /* If success */
         this.setState({
