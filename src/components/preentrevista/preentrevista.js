@@ -29,6 +29,7 @@ class Preentrevista extends Component {
         this.parentLabel = "";
         this.subniveles = [];
         this.arrayPreguntas = [];
+        this.preguntasDivs = [];
     }
 
     componentDidMount = () => {
@@ -61,16 +62,16 @@ class Preentrevista extends Component {
     }
 
     handlePreguntaChange = (e, preguntaID, typeOfLevel, triggerID, index) => {
-        /* console.log(preguntaID, e.target.value); */
         const selectedOptionID = `${preguntaID}.${e.target.value}`;
-        /* console.log("Buscando... ", selectedOptionID); */
-        const newRespuestas = [...this.state.respuestas];
+        const newRespuestas = [...this.state.respuestas];     
+        const evento = e.target;
 
         newRespuestas[index] = e.target.value;
 
         const newPreguntasVisibles = [...this.state.preguntasVisibles];
         const newVisibilityClasses = [...this.state.visibilityClasses];
         const encontrados = [];
+        const indicesMostrados = [];
 
         /* Primero, reiniciar ocultando todo excepto los niveles root */
         newPreguntasVisibles.forEach(pregunta => {
@@ -85,6 +86,7 @@ class Preentrevista extends Component {
         newPreguntasVisibles.forEach(pregunta => {
             if (pregunta.props.triggerid === selectedOptionID) {
                 encontrados.push(pregunta.props);
+                indicesMostrados.push(pregunta.props.index);
             }
         });
 
@@ -100,8 +102,36 @@ class Preentrevista extends Component {
 
         /* Después del cambio. Ya hay que seguir carrying el delay del inicio */
         const timeout = setTimeout(() => {
-            console.log(this.state.preguntasVisibles);
-            console.log(this.state.visibilityClasses);
+            /* console.log("Mostrar: ", indicesMostrados);
+            console.log("Value: ", value); */
+
+            let condicion = false;
+
+            switch (evento.type) {
+                case "radio":
+                    condicion = evento.value === "0";
+                    break;
+                case "checkbox":
+                    condicion = evento.checked;
+                    break;
+                case "input":
+                    condicion = evento.value !== "" && evento.value !== undefined;
+                    break;
+                default:
+                    break;
+            }
+
+            if (condicion) {
+                indicesMostrados.forEach(indice => {
+                    this.preguntasDivs[indice].classList.remove("d-none")
+                });
+            } else {
+                this.preguntasDivs.forEach(preguntaDiv => {
+                    if (indicesMostrados.length === 0 && preguntaDiv.getAttribute("typeoflevel") !== "ROOT" || indicesMostrados.includes(preguntaDiv.getAttribute("index"))) {
+                        preguntaDiv.classList.add("d-none");
+                    }
+                });
+            }
             clearTimeout(timeout);
         }, 100);
     }
@@ -160,7 +190,6 @@ class Preentrevista extends Component {
                             key={pregunta.label}
                             variant="outlined"
                             margin="normal"
-                            required
                             fullWidth
                             multiline
                             inputProps={{ maxLength: 400 }}
@@ -186,7 +215,9 @@ class Preentrevista extends Component {
             /* Pequeño delay para alcanzar a que las clases de visibilidad de inicialicen */
             const timeout = setTimeout(() => {
                 const newPregunta = (
-                    <div key={i} index={pregunta.id} typeoflevel={pregunta.typeOfLevel} triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy} className={this.state.visibilityClasses[i]}>
+                    <div key={i} index={pregunta.id} typeoflevel={pregunta.typeOfLevel} triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy} className={this.state.visibilityClasses[i]} ref={elem => {
+                        this.preguntasDivs.push(elem);
+                    }}>
                         <Typography variant="body1" className="mb-3"><strong>{pregunta.label}</strong></Typography>
                         {opcionesRespuesta}
                     </div>
