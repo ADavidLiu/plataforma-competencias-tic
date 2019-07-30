@@ -46,7 +46,8 @@ class Preentrevista extends Component {
         }
 
         this.setState({
-            tipoUsuario: infoCargada.tipoUsuario
+            tipoUsuario: infoCargada.tipoUsuario,
+            respuestas: new Array(this.state.preguntas.length)
         });
         
         this.crearCuestionario();
@@ -78,6 +79,7 @@ class Preentrevista extends Component {
         const timeout = setTimeout(() => {
             let condicion = false;
 
+            /* Para asignar el valor seleccionado. */
             switch (evento.type) {
                 case "radio":
                     condicion = evento.value === "0";
@@ -102,10 +104,10 @@ class Preentrevista extends Component {
                     /* Para determinar los valores seleccionados y asignarlos al arreglo de respuestas. */
                     if (condicion) {
                         let checkboxes = evento.parentNode.parentNode.parentNode.parentNode.querySelectorAll("input[type='checkbox']");
-                        const selected = [];
-                        checkboxes = checkboxes.forEach(input => {
+                        const selected = new Array(checkboxes.length);
+                        checkboxes = checkboxes.forEach((input, i) => {
                             if (input.checked) {
-                                selected.push(input.name);
+                                selected[i] = input.name;
                             }
                         });
                         newRespuestas[index] = {
@@ -113,9 +115,18 @@ class Preentrevista extends Component {
                             value: selected
                         };
                     } else {
-                        newRespuestas[index].splice(selectedOptionID.split(".")[1], 1, null);
-                        if (newRespuestas[index].every(respuesta => respuesta === null)) {
-                            newRespuestas.splice(index, 1);
+                        /* Eliminarlo si se deselecciona */
+                        newRespuestas[index].value.splice(evento.value, 1, null);
+
+                        /* Si el arreglo de valores en esta posición quedó vacío, elimine toda la posición e inserte null en el arreglo general de respuestas */
+                        let isNull = true;
+                        newRespuestas[index].value.forEach(respuesta => {
+                            if (respuesta !== null) {
+                                isNull = false;
+                            }
+                        });
+                        if (isNull) {
+                            newRespuestas.splice(index, 1, null);
                         }
                     }
                     break;
@@ -131,57 +142,89 @@ class Preentrevista extends Component {
                     break;
             }
 
+            this.setState({
+                respuestas: newRespuestas
+            });
+
+            /* Para eliminar los valores deseleccionados. */
             if (condicion) {
+                console.log("--- MOSTRAR ---");
                 indicesMostrados.forEach(indice => {
                     this.preguntasDivs[indice].classList.remove("d-none");
                 });
             } else {
+                console.log("--- OCULTAR Y ELIMINAR ---");
                 this.preguntasDivs.forEach(preguntaDiv => {
+                    /* Sólo ocultar los que son */
                     if (indicesMostrados.length === 0 && preguntaDiv.getAttribute("typeoflevel") !== "ROOT" || indicesMostrados.includes(preguntaDiv.getAttribute("index"))) {
                         preguntaDiv.classList.add("d-none");
-
-                        /* Eliminar del array las respuestas ahora ocultas */
-                        /* console.log(newRespuestas);
-                        console.log(groupID, index); */
-                        let count = 0;
-                        newRespuestas.forEach(respuesta => {
-                            console.log(respuesta);
-                            /* if (respuesta.group === groupID || respuesta === undefined) {
-                                count += 1;
-                            } */
-                        });
-                        newRespuestas.splice(index + 1, count);
-
-                        /* Reiniciar la parte visual de cada opción de respuesta. */
-                        switch (preguntaDiv.getAttribute("typeofanswer")) {
-                            case "CHECKBOX":
-                                const checkboxes = preguntaDiv.querySelectorAll(".preentrevista-checkbox input[type='checkbox']");
-                                checkboxes.forEach(input => {
-                                    input.checked = false;
-                                    /* const parentLabel = input.closest(".PrivateSwitchBase-checked-246.Mui-checked");
-                                    if (parentLabel !== null) {
-                                        console.log(parentLabel);
-                                        parentLabel.classList.remove("PrivateSwitchBase-checked-246");
-                                        parentLabel.classList.remove("Mui-checked");
-                                    } */
-
-
-                                });
-                                break;
-                            case "INPUT":
-                                const textarea = preguntaDiv.querySelector("textarea");
-                                textarea.value = "";
-                                break;
-                            default:
-                                break;
-                        }
                     }
+
+                    /* Reiniciar los campos seleccionados */
+                    const textareas = preguntaDiv.querySelectorAll("textarea");
+                    const checkboxes = preguntaDiv.querySelectorAll(".preentrevista-checkbox input[type='checkbox']");
+                    const newRespuestas = [...this.state.respuestas];
+
+                    switch (evento.type) {
+                        case "radio":
+                            /* Reiniciar del estado todos los elementos del grupo */
+                            if (preguntaDiv.getAttribute("group") === groupID) {
+                                newRespuestas.forEach((respuesta, i) => {
+                                    if (respuesta !== undefined && respuesta !== null && respuesta.group === groupID) {
+                                        if (i !== 0) {
+                                            newRespuestas[i] = null;
+                                        }
+                                    }
+                                });
+
+                                /* Reinicio de los input values y checkboxes */
+                                textareas.forEach(textarea => {
+                                    textarea.value = "";
+                                });
+                                checkboxes.forEach(checkbox => {
+                                    checkbox.checked = false;
+                                    checkbox.classList.remove("Mui-checked");
+                                });
+                            }
+                            break;
+                        case "checkbox":
+                            const encontrados = this.state.preguntas.filter(pregunta => pregunta.isTriggeredBy === selectedOptionID);
+                            
+                            encontrados.forEach(encontrado => {
+                                switch (encontrado.typeOfAnswer) {
+                                    case "INPUT":
+                                        /* Se remueve del estado */
+                                        
+                                        const preguntasReinicio = this.state.preguntas.filter(pregunta => pregunta.isTriggeredBy === selectedOptionID);
+                                        preguntasReinicio.forEach(pregunta => {
+                                            newRespuestas[pregunta.id] = null;
+                                        });
+
+                                        /* Se reinicia el input value */
+                                        const preguntaDivEncontrado = this.preguntasDivs.filter(preguntaDiv => preguntaDiv.getAttribute("triggerid") === encontrado.isTriggeredBy);
+                                        preguntaDivEncontrado.forEach(div => {
+                                            const textarea = div.querySelector("textarea");
+                                            textarea.value = "";
+                                        });
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            });
+                            break;
+                        case "textarea":
+                        case "input":
+                        default:
+                            /* Nunca llega a pasar esto en el JSON */
+                            break;
+                    }
+
+                    /* Eliminar del array de respuestas */
+                    this.setState({
+                        respuestas: newRespuestas
+                    });
                 });
             }
-
-            this.setState({
-                respuestas: newRespuestas
-            });
 
             clearTimeout(timeout);
         }, 100);

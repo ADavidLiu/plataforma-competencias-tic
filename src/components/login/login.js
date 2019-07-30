@@ -19,11 +19,6 @@ class Login extends Component {
             contrasenia: "",
             didSubmit: false
         }
-
-        this.endpoint = "http://192.168.0.185:3333/login";
-
-        console.log(process.env);
-        console.log(process.env.REACT_APP_BASE_ENDPOINT);
     }
 
     handleChange = e => {
@@ -37,7 +32,7 @@ class Login extends Component {
         e.preventDefault();
         console.log("Conectarse al backend");
 
-        axios.post(this.endpoint, {
+        axios.post(`${process.env.REACT_APP_BASE_ENDPOINT}/${process.env.REACT_APP_LOGIN}`, {
             email: this.state.usuario,
             password: this.state.contrasenia
         }).then(res => {
