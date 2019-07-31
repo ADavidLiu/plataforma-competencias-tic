@@ -15,6 +15,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { Paper } from "@material-ui/core";
 
 class Preentrevista extends Component {
     constructor() {
@@ -348,13 +349,12 @@ class Preentrevista extends Component {
             /* Pequeño delay para alcanzar a que las clases de visibilidad se inicialicen */
             const timeout = setTimeout(() => {
                 const newPregunta = (
-                    <div key={i} index={pregunta.id} group={pregunta.group} typeofanswer={pregunta.typeOfAnswer} typeoflevel={pregunta.typeOfLevel} triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy} className={this.state.visibilityClasses[i]} ref={elem => {
+                    <Paper key={i} index={pregunta.id} group={pregunta.group} typeofanswer={pregunta.typeOfAnswer} typeoflevel={pregunta.typeOfLevel} triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy} className={this.state.visibilityClasses[i] + " p-4"} ref={elem => {
                         this.preguntasDivs.push(elem);
                     }}>
-                        <Typography variant="body2">Pregunta #{i}</Typography>
                         <Typography variant="body1"><strong>{pregunta.label}</strong></Typography>
                         {opcionesRespuesta}
-                    </div>
+                    </Paper>
                 );
                 tempArray.push(newPregunta);
 
