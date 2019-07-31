@@ -382,7 +382,7 @@ class Preentrevista extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="mb-5">
                             <Typography variant="h5" className="mb-5 text-center">Pre-entrevista</Typography>
-                            <Typography variant="body1" className="mb-3">Por favor conteste las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.</Typography>
+                            <Typography variant="body1" className="mb-3">Por favor responda <strong>todas</strong> las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.</Typography>
                         </div>
                         <hr className="mb-5" />
                         {

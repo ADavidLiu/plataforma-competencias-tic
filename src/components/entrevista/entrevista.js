@@ -68,7 +68,7 @@ class Entrevista extends Component {
 							{this.state.isEvaluada ? (
 								<React.Fragment>
 									<Typography
-										variant="h4"
+										variant="h5"
 										className="mb-4"
 									>
 										Evidencias requeridas
@@ -78,7 +78,7 @@ class Entrevista extends Component {
 											Señor(a) docente, por favor
 											prepare los siguientes
 											recursos para presentar
-											durante su sesión de
+											durante su próxima sesión de
 											entrevista.
 										</Typography>
 										<hr className="mt-4" />
