@@ -355,13 +355,13 @@ class Preentrevista extends Component {
                         <FormControlLabel
                             key="Sí"
                             value="0"
-                            control={<Radio required name={pregunta.label} color="primary" />}
+                            control={<Radio required={pregunta.typeOfLevel === "ROOT" ? true : false} name={pregunta.label} color="primary" />}
                             label="Sí"
                         />
                         <FormControlLabel
                             key="No"
                             value="1"
-                            control={<Radio required name={pregunta.label} color="primary" />}
+                            control={<Radio required={pregunta.typeOfLevel === "ROOT" ? true : false} name={pregunta.label} color="primary" />}
                             label="No"
                         />
                     </RadioGroup>
@@ -443,6 +443,11 @@ class Preentrevista extends Component {
             });
             clearTimeout(timeout2);
         }, 200);
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        console.log("Enviar al backend");
     }
 
     render() {
