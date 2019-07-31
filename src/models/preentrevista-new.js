@@ -280,7 +280,7 @@ const preguntas = [
         id: "29",
         group: "9",
         subgroup: "9.0",
-        label: "¿Qué transformaciones experimentó su práctica educativa apoyada en TIC al implementarla? (puede elegir más de una opción)",
+        label: "¿Qué transformaciones experimentó su práctica educativa apoyada en TIC al implementarlos? (puede elegir más de una opción)",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "CHECKBOX",
         options: ["Se ha mejorado la presentación de contenidos, el intercambio de archivos, el acceso y la búsqueda de información de calidad.", "Se ha facilitado el alcance del objetivo de aprendizaje integrando herramientas diferentes a las planteadas en el diseño inicial.", "Se han propuesto nuevos usos de las TIC para favorecer el aprendizaje significativo."],

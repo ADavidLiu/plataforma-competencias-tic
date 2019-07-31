@@ -674,18 +674,18 @@ class Practicas extends Component {
                                     <FormControl variant="outlined" className="w-100">
                                         <RadioGroup
                                             name="hasNecesidadesEspeciales"
-                                            value={this.state.hasNecesidadesEspeciales}
+                                            value={this.state.hasNecesidadesEspeciales.toString()}
                                             onChange={this.actualizarHasNecesidadesEspeciales}
                                         >
                                             <FormControlLabel
                                                 key="Sí"
-                                                value={true}
+                                                value="true"
                                                 control={<Radio required color="primary" />}
                                                 label="Sí"
                                             />
                                             <FormControlLabel
                                                 key="No"
-                                                value={false}
+                                                value="false"
                                                 control={<Radio required color="primary" />}
                                                 label="No"
                                             />
@@ -945,7 +945,7 @@ class Practicas extends Component {
                                 <FormControl variant="outlined" className="w-100">
                                     <RadioGroup
                                         name="evaluaActividad"
-                                        value={this.state.formActividad.evalua}
+                                        value={this.state.formActividad.evalua.toString()}
                                         onChange={this.actualizarEvaluaActividad}
                                     >
                                         <FormControlLabel

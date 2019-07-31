@@ -29,16 +29,13 @@ class LoginCheck extends Component {
     constructor() {
         super();
 
-        /* Aquí se debe verificar el login del usuario */
+        /* Aquí se debe verificar el login pasado del usuario */
 
         this.state = {
             isLogeado: true,
             tipo: "DOCENTE",
             id: "loremipsum"
         }
-
-
-        
 
         /* this.state = {
             isLogeado: false,
