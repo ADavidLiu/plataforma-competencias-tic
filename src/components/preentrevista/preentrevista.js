@@ -57,7 +57,7 @@ class Preentrevista extends Component {
         this.crearCuestionario();
     }
 
-    handlePreguntaChange = (e, preguntaID, groupID, typeOfLevel, triggerID, index) => {
+    handlePreguntaChange = (e, preguntaID, groupID, subgroupID, typeOfLevel, triggerID, index) => {
         const selectedOptionID = `${preguntaID}.${e.target.value}`;
         const newRespuestas = [...this.state.respuestas];     
         const evento = e.target;
@@ -90,11 +90,13 @@ class Preentrevista extends Component {
                     if (evento.value === "0") {
                         newRespuestas[index] = {
                             group: groupID,
+                            subgroup: subgroupID,
                             value: "Sí"
                         };
                     } else {
                         newRespuestas[index] = {
                             group: groupID,
+                            subgroup: subgroupID,
                             value: "No"
                         };
                     }
@@ -116,6 +118,7 @@ class Preentrevista extends Component {
                         });
                         newRespuestas[index] = {
                             group: groupID,
+                            subgroup: subgroupID,
                             value: selected
                         };
                     } else {
@@ -139,6 +142,7 @@ class Preentrevista extends Component {
                     condicion = true;
                     newRespuestas[index] = {
                         group: groupID,
+                        subgroup: subgroupID,
                         value: evento.value
                     };
                     break;
@@ -150,7 +154,7 @@ class Preentrevista extends Component {
                 respuestas: newRespuestas
             });
 
-            /* Para eliminar los valores deseleccionados. */
+            /* Para mostrar/ocultar y reiniciar/eliminar los valores deseleccionados. */
             if (condicion) {
                 /* Mostrar */
                 indicesMostrados.forEach(indice => {
@@ -170,54 +174,115 @@ class Preentrevista extends Component {
                         /* Determinar el nuevo estado a partir de lo que se haya ocultado y qué quede visible */
                         switch (evento.type) {
                             case "radio":
-                                /* Es el ROOT. Debe reiniciar todo lo que haya en el grupo */
-                                /* Empezar ocultando visualmente los campos correspondientes */
-                                this.preguntasDivs.forEach(div => {
-                                    if (div.getAttribute("group") === selectedGroupID) {
-                                        if (div.getAttribute("typeoflevel") !== "ROOT") {
-                                            div.classList.add("d-none");
-                                            selectedDivs.push(div);
-                                        }
-                                    }
-                                });
+                                /* Puede ser el ROOT o un elemento MIDDLE */
+                                if (preguntaDiv.getAttribute("typeoflevel") === "ROOT") {
+                                    /* Es el ROOT. Debe reiniciar todo lo que haya en el grupo */
 
-                                /* Para ajustar el estado */
-                                if (preguntaDiv.getAttribute("group") === groupID) {
-                                    const paraEliminarDelEstado = [];
-                                    newRespuestas.forEach((respuesta, i) => {
-                                        if (respuesta !== undefined && respuesta !== null && respuesta.group === groupID && respuesta.value.length > 0) {
-                                            paraEliminarDelEstado.push(newRespuestas[i]);
+                                    /* Empezar ocultando visualmente los campos de niveles inferiores */
+                                    this.preguntasDivs.forEach(div => {
+                                        if (div.getAttribute("group") === selectedGroupID) {
+                                            if (div.getAttribute("typeoflevel") !== "ROOT") {
+                                                div.classList.add("d-none");
+                                                selectedDivs.push(div);
+                                            }
                                         }
                                     });
 
-                                    paraEliminarDelEstado.forEach((respuesta, i) => {
-                                        if (i !== 0) {
-                                            console.log("Eliminar esto... ", respuesta);
-                                            const indexParaEliminar = this.state.respuestas.findIndex(respuestaEnArray => respuestaEnArray === respuesta);
-                                            newRespuestas[indexParaEliminar] = null;
-                                        }
-                                    });
-    
-                                    /* Reinicio visual de los input values y checkboxes */
-                                    const textareas = [];
-                                    const checkboxes = [];
-
-                                    selectedDivs.forEach(div => {
-                                        const foundTextareas = div.querySelectorAll("textarea");
-                                        const foundCheckboxes = div.querySelectorAll(".preentrevista-checkbox input[type='checkbox']");
-                                        textareas.push(foundTextareas);
-                                        checkboxes.push(foundCheckboxes);
-                                    });
-
-                                    if (textareas[0].length > 0) {
-                                        textareas[0].forEach(textarea => {
-                                            textarea.value = "";
+                                    /* Para ajustar el estado */
+                                    if (preguntaDiv.getAttribute("group") === groupID) {
+                                        const paraEliminarDelEstado = [];
+                                        newRespuestas.forEach((respuesta, i) => {
+                                            if (respuesta !== undefined && respuesta !== null && respuesta.group === groupID && respuesta.value.length > 0) {
+                                                paraEliminarDelEstado.push(newRespuestas[i]);
+                                            }
                                         });
+
+                                        paraEliminarDelEstado.forEach((respuesta, i) => {
+                                            /* Eliminar todo el grupo, excepto el primer elemento (ROOT) */
+                                            if (i !== 0) {
+                                                console.log("Eliminar esto... ", respuesta);
+                                                const indexParaEliminar = this.state.respuestas.findIndex(respuestaEnArray => respuestaEnArray === respuesta);
+                                                newRespuestas[indexParaEliminar] = null;
+                                            }
+                                        });
+        
+                                        /* Reinicio visual de los input values y checkboxes */
+                                        const textareas = [];
+                                        const checkboxes = [];
+
+                                        selectedDivs.forEach(div => {
+                                            const foundTextareas = div.querySelectorAll("textarea");
+                                            const foundCheckboxes = div.querySelectorAll(".preentrevista-checkbox input[type='checkbox']");
+                                            textareas.push(foundTextareas);
+                                            checkboxes.push(foundCheckboxes);
+                                        });
+
+                                        if (textareas[0].length > 0) {
+                                            textareas[0].forEach(textarea => {
+                                                textarea.value = "";
+                                            });
+                                        }
+                                        if (checkboxes[0].length > 0) {
+                                            checkboxes[0].forEach(checkbox => {
+                                                checkbox.checked = false;
+                                                checkbox.classList.remove("Mui-checked");
+                                            });
+                                        }
                                     }
-                                    if (checkboxes[0].length > 0) {
-                                        checkboxes[0].forEach(checkbox => {
-                                            checkbox.checked = false;
-                                            checkbox.classList.remove("Mui-checked");
+                                } else {
+                                    /* Es MIDDLE. Sólo deben reiniciar los niveles inferiores a él */
+                                    const subgroupID = preguntaDiv.getAttribute("subgroupid");
+
+                                    if (subgroupID !== "") {
+                                        const preguntasDivsEncontrados = this.preguntasDivs.filter(div => div.getAttribute("subgroupid") === subgroupID);
+
+                                        /* Empezar ocultando visualmente los campos de niveles inferiores */
+                                        preguntasDivsEncontrados.forEach((div, i) => {
+                                            if (i !== 0) {
+                                                div.classList.add("d-none");
+                                            }
+                                        });
+
+                                        /* Reinicio del estado */
+                                        const paraEliminarDelEstado = [];
+                                        newRespuestas.forEach((respuesta, i) => {
+                                            if (respuesta !== undefined && respuesta !== null && respuesta.subgroup === subgroupID && respuesta.value.length > 0) {
+                                                paraEliminarDelEstado.push(newRespuestas[i]);
+                                            }
+                                        });
+
+                                        paraEliminarDelEstado.forEach((respuesta, i) => {
+                                            /* Eliminar todo el grupo, excepto el primer elemento (ROOT) */
+                                            if (i !== 0) {
+                                                console.log("Eliminar esto... ", respuesta);
+                                                const indexParaEliminar = this.state.respuestas.findIndex(respuestaEnArray => respuestaEnArray === respuesta);
+                                                newRespuestas[indexParaEliminar] = null;
+                                            }
+                                        });
+
+                                        /* Reinicio visual de inputs */
+                                        let textareas = [];
+                                        let checkboxes = [];
+
+                                        preguntasDivsEncontrados.forEach(divEncontrado => {
+                                            textareas.push(divEncontrado.querySelectorAll("textarea"));
+                                            checkboxes.push(divEncontrado.querySelectorAll(".preentrevista-checkbox input[type='checkbox']"));
+                                        });
+
+                                        textareas = textareas.filter(nodelist => nodelist.length > 0);
+                                        checkboxes = checkboxes.filter(nodelist => nodelist.length > 0);
+
+                                        textareas.forEach(nodelist => {
+                                            nodelist.forEach(textarea => {
+                                                textarea.value = "";
+                                            });
+                                        });
+
+                                        checkboxes.forEach(nodelist => {
+                                            nodelist.forEach(checkbox => {
+                                                checkbox.checked = false;
+                                                checkbox.classList.remove("Mui-checked");
+                                            });
                                         });
                                     }
                                 }
@@ -243,6 +308,7 @@ class Preentrevista extends Component {
                                             });
                                             break;
                                         default:
+                                            /* Después de un checkbox siempre sigue un INPUT en el JSON */
                                             break;
                                     }
                                 });
@@ -250,7 +316,7 @@ class Preentrevista extends Component {
                             case "textarea":
                             case "input":
                             default:
-                                /* Nunca llega a pasar esto en el JSON */
+                                /* Estos son siempre los últimos niveles. No se deberían ocultar aún si se dejan vacíos ("") */
                                 break;
                         }
     
@@ -284,7 +350,7 @@ class Preentrevista extends Component {
                         className="mt-2"
                         name={pregunta.label}
                         value={this.state.respuestas[i]}
-                        onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.typeOfLevel, pregunta.isTriggerFor, i)}
+                        onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.subgroup, pregunta.typeOfLevel, pregunta.isTriggerFor, i)}
                     >
                         <FormControlLabel
                             key="Sí"
@@ -308,7 +374,7 @@ class Preentrevista extends Component {
                                 className="preentrevista-checkbox"
                                 key={option}
                                 istriggeredby={triggeredBy}
-                                control={<Checkbox onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.typeOfLevel, triggeredBy, i)} color="primary" 
+                                control={<Checkbox onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.subgroup, pregunta.typeOfLevel, triggeredBy, i)} color="primary" 
                                 value={j} name={option} />}
                                 label={option}
                             />
@@ -328,7 +394,7 @@ class Preentrevista extends Component {
                             rows="5"
                             label="Escriba su respuesta..."
                             name={pregunta.label}
-                            onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.typeOfLevel, triggeredBy, i)}
+                            onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.subgroup, pregunta.typeOfLevel, triggeredBy, i)}
                         />
                     );
                     break;
@@ -349,9 +415,17 @@ class Preentrevista extends Component {
             /* Pequeño delay para alcanzar a que las clases de visibilidad se inicialicen */
             const timeout = setTimeout(() => {
                 const newPregunta = (
-                    <Paper key={i} index={pregunta.id} group={pregunta.group} typeofanswer={pregunta.typeOfAnswer} typeoflevel={pregunta.typeOfLevel} triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy} className={this.state.visibilityClasses[i] + " p-4"} ref={elem => {
-                        this.preguntasDivs.push(elem);
-                    }}>
+                    <Paper
+                        key={i}
+                        index={pregunta.id}
+                        group={pregunta.group}
+                        subgroupid={pregunta.subgroup ? pregunta.subgroup : ""}
+                        typeofanswer={pregunta.typeOfAnswer}
+                        typeoflevel={pregunta.typeOfLevel}
+                        triggerid={!triggeredBy ? pregunta.isTriggerFor : triggeredBy}
+                        className={this.state.visibilityClasses[i] + " p-4"}
+                        ref={elem => { this.preguntasDivs.push(elem); }}
+                    >
                         <Typography variant="body1"><strong>{pregunta.label}</strong></Typography>
                         {opcionesRespuesta}
                     </Paper>
@@ -384,10 +458,9 @@ class Preentrevista extends Component {
                             <Typography variant="h5" className="mb-5 text-center">Pre-entrevista</Typography>
                             <Typography variant="body1" className="mb-3">Por favor responda <strong>todas</strong> las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.</Typography>
                         </div>
-                        <hr className="mb-5" />
                         {
                             this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
-                                <div>
+                                <div className="preentrevista-preguntas">
                                     {this.state.preguntasVisibles}
                                     <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large">Enviar</Button>
                                 </div>

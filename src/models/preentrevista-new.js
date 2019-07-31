@@ -269,6 +269,7 @@ const preguntas = [
     {
         id: "28",
         group: "9",
+        subgroup: "9.0",
         label: "Al implementarlos ¿Su práctica educativa apoyada en TIC tuvo ajustes?",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "RADIO",
@@ -278,6 +279,7 @@ const preguntas = [
     {
         id: "29",
         group: "9",
+        subgroup: "9.0",
         label: "¿Qué transformaciones experimentó su práctica educativa apoyada en TIC al implementarla? (puede elegir más de una opción)",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "CHECKBOX",
@@ -287,6 +289,7 @@ const preguntas = [
     {
         id: "30",
         group: "9",
+        subgroup: "9.0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -297,6 +300,7 @@ const preguntas = [
     {
         id: "31",
         group: "9",
+        subgroup: "9.0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -307,6 +311,7 @@ const preguntas = [
     {
         id: "32",
         group: "9",
+        subgroup: "9.0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -317,6 +322,7 @@ const preguntas = [
     {
         id: "33",
         group: "9",
+        subgroup: "9.0",
         label: "¿Por qué ha realizado cambios en su práctica educativa apoyada en TIC? (puede marcar más de una opción)",
         typeOfLevel: "MIDDLE",
         typeOfAnswer: "CHECKBOX",
@@ -326,6 +332,7 @@ const preguntas = [
     {
         id: "34",
         group: "9",
+        subgroup: "9.0",
         label: "Mencione ejemplos. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -336,6 +343,7 @@ const preguntas = [
     {
         id: "35",
         group: "9",
+        subgroup: "9.0",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -346,6 +354,7 @@ const preguntas = [
     {
         id: "36",
         group: "9",
+        subgroup: "9.0",
         label: "Describa el proceso de análisis de información. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",
         typeOfAnswer: "INPUT",
@@ -479,7 +488,7 @@ const preguntas = [
         isTriggeredBy: "45.3"
     },
     {
-        id: "49",
+        id: "50",
         group: "13",
         label: "Explique. (Máximo 400 caracteres)",
         typeOfLevel: "FINAL",

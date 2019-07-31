@@ -35,3 +35,19 @@ body {
 .preentrevista-checkbox + div {
     margin-top: 1rem;
 }
+
+.preentrevista-preguntas > div[typeoflevel="ROOT"] {
+    position: relative;
+    margin-top: 4rem;
+}
+
+.preentrevista-preguntas > div[typeoflevel="ROOT"]::before {
+    content: "";
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
