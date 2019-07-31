@@ -216,23 +216,26 @@ class Practicas extends Component {
 
     agregarItem = target => {
         const property = "num" + target;
+        const copiaFormActividad = [...this.state.formActividad];
 
         this.setState({
             formActividad: {
                 ...this.state.formActividad,
-                [property]: this.state.formActividad[property] += 1
+                [property]: copiaFormActividad[property] += 1
             }
         });
     }
 
     eliminarItem = target => {
         const property = "num" + target;
-        if (this.state.formActividad[property] > 1) {
-            this.state.formActividad[target.toLowerCase()].pop();
+        const copiaFormActividad = [...this.state.formActividad];
+
+        if (copiaFormActividad[property] > 1) {
+            copiaFormActividad[target.toLowerCase()].pop();
             this.setState({
                 formActividad: {
                     ...this.state.formActividad,
-                    [property]: this.state.formActividad[property] -= 1
+                    [property]: copiaFormActividad[property] -= 1
                 }
             });
         }

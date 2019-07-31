@@ -191,9 +191,9 @@ class Preentrevista extends Component {
 
                                     paraEliminarDelEstado.forEach((respuesta, i) => {
                                         if (i !== 0) {
-                                            console.log(selectedOptionID);
                                             console.log("Eliminar esto... ", respuesta);
-                                            /* newRespuestas[index + i] = null; */
+                                            const indexParaEliminar = this.state.respuestas.findIndex(respuestaEnArray => respuestaEnArray === respuesta);
+                                            newRespuestas[indexParaEliminar] = null;
                                         }
                                     });
     
@@ -266,11 +266,10 @@ class Preentrevista extends Component {
     }
 
     crearCuestionario = () => {
-        const newPreguntasVisibles = [...this.state.preguntasVisibles];
         const newVisibilityClasses = [...this.state.visibilityClasses];
         const tempArray = [];
 
-        this.state.preguntas.map((pregunta, i) => {
+        this.state.preguntas.forEach((pregunta, i) => {
             let opcionesRespuesta = "";
             let triggeredBy;
 
@@ -331,6 +330,8 @@ class Preentrevista extends Component {
                             onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.typeOfLevel, triggeredBy, i)}
                         />
                     );
+                    break;
+                default:
                     break;
             }
 

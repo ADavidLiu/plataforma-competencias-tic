@@ -6,8 +6,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from '@material-ui/core/FormLabel';
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from "@material-ui/core/Radio";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -82,19 +80,6 @@ class Registro extends Component {
         }
 
         this.state = this.initialState;
-    }
-    componentDidMount = () => {
-        let infoCargada = {};
-
-        if (this.props.location && this.props.location.state !== undefined) {
-            infoCargada = {
-                tipoUsuario: this.props.location.state.tipoUsuario
-            }
-        } else {
-            infoCargada = {
-                tipoUsuario: ""
-            }
-        }
     }
 
     handleChange = e => {

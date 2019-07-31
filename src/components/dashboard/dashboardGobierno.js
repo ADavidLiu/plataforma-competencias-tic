@@ -9,7 +9,6 @@ import { Bar, Doughnut, Radar } from "react-chartjs-2";
 
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 
@@ -485,10 +484,10 @@ class DashboardGobierno extends Component {
                         <Grid item xs={12} sm={6}>
                             <Typography variant="h6" className="mb-3">Estado de descriptores</Typography>
                             {
-                                this.currentData.map((division, i) => {
+                                this.currentData.forEach((division, i) => {
                                     if (division.titulo === this.state.subdivisionSeleccionada) {
                                         const descriptores = [];
-                                        division.descriptores.map(descriptor => {
+                                        division.descriptores.forEach(descriptor => {
                                             descriptores.push(
                                                 <Paper
                                                     className="p-3 mb-3"
@@ -589,10 +588,10 @@ class DashboardGobierno extends Component {
                         <Grid item xs={12} sm={6}>
                             <Typography variant="h6" className="mb-3">Estado de niveles</Typography>
                             {
-                                this.currentData.map((division, i) => {
+                                this.currentData.forEach((division, i) => {
                                     if (division.titulo === this.state.subdivisionSeleccionada) {
                                         const niveles = [];
-                                        division.niveles.map(nivel => {
+                                        division.niveles.forEach(nivel => {
                                             niveles.push(
                                                 <Paper
                                                     className="p-3 mb-3"

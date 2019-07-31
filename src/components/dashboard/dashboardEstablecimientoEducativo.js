@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Paper from '@material-ui/core/Paper';
-import Button from "@material-ui/core/Button";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut } from "react-chartjs-2";
@@ -107,10 +106,12 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 
     calcularNoIngresos = () => {
+        let cuentaNoIngreso = this.state.cuentaNoIngreso;
+
         docentesCargados.forEach(perfil => {
 			if (perfil.ultimoIngreso === "") {
 				this.setState({
-                    cuentaNoIngreso: this.state.cuentaNoIngreso += 1
+                    cuentaNoIngreso: cuentaNoIngreso += 1
                 });
 			}
 		});
@@ -139,8 +140,10 @@ class DashboardExtablecimientoEducativo extends Component {
 
     cargarAnterioresPerfiles = () => {
         if (this.state.currentDivisionPerfiles > 0) {
+            let copiaCurrentDivisionPerfiles = [...this.state.currentDivisionPerfiles];
+
             this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles -= 1]
+                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles -= 1]
             });
         }
 
@@ -149,8 +152,10 @@ class DashboardExtablecimientoEducativo extends Component {
     
     cargarSiguientesPerfiles = () => {
         if (this.state.currentDivisionPerfiles < this.state.numDivisionesPerfiles - 1) {
+            let copiaCurrentDivisionPerfiles = [...this.state.currentDivisionPerfiles];
+
             this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles += 1]
+                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles += 1]
             });
         }
 

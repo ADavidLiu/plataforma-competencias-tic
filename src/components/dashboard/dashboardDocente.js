@@ -155,6 +155,7 @@ class DashboardDocente extends Component {
     componentDidMount() {
         /* Conexión al backend para almacenar timestamp del último ingreso */
         const timestamp = moment.now();
+        console.log(timestamp);
 
         let infoCargada = {};
 
