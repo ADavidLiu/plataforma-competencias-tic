@@ -25,7 +25,7 @@ class DashboardGobierno extends Component {
     constructor() {
         super();
 
-        /* Sólo hay 3 divisiones. 0 es el nivel más alto, y 3 es el más bajo. */
+        /* Sólo hay 3 divisiones. 0 es el nivel más alto, y 2 es el más bajo. */
         this.state = {
             divisiones: [],
             divisionMostrada: 0,

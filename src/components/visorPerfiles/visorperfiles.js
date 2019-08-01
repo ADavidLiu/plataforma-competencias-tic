@@ -82,10 +82,8 @@ class VisorPerfiles extends Component {
 
     cargarAnterioresPerfiles = () => {
         if (this.state.currentDivisionPerfiles > 0) {
-            let copiaCurrentDivisionPerfiles = this.state.currentDivisionPerfiles;
-
             this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles -= 1]
+                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles -= 1],
             });
         }
 
@@ -94,10 +92,8 @@ class VisorPerfiles extends Component {
     
     cargarSiguientesPerfiles = () => {
         if (this.state.currentDivisionPerfiles < this.state.numDivisionesPerfiles - 1) {
-            let copiaCurrentDivisionPerfiles = this.state.currentDivisionPerfiles;
-
             this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles += 1]
+                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles += 1]
             });
         }
 
