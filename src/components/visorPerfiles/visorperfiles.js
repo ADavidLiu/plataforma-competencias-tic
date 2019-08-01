@@ -21,10 +21,15 @@ class VisorPerfiles extends Component {
     }
 
     componentDidMount = () => {
+        this.cargarDatos();
+    }
+
+    cargarDatos = () => {
         const perfilesCargados = this.props.perfiles;
 
         this.setState({
-            perfiles: [...perfilesCargados]
+            perfiles: [...perfilesCargados],
+            perfilesDivididos: []
         });
 
         this.calcularNumDivisionesPerfiles();
@@ -34,15 +39,29 @@ class VisorPerfiles extends Component {
     dividirPerfiles = () => {
         const copiaPerfiles = [...this.props.perfiles];
         const numDivisiones = Math.ceil(this.props.perfiles.length/this.props.numPorPagina);
+        let backupArray = [];
+        this.state.perfilesDivididos = [];
+
         for (let i = 0; i < numDivisiones; i++) {
             const divisionArray = copiaPerfiles.slice(0, this.props.numPorPagina);
             this.state.perfilesDivididos.push(divisionArray);
+            backupArray.push(divisionArray);
             copiaPerfiles.splice(0, this.props.numPorPagina);
         }
 
-        this.setState({
-            perfilesMostrados: this.state.perfilesDivididos[0]
-        });
+        if (this.state.perfilesDivididos.length === 1) {
+            this.setState({
+                perfilesMostrados: this.state.perfilesDivididos[0],
+                perfilesDivididos: []
+            });
+        } else {
+            this.setState({
+                perfilesMostrados: this.state.perfilesDivididos[0],
+                perfilesDivididos: backupArray
+            });
+        }
+
+        backupArray = [];
     }
 
     calcularNumDivisionesPerfiles = () => {
@@ -98,6 +117,20 @@ class VisorPerfiles extends Component {
         }
 
         this.checkCurrentDivisionPerfiles();
+    }
+
+    componentDidUpdate = (prevProps, prevState, snapshot) => {
+        if (prevProps.perfiles !== this.props.perfiles) {
+            this.cargarDatos();
+
+            if (this.state.perfilesDivididos.length === 1) {
+                this.setState({
+                    hasPreviousPerfiles: false,
+                    hasNextPerfiles: false,
+                    perfilesDivididos: []
+                });
+            }
+        }
     }
 
     render() {
