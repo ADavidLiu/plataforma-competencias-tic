@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 
+import { I18n } from "react-polyglot-hooks";
+import frases from "../../phrases/main";
+import { T } from 'react-polyglot-hooks';
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -31,19 +35,20 @@ class LoginCheck extends Component {
 
         /* Aquí se debe verificar el login pasado del usuario */
 
-        this.state = {
+        /* this.state = {
             isLogeado: true,
             tipo: "GOBIERNO",
             id: "loremipsum"
-        }
+        } */
 
-        /* this.state = {
+        /* Pruebas de integración con backend */
+        this.state = {
             isLogeado: false,
             tipo: "",
             id: ""
-        } */
+        }
 
-        /* Conectarse al backend para obtener los datos personales del usuario o EE */
+        /* Conectarse al backend para obtener los datos personales del usuario, IE o EE */
         this.datosPerfil = {};
 
         switch (this.state.tipo) {
@@ -77,69 +82,73 @@ class LoginCheck extends Component {
     }
 
     render() {
+        const locale = window.locale || "es";
+
         return (
-            <Router>
-                <CssBaseline />
-                {
-                    this.state.isLogeado ? (
-                        <AppBar position="static" color="primary">
-                            <Toolbar>
-                                <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
-                                <Typography variant="h6" color="inherit">{this.datosPerfil.nombre}</Typography>
-                                <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                    <Link to="/" className="mr-4">
-                                        <IconButton style={{ color: "#ffffff" }} edge="start">
-                                            <Home />
-                                        </IconButton>
-                                    </Link>
-                                    <Link to="/">
-                                        <IconButton style={{ color: "#ffffff" }} edge="start" onClick={() => this.actualizarLogeado(false)}>
-                                            <ExitToApp />
-                                        </IconButton>
-                                    </Link>
-                                </div>
-                            </Toolbar>
-                        </AppBar>
-                    ) : (
-                        <AppBar position="static" color="primary">
-                            <Toolbar>
-                                <Typography variant="h6" color="inherit">Plataforma de competencias TIC</Typography>
-                            </Toolbar>
-                        </AppBar>       
-                    )
-                }
-                <Container component="main">
-                    <div className="py-5">
-                        <Switch>
-                            <Route path="/" exact render={(...routeProps) => {
-                                if (this.state.isLogeado) {
-                                    return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
-                                } else {
-                                    return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
+            <I18n locale={locale} phrases={frases[locale]}>
+                <Router>
+                    <CssBaseline />
+                    {
+                        this.state.isLogeado ? (
+                            <AppBar position="static" color="primary">
+                                <Toolbar>
+                                    <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
+                                    <Typography variant="h6" color="inherit">{this.datosPerfil.nombre}</Typography>
+                                    <div className="d-flex align-items-center justify-content-end flex-grow-1">
+                                        <Link to="/" className="mr-4">
+                                            <IconButton style={{ color: "#ffffff" }} edge="start">
+                                                <Home />
+                                            </IconButton>
+                                        </Link>
+                                        <Link to="/">
+                                            <IconButton style={{ color: "#ffffff" }} edge="start" onClick={() => this.actualizarLogeado(false)}>
+                                                <ExitToApp />
+                                            </IconButton>
+                                        </Link>
+                                    </div>
+                                </Toolbar>
+                            </AppBar>
+                        ) : (
+                            <AppBar position="static" color="primary">
+                                <Toolbar>
+                                    <Typography variant="h6" color="inherit"><T phrase="loginCheck.mensaje-navbar" /></Typography>
+                                </Toolbar>
+                            </AppBar>       
+                        )
+                    }
+                    <Container component="main">
+                        <div className="py-5">
+                            <Switch>
+                                <Route path="/" exact render={(...routeProps) => {
+                                    if (this.state.isLogeado) {
+                                        return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
+                                    } else {
+                                        return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
+                                    }
+                                }} />
+                                <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                                <Route path="/registro/" component={Registro} />
+                                {
+                                    this.state.isLogeado ? (
+                                        <Switch>
+                                            <Route path="/prueba/" component={Prueba} />
+                                            <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
+                                            <Route path="/dashboard-docente/" component={DashboardDocente} />
+                                            <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
+                                            <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
+                                            <Route path="/practicas/" component={Practicas} />
+                                            <Route path="/preentrevista/" component={Preentrevista} />
+                                            <Route path="/entrevista/" component={Entrevista} />
+                                            <Route component={Pagina404} />
+                                        </Switch>
+                                    ) : ""
                                 }
-                            }} />
-                            <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                            <Route path="/registro/" component={Registro} />
-                            {
-                                this.state.isLogeado ? (
-                                    <Switch>
-                                        <Route path="/prueba/" component={Prueba} />
-                                        <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
-                                        <Route path="/dashboard-docente/" component={DashboardDocente} />
-                                        <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
-                                        <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
-                                        <Route path="/practicas/" component={Practicas} />
-                                        <Route path="/preentrevista/" component={Preentrevista} />
-                                        <Route path="/entrevista/" component={Entrevista} />
-                                        <Route component={Pagina404} />
-                                    </Switch>
-                                ) : ""
-                            }
-                            <Route component={Pagina404} />
-                        </Switch>
-                    </div>
-                </Container>
-            </Router>
+                                <Route component={Pagina404} />
+                            </Switch>
+                        </div>
+                    </Container>
+                </Router>
+            </I18n>
         );
     };
 }
