@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
@@ -71,15 +73,11 @@ class Entrevista extends Component {
 										variant="h5"
 										className="mb-4"
 									>
-										Evidencias requeridas
+										<T phrase="entrevista.titulo"/>
 									</Typography>
 									<Grid item xs={12}>
 										<Typography variant="body1">
-											Señor(a) docente, por favor
-											prepare los siguientes
-											recursos para presentar
-											durante su próxima sesión de
-											entrevista.
+											<T phrase="entrevista.ayuda"/>
 										</Typography>
 										<hr className="mt-4" />
 									</Grid>
@@ -114,18 +112,11 @@ class Entrevista extends Component {
 										className="mb-3"
 									>
 										<strong>
-											Su pre-entrevista aún no ha
-											sido evaluada.
+											<T phrase="entrevista.label-no-evaluado"/>
 										</strong>
 									</Typography>
 									<Typography variant="body1">
-										Tan pronto se realice este
-										proceso, se le notificará via
-										correo electrónico con los
-										recursos que deberá presentar
-										durante la entrevista.
-										Igualmente, revise
-										periódicamente esta página.
+										<T phrase="entrevista.ayuda-no-evaluado"/>
 									</Typography>
 								</React.Fragment>
 							)}
@@ -138,24 +129,17 @@ class Entrevista extends Component {
 								className="mb-3"
 							>
 								<strong>
-									No requiere de entrevista
+									<T phrase="entrevista.no-requerido"/>
 								</strong>
 							</Typography>
 							<Typography variant="body1">
-								Señor(a) docente, tras evaluar su
-								pre-entrevista, se ha determinado que no
-								es necesario que pase a una entrevista.
+								<T phrase="entrevista.ayuda-no-requerido-0"/>
 							</Typography>
 							<Typography variant="body1">
-								Lo invitamos a analizar sus resultados e
-								implementar las acciones de mejora
-								correspondientes.
+								<T phrase="entrevista.ayuda-no-requerido-1"/>
 							</Typography>
 							<Typography variant="body1">
-								Igualmente, a volver a realizar todo el
-								proceso cuando lo considere pertinente,
-								para poder evaluar el progreso de su
-								apropiación en competencias TIC.
+								<T phrase="entrevista.ayuda-no-requerido-2"/>
 							</Typography>
 						</React.Fragment>
 					)}

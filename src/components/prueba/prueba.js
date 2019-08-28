@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import { T } from "react-polyglot-hooks";
+
 import moment from "moment";
 
 import { Redirect } from "react-router-dom";
@@ -199,11 +202,11 @@ class Prueba extends Component {
                             {!this.state.isPruebaIniciada ? (
                                 <React.Fragment>
                                     <Grid item xs={12}>
-                                        <Typography variant="h5" className="mb-5 text-center">Prueba de conocimiento sobre apropiación de las TIC a las prácticas educativas</Typography>
-                                        <Typography variant="h6" className="mb-2">Introducción</Typography>
-                                        <Typography variant="body1" className="mb-4">Esta es una prueba para evaluar el conocimiento acerca del diseño, implementación y evaluación de prácticas educativas con TIC.</Typography>
-                                        <Typography variant="h6" className="mb-2">Instrucciones</Typography>
-                                        <Typography variant="body1">A continuación, encontrará 31 preguntas de opción múltiple con única respuesta. Cada pregunta está constituida por un enunciado y cuatro (4) opciones de respuesta. Seleccione la opción que considere más correcta. Esta prueba debe ser finalizada una vez se inicia. Puede tomarse hasta una hora y treinta minutos (1:30) para responder. La resolución de la prueba es estrictamente individual.</Typography>
+                                        <Typography variant="h5" className="mb-5 text-center"><T phrase="prueba.titulo"/></Typography>
+                                        <Typography variant="h6" className="mb-2"><T phrase="prueba.label-introduccion"/></Typography>
+                                        <Typography variant="body1" className="mb-4"><T phrase="prueba.introduccion"/></Typography>
+                                        <Typography variant="h6" className="mb-2"><T phrase="prueba.label-instrucciones"/></Typography>
+                                        <Typography variant="body1"><T phrase="prueba.instrucciones"/></Typography>
                                     </Grid>
                                     <Grid item xs={12} className="mt-5">
                                         <Button
@@ -215,14 +218,14 @@ class Prueba extends Component {
                                             size="large"
                                             onClick={this.iniciarPrueba}
                                         >
-                                            Iniciar prueba
+                                            <T phrase="prueba.btn-iniciar"/>
                                         </Button>
                                     </Grid>
                                 </React.Fragment>
                             ) : (
                                 <React.Fragment>
                                     <Grid item xs={12}>
-                                        <Typography variant="h5" className="text-center">Cuestionario de preguntas</Typography>
+                                        <Typography variant="h5" className="text-center"><T phrase="prueba.titulo-cuestionario"/></Typography>
                                         <hr className="my-5" />
                                         {this.finalQuestions.map(pregunta => {
                                             return <Pregunta key={pregunta.id} id={pregunta.id} data={pregunta} actualizarRespuestas={this.actualizarRespuestas} />
@@ -237,7 +240,7 @@ class Prueba extends Component {
                                             className="mt-2"
                                             size="large"
                                         >
-                                            Enviar respuestas
+                                            <T phrase="prueba.btn-enviar"/>
                                         </Button>
                                     </Grid>
                                 </React.Fragment>
@@ -246,18 +249,18 @@ class Prueba extends Component {
                     </Grid>
                 </Grid>
                 <Dialog open={this.state.isPruebaTerminada} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Resultados</DialogTitle>
+                    <DialogTitle id="form-dialog-title"><T phrase="prueba.label-resultados"/></DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            La prueba ha finalizado. A continuación podrá encontrar sus resultados.
+                            <T phrase="prueba.ayuda-label-resultados"/>
                             <br/><br/>
-                            <strong>Preguntas correctas:</strong> {this.state.revision.numCorrectas}
+                            <strong><T phrase="prueba.label-correctas"/></strong> {this.state.revision.numCorrectas}
                             <br/>
-                            <strong>Preguntas incorrectas:</strong> {this.state.revision.numIncorrectas}
+                            <strong><T phrase="prueba.label-correctas"/></strong> {this.state.revision.numIncorrectas}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.terminarPrueba}>Volver a inicio</Button>
+                        <Button color="primary" onClick={this.terminarPrueba}><T phrase="prueba.btn-volver-inicio"/></Button>
                     </DialogActions>
                 </Dialog>
                 <Snackbar
@@ -265,7 +268,7 @@ class Prueba extends Component {
                     key="tiempo-restante"
                     open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
                     ContentProps={{ 'aria-describedby': 'message-id' }}
-                    message={"Tiempo restante: " + this.state.tiempoRestante}
+                    message={<span>{<T phrase="prueba.label-tiempo"/>} {this.state.tiempoRestante}</span>}
                 />
             </React.Fragment>
         );

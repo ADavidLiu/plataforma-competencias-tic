@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -314,7 +316,7 @@ class Registro extends Component {
         } else {
             formulario = (
                 <React.Fragment>
-                    <Typography variant="body1" className="mb-2"><strong>Datos personales</strong></Typography>
+                    <Typography variant="body1" className="mb-2"><strong><T phrase="registro.titulo"/></strong></Typography>
                     <form onSubmit={this.registrar}>
                         <Grid container spacing={2} className="mb-2">
                             <Grid item xs={12} md={6} className="py-0">
@@ -324,7 +326,7 @@ class Registro extends Component {
                                     required
                                     fullWidth
                                     id="nombres"
-                                    label="Nombres"
+                                    label={<T phrase="registro.nombres"/>}
                                     name="perfilIndividual.nombres"
                                     value={this.state.perfilIndividual.nombres}
                                     onChange={this.handleProfileInfoChange}
@@ -337,7 +339,7 @@ class Registro extends Component {
                                     required
                                     fullWidth
                                     id="apellidos"
-                                    label="Apellidos"
+                                    label={<T phrase="registro.apellidos"/>}
                                     name="perfilIndividual.apellidos"
                                     value={this.state.perfilIndividual.apellidos}
                                     onChange={this.handleProfileInfoChange}
@@ -349,7 +351,7 @@ class Registro extends Component {
                                     required
                                     fullWidth
                                     id="fechaNacimiento"
-                                    label="Fecha de Nacimiento"
+                                    label={<T phrase="registro.fecha-nacimiento"/>}
                                     name="perfilIndividual.fechaNacimiento"
                                     type="date"
                                     value={this.state.perfilIndividual.fechaNacimiento}
@@ -366,7 +368,7 @@ class Registro extends Component {
                                     inputProps={{ maxLength: 400 }}
                                     rows="5"
                                     id="descripcionPersonal"
-                                    label="Descripción personal"
+                                    label={<T phrase="registro.descripcion-personal"/>}
                                     name="perfilIndividual.descripcionPersonal"
                                     type="text"
                                     value={this.state.perfilIndividual.descripcionPersonal}
@@ -375,49 +377,49 @@ class Registro extends Component {
                             </Grid>
                             <Grid item xs={12} className="py-0">
                                 <FormControl variant="outlined" className="w-100 mt-4 mt-md-3 mb-2">
-                                    <InputLabel htmlFor="educacionMaxima">Educación formal máxima (alcanzada o en curso) *</InputLabel>
+                                    <InputLabel htmlFor="educacionMaxima"><T phrase="registro.label-educacion"/></InputLabel>
                                     <Select
                                         value={this.state.perfilIndividual.educacionMaxima}
                                         onChange={this.handleProfileInfoChange}
                                         input={<OutlinedInput required name="perfilIndividual.educacionMaxima" id="educacionMaxima"/>}
                                     >
-                                        <MenuItem value="Bachiller">Bachiller</MenuItem>
-                                        <MenuItem value="Técnico">Técnico</MenuItem>
-                                        <MenuItem value="Tecnólogo">Tecnólogo</MenuItem>
-                                        <MenuItem value="Profesional">Profesional</MenuItem>
-                                        <MenuItem value="Especialista">Especialista</MenuItem>
-                                        <MenuItem value="Magister">Magister</MenuItem>
-                                        <MenuItem value="Doctorado">Doctorado</MenuItem>
-                                        <MenuItem value="Postdoctorado">Postdoctorado</MenuItem>
+                                        <MenuItem value="Bachiller"><T phrase="registro.educacion-bachiller"/></MenuItem>
+                                        <MenuItem value="Técnico"><T phrase="registro.educacion-tecnico"/></MenuItem>
+                                        <MenuItem value="Tecnólogo"><T phrase="registro.educacion-tecnologo"/></MenuItem>
+                                        <MenuItem value="Profesional"><T phrase="registro.educacion-profesional"/></MenuItem>
+                                        <MenuItem value="Especialista"><T phrase="registro.educacion-especialista"/></MenuItem>
+                                        <MenuItem value="Magister"><T phrase="registro.educacion-magister"/></MenuItem>
+                                        <MenuItem value="Doctorado"><T phrase="registro.educacion-doctorado"/></MenuItem>
+                                        <MenuItem value="Postdoctorado"><T phrase="registro.educacion-postdoctorado"/></MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} className="py-0">
                                 <FormControl variant="outlined" className="w-100 mt-4 mt-md-3 mb-2">
-                                    <InputLabel htmlFor="aniosExperiencia">¿Cuántos años tiene de experiencia docente?</InputLabel>
+                                    <InputLabel htmlFor="aniosExperiencia"><T phrase="registro.label-anios-experiencia"/></InputLabel>
                                     <Select
                                         value={this.state.perfilIndividual.aniosExperiencia}
                                         onChange={this.handleProfileInfoChange}
                                         input={<OutlinedInput required name="perfilIndividual.aniosExperiencia" id="aniosExperiencia"/>}
                                     >
-                                        <MenuItem value="No tengo experiencia">No tengo experiencia</MenuItem>
-                                        <MenuItem value="Entre 1 y 5">Entre 1 y 5</MenuItem>
-                                        <MenuItem value="Entre 5 y 10">Entre 5 y 10</MenuItem>
-                                        <MenuItem value="Entre 10 y 15">Entre 10 y 15</MenuItem>
-                                        <MenuItem value="Más de 15 años">Más de 15 años</MenuItem>
+                                        <MenuItem value="No tengo experiencia"><T phrase="registro.experiencia-0"/></MenuItem>
+                                        <MenuItem value="Entre 1 y 5"><T phrase="registro.experiencia-1"/></MenuItem>
+                                        <MenuItem value="Entre 5 y 10"><T phrase="registro.experiencia-2"/></MenuItem>
+                                        <MenuItem value="Entre 10 y 15"><T phrase="registro.experiencia-3"/></MenuItem>
+                                        <MenuItem value="Más de 15 años"><T phrase="registro.experiencia-4"/></MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={12} className="py-0">
                                 <FormControl variant="outlined" className="w-100 mt-4 mt-md-3 mb-2">
-                                    <InputLabel htmlFor="representaInstitucionEducativa">¿Representa a una institución educativa? *</InputLabel>
+                                    <InputLabel htmlFor="representaInstitucionEducativa"><T phrase="registro.representa-ie"/></InputLabel>
                                     <Select
                                         value={this.state.perfilIndividual.representaInstitucionEducativa}
                                         onChange={this.handleProfileInfoChange}
                                         input={<OutlinedInput required name="perfilIndividual.representaInstitucionEducativa" id="representaInstitucionEducativa"/>}
                                     >
-                                        <MenuItem value={true}>Sí</MenuItem>
-                                        <MenuItem value={false}>No</MenuItem>
+                                        <MenuItem value={true}><T phrase="si"/></MenuItem>
+                                        <MenuItem value={false}><T phrase="no"/></MenuItem>
                                     </Select>
                                 </FormControl>
                                 {this.state.perfilIndividual.representaInstitucionEducativa ? (
@@ -428,149 +430,151 @@ class Registro extends Component {
                                             onChange={this.handleProfileInfoChange}
                                             input={<OutlinedInput required name="perfilIndividual.cualInstitucionRepresenta" id="cualInstitucionRepresenta"/>}
                                         >
+                                            {/* Aquí hacer un foreach con el array de los EE que ya hayan */}
                                             <MenuItem value="Item 1">Item 1</MenuItem>
-                                            <MenuItem value="Otra">Otra</MenuItem>
+
+                                            <MenuItem value="Otra"><T phrase="registro.cual-label-otra"/></MenuItem>
                                         </Select>
                                     </FormControl>
                                 ) : ""}
                                 {this.state.perfilIndividual.cualInstitucionRepresenta === "Otra" ? (
-                                    <Typography variant="body2" color="secondary">Por favor consulte con su Insitución Educativa para que primero se realice el registro de ésta, o realícelo usted mismo.</Typography>
+                                    <Typography variant="body2" color="secondary"><T phrase="registro.directivo-otra-error"/></Typography>
                                 ) : ""}
                             </Grid>
                             {this.state.perfilIndividual.cualInstitucionRepresenta !== "Otra" ? (
                                 <React.Fragment>
                                     <Grid item xs={12} className="py-0">
                                         <FormControl variant="outlined" className="w-100 mt-4 mt-md-3 mb-2">
-                                            <InputLabel htmlFor="esDirectivo">¿Es directivo docente? *</InputLabel>
+                                            <InputLabel htmlFor="esDirectivo"><T phrase="registro.label-directivo"/></InputLabel>
                                             <Select
                                                 value={this.state.perfilIndividual.esDirectivo}
                                                 onChange={this.handleProfileInfoChange}
                                                 input={<OutlinedInput required name="perfilIndividual.esDirectivo" id="esDirectivo"/>}
                                             >
-                                                <MenuItem value={true}>Sí</MenuItem>
-                                                <MenuItem value={false}>No</MenuItem>
+                                                <MenuItem value={true}><T phrase="si"/></MenuItem>
+                                                <MenuItem value={false}><T phrase="no"/></MenuItem>
                                             </Select>
                                         </FormControl>
                                         {this.state.perfilIndividual.esDirectivo ? (
                                             <FormControl variant="outlined" className="w-100 mt-4 mt-md-3 mb-2">
-                                                <InputLabel htmlFor="tipoDirectivo">Tipo de directivo docente *</InputLabel>
+                                                <InputLabel htmlFor="tipoDirectivo"><T phrase="registro.label-tipo-directivo"/></InputLabel>
                                                 <Select
                                                     value={this.state.perfilIndividual.tipoDirectivo}
                                                     onChange={this.handleProfileInfoChange}
                                                     input={<OutlinedInput required name="perfilIndividual.tipoDirectivo" id="tipoDirectivo"/>}
                                                 >
-                                                    <MenuItem value="Rector">Rector</MenuItem>
-                                                    <MenuItem value="Director">Director</MenuItem>
-                                                    <MenuItem value="Coordinador">Coordinador</MenuItem>
+                                                    <MenuItem value="Rector"><T phrase="registro.rector"/></MenuItem>
+                                                    <MenuItem value="Director"><T phrase="registro.director"/></MenuItem>
+                                                    <MenuItem value="Coordinador"><T phrase="registro.coordinador"/></MenuItem>
                                                 </Select>
                                             </FormControl>
                                         ) : ""}
                                     </Grid>
                                     <Grid item xs={12} className="mt-2">
-                                        <FormLabel component="legend" className="mb-4">¿En qué niveles enseña?</FormLabel>
+                                        <FormLabel component="legend" className="mb-4"><T phrase="registro.label-niveles"/></FormLabel>
                                         <FormGroup>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.noAplica} value="noAplica" />}
-                                                        label="No aplica"
+                                                        label={<T phrase="registro.no-aplica"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.preescolar} value="preescolar" />}
-                                                        label="Preescolar"
+                                                        label={<T phrase="registro.preescolar"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.basicaPrimaria} value="basicaPrimaria" />}
-                                                        label="Básica primaria"
+                                                        label={<T phrase="registro.primaria"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.basicaSecundaria} value="basicaSecundaria" />}
-                                                        label="Básica secundaria"
+                                                        label={<T phrase="registro.secundaria"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.mediaAcademica} value="mediaAcademica" />}
-                                                        label="Media académica"
+                                                        label={<T phrase="registro.academica"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} md={6} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarNiveles} color="primary" checked={this.state.perfilIndividual.niveles.mediaTecnica} value="mediaTecnica" />}
-                                                        label="Media técnica"
+                                                        label={<T phrase="registro.tecnica"/>}
                                                     />
                                                 </Grid>
                                             </Grid>
                                         </FormGroup>
                                     </Grid>
                                     <Grid item xs={12} className="mt-2">
-                                        <FormLabel component="legend" className="mb-4">Señale en qué áreas disciplinares trabaja en el establecimiento educativo - puede elegir más de una opción.</FormLabel>
+                                        <FormLabel component="legend" className="mb-4"><T phrase="registro.label-areas"/></FormLabel>
                                         <FormGroup>
                                             <Grid container spacing={2}>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.naturales} value="naturales" />}
-                                                        label="Ciencias naturales y educación ambiental"
+                                                        label={<T phrase="registro.naturales"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.sociales} value="sociales" />}
-                                                        label="Ciencias sociales, historia, geografía y constitución política y democracia"
+                                                        label={<T phrase="registro.sociales"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.arte} value="arte" />}
-                                                        label="Educación artística y cultural"
+                                                        label={<T phrase="registro.arte"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.etica} value="etica" />}
-                                                        label="Educación ética y en valores humanos"
+                                                        label={<T phrase="registro.etica"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.deporte} value="deporte" />}
-                                                        label="Educación física, recreación y deporte"
+                                                        label={<T phrase="registro.deporte"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.religion} value="religion" />}
-                                                        label="Educación Religiosa"
+                                                        label={<T phrase="registro.religion"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.humanidades} value="humanidades" />}
-                                                        label="Humanidades (lengua castellana e idiomas extranjeros)"
+                                                        label={<T phrase="registro.humanidades"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.matematicas} value="matematicas" />}
-                                                        label="Matemáticas"
+                                                        label={<T phrase="registro.matematicas"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.informatica} value="informatica" />}
-                                                        label="Tecnología e informática"
+                                                        label={<T phrase="registro.informatica"/>}
                                                     />
                                                 </Grid>
                                                 <Grid item xs={12} className="py-0">
                                                     <FormControlLabel
                                                         control={<Checkbox onChange={this.actualizarAreasDisciplinares} color="primary" checked={this.state.perfilIndividual.areasDisciplinares.otras} value="otras" />}
-                                                        label="Otra(s)"
+                                                        label={<T phrase="registro.label-areas-otras"/>}
                                                     />
                                                 </Grid>
                                                 {this.state.perfilIndividual.areasDisciplinares.otras ? (
@@ -581,7 +585,7 @@ class Registro extends Component {
                                                             required
                                                             fullWidth
                                                             id="areasDisciplinaresOtras"
-                                                            label="¿Cuál(es)?"
+                                                            label={<T phrase="registro.areas-otras"/>}
                                                             name="otrasCuales"
                                                             value={this.state.perfilIndividual.areasDisciplinares.otrasCuales}
                                                             onChange={this.actualizarOtrasAreasDisciplinares}
@@ -597,7 +601,7 @@ class Registro extends Component {
                         {this.state.perfilIndividual.cualInstitucionRepresenta !== "Otra" ? (
                             <React.Fragment>
                                 <hr/>
-                                <Typography variant="body1" className="mb-2"><strong>Datos de perfil</strong></Typography>
+                                <Typography variant="body1" className="mb-2"><strong><T phrase="registro.label-datos-perfil"/></strong></Typography>
                                 <Grid container spacing={2} className="mb-2">
                                     <Grid item xs={12}>
                                         <Grid container spacing={2}>
@@ -610,7 +614,7 @@ class Registro extends Component {
                                                             required
                                                             fullWidth
                                                             id="usuario"
-                                                            label="Usuario"
+                                                            label={<T phrase="registro.usuario"/>}
                                                             name="perfilIndividual.usuario"
                                                             value={this.state.perfilIndividual.usuario}
                                                             onChange={this.handleProfileInfoChange}
@@ -623,7 +627,7 @@ class Registro extends Component {
                                                             required
                                                             fullWidth
                                                             id="contrasenia"
-                                                            label="Contraseña"
+                                                            label={<T phrase="registro.contrasenia"/>}
                                                             name="perfilIndividual.contrasenia"
                                                             value={this.state.perfilIndividual.constrasenia}
                                                             onChange={this.handleProfileInfoChange}
@@ -635,16 +639,16 @@ class Registro extends Component {
                                             <Grid item xs={12} md={6}>
                                                 <Grid container>
                                                     <Grid item xs={12} className="py-0 my-md-3">
-                                                        {this.state.perfilIndividual.imgPerfil.src === "" ? <Typography variant="body2" className="mb-3">Adjunte una imagen de perfil <em>(opcional)</em></Typography> : ""}
+                                                        {this.state.perfilIndividual.imgPerfil.src === "" ? <Typography variant="body2" className="mb-3"><T phrase="registro.label-img-perfil"/> <em><T phrase="opcional"/></em></Typography> : ""}
                                                         {this.state.perfilIndividual.imgPerfil.src !== "" ? (
-                                                            <img src={this.state.perfilIndividual.imgPerfil.src} alt="Imagen de perfil seleccionada" className="w-100 mb-3"/>
+                                                            <img src={this.state.perfilIndividual.imgPerfil.src} className="w-100 mb-3"/>
                                                         ) : ""}
                                                         <Button
                                                             variant="contained"
                                                             component="label"
                                                             fullWidth
                                                         >
-                                                            Seleccionar archivo
+                                                            <T phrase="seleccionar-archivo"/>
                                                             <input type="file" accept="image/*" onChange={this.actualizarImgPerfil} style={{ display: "none" }} />
                                                         </Button>
                                                     </Grid>
@@ -659,7 +663,7 @@ class Registro extends Component {
                                             required
                                             fullWidth
                                             id="correo"
-                                            label="Correo electrónico"
+                                            label={<T phrase="registro.email"/>}
                                             name="perfilIndividual.correo"
                                             value={this.state.perfilIndividual.correo}
                                             onChange={this.handleProfileInfoChange}
@@ -673,7 +677,7 @@ class Registro extends Component {
                                             required
                                             fullWidth
                                             id="numContacto"
-                                            label="Número de contacto"
+                                            label={<T phrase="registro.num-contacto"/>}
                                             name="perfilIndividual.numContacto"
                                             value={this.state.perfilIndividual.numContacto}
                                             onChange={this.handleProfileInfoChange}
@@ -686,7 +690,7 @@ class Registro extends Component {
                                             margin="normal"
                                             fullWidth
                                             id="webPersonal"
-                                            label="Página web personal"
+                                            label={<T phrase="registro.web-personal"/>}
                                             name="perfilIndividual.webPersonal"
                                             value={this.state.perfilIndividual.webPersonal}
                                             onChange={this.handleProfileInfoChange}
@@ -701,7 +705,7 @@ class Registro extends Component {
                                     className="mt-2"
                                     size="large"
                                 >
-                                    Guardar datos
+                                    <T phrase="registro.btn-guardar"/>
                                 </Button>
                             </React.Fragment>
                         ) : ""}
@@ -717,7 +721,7 @@ class Registro extends Component {
 					variant="h5"
 					className="mb-4 text-center"
 				>
-					<strong>Registro de datos</strong>
+					<strong><T phrase="registro.titulo-principal"/></strong>
                     <hr className="mt-5"/>
 				</Typography>
 				<FormControl

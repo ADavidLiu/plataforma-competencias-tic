@@ -15,6 +15,9 @@ class Dashboard extends Component {
             case "DOCENTE":
                 this.dashboard = <DashboardDocente />;
                 break;
+            case "INSTITUCIÓN":
+                
+                break;
             case "ESTABLECIMIENTO":
                 this.dashboard = <DashboardEstablecimientoEducativo />;
                 break;

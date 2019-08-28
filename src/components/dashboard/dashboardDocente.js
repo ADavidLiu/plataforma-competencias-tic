@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -365,7 +367,7 @@ class DashboardDocente extends Component {
         return (
             <Grid container spacing={4} justify="center">
                 <Grid item xs={12}>
-                    <Typography variant="h5">Proceso actual</Typography>
+                    <Typography variant="h5"><T phrase="dashboardDocente.proceso-actual"/></Typography>
                     <Stepper activeStep={this.state.pasoActual} alternativeLabel className="my-4">
                         <Step key="Registro">
                             <StepLabel>{this.pasosNames[0]}</StepLabel>
@@ -385,15 +387,15 @@ class DashboardDocente extends Component {
                     </Stepper>
                     {
                         this.state.pasoActual < 5 ? 
-                            <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>Continuar con:&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
-                        : <Typography variant="body1" color="primary"><strong>Ha terminado todo su proceso exitosamente.</strong></Typography>
+                            <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}><T phrase="dashboardDocente.label-continuar"/>&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
+                        : <Typography variant="body1" color="primary"><strong><T phrase="dashboardDocente.mensaje-terminado"/></strong></Typography>
                     }
                 </Grid>
                 <Grid item xs={12}>
                     <hr className="my-3"/>
                 </Grid>
                 <Grid item xs={12} sm={8} lg={9}>
-                    <Typography variant="h5" className="mb-4">Diagnóstico personal</Typography>
+                    <Typography variant="h5" className="mb-4"><T phrase="dashboardDocente.diagnostico"/></Typography>
                     {
                         this.state.pasoActual > 1 ? (
                             <Grid container>
@@ -401,7 +403,7 @@ class DashboardDocente extends Component {
                                     this.state.didEstadisticasLoad ? (
                                         <Grid container spacing={2}>
                                             <Grid item xs={12}>
-                                                <Typography variant="h6" className="mb-4">Resultados de pruebas</Typography>
+                                                <Typography variant="h6" className="mb-4"><T phrase="dashboardDocente.resultados-pruebas"/></Typography>
                                                 <Bar height={80} data={{
                                                     labels: ["Prueba de conocimiento"],
                                                     datasets: [
@@ -513,7 +515,7 @@ class DashboardDocente extends Component {
                                 {
                                     this.state.didRutaLoad ? (
                                         <Grid item xs={12} className="mt-5">
-                                            <Typography variant="h6" className="mb-4">Ruta de aprendizaje sugerida</Typography>
+                                            <Typography variant="h6" className="mb-4"><T phrase="dashboardDocente.ruta"/></Typography>
                                             <RutaAprendizaje cursos={this.state.cursosSugeridos} />
                                         </Grid>
                                     ) : (
@@ -522,12 +524,12 @@ class DashboardDocente extends Component {
                                 }
                             </Grid>
                         ) : (
-                            <Typography variant="body1" color="primary"><strong>Aún no hay datos para mostrar</strong></Typography>
+                            <Typography variant="body1" color="primary"><strong><T phrase="dashboardDocente.no-data"/></strong></Typography>
                         )
                     }
                 </Grid>
                 <Grid item xs={12} sm={4} lg={3}>
-                    <Typography variant="h5" className="mb-1">Acciones</Typography>
+                    <Typography variant="h5" className="mb-1"><T phrase="dashboardDocente.acciones"/></Typography>
                     <Link to={{
                         pathname: "/registro",
                         state: {
@@ -541,7 +543,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver datos personales</Button>
+                        ><T phrase="dashboardDocente.btn-registro"/></Button>
                     </Link>
                     <Link to={{
                         pathname: "/prueba",
@@ -556,7 +558,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver prueba de conocimiento</Button>
+                        ><T phrase="dashboardDocente.btn-prueba"/></Button>
                     </Link>
                     <Link to={{
                         pathname: "/practicas",
@@ -571,7 +573,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver práctica educativa</Button>
+                        ><T phrase="dashboardDocente.btn-practica"/></Button>
                     </Link>
                     <Link to={{
                         pathname: "/preentrevista",
@@ -586,7 +588,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver pre-entrevista</Button>
+                        ><T phrase="dashboardDocente.btn-preentrevista"/></Button>
                     </Link>
                     <Link to={{
                         pathname: "/entrevista",
@@ -601,7 +603,7 @@ class DashboardDocente extends Component {
                             color="default"
                             className="mt-3"
                             size="medium"
-                        >Ver entrevista</Button>
+                        ><T phrase="dashboardDocente.btn-entrevista"/></Button>
                     </Link>
                 </Grid>
             </Grid>

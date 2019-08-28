@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import  { T } from "react-polyglot-hooks";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Paper from '@material-ui/core/Paper';
@@ -171,7 +173,7 @@ class DashboardExtablecimientoEducativo extends Component {
 			<Grid container spacing={5}>
 				<Grid item xs={12}>
 					<Typography variant="h5">
-						Estado de docentes
+						<T phrase="dashboardEE.label-docentes"/>
 					</Typography>
                     <hr/>
 				</Grid>
@@ -189,26 +191,26 @@ class DashboardExtablecimientoEducativo extends Component {
                         <Grid item xs={12}>
                             <Paper className="p-4 text-center">
                                 <Typography variant="h3" component="p" className="mb-2">{this.state.indiceApropiacion}</Typography>
-                                <Typography component="p">Índice de apropiación TIC</Typography>
+                                <Typography component="p"><T phrase="indice-tic"/></Typography>
                             </Paper>
                         </Grid>
                         <Grid item xs={6}>
                             <Paper className="p-4 text-center mb-5">
                                 <Typography variant="h3" component="p" className="mb-2">{this.state.perfiles.length}</Typography>
-                                <Typography component="p">Docentes</Typography>
+                                <Typography component="p"><T phrase="dashboardEE.docentes"/></Typography>
                             </Paper>
                         </Grid>
                         <Grid item xs={6}>
                             <Paper className="p-4 text-center mb-5">
                                 <Typography variant="h3" component="p" className="mb-2">{this.state.cuentaNoIngreso}</Typography>
-                                <Typography component="p">Nunca han ingresado</Typography>
+                                <Typography component="p"><T phrase="dashboardEE.nunca-ingreso"/></Typography>
                             </Paper>
                         </Grid>
                     </Grid>
 					{this.state.didPerfilesLoad ? (
                         <React.Fragment>
-                            <Typography variant="h6" className="mb-3">Estado general de procesos</Typography>
-                            <Typography variant="body1"><strong>Frecuencia absoluta</strong></Typography>
+                            <Typography variant="h6" className="mb-3"><T phrase="dashboardEE.label-estado-general"/></Typography>
+                            <Typography variant="body1"><strong><T phrase="dashboardEE.label-frecuencia-absoluta"/></strong></Typography>
                             <hr className="mt-2 mb-4"/>
                             <Bar
                                 data={() => {
@@ -247,7 +249,7 @@ class DashboardExtablecimientoEducativo extends Component {
                                 }}
                             />
                             <div className="mt-4">
-                                <Typography variant="body1"><strong>Frecuencia relativa</strong></Typography>
+                                <Typography variant="body1"><strong><T phrase="dashboardEE.label-frecuencia-relativa"/></strong></Typography>
                                 <hr className="mt-2 mb-4"/>
                                 <Doughnut height={200} data={() => {
                                     const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
@@ -297,7 +299,7 @@ class DashboardExtablecimientoEducativo extends Component {
 					)}
 				</Grid>
                 <Grid item xs={12} className="mt-4">
-					<Typography variant="h5">Ruta de aprendizaje sugerida</Typography>
+					<Typography variant="h5"><T phrase="dashboardEE.ruta"/></Typography>
                     <hr/>
 				</Grid>
                 {

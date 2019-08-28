@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import { Redirect } from "react-router-dom";
 
 import preguntas from "../../models/preentrevista-new";
@@ -460,14 +462,14 @@ class Preentrevista extends Component {
                 <Grid item xs={12} sm={8} md={6}>
                     <form onSubmit={this.handleSubmit}>
                         <div className="mb-5">
-                            <Typography variant="h5" className="mb-5 text-center">Pre-entrevista</Typography>
-                            <Typography variant="body1" className="mb-3">Por favor responda <strong>todas</strong> las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.</Typography>
+                            <Typography variant="h5" className="mb-5 text-center"><T phrase="preentrevista.titulo"/></Typography>
+                            <Typography variant="body1" className="mb-3"><T phrase="preentrevista.ayuda"/></Typography>
                         </div>
                         {
                             this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
                                 <div className="preentrevista-preguntas">
                                     {this.state.preguntasVisibles}
-                                    <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large">Enviar</Button>
+                                    <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large"><T phrase="enviar"/></Button>
                                 </div>
                             )
                         }
