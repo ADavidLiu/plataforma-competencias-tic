@@ -7,6 +7,7 @@ import { T } from 'react-polyglot-hooks';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -14,6 +15,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
+import HowToReg from '@material-ui/icons/HowToReg';
+import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
@@ -27,6 +30,7 @@ import DashboardGobierno from "../dashboard/dashboardGobierno";
 import Practicas from "../practicas/practicas";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
+import Configuracion from "../configuracion/configuracion";
 import Pagina404 from "../pagina404/pagina404";
 
 class LoginCheck extends Component {
@@ -92,18 +96,40 @@ class LoginCheck extends Component {
                             <AppBar position="static" color="primary">
                                 <Toolbar>
                                     <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
-                                    <Typography variant="h6" color="inherit">{this.datosPerfil.nombre}</Typography>
+                                    <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
                                     <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                        <Link to="/" className="mr-4">
-                                            <IconButton style={{ color: "#ffffff" }} edge="start">
-                                                <Home />
-                                            </IconButton>
-                                        </Link>
-                                        <Link to="/">
-                                            <IconButton style={{ color: "#ffffff" }} edge="start" onClick={() => this.actualizarLogeado(false)}>
-                                                <ExitToApp />
-                                            </IconButton>
-                                        </Link>
+                                        <Tooltip title="Configuración" placement="bottom">
+                                            <Link to="/configuracion">
+                                                <IconButton style={{ color: "#ffffff" }}>
+                                                    <SettingsApplications />
+                                                </IconButton>
+                                            </Link>
+                                        </Tooltip>
+                                        {
+                                            this.state.tipo !== "DOCENTE" ? (
+                                                <Tooltip title="Usuarios" placement="bottom">
+                                                    <Link to="/usuarios">
+                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                            <HowToReg />
+                                                        </IconButton>
+                                                    </Link>
+                                                </Tooltip>
+                                            ) : ""
+                                        }
+                                        <Tooltip title="Inicio" placement="bottom">
+                                            <Link to="/">
+                                                <IconButton style={{ color: "#ffffff" }}>
+                                                    <Home />
+                                                </IconButton>
+                                            </Link>
+                                        </Tooltip>
+                                        <Tooltip title="Cerrar sesión" placement="bottom">
+                                            <Link to="/">
+                                                <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
+                                                    <ExitToApp />
+                                                </IconButton>
+                                            </Link>
+                                        </Tooltip>
                                     </div>
                                 </Toolbar>
                             </AppBar>
@@ -138,6 +164,7 @@ class LoginCheck extends Component {
                                             <Route path="/practicas/" component={Practicas} />
                                             <Route path="/preentrevista/" component={Preentrevista} />
                                             <Route path="/entrevista/" component={Entrevista} />
+                                            <Route path="/configuracion/" component={Configuracion} />
                                             <Route component={Pagina404} />
                                         </Switch>
                                     ) : ""

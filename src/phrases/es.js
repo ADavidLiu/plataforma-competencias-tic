@@ -198,6 +198,11 @@ const es = {
     "dashboardDocente.btn-practica": "Ver práctica educativa",
     "dashboardDocente.btn-preentrevista": "Ver pre-entrevista",
     "dashboardDocente.btn-entrevista": "Ver entrevista",
+    "configuracion.titulo": "Configuración",
+    "configuracion.ajustes-plataforma": "Ajustes de la plataforma",
+    "configuracion.label-version": "Versión del instrumento",
+    "configuracion.label-idioma": "Idioma de la interfaz",
+    "configuracion.ajustes-cuenta": "Ajustes de la cuenta",
 }
 
 export default es;

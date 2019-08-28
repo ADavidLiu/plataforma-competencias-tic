@@ -51,3 +51,22 @@ body {
     border: 0;
     border-top: 1px solid rgba(0,0,0,.1);
 }
+
+.text-ellipsis {
+    width: 10rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@media screen and (min-width:500px) {
+    .text-ellipsis {
+        width: 17rem;
+    }
+}
+
+@media screen and (min-width:500px) {
+    .text-ellipsis {
+        width: 60%;
+    }
+}
