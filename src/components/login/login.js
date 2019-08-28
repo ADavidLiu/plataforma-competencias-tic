@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from 'react-polyglot-hooks';
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
@@ -60,7 +62,7 @@ class Login extends Component {
 					variant="h5"
 					className="mb-4 text-center"
 				>
-					<strong>Inicio de sesión</strong>
+					<strong><T phrase="login.titulo" /></strong>
 				</Typography>
 				<FormControl
 					component="fieldset"
@@ -75,7 +77,7 @@ class Login extends Component {
                                     required
                                     fullWidth
                                     id="usuario"
-                                    label="Usuario"
+                                    label={<T phrase="login.usuario" />}
                                     name="usuario"
                                     value={this.state.usuario}
                                     onChange={this.handleChange}
@@ -86,7 +88,7 @@ class Login extends Component {
                                     required
                                     fullWidth
                                     id="contrasenia"
-                                    label="Contraseña"
+                                    label={<T phrase="login.contrasenia" />}
                                     name="contrasenia"
                                     type="password"
                                     value={this.state.contrasenia}
@@ -100,7 +102,7 @@ class Login extends Component {
                                     className="mt-3"
                                     size="large"
                                 >
-                                    Ingresar
+                                    <T phrase="login.btn" />
                                 </Button>
                             </form>
                             {/* <Link to="/registro">

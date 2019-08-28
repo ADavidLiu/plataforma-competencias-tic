@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
@@ -135,67 +137,67 @@ class VisorPerfiles extends Component {
 
     render() {
         return (
-			<React.Fragment>
-				{this.state.perfilesMostrados
-					? this.state.perfilesMostrados.map(perfil => {
-							return (
-								<Perfil
-									key={perfil.perfilID}
-									tipo={this.props.tipo}
-									perfil={perfil}
+            <React.Fragment>
+                {this.state.perfilesMostrados
+                    ? this.state.perfilesMostrados.map(perfil => {
+                            return (
+                                <Perfil
+                                    key={perfil.perfilID}
+                                    tipo={this.props.tipo}
+                                    perfil={perfil}
                                     userID={perfil.perfilID}
-								/>
-							);
-					  })
-					: ""}
-				<Grid container spacing={2}>
-					<Grid item xs={4}>
-						{this.state.perfiles.length > this.props.numPorPagina ? (
-							<Button
-								type="button"
-								variant="outlined"
-								color="primary"
-								className="mt-3"
-								size="medium"
-							>
-								Ver todos
-							</Button>
-						) : (
-							""
-						)}
-					</Grid>
-					<Grid item xs={8} className="text-right">
-						{this.state.hasPreviousPerfiles ? (
-							<Button
-								type="button"
-								variant="contained"
-								color="primary"
-								className="mt-3"
-								size="medium"
-								onClick={this.cargarAnterioresPerfiles}
-							>
-								◀ Anteriores
-							</Button>
-						) : (
-							""
-						)}
-						{this.state.hasNextPerfiles ? (
-							<Button
-								type="button"
-								variant="contained"
-								color="primary"
-								className="mt-3 ml-3"
-								size="medium"
-								onClick={this.cargarSiguientesPerfiles}
-							>
-								Siguientes ▶
-							</Button>
-						) : (
-							""
-						)}
-					</Grid>
-				</Grid>
-			</React.Fragment>
+                                />
+                            );
+                    })
+                    : ""}
+                <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                        {this.state.perfiles.length > this.props.numPorPagina ? (
+                            <Button
+                                type="button"
+                                variant="outlined"
+                                color="primary"
+                                className="mt-3"
+                                size="medium"
+                            >
+                                <T phrase="visorPerfiles.todos" />
+                            </Button>
+                        ) : (
+                            ""
+                        )}
+                    </Grid>
+                    <Grid item xs={8} className="text-right">
+                        {this.state.hasPreviousPerfiles ? (
+                            <Button
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                className="mt-3"
+                                size="medium"
+                                onClick={this.cargarAnterioresPerfiles}
+                            >
+                                <T phrase="visorPerfiles.anteriores" />
+                            </Button>
+                        ) : (
+                            ""
+                        )}
+                        {this.state.hasNextPerfiles ? (
+                            <Button
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                className="mt-3 ml-3"
+                                size="medium"
+                                onClick={this.cargarSiguientesPerfiles}
+                            >
+                                <T phrase="visorPerfiles.siguientes" />
+                            </Button>
+                        ) : (
+                            ""
+                        )}
+                    </Grid>
+                </Grid>
+            </React.Fragment>
 		);   
     }
 }

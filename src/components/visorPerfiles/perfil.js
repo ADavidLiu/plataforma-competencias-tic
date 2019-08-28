@@ -1,5 +1,7 @@
 import React from "react";
 
+import { T } from "react-polyglot-hooks";
+
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -23,7 +25,7 @@ function Perfil(props) {
             <Grid container alignItems="center">
                 <Grid item xs={6}>
                     <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
-                    <Typography variant="body2">Último ingreso: {perfil.ultimoIngreso === "" ? <strong>nunca ha ingresado</strong> : moment.unix(perfil.ultimoIngreso).format("DD/MM/YYYY - h:mm:ss")}</Typography>
+                    <Typography variant="body2"><T phrase="perfil.ingreso" /> {perfil.ultimoIngreso === "" ? <strong><T phrase="perfil.nunca" /></strong> : moment.unix(perfil.ultimoIngreso).format("DD/MM/YYYY - h:mm:ss")}</Typography>
                 </Grid>
                 <Grid item xs={6} className="text-right">
                     <Link to={{
@@ -37,7 +39,7 @@ function Perfil(props) {
                             variant="outlined"
                             color="default"
                             size="medium"
-                        >Ver detalles</Button>
+                        ><T phrase="perfil.ver-detalles" /></Button>
                     </Link>
                 </Grid>
                 <Grid item xs={12}>
@@ -49,19 +51,19 @@ function Perfil(props) {
                             style={{backgroundColor: "transparent"}}
                         >
                             <Step key="Registro">
-                                <StepLabel>Registro de datos</StepLabel>
+                                <StepLabel><T phrase="procesoPaso.0" /></StepLabel>
                             </Step>
                             <Step key="Prueba de conocimiento">
-                                <StepLabel>Prueba de conocimiento</StepLabel>
+                                <StepLabel><T phrase="procesoPaso.1" /></StepLabel>
                             </Step>
                             <Step key="Prácticas educativas">
-                                <StepLabel>Prácticas educativas</StepLabel>
+                                <StepLabel><T phrase="procesoPaso.2" /></StepLabel>
                             </Step>
                             <Step key="Preentrevista">
-                                <StepLabel>Preentrevista</StepLabel>
+                                <StepLabel><T phrase="procesoPaso.3" /></StepLabel>
                             </Step>
                             <Step key="Entrevista">
-                                <StepLabel>Entrevista</StepLabel>
+                                <StepLabel><T phrase="procesoPaso.4" /></StepLabel>
                             </Step>
                         </Stepper>
                     </Paper>
@@ -76,7 +78,7 @@ function Perfil(props) {
             <Grid container alignItems="center">
                 <Grid item xs={6}>
                     <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
-                    <Typography variant="body2">Número de docentes: {perfil.numDocentes}</Typography>
+                    <Typography variant="body2"><T phrase="perfil.num-docentes" /> {perfil.numDocentes}</Typography>
                 </Grid>
                 <Grid item xs={6} className="text-right">
                     <Link to={{
@@ -90,7 +92,7 @@ function Perfil(props) {
                             variant="outlined"
                             color="default"
                             size="medium"
-                        >Ver detalles</Button>
+                        ><T phrase="perfil.ver-detalles" /></Button>
                     </Link>
                 </Grid>
                 <Grid item xs={12}>

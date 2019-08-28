@@ -33,20 +33,21 @@ class LoginCheck extends Component {
     constructor() {
         super();
 
-        /* Aquí se debe verificar el login pasado del usuario */
-
-        /* this.state = {
+        /* Aquí se debe verificar el login pasado y la configuración del usuario */
+        this.state = {
             isLogeado: true,
+            locale: "es",
             tipo: "GOBIERNO",
             id: "loremipsum"
-        } */
+        }
 
         /* Pruebas de integración con backend */
-        this.state = {
+        /* this.state = {
             isLogeado: false,
+            locale: "es",
             tipo: "",
             id: ""
-        }
+        } */
 
         /* Conectarse al backend para obtener los datos personales del usuario, IE o EE */
         this.datosPerfil = {};
@@ -82,10 +83,8 @@ class LoginCheck extends Component {
     }
 
     render() {
-        const locale = window.locale || "es";
-
         return (
-            <I18n locale={locale} phrases={frases[locale]}>
+            <I18n locale={this.state.locale} phrases={frases[this.state.locale]}>
                 <Router>
                     <CssBaseline />
                     {

@@ -3,7 +3,7 @@ import en from "./en.js";
 
 const main = {
     es,
-    en
+    en,
 };
 
 export default main;

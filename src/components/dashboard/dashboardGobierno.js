@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import { T } from 'react-polyglot-hooks';
+
 import { Grid } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -438,7 +440,7 @@ class DashboardGobierno extends Component {
                     <React.Fragment>
                         <Grid item xs={12}>
                             <div className="d-flex align-items-center justify-content-start">
-                                <Typography variant="body1" className="mr-3">Actualmente viendo datos de:</Typography>
+                                <Typography variant="body1" className="mr-3"><T phrase="dashboardGobierno.division" /></Typography>
                                 <FormControl variant="filled" className="col-6 col-md-auto">
                                     <Select
                                         value={this.state.subdivisionSeleccionada}
@@ -459,30 +461,30 @@ class DashboardGobierno extends Component {
                             <hr/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography variant="h5" className="mb-4">Información general</Typography>
+                            <Typography variant="h5" className="mb-4"><T phrase="dashboardGobierno.general" /></Typography>
                             <Grid container spacing={5}>
                                 <Grid item xs={12} sm={4}>
                                     <Paper className="p-4 text-center">
                                         <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].indiceApropiacion}</Typography>
-                                        <Typography component="p">Índice de apropiación TIC</Typography>
+                                        <Typography component="p"><T phrase="dashboardGobierno.indice" /></Typography>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={6} sm={4}>
                                     <Paper className="p-4 text-center">
                                         <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numEE}</Typography>
-                                        <Typography component="p">Establecimientos Educativos</Typography>
+                                        <Typography component="p"><T phrase="dashboardGobierno.establecimientos"/></Typography>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={6} sm={4}>
                                     <Paper className="p-4 text-center">
                                         <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numDocentes}</Typography>
-                                        <Typography component="p">Docentes</Typography>
+                                        <Typography component="p"><T phrase="dashboardGobierno.docentes" /></Typography>
                                     </Paper>
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Typography variant="h6" className="mb-3">Estado de descriptores</Typography>
+                            <Typography variant="h6" className="mb-3"><T phrase="dashboardGobierno.descriptores" /></Typography>
                             {
                                 this.currentData.forEach((division, i) => {
                                     if (division.titulo === this.state.subdivisionSeleccionada) {
@@ -513,7 +515,7 @@ class DashboardGobierno extends Component {
                                 })
                             }
                             <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong>Frecuencia absoluta</strong></Typography>
+                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.frecuencia-absoluta" /></strong></Typography>
                                 <Bar 
                                     data={{
                                         labels: ["Estado de descriptores"],
@@ -551,7 +553,7 @@ class DashboardGobierno extends Component {
                                 />
                             </div>
                             <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong>Frecuencia relativa</strong></Typography>
+                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.frecuencia-relativa" /></strong></Typography>
                                 <Doughnut
                                     data={() => {
                                         return {
@@ -586,7 +588,7 @@ class DashboardGobierno extends Component {
                             </div>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Typography variant="h6" className="mb-3">Estado de niveles</Typography>
+                            <Typography variant="h6" className="mb-3"><T phrase="dashboardGobierno.niveles" /></Typography>
                             {
                                 this.currentData.forEach((division, i) => {
                                     if (division.titulo === this.state.subdivisionSeleccionada) {
@@ -617,7 +619,7 @@ class DashboardGobierno extends Component {
                                 })
                             }
                             <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong>Distribución relativa</strong></Typography>
+                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.distribucion-relativa" /></strong></Typography>
                                 <Radar height={300} data={{
                                     labels: ["Integración", "Reorientación", "Evolución"],
                                     datasets: [{
