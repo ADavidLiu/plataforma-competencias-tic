@@ -62,22 +62,6 @@ class DashboardExtablecimientoEducativo extends Component {
 
         this.cargarRuta();
         this.calcularNoIngresos();
-        this.calcularNumDivisionesPerfiles();
-        this.dividirPerfiles();
-    }
-
-    calcularNumDivisionesPerfiles = () => {
-        const numDivisiones = Math.ceil(docentesCargados.length/4);
-        
-        this.setState({
-            numDivisionesPerfiles: numDivisiones
-        });
-
-        if (numDivisiones > 1) {
-            this.setState({
-                hasNextPerfiles: true
-            });
-        }
     }
 
     cargarRuta = () => {
@@ -93,20 +77,6 @@ class DashboardExtablecimientoEducativo extends Component {
         });
     }
 
-    dividirPerfiles = () => {
-        const copiaDocentes = [...docentesCargados];
-        const numDivisiones = Math.ceil(docentesCargados.length/4);
-        for (let i = 0; i < numDivisiones; i++) {
-            const divisionArray = docentesCargados.slice(0, 4);
-            this.state.perfilesDivididos.push(divisionArray);
-            copiaDocentes.splice(0, 4);
-        }
-
-        this.setState({
-            perfilesMostrados: this.state.perfilesDivididos[0]
-        });
-    }
-
     calcularNoIngresos = () => {
         let cuentaNoIngreso = this.state.cuentaNoIngreso;
 
@@ -117,51 +87,6 @@ class DashboardExtablecimientoEducativo extends Component {
                 });
 			}
 		});
-    }
-
-    checkCurrentDivisionPerfiles = () => {
-        if (this.state.currentDivisionPerfiles > 0) {
-            this.setState({
-                hasPreviousPerfiles: true
-            });
-        } else {
-            this.setState({
-                hasPreviousPerfiles: false
-            });
-        }
-        if (this.state.currentDivisionPerfiles === this.state.numDivisionesPerfiles - 1) {
-            this.setState({
-                hasNextPerfiles: false
-            });
-        } else {
-            this.setState({
-                hasNextPerfiles: true
-            });
-        }
-    }
-
-    cargarAnterioresPerfiles = () => {
-        if (this.state.currentDivisionPerfiles > 0) {
-            let copiaCurrentDivisionPerfiles = [...this.state.currentDivisionPerfiles];
-
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles -= 1]
-            });
-        }
-
-        this.checkCurrentDivisionPerfiles();
-    }
-    
-    cargarSiguientesPerfiles = () => {
-        if (this.state.currentDivisionPerfiles < this.state.numDivisionesPerfiles - 1) {
-            let copiaCurrentDivisionPerfiles = [...this.state.currentDivisionPerfiles];
-
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[copiaCurrentDivisionPerfiles += 1]
-            });
-        }
-
-        this.checkCurrentDivisionPerfiles();
     }
 
     render() {

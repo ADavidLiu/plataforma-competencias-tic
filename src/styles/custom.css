@@ -59,14 +59,18 @@ body {
     text-overflow: ellipsis;
 }
 
-@media screen and (min-width:500px) {
+.configuracion-img {
+    width: 100%;
+}
+
+@media screen and (min-width: 500px) {
     .text-ellipsis {
-        width: 17rem;
+        width: 60%;
     }
 }
 
-@media screen and (min-width:500px) {
-    .text-ellipsis {
-        width: 60%;
+@media screen and (min-width: 768px) {
+    .configuracion-img {
+        width: 50%;
     }
 }

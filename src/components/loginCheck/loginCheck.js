@@ -31,6 +31,7 @@ import Practicas from "../practicas/practicas";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
 import Configuracion from "../configuracion/configuracion";
+import Usuarios from "../usuarios/usuarios";
 import Pagina404 from "../pagina404/pagina404";
 
 class LoginCheck extends Component {
@@ -41,7 +42,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "ESTABLECIMIENTO",
+            tipo: "GOBIERNO",
             id: "loremipsum"
         }
 
@@ -63,9 +64,15 @@ class LoginCheck extends Component {
                     imgSrc: ""
                 }
                 break;
-            case "ESTABLECIMIENTO":
+            case "INSTITUCION":
                 this.datosPerfil = {
                     nombre: "Universidad Javeriana",
+                    imgSrc: ""
+                }
+                break;
+            case "ESTABLECIMIENTO":
+                this.datosPerfil = {
+                    nombre: "Universidad Javeriana - Cali",
                     imgSrc: ""
                 }
                 break;
@@ -164,7 +171,8 @@ class LoginCheck extends Component {
                                             <Route path="/practicas/" component={Practicas} />
                                             <Route path="/preentrevista/" component={Preentrevista} />
                                             <Route path="/entrevista/" component={Entrevista} />
-                                            <Route path="/configuracion/" component={Configuracion} />
+                                            <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
+                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                             <Route component={Pagina404} />
                                         </Switch>
                                     ) : ""

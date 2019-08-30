@@ -641,7 +641,7 @@ class Registro extends Component {
                                                     <Grid item xs={12} className="py-0 my-md-3">
                                                         {this.state.perfilIndividual.imgPerfil.src === "" ? <Typography variant="body2" className="mb-3"><T phrase="registro.label-img-perfil"/> <em><T phrase="opcional"/></em></Typography> : ""}
                                                         {this.state.perfilIndividual.imgPerfil.src !== "" ? (
-                                                            <img src={this.state.perfilIndividual.imgPerfil.src} className="w-100 mb-3"/>
+                                                            <img src={this.state.perfilIndividual.imgPerfil.src} alt="" className="w-100 mb-3"/>
                                                         ) : ""}
                                                         <Button
                                                             variant="contained"

@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 
+import { Redirect } from "react-router-dom";
 import { T } from "react-polyglot-hooks";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 
-import FormGroup from '@material-ui/core/FormGroup';
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
 
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -27,7 +25,7 @@ class Configuracion extends Component {
     constructor() {
         super();
 
-        /* Conectarse al backend para traer la información de la configuración actual */
+        /* Conectarse al backend para traer la información verdadera de la configuración actual */
         this.state = {
             versionActual: "1.0.0",
             versionSeleccionada: "1.0.0",
@@ -52,7 +50,9 @@ class Configuracion extends Component {
             usuario: "usuario-1",
             contrasenia: "loremipsum123",
             mostrarContrasenia: false,
-            isEditandoInfoCuenta: false
+            isEditandoInfoCuenta: false,
+            isEliminarChecked: false,
+            isCuentaEliminada: false
         }
     }
 
@@ -111,7 +111,26 @@ class Configuracion extends Component {
         }
     }
 
+    handleEliminarCheck = e => {
+        this.setState({
+            isEliminarChecked: e.target.checked
+        });
+    }
+
+    eliminarCuenta = () => {
+        this.setState({
+            isCuentaEliminada: true
+        });
+        
+        /* Enviar solicitud al backend */
+    }
+
     render() {
+        if (this.state.isCuentaEliminada) {
+            this.props.actualizarLogeado(false);
+            return <Redirect to="/"/>
+        }
+
         return (
             <React.Fragment>
                 <Grid container>
@@ -183,7 +202,7 @@ class Configuracion extends Component {
                         </Typography>
                         <hr/>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className="mb-5">
                         <Grid container spacing={5} alignItems="center">
                             <Grid item xs={6}>
                                 <Typography variant="subtitle2" className="mr-4">
@@ -191,7 +210,7 @@ class Configuracion extends Component {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                                <img src={this.state.imgPerfil.src} className="d-block w-50 mx-auto mb-3"/>
+                                <img src={this.state.imgPerfil.src} alt="" className="d-block configuracion-img mx-auto mb-3"/>
                                 <Button
                                     variant="outlined"
                                     component="label"
@@ -199,6 +218,7 @@ class Configuracion extends Component {
                                     fullWidth
                                     size="large"
                                     disabled={!this.state.isEditandoInfoCuenta}
+                                    className="text-center"
                                 >
                                     <T phrase="seleccionar-archivo"/>
                                     <input type="file" accept="image/*" onChange={this.actualizarImgPerfil} style={{ display: "none" }} />
@@ -267,6 +287,41 @@ class Configuracion extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid item xs={12} className="mb-5">
+                        <hr />
+                    </Grid>
+                    <Paper className="p-5 w-100">
+                        <Grid item xs={12}>
+                            <Typography variant="h6" className="mr-4" color="secondary">
+                                <T phrase="configuracion.label-eliminar"/>
+                            </Typography>
+                            <hr/>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={12}>
+                                <Grid container spacing={5} alignItems="center">
+                                    <Grid item xs={12} md={6}>
+                                        <Typography variant="body1" className="mr-4 mb-2">
+                                            <strong><T phrase="configuracion.label-eliminar-confirmacion"/></strong>
+                                        </Typography>
+                                        <Typography variant="body1" className="mr-4">
+                                            <T phrase="configuracion.label-eliminar-confirmacion-2"/>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} md={6} className="d-flex flex-column justify-content-end">
+                                        <FormControlLabel
+                                            control={<Checkbox style={{color: "#f50057"}} onChange={this.handleEliminarCheck} color="primary" 
+                                            checked={this.state.isEliminarChecked} name="isEliminarChecked" />}
+                                            label={<Typography variant="subtitle2" color="secondary"><T phrase="configuracion.label-radio"/></Typography>}
+                                        />
+                                        <Button disabled={!this.state.isEliminarChecked} onClick={this.eliminarCuenta} fullWidth color="secondary" variant="outlined">
+                                            <T phrase="configuracion.label-btn-eliminar"/>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Paper>
                 </Grid>
             </React.Fragment>
         );
