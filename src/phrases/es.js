@@ -202,7 +202,10 @@ const es = {
     "configuracion.ajustes-plataforma": "Ajustes de la plataforma",
     "configuracion.label-version": "Versión del instrumento",
     "configuracion.label-idioma": "Idioma de la interfaz",
-    "configuracion.ajustes-cuenta": "Ajustes de la cuenta",
+    "configuracion.ajustes-cuenta": "Mi cuenta",
+    "configuracion.label-imagen": "Imagen de perfil",
+    "configuracion.label-usuario": "Nombre de usuario",
+    "configuracion.label-contrasenia": "Contraseña",
 }
 
 export default es;

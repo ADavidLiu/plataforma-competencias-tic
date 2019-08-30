@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { T } from 'react-polyglot-hooks';
-import Helmet from "react-helmet";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -58,9 +57,6 @@ class Login extends Component {
 
         return (
 			<div className="mb-2 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-                <Helmet>
-                    <title><T phrase="login.titulo"/></title>
-                </Helmet>
 				<Typography
 					component="h1"
 					variant="h5"
