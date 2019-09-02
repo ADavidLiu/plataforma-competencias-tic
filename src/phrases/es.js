@@ -227,7 +227,7 @@ const es = {
     "usuarios.registro-pais": "País",
     "usuarios.registro-departamento": "Provincia, Estado o Departamento",
     "usuarios.registro-btn-agregar": "Crear usuarios",
-    "usuarios.registro-municipio": "Municipio / Ciudad",
+    "usuarios.registro-municipio": "Municipio o Ciudad",
     "usuarios.registro-nombre-ie": "Nombre",
     "usuarios.registro-idNacional": "ID Nacional",
     "usuarios.label-registro-establecimientos": "Registrar Establecimientos",
@@ -247,6 +247,14 @@ const es = {
     "usuarios.label-usuarios-docentes": "Lista de Docentes",
     "usuarios.registro-nombre-docente": "Nombre completo",
     "usuarios.registro-idEstablecimiento": "ID Nacional de la sede a la que pertenece",
+    "usuarios.acciones": "Acciones",
+    "usuarios.editar": "Editar información",
+    "usuarios.btn-guardar": "Guardar",
+    "usuarios.borrar": "Eliminar usuario",
+    "usuarios.ayuda-borrar-0": "¿Está seguro de que desea eliminar esta cuenta de usuario?",
+    "usuarios.ayuda-borrar-1": "Todas las cuentas que estén asociadas a ésta también serán borradas.",
+    "usuarios.btn-borrar": "Eliminar",
+    "usuarios.no-datos": "No hay datos",
 }
 
 export default es;

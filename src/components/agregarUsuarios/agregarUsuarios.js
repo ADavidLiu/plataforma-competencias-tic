@@ -235,7 +235,7 @@ class AgregarUsuarios extends Component {
             case "GOBIERNO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-5 mb-3" key={i}>
+                        <Paper className="p-4 mb-3" key={i}>
                             <Grid container>
                                 <Grid item xs={12}>
                                     <Grid container spacing={3} alignItems="flex-end">
@@ -314,7 +314,7 @@ class AgregarUsuarios extends Component {
             case "INSTITUCION":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-5 mb-3" key={i}>
+                        <Paper className="p-4 mb-3" key={i}>
                             <Grid container>
                                 <Grid item xs={12}>
                                     <Grid container spacing={3} alignItems="flex-end">
@@ -444,7 +444,7 @@ class AgregarUsuarios extends Component {
             case "ESTABLECIMIENTO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-5 mb-3" key={i}>
+                        <Paper className="p-4 mb-3" key={i}>
                             <Grid container>
                                 <Grid item xs={12}>
                                     <Grid container spacing={3} alignItems="flex-end">

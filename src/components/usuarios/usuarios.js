@@ -18,8 +18,7 @@ class Usuarios extends Component {
         super();
 
         this.state = {
-            divisionMostrada: 0,
-            didUsuariosLoad: false
+            divisionMostrada: 1
         }
     }
 
@@ -93,7 +92,7 @@ class Usuarios extends Component {
                         ) : (
                             <Grid container spacing={5}>
                                 <Grid item xs={12}>
-                                    <ListaUsuarios />
+                                    <ListaUsuarios userType={this.props.userType} />
                                 </Grid>
                             </Grid>
                         )

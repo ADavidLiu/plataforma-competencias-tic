@@ -63,6 +63,16 @@ body {
     width: 100%;
 }
 
+.scrolling-table-outer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.scrolling-table {
+    min-width: 100%;
+    white-space: nowrap;
+}
+
 @media screen and (min-width: 500px) {
     .text-ellipsis {
         width: 60%;
