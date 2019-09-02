@@ -30,19 +30,56 @@ class Usuarios extends Component {
     }
 
     render() {
+        let tabs;
+        switch (this.props.userType) {
+            case "GOBIERNO":
+                tabs = (
+                    <Tabs
+						indicatorColor="primary"
+						textColor="primary"
+						value={this.state.divisionMostrada}
+						onChange={this.handleTabChange}
+					>
+                        <Tab label={<T phrase="usuarios.label-registro-instituciones"/>}/>
+					    <Tab label={<T phrase="usuarios.label-usuarios-instituciones"/>}/> 
+					</Tabs>
+                );
+                break;
+            case "INSTITUCION":
+                tabs = (
+                    <Tabs
+                            indicatorColor="primary"
+                            textColor="primary"
+                            value={this.state.divisionMostrada}
+                            onChange={this.handleTabChange}
+                        >
+                        <Tab label={<T phrase="usuarios.label-registro-establecimientos"/>}/>
+                            <Tab label={<T phrase="usuarios.label-usuarios-establecimientos"/>}/> 
+                        </Tabs>
+                );
+                break;
+            case "ESTABLECIMIENTO":
+                tabs = (
+                    <Tabs
+                            indicatorColor="primary"
+                            textColor="primary"
+                            value={this.state.divisionMostrada}
+                            onChange={this.handleTabChange}
+                        >
+                        <Tab label={<T phrase="usuarios.label-registro-docentes"/>}/>
+                            <Tab label={<T phrase="usuarios.label-usuarios-docentes"/>}/> 
+                        </Tabs>
+                );
+                break;
+            default:
+                break;
+        }
+
         return (
             <Grid container spacing={5}>
                 <Grid item xs={12}>
                     <Paper>
-                        <Tabs
-							indicatorColor="primary"
-							textColor="primary"
-							value={this.state.divisionMostrada}
-							onChange={this.handleTabChange}
-						>
-                            <Tab label={<T phrase="usuarios.label-registro"/>}/>
-							<Tab label={<T phrase="usuarios.label-usuarios"/>}/>
-						</Tabs>
+                        { tabs }
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>
