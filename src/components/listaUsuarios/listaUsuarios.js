@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { T } from "react-polyglot-hooks";
+import locationData from "countrycitystatejson";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -21,6 +22,9 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Edit from "@material-ui/icons/EditOutlined";
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
@@ -29,8 +33,45 @@ import OpenInNew from "@material-ui/icons/OpenInNewOutlined";
 import { CircularProgress } from "@material-ui/core";
 
 class ListaUsuarios extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+        super(props);
+        
+        this.formularioPlaceholder = {};
+        switch (props.userType) {
+            case "GOBIERNO":
+                this.formularioPlaceholder = {
+                    idNacional: "",
+                    nombre: "",
+                    pais: "",
+                    departamento: "",
+                    municipio: ""
+                };
+                break;
+            case "INSTITUCION":
+                this.formularioPlaceholder = {
+                    nombre: "",
+                    departamento: "",
+                    direccion: "",
+                    tipoUbicacion: "",
+                    nombreUbicacion: "",
+                    zona: "",
+                    regimen: "",
+                    telefono: "",
+                    emailInstitucional: "",
+                    sitioWeb: "",
+                    idNacional: ""
+                };
+                break;
+            case "ESTABLECIMIENTO":
+                this.formularioPlaceholder = {
+                    idNacional: "",
+                    nombreCompleto: "",
+                    idEstablecimiento: ""
+                };
+                break;
+            default:
+                break;
+        }
 
 		this.state = {
             isLoading: true,
@@ -41,20 +82,27 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "1234",
                     nombre: "Institución Educativa John Doe",
-                    pais: "Colombia",
-                    departamento: "Valle del Cauca",
-                    municipio: "Cali"
+                    pais: "CO-Colombia",
+                    departamento: "Antioquia",
+                    municipio: "Abejorral"
                 },
                 {
                     idNacional: "5678",
                     nombre: "Universidad Jane Doe",
-                    pais: "Perú",
+                    pais: "PE-Perú",
                     departamento: "Arequipa",
-                    municipio: "Acarí"
+                    municipio: "Acari"
                 }
-            ]
+            ],
+            editingForm: this.formularioPlaceholder,
+            departamentos: [],
+            municipios: []
         };
     }
+
+    /* static getDerivedStateFromProps = (props, state) => {
+        
+    } */
     
     componentDidMount = () => {
         /* Simulando el delay al traer la información del backend */
@@ -102,13 +150,96 @@ class ListaUsuarios extends Component {
     editUser = id => {
         this.toggleEditor();
         
+        const encontrado = this.state.usuarios.find(usuario => usuario.idNacional === id);
+        const codigoPais = encontrado.pais.split("-")[0];
+
+        const states = locationData.getStatesByShort(codigoPais);
+        const cities = locationData.getCities(codigoPais, encontrado.departamento);
+        const statesMenuItems = [];
+        const citiesMenuItems = [];
+
+        states.forEach(state => {
+            statesMenuItems.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+        });
+        cities.forEach(city => {
+            citiesMenuItems.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
+        });
+
         this.setState({
-            activeID: id
+            activeID: id,
+            editingForm: {
+                idNacional: encontrado.idNacional,
+                nombre: encontrado.nombre,
+                pais: encontrado.pais,
+                departamento: encontrado.departamento,
+                municipio: encontrado.municipio
+            },
+            departamentos: statesMenuItems,
+            municipios: citiesMenuItems
         });
     }
 
+    saveUpdatedUser = () => {
+        this.toggleEditor();
+    }
+
     handleEdicionChange = e => {
-        
+        this.setState({
+            editingForm: {
+                ...this.state.editingForm,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
+    handleChangeLocationDropdown = e => {
+        this.setState({
+            editingForm: {
+                ...this.state.editingForm,
+                [e.target.name]: e.target.value
+            }
+        });
+
+        switch (e.target.name) {
+            case "pais":
+                this.setState({
+                    departamentos: [],
+                    municipios: []
+                });
+
+                const codigoPais = e.target.value.split("-")[0];
+                const states = locationData.getStatesByShort(codigoPais);
+                const statesMenuItems = [];
+
+                states.forEach(state => {
+                    statesMenuItems.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+                });
+
+                this.setState({
+                    departamentos: statesMenuItems
+                });
+                break;
+            case "departamento":
+                this.setState({
+                    municipios: []
+                });
+
+                const codigoPais2 = this.state.editingForm.pais.split("-")[0];
+                const cities = locationData.getCities(codigoPais2, e.target.value);
+                const citiesMenuItems = [];
+
+                cities.forEach(city => {
+                    citiesMenuItems.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
+                });
+
+                this.setState({
+                    municipios: citiesMenuItems
+                });
+                break;
+            case "municipio":
+            default:
+                break;
+        }
     }
 
 	render() {
@@ -140,7 +271,7 @@ class ListaUsuarios extends Component {
                                                         <TableRow key={usuario.idNacional}>
                                                             <TableCell>{usuario.idNacional}</TableCell>
                                                             <TableCell>{usuario.nombre}</TableCell>
-                                                            <TableCell>{usuario.pais}</TableCell>
+                                                            <TableCell>{usuario.pais.split("-")[1]}</TableCell>
                                                             <TableCell>{usuario.departamento}</TableCell>
                                                             <TableCell>{usuario.municipio}</TableCell>
                                                             <TableCell>
@@ -173,23 +304,79 @@ class ListaUsuarios extends Component {
                     </Paper>
                 );
 
-                const index = this.state.usuarios.findIndex(usuario => usuario.idNacional === this.state.activeID);
-
                 formularioEdicion = (
-                    <Grid container>
-                        <Grid item xs={12}>
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-idNacional"/></Typography>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
                                 name="idNacional"
-                                value={this.state.usuarios[index].idNacional}
+                                value={this.state.editingForm.idNacional}
                                 onChange={this.handleEdicionChange}
                             />
                         </Grid>
+                        <Grid item xs={12} md={8}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-nombre-ie"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="nombre"
+                                value={this.state.editingForm.nombre}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-pais"/></Typography>
+                            <Select
+                                className="w-100"
+                                value={this.state.editingForm.pais}
+                                onChange={this.handleChangeLocationDropdown}
+                                input={<OutlinedInput required name="pais"/>}
+                            >
+                                <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                <MenuItem value="PA-Panamá">Panamá</MenuItem>
+                                <MenuItem value="PE-Perú">Perú</MenuItem>
+                                <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                <MenuItem value="CL-Chile">Chile</MenuItem>
+                                <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-departamento"/></Typography>
+                            <Select
+                                className="w-100"
+                                value={this.state.editingForm.departamento}
+                                onChange={this.handleChangeLocationDropdown}
+                                input={<OutlinedInput required name="departamento"/>}
+                            >
+                                { this.state.departamentos }
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-municipio"/></Typography>
+                            <Select
+                                className="w-100"
+                                value={this.state.editingForm.municipio}
+                                onChange={this.handleChangeLocationDropdown}
+                                input={<OutlinedInput required name="municipio"/>}
+                            >
+                                { this.state.municipios }
+                            </Select>
+                        </Grid>
                     </Grid>
                 );
+                break;
+            default:
                 break;
         }
 
@@ -197,13 +384,13 @@ class ListaUsuarios extends Component {
             <React.Fragment>
                 { this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : tabla }
 
-                <Dialog open={this.state.isEditing} onClose={this.toggleEditor} aria-labelledby="form-dialog-title">
+                <Dialog open={this.state.isEditing} onClose={this.toggleEditor} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                     <DialogTitle id="form-dialog-title"><T phrase="usuarios.editar"/></DialogTitle>
                     <DialogContent>
                         { formularioEdicion }
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" onClick={this.toggleEditor}><T phrase="usuarios.btn-guardar"/></Button>
+                        <Button color="primary" onClick={this.saveUpdatedUser}><T phrase="usuarios.btn-guardar"/></Button>
                     </DialogActions>
                 </Dialog>
                 
