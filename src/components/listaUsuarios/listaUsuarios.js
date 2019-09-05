@@ -80,18 +80,9 @@ class ListaUsuarios extends Component {
             activeID: "",
             usuarios: [
                 {
-                    idNacional: "1234",
-                    nombre: "Institución Educativa John Doe",
-                    pais: "CO-Colombia",
-                    departamento: "Antioquia",
-                    municipio: "Abejorral"
-                },
-                {
-                    idNacional: "5678",
-                    nombre: "Universidad Jane Doe",
-                    pais: "PE-Perú",
-                    departamento: "Arequipa",
-                    municipio: "Acari"
+                    idNacional: "1234567890",
+                    nombreCompleto: "John Doe",
+                    idEstablecimiento: "0987-12"
                 }
             ],
             editingForm: this.formularioPlaceholder,
@@ -149,34 +140,69 @@ class ListaUsuarios extends Component {
 
     editUser = id => {
         this.toggleEditor();
-        
+
         const encontrado = this.state.usuarios.find(usuario => usuario.idNacional === id);
-        const codigoPais = encontrado.pais.split("-")[0];
+        
+        switch (this.props.userType) {
+            case "GOBIENRO":
+                const codigoPais = encontrado.pais.split("-")[0];
 
-        const states = locationData.getStatesByShort(codigoPais);
-        const cities = locationData.getCities(codigoPais, encontrado.departamento);
-        const statesMenuItems = [];
-        const citiesMenuItems = [];
-
-        states.forEach(state => {
-            statesMenuItems.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
-        });
-        cities.forEach(city => {
-            citiesMenuItems.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
-        });
-
-        this.setState({
-            activeID: id,
-            editingForm: {
-                idNacional: encontrado.idNacional,
-                nombre: encontrado.nombre,
-                pais: encontrado.pais,
-                departamento: encontrado.departamento,
-                municipio: encontrado.municipio
-            },
-            departamentos: statesMenuItems,
-            municipios: citiesMenuItems
-        });
+                const states = locationData.getStatesByShort(codigoPais);
+                const cities = locationData.getCities(codigoPais, encontrado.departamento);
+                const statesMenuItems = [];
+                const citiesMenuItems = [];
+        
+                states.forEach(state => {
+                    statesMenuItems.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+                });
+                cities.forEach(city => {
+                    citiesMenuItems.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
+                });
+        
+                this.setState({
+                    activeID: id,
+                    editingForm: {
+                        idNacional: encontrado.idNacional,
+                        nombre: encontrado.nombre,
+                        pais: encontrado.pais,
+                        departamento: encontrado.departamento,
+                        municipio: encontrado.municipio
+                    },
+                    departamentos: statesMenuItems,
+                    municipios: citiesMenuItems
+                });
+                break;
+            case "INSTITUCION":
+                this.setState({
+                    activeID: id,
+                    editingForm: {
+                        nombre: encontrado.nombre,
+                        departamento: encontrado.departamento,
+                        direccion: encontrado.direccion,
+                        tipoUbicacion: encontrado.tipoUbicacion,
+                        nombreUbicacion: encontrado.nombreUbicacion,
+                        zona: encontrado.zona,
+                        regimen: encontrado.regimen,
+                        telefono: encontrado.telefono,
+                        emailInstitucional: encontrado.emailInstitucional,
+                        sitioWeb: encontrado.sitioWeb,
+                        idNacional: encontrado.idNacional
+                    }
+                });
+                break;
+            case "ESTABLECIMIENTO":
+                this.setState({
+                    activeID: id,
+                    editingForm: {
+                        idNacional: encontrado.idNacional,
+                        nombreCompleto: encontrado.nombreCompleto,
+                        idEstablecimiento: encontrado.idEstablecimiento
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 
     saveUpdatedUser = () => {
@@ -382,6 +408,103 @@ class ListaUsuarios extends Component {
                             >
                                 { this.state.municipios }
                             </Select>
+                        </Grid>
+                    </Grid>
+                );
+                break;
+            case "INSTITUCION":
+                
+                break;
+            case "ESTABLECIMIENTO":
+                tabla = (
+                    <Paper className="scrolling-table-outer">
+                        <div className="scrolling-table-wrapper">
+                            <Table className="scrolling-table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell><T phrase="usuarios.registro-idNacional"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-nombre-docente"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-idEstablecimiento"/></TableCell>
+                                        <TableCell><T phrase="usuarios.acciones"/></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                {
+                                    this.state.usuarios.length > 0 ? (
+                                        <TableBody>
+                                            {
+                                                this.state.usuarios.map(usuario => {
+                                                    return (
+                                                        <TableRow key={usuario.idNacional}>
+                                                            <TableCell>{usuario.idNacional}</TableCell>
+                                                            <TableCell>{usuario.nombreCompleto}</TableCell>
+                                                            <TableCell>{usuario.idEstablecimiento}</TableCell>
+                                                            <TableCell>
+                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
+                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                <Link to={{
+                                                                    pathname: "/dashboard-docente",
+                                                                    state: {
+                                                                        docenteID: usuario.idNacional
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                </Link>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    );
+                                                })
+                                            }
+                                        </TableBody>
+                                    ) : (
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell colSpan="6" align="center"><T phrase="usuarios.no-datos"/></TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    )
+                                }
+                            </Table>
+                        </div>
+                    </Paper>
+                );
+
+                formularioEdicion = (
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-idNacional"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="idNacional"
+                                value={this.state.editingForm.idNacional}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-nombre-docente"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="nombreCompleto"
+                                value={this.state.editingForm.nombreCompleto}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={5}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-idEstablecimiento"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="idEstablecimiento"
+                                value={this.state.editingForm.idEstablecimiento}
+                                onChange={this.handleEdicionChange}
+                            />
                         </Grid>
                     </Grid>
                 );
