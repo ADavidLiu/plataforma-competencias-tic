@@ -32,6 +32,7 @@ import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
 import Configuracion from "../configuracion/configuracion";
 import Usuarios from "../usuarios/usuarios";
+import Procesos from "../procesos/procesos";
 import Pagina404 from "../pagina404/pagina404";
 
 class LoginCheck extends Component {
@@ -42,7 +43,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "INSTITUCION",
+            tipo: "DOCENTE",
             id: "loremipsum"
         }
 
@@ -121,7 +122,15 @@ class LoginCheck extends Component {
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
-                                            ) : ""
+                                            ) : (
+                                                <Tooltip title="Procesos" placement="bottom">
+                                                    <Link to="/procesos">
+                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                            <HowToReg />
+                                                        </IconButton>
+                                                    </Link>
+                                                </Tooltip>
+                                            )
                                         }
                                         <Tooltip title="Inicio" placement="bottom">
                                             <Link to="/">
@@ -172,7 +181,13 @@ class LoginCheck extends Component {
                                             <Route path="/preentrevista/" component={Preentrevista} />
                                             <Route path="/entrevista/" component={Entrevista} />
                                             <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
-                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                            {
+                                                this.state.tipo !== "DOCENTE" ? (
+                                                    <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                ) : (
+                                                    <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                )
+                                            }
                                             <Route component={Pagina404} />
                                         </Switch>
                                     ) : ""

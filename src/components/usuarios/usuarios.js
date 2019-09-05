@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { T } from "react-polyglot-hooks";
 
+import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -18,6 +20,7 @@ class Usuarios extends Component {
         super();
 
         this.state = {
+            datosID: "",
             divisionMostrada: 0
         }
     }
@@ -28,7 +31,29 @@ class Usuarios extends Component {
         });
     }
 
+    componentDidMount() {
+        this.cargarDatos(this.state.datosID);
+    }
+
+    cargarDatos = datosID => {
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
+    }
+
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        
         let tabs;
         switch (this.props.userType) {
             case "GOBIERNO":
