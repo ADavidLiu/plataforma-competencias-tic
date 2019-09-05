@@ -18,7 +18,7 @@ class Usuarios extends Component {
         super();
 
         this.state = {
-            divisionMostrada: 1
+            divisionMostrada: 0
         }
     }
 

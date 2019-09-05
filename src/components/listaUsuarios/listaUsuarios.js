@@ -50,6 +50,7 @@ class ListaUsuarios extends Component {
             case "INSTITUCION":
                 this.formularioPlaceholder = {
                     nombre: "",
+                    pais: "",
                     departamento: "",
                     direccion: "",
                     tipoUbicacion: "",
@@ -81,8 +82,17 @@ class ListaUsuarios extends Component {
             usuarios: [
                 {
                     idNacional: "1234567890",
-                    nombreCompleto: "John Doe",
-                    idEstablecimiento: "0987-12"
+                    nombre: "Colegio John Doe",
+                    pais: "CO-Colombia",
+                    departamento: "Antioquia",
+                    direccion: "Calle 12 #34-56",
+                    tipoUbicacion: "Barrio",
+                    nombreUbicacion: "Jane Doe",
+                    zona: "Urbana",
+                    regimen: "Oficial",
+                    telefono: "1234567890",
+                    emailInstitucional: "john@doe.edu.co",
+                    sitioWeb: "johndoe.edu.co"
                 }
             ],
             editingForm: this.formularioPlaceholder,
@@ -173,10 +183,20 @@ class ListaUsuarios extends Component {
                 });
                 break;
             case "INSTITUCION":
+                const pais = encontrado.pais;
+                const codigoPaisDpto = pais.split("-")[0];
+                const statesDpto = locationData.getStatesByShort(codigoPaisDpto);
+                
+                const statesMenuItemsDptos = [];
+                statesDpto.forEach(state => {
+                    statesMenuItemsDptos.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+                });
+            
                 this.setState({
                     activeID: id,
                     editingForm: {
                         nombre: encontrado.nombre,
+                        pais: encontrado.pais,
                         departamento: encontrado.departamento,
                         direccion: encontrado.direccion,
                         tipoUbicacion: encontrado.tipoUbicacion,
@@ -187,7 +207,8 @@ class ListaUsuarios extends Component {
                         emailInstitucional: encontrado.emailInstitucional,
                         sitioWeb: encontrado.sitioWeb,
                         idNacional: encontrado.idNacional
-                    }
+                    },
+                    departamentos: statesMenuItemsDptos
                 });
                 break;
             case "ESTABLECIMIENTO":
@@ -413,7 +434,214 @@ class ListaUsuarios extends Component {
                 );
                 break;
             case "INSTITUCION":
-                
+                tabla = (
+                    <Paper className="scrolling-table-outer">
+                        <div className="scrolling-table-wrapper">
+                            <Table className="scrolling-table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell><T phrase="usuarios.registro-ee-id"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-nombre"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-departamento"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-direccion"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-tipo-ubicacion"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-nombre-ubicacion"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-zona"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-regimen"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-telefono"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-email"/></TableCell>
+                                        <TableCell><T phrase="usuarios.registro-ee-web"/></TableCell>
+                                        <TableCell><T phrase="usuarios.acciones"/></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                {
+                                    this.state.usuarios.length > 0 ? (
+                                        <TableBody>
+                                            {
+                                                this.state.usuarios.map(usuario => {
+                                                    return (
+                                                        <TableRow key={usuario.idNacional}>
+                                                            <TableCell>{usuario.idNacional}</TableCell>
+                                                            <TableCell>{usuario.nombre}</TableCell>
+                                                            <TableCell>{usuario.departamento}</TableCell>
+                                                            <TableCell>{usuario.direccion}</TableCell>
+                                                            <TableCell>{usuario.tipoUbicacion}</TableCell>
+                                                            <TableCell>{usuario.nombreUbicacion}</TableCell>
+                                                            <TableCell>{usuario.zona}</TableCell>
+                                                            <TableCell>{usuario.regimen}</TableCell>
+                                                            <TableCell><a href={"tel:" + usuario.telefono} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.telefono}</a></TableCell>
+                                                            <TableCell><a href={"mailto:" + usuario.emailInstitucional} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.emailInstitucional}</a></TableCell>
+                                                            <TableCell><a href={"https://" + usuario.sitioWeb} style={{textDecoration: "none", color:"rgba(0,0,0,0.87)"}}>{usuario.sitioWeb}</a></TableCell>
+                                                            <TableCell>
+                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
+                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                <Link to={{
+                                                                    pathname: "/dashboard-docente",
+                                                                    state: {
+                                                                        docenteID: usuario.idNacional
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                </Link>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    );
+                                                })
+                                            }
+                                        </TableBody>
+                                    ) : (
+                                        <TableBody>
+                                            <TableRow>
+                                                <TableCell colSpan="12" align="center"><T phrase="usuarios.no-datos"/></TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    )
+                                }
+                            </Table>
+                        </div>
+                    </Paper>
+                );
+
+                formularioEdicion = (
+                    <Grid container spacing={4}>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-id"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="idNacional"
+                                value={this.state.editingForm.idNacional}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-nombre"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="nombre"
+                                value={this.state.editingForm.nombre}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-departamento"/></Typography>
+                            <Select
+                                className="w-100 mt-3"
+                                value={this.state.editingForm.departamento}
+                                onChange={this.handleEdicionChange}
+                                input={<OutlinedInput required name="departamento"/>}
+                            >
+                                { this.state.departamentos }
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-direccion"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="direccion"
+                                value={this.state.editingForm.direccion}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-tipo-ubicacion"/></Typography>
+                            <Select
+                                className="w-100 mt-3"
+                                value={this.state.editingForm.tipoUbicacion}
+                                onChange={this.handleEdicionChange}
+                                input={<OutlinedInput required name="tipoUbicacion"/>}
+                            >
+                                <MenuItem value="Barrio">{<T phrase="barrio"/>}</MenuItem>
+                                <MenuItem value="Localidad">{<T phrase="localidad"/>}</MenuItem>
+                                <MenuItem value="Vereda">{<T phrase="vereda"/>}</MenuItem>
+                                <MenuItem value="Corregimiento">{<T phrase="corregimiento"/>}</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-nombre-ubicacion"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="nombreUbicacion"
+                                value={this.state.editingForm.nombreUbicacion}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-zona"/></Typography>
+                            <Select
+                                className="w-100 mt-3"
+                                value={this.state.editingForm.zona}
+                                onChange={this.handleEdicionChange}
+                                input={<OutlinedInput required name="zona"/>}
+                            >
+                                <MenuItem value="Rural">{<T phrase="rural"/>}</MenuItem>
+                                <MenuItem value="Urbana">{<T phrase="urbana"/>}</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-regimen"/></Typography>
+                            <Select
+                                className="w-100 mt-3"
+                                value={this.state.editingForm.regimen}
+                                onChange={this.handleEdicionChange}
+                                input={<OutlinedInput required name="regimen"/>}
+                            >
+                                <MenuItem value="Oficial">{<T phrase="oficial"/>}</MenuItem>
+                                <MenuItem value="Privado">{<T phrase="privado"/>}</MenuItem>
+                                <MenuItem value="Concesión">{<T phrase="concesion"/>}</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid item xs={12} md={3}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-telefono"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="telefono"
+                                type="tel"
+                                value={this.state.editingForm.telefono}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={5}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-email"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="emailInstitucional"
+                                type="email"
+                                value={this.state.editingForm.emailInstitucional}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <Typography variant="body1"><T phrase="usuarios.registro-ee-web"/></Typography>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="sitioWeb"
+                                value={this.state.editingForm.sitioWeb}
+                                onChange={this.handleEdicionChange}
+                            />
+                        </Grid>
+                    </Grid>
+                );
                 break;
             case "ESTABLECIMIENTO":
                 tabla = (
@@ -458,7 +686,7 @@ class ListaUsuarios extends Component {
                                     ) : (
                                         <TableBody>
                                             <TableRow>
-                                                <TableCell colSpan="6" align="center"><T phrase="usuarios.no-datos"/></TableCell>
+                                                <TableCell colSpan="4" align="center"><T phrase="usuarios.no-datos"/></TableCell>
                                             </TableRow>
                                         </TableBody>
                                     )

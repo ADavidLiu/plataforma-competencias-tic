@@ -33,6 +33,7 @@ class AgregarUsuarios extends Component {
             },
             nuevoEstablecimiento: {
                 nombre: "",
+                pais: "",
                 departamento: "",
                 direccion: "",
                 tipoUbicacion: "",
@@ -49,6 +50,7 @@ class AgregarUsuarios extends Component {
                 nombreCompleto: "",
                 idEstablecimiento: ""
             },
+            paisCodigoInstitucion: "CO",
             paisesSeleccionados: [],
             departamentosEncontrados: [],
             municipiosEncontrados: []
@@ -73,6 +75,7 @@ class AgregarUsuarios extends Component {
             case "INSTITUCION":
                 this.state.nuevosUsuarios.push({
                     nombre: "",
+                    pais: "",
                     departamento: "",
                     direccion: "",
                     tipoUbicacion: "",
@@ -92,6 +95,8 @@ class AgregarUsuarios extends Component {
                     idEstablecimiento: ""
                 });
                 break;
+            default:
+                break;
         }
     }
 
@@ -105,7 +110,7 @@ class AgregarUsuarios extends Component {
         this.state.municipiosEncontrados.push([]);
 
         this.setState({
-            numNuevosUsuarios: this.state.numNuevosUsuarios += 1
+            numNuevosUsuarios: this.state.numNuevosUsuarios + 1
         });
     }
 
@@ -116,7 +121,7 @@ class AgregarUsuarios extends Component {
         this.state.municipiosEncontrados.splice(this.state.municipiosEncontrados.length - 1, 1);
 
         this.setState({
-            numNuevosUsuarios: this.state.numNuevosUsuarios -= 1
+            numNuevosUsuarios: this.state.numNuevosUsuarios - 1
         });
     }
 
@@ -218,6 +223,13 @@ class AgregarUsuarios extends Component {
         const itemsUsers = [];
         let states = [];
         let cities = [];
+
+        if (this.props.userType === "INSTITUCION") {
+            const dptosEncontrados = locationData.getStatesByShort(this.state.paisCodigoInstitucion);
+
+            this.state.departamentosEncontrados.push(dptosEncontrados);
+        }
+
         this.state.departamentosEncontrados.forEach((item, i) => {
             states[i] = [];
             item.forEach((dpto, j) => {
@@ -319,6 +331,17 @@ class AgregarUsuarios extends Component {
                                 <Grid item xs={12}>
                                     <Grid container spacing={3} alignItems="flex-end">
                                         <Grid item xs={6} md={3} lg={2}>
+                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-id"/></strong></Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                required
+                                                fullWidth
+                                                name="idNacional"
+                                                value={this.state.nuevosUsuarios[i].idNacional}
+                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6} md={3} lg={2}>
                                             <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-nombre"/></strong></Typography>
                                             <TextField
                                                 variant="outlined"
@@ -330,15 +353,15 @@ class AgregarUsuarios extends Component {
                                             />
                                         </Grid>
                                         <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-departamento"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="departamento"
+                                            <Typography variant="body1" className="text-center"><strong><T phrase="usuarios.registro-ee-departamento"/></strong></Typography>
+                                            <Select
+                                                className="w-100 mt-3"
                                                 value={this.state.nuevosUsuarios[i].departamento}
                                                 onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
+                                                input={<OutlinedInput required name="departamento"/>}
+                                            >
+                                                { states[i] }
+                                            </Select>
                                         </Grid>
                                         <Grid item xs={6} md={3} lg={2}>
                                             <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-direccion"/></strong></Typography>
@@ -401,7 +424,7 @@ class AgregarUsuarios extends Component {
                                                 <MenuItem value="Concesión">{<T phrase="concesion"/>}</MenuItem>
                                             </Select>
                                         </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
+                                        <Grid item xs={12} md={3} lg={2}>
                                             <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-telefono"/></strong></Typography>
                                             <TextField
                                                 variant="outlined"
@@ -412,7 +435,7 @@ class AgregarUsuarios extends Component {
                                                 onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
                                             />
                                         </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
+                                        <Grid item xs={12} md={5} lg={3}>
                                             <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-email"/></strong></Typography>
                                             <TextField
                                                 variant="outlined"
@@ -423,7 +446,7 @@ class AgregarUsuarios extends Component {
                                                 onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
                                             />
                                         </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
+                                        <Grid item xs={12} md={4} lg={3}>
                                             <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-web"/></strong></Typography>
                                             <TextField
                                                 variant="outlined"
