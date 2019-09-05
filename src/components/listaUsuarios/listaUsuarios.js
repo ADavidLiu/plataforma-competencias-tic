@@ -181,6 +181,16 @@ class ListaUsuarios extends Component {
 
     saveUpdatedUser = () => {
         this.toggleEditor();
+
+        const updatedUsers = [...this.state.usuarios];
+        let updatedUser = updatedUsers.find(user => user.idNacional === this.state.activeID);
+        const updatedUserIndex = updatedUsers.findIndex(user => user.idNacional === this.state.activeID);
+        updatedUser = this.state.editingForm;
+        updatedUsers[updatedUserIndex] = updatedUser;
+
+        this.setState({
+            usuarios: updatedUsers
+        });
     }
 
     handleEdicionChange = e => {
