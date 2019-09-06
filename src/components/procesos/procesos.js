@@ -1,37 +1,404 @@
 import React, { Component } from "react";
 
+import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+import { T } from "react-polyglot-hooks";
+import sortBy from "sort-by";
+
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import FormControl from "@material-ui/core/FormControl";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import Avatar from '@material-ui/core/Avatar';
+import Today from "@material-ui/icons/Today";
+import Launch from "@material-ui/icons/Launch";
+import Build from "@material-ui/icons/Build";
+
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 
 class Procesos extends Component {
     constructor() {
         super();
+
+        this.state = {
+            procesos: [
+                {
+                    version: "1.0.1",
+                    currentTab: 0,
+                    fecha: "03-08-2019",
+                    fechaInicio: "29-06-2019",
+                    fechaFinal: "03-08-2019",
+                    vez: 2,
+                    prueba: {
+                        correctas: 15,
+                        incorrectas: 16
+                    },
+                    practica: {
+                        calificacion: 1,
+                    },
+                    preentrevista: [
+                        {
+                            descriptor: "I2a",
+                            calificacion: 1,
+                        },
+                        {
+                            descriptor: "I1b",
+                            calificacion: 1,
+                        }
+                    ],
+                    entrevista: [
+                        {
+                            descriptor: "R1tb",
+                            calificacion: 1,
+                        },
+                        {
+                            descriptor: "E2ub",
+                            calificacion: 2,
+                        }
+                    ],
+                    reporte: {
+                        indiceTic: "1-1-1",
+                        descripcion: "Proident magna esse elit laboris laborum in amet ut adipisicing. Adipisicing dolor duis et amet laborum commodo nulla esse eu anim commodo nostrud fugiat nisi. Et officia proident mollit sit enim minim mollit et qui dolore. Sunt magna sint nostrud pariatur quis consectetur aliqua anim reprehenderit reprehenderit. In culpa reprehenderit Lorem Lorem officia irure veniam laborum adipisicing officia veniam nisi aute."
+                    },
+                    cursos: [
+                        {
+                            nombre: "Nombre curso 4",
+                            descripcion: "In ex eu culpa cupidatat do aute do irure ad enim. Reprehenderit anim ipsum aliquip velit tempor id ad eiusmod cillum reprehenderit sint velit quis aute. Proident non deserunt id magna consectetur excepteur magna aliquip.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        },
+                        {
+                            nombre: "Nombre curso 5",
+                            descripcion: "Amet ut occaecat nostrud veniam velit aliquip proident ullamco. Aliqua commodo velit nisi do consectetur cupidatat incididunt ea laboris eiusmod et voluptate veniam incididunt. Et eiusmod fugiat adipisicing ut. Eu est minim in pariatur. Enim voluptate ipsum labore ad enim ex velit commodo cillum aute velit cillum in.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        },
+                        {
+                            nombre: "Nombre curso 6",
+                            descripcion: "In deserunt ex do aliquip pariatur cupidatat velit nisi nostrud eiusmod et labore sit. Duis eu adipisicing ad ut incididunt ea Lorem. Sit Lorem consequat cillum ullamco minim cupidatat adipisicing aute amet. Est commodo est est voluptate aute. In non consectetur mollit sunt aute velit est aute.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        }
+                    ]
+                },
+                {
+                    version: "1.0.0",
+                    currentTab: 0,
+                    fecha: "20-11-2018",
+                    fechaInicio: "15-10-2018",
+                    fechaFinal: "20-11-2018",
+                    vez: 1,
+                    prueba: {
+                        correctas: 28,
+                        incorrectas: 3
+                    },
+                    practica: {
+                        calificacion: 2,
+                    },
+                    preentrevista: [
+                        {
+                            descriptor: "I2a",
+                            calificacion: 2,
+                        },
+                        {
+                            descriptor: "I1b",
+                            calificacion: 1,
+                        }
+                    ],
+                    entrevista: [
+                        {
+                            descriptor: "R1tb",
+                            calificacion: 1,
+                        },
+                        {
+                            descriptor: "E2ub",
+                            calificacion: 3,
+                        }
+                    ],
+                    reporte: {
+                        indiceTic: "2-2-1",
+                        descripcion: "Quis minim laborum duis velit quis ullamco irure est sunt cupidatat qui et in. Cupidatat deserunt eu aliquip in elit aliquip incididunt sit reprehenderit magna voluptate veniam. Proident quis deserunt dolor sunt. Aliqua ex aliqua tempor anim occaecat deserunt mollit aliqua in velit."
+                    },
+                    cursos: [
+                        {
+                            nombre: "Nombre curso 1",
+                            descripcion: "Dolore pariatur mollit exercitation eiusmod veniam qui commodo. Eu reprehenderit exercitation cupidatat fugiat occaecat consequat consequat incididunt non.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        },
+                        {
+                            nombre: "Nombre curso 2",
+                            descripcion: "Officia deserunt do ipsum sit enim consectetur ipsum ullamco non. Officia eiusmod aute dolor velit tempor amet labore aliquip velit incididunt. Irure minim aute quis anim ullamco minim voluptate sint.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        },
+                        {
+                            nombre: "Nombre curso 3",
+                            descripcion: "Nostrud id officia in ipsum ullamco ex pariatur. Nostrud ullamco adipisicing et ex officia nisi esse ullamco. Deserunt adipisicing ea dolor fugiat. Excepteur commodo dolore non dolor tempor commodo irure ipsum.",
+                            imgSrc: "https://via.placeholder.com/400",
+                            link: "https://www.google.com"
+                        }
+                    ]
+                }
+            ],
+            filtros: {
+                categoria: "fecha",
+                orden: "descendente"
+            }
+        }
+    }
+
+    handleTabChange = (e, newTabIndex, index) => {
+        const copiaProcesos = [...this.state.procesos];
+        copiaProcesos[index].currentTab = newTabIndex;
+
+        this.setState({
+            procesos: copiaProcesos
+        });
+    }
+
+    handleFiltroChange = e => {
+        const copiaProcesos = [...this.state.procesos];
+
+        switch (e.target.name) {
+            case "categoria":
+                const dash = this.state.filtros.orden === "descendente" ? "-" : "";
+
+                switch (e.target.value) {
+                    case "fecha":
+                        copiaProcesos.sort(sortBy(`${dash}fecha`));
+                        break;
+                    case "version":
+                        copiaProcesos.sort(sortBy(`${dash}version`));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "orden":
+                switch (e.target.value) {
+                    case "descendente":
+                        copiaProcesos.sort(sortBy(`-${this.state.filtros.categoria}`));
+                        break;
+                    case "ascendente":
+                        copiaProcesos.sort(sortBy(this.state.filtros.categoria));
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
+        this.setState({
+            procesos: copiaProcesos,
+            filtros: {
+                ...this.state.filtros,
+                [e.target.name]: e.target.value
+            }
+        });
     }
 
     render() {
         return(
-            <Grid container spacing={5}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <ExpansionPanel>
-                        <ExpansionPanelSummary
-                        expandIcon={<ExpandMoreIcon />}>
-                        <Typography>Expansion Panel 1</Typography>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                        <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
-                        </Typography>
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
+                    <Typography variant="h5">
+                        <T phrase="procesos.titulo"/>
+                    </Typography>
                 </Grid>
+                <Grid item xs={12}>
+                    <Grid container alignItems="flex-end">
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Typography variant="body1">
+                                <strong><T phrase="procesos.total"/> {this.state.procesos.length}</strong>
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} md={8} lg={9} className="d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
+                            <FormControl>
+                                <Typography variant="body1" className="mb-2"><strong><T phrase="filtros.categoria"/></strong></Typography>
+                                <Select
+                                    value={this.state.filtros.categoria}
+                                    onChange={this.handleFiltroChange}
+                                    input={<OutlinedInput required name="categoria"/>}
+                                >
+                                    <MenuItem value="fecha"><T phrase="filtros.fecha-finalizacion"/></MenuItem>
+                                    <MenuItem value="version"><T phrase="filtros.version"/></MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl className="ml-3">
+                                <Typography variant="body1" className="mb-2"><strong><T phrase="filtros.orden"/></strong></Typography>
+                                <Select
+                                    value={this.state.filtros.orden}
+                                    onChange={this.handleFiltroChange}
+                                    input={<OutlinedInput required name="orden"/>}
+                                >
+                                    <MenuItem value="descendente"><T phrase="filtros.descendente"/></MenuItem>
+                                    <MenuItem value="ascendente"><T phrase="filtros.ascendente"/></MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                    <hr/>
+                </Grid>
+                {
+                    this.state.procesos.map((proceso, i) => (
+                        <Grid item xs={12} key={proceso.vez}>
+                            <ExpansionPanel>
+                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                    <div className="d-flex align-items-center">
+                                        <Avatar className="mr-3" style={{backgroundColor: "#3f51b5"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
+                                        <div className="d-md-flex align-items-center">
+                                            <Typography className="d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong><T phrase="procesos.fecha-inicio"/></strong>&nbsp;{proceso.fechaInicio}</Typography>
+                                            <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong><T phrase="procesos.fecha-final"/></strong>&nbsp;{proceso.fechaFinal}</Typography>
+                                            <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Build className="mr-2" fontSize="small" /><strong><T phrase="procesos.version"/></strong>&nbsp;{proceso.version}</Typography>
+                                        </div>
+                                    </div>
+                                </ExpansionPanelSummary>
+                                <ExpansionPanelDetails className="d-block">
+                                    <Typography variant="h6" className="mb-2"><T phrase="indice-tic"/>: {proceso.reporte.indiceTic}</Typography>
+                                    <Typography variant="body1">{proceso.reporte.descripcion}</Typography>
+                                    <hr/>
+                                    <Typography variant="h6" className="mb-2"><T phrase="procesos.resultados"/></Typography>
+                                    <Tabs
+                                        indicatorColor="primary"
+                                        variant="scrollable"
+                                        className="mb-4"
+                                        value={this.state.procesos[i].currentTab}
+                                        onChange={(e, newValue) => { this.handleTabChange(e, newValue, i); }}>
+                                            <Tab label={<T phrase="procesoPaso.1"/>} />
+                                            <Tab label={<T phrase="practicas.titulo"/>} />
+                                            <Tab label={<T phrase="procesoPaso.3"/>} />
+                                            <Tab label={<T phrase="procesoPaso.4"/>} />
+                                            <Tab label={<T phrase="dashboardGobierno.ruta"/>} />
+                                    </Tabs>
+                                    {
+                                        this.state.procesos[i].currentTab === 0 ? (
+                                            <Grid container spacing={3}>
+                                                <Grid item xs={12}>
+                                                    <Link to={{
+                                                        pathname: "/prueba",
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE"
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
+                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                        </Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={6} md={4}>
+                                                    <Paper className="p-3">
+                                                        <Typography variant="h4" color="primary"><strong>{proceso.prueba.correctas}</strong></Typography>
+                                                        <Typography variant="subtitle2"><T phrase="procesos.prueba-correctas"/></Typography>
+                                                    </Paper>
+                                                </Grid>
+                                                <Grid item xs={6} md={4}>
+                                                    <Paper className="p-3">
+                                                        <Typography variant="h4" color="primary"><strong>{proceso.prueba.incorrectas}</strong></Typography>
+                                                        <Typography variant="subtitle2"><T phrase="procesos.prueba-incorrectas"/></Typography>
+                                                    </Paper>
+                                                </Grid>
+                                            </Grid>
+                                        ) : this.state.procesos[i].currentTab === 1 ? (
+                                            <Grid container spacing={3}>
+                                                <Grid item xs={12}>
+                                                    <Link to={{
+                                                        pathname: "/practicas",
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE"
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
+                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                        </Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={6} md={4}>
+                                                    <Paper className="p-3">
+                                                        <Typography variant="h4" color="primary"><strong>{proceso.practica.calificacion}</strong></Typography>
+                                                        <Typography variant="subtitle2"><T phrase="calificacion"/></Typography>
+                                                    </Paper>
+                                                </Grid>
+                                            </Grid>
+                                        ) : this.state.procesos[i].currentTab === 2 ? (
+                                            <Grid container spacing={3}>
+                                                <Grid item xs={12}>
+                                                    <Link to={{
+                                                        pathname: "/preentrevista",
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE"
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
+                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                        </Button>
+                                                    </Link>
+                                                </Grid>
+                                                {
+                                                    proceso.preentrevista.map(item => (
+                                                        <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
+                                                            <Paper className="p-3">
+                                                                <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
+                                                                <Typography variant="subtitle2"><T phrase="descriptor"/> <strong>{item.descriptor}</strong></Typography>
+                                                            </Paper>
+                                                        </Grid>
+                                                    ))
+                                                }
+                                            </Grid>
+                                        ) : this.state.procesos[i].currentTab === 3 ? (
+                                            <Grid container spacing={3}>
+                                                <Grid item xs={12}>
+                                                    <Link to={{
+                                                        pathname: "/entrevista",
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE"
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
+                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                        </Button>
+                                                    </Link>
+                                                </Grid>
+                                                {
+                                                    proceso.entrevista.map(item => (
+                                                        <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
+                                                            <Paper className="p-3">
+                                                                <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
+                                                                <Typography variant="subtitle2"><T phrase="descriptor"/> <strong>{item.descriptor}</strong></Typography>
+                                                            </Paper>
+                                                        </Grid>
+                                                    ))
+                                                }
+                                            </Grid>
+                                        ) : this.state.procesos[i].currentTab === 4 ? (
+                                            <RutaAprendizaje cursos={proceso.cursos} />
+                                        ) : ""
+                                    }
+                                </ExpansionPanelDetails>
+                            </ExpansionPanel>
+                        </Grid>
+                    ))
+                }
             </Grid>
         );
     }

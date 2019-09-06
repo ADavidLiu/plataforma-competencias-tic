@@ -19,6 +19,7 @@ import HowToReg from '@material-ui/icons/HowToReg';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import ViewList from '@material-ui/icons/ViewList';
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -126,7 +127,7 @@ class LoginCheck extends Component {
                                                 <Tooltip title="Procesos" placement="bottom">
                                                     <Link to="/procesos">
                                                         <IconButton style={{ color: "#ffffff" }}>
-                                                            <HowToReg />
+                                                            <ViewList />
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
