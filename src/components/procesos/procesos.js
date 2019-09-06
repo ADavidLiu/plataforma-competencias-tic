@@ -37,7 +37,7 @@ class Procesos extends Component {
                 {
                     version: "1.0.1",
                     currentTab: 0,
-                    fecha: "03-08-2019",
+                    fecha: "2019-08-03",
                     fechaInicio: "29-06-2019",
                     fechaFinal: "03-08-2019",
                     vez: 2,
@@ -96,7 +96,7 @@ class Procesos extends Component {
                 {
                     version: "1.0.0",
                     currentTab: 0,
-                    fecha: "20-11-2018",
+                    fecha: "2018-11-20",
                     fechaInicio: "15-10-2018",
                     fechaFinal: "20-11-2018",
                     vez: 1,
