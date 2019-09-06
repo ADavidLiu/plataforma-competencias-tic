@@ -38,11 +38,13 @@ class EntrevistaRevision extends Component {
             {
                 descriptores: ["E1ub"],
                 definicion: "Como consecuencia de la incorporación de las TIC propone cambios significativos en otros escenarios educativos replicando contenidos, actividades y/o evaluaciones.",
+                respuestaOriginal: "Ipsum culpa laboris sit pariatur sunt aliqua id esse consequat ut commodo. Ad nostrud magna proident non voluptate magna ullamco. Non sit aliquip aute consectetur Lorem culpa. Laborum culpa amet et est voluptate adipisicing. Ex minim nulla in labore cupidatat amet voluptate sunt eu eu. Consectetur ullamco esse dolore elit deserunt et.",
                 evidencia: "Ejemplo de modificaciones de otros escenarios educativos."
             },
             {
                 descriptores: ["I1ta"],
                 definicion: "Durante el diseño de escenarios educativos adiciona, suprime y reorganiza las herramientas TIC para facilitar la presentación de contenidos, el almacenamiento, la comunicación, la transmisión e intercambio de información y el acceso y búsqueda de información de calidad, considerando sugerencias (grupos de apoyo, colegas y estudiantes, etc.).",
+                respuestaOriginal: "Ipsum laborum esse aliqua esse occaecat id dolor enim deserunt tempor aliqua aliqua labore. Qui pariatur ut mollit sit labore mollit cillum sint eiusmod. Dolor cupidatat minim labore est.",
                 evidencia: "Cambios en (1) la manera de presentar los contenidos; (2) la forma de almacenar y compartir información; (3) manera de facilitar el acceso a información de calidad."
             }
         ]
@@ -135,6 +137,7 @@ class EntrevistaRevision extends Component {
                                                     <Grid item xs={12} sm={8} md={9}>
                                                         <Typography variant="body1" className="mb-3"><strong>Descriptores:</strong> {pregunta.descriptores.map(descriptor => "• " + descriptor)}</Typography>
                                                         <Typography variant="body1" className="mb-3"><strong>Definición:</strong> {pregunta.definicion}</Typography>
+                                                        <Typography variant="body1" className="mb-3"><strong>Respuesta original:</strong> {pregunta.respuestaOriginal}</Typography>
                                                         <Typography variant="body1"><strong>Evidencia requerida:</strong> {pregunta.evidencia}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} className="d-sm-none py-0">

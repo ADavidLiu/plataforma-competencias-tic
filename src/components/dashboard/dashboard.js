@@ -28,6 +28,12 @@ class Dashboard extends Component {
             case "EVALUADOR":
                 this.dashboard = <DashboardEvaluador />;
                 break;
+            case "SUPERADMIN":
+                
+                break;
+            case "ADMIN":
+                
+                break;
             default:
                 break;
         }

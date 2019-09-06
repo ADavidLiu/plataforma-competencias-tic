@@ -48,6 +48,7 @@ class PreentrevistaRevision extends Component {
             {
                 descriptores: ["I1ta", "R1tc"],
                 label: "¿Ha realizado modificaciones al diseño de la práctica educativa apoyada en TIC que presentó?",
+                evidencia: "https://www.google.com",
                 respuestas: ["Sí"],
                 subPregunta: {
                     label: "¿Para qué ha modificado el diseño de su práctica educativa apoyada en TIC? Puede elegir más de una opción.",
@@ -196,26 +197,38 @@ class PreentrevistaRevision extends Component {
                                             <Grid item xs={12} sm={8} md={9}>
                                                 {this.state.preguntasPreparadas[i]}
                                             </Grid>
-                                            <Grid item xs={12} sm={4} md={3}>
-                                                <Typography variant="body1" className="mb-3"><strong>Calificación</strong></Typography>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <InputLabel htmlFor={`calificacion-${i}`}>Seleccione un valor *</InputLabel>
-                                                    <Select
-                                                        required
-                                                        value={
-                                                            this.state.calificaciones[i] ? (
-                                                                this.state.calificaciones[i].calificacion
-                                                            ) : ""
-                                                        }
-                                                        onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
-                                                        input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                    >
-                                                        <MenuItem value={1}>1</MenuItem>
-                                                        <MenuItem value={2}>2</MenuItem>
-                                                        <MenuItem value={3}>3</MenuItem>
-                                                        <MenuItem value={4}>4</MenuItem>
-                                                    </Select>
-                                                </FormControl>
+                                            <Grid item xs={12} sm={4} md={3} className="d-md-flex flex-column">
+                                                <div className="order-md-2 mt-md-4">
+                                                    {
+                                                        pregunta.evidencia ? (
+                                                            <a href={pregunta.evidencia}>
+                                                                <Button color="primary" variant="contained"
+                                                                fullWidth>Descargar evidencia</Button>
+                                                            </a>
+                                                        ) : ""
+                                                    }
+                                                </div>
+                                                <div className="order-md-1">
+                                                    <Typography variant="body1" className="mb-3"><strong>Calificación</strong></Typography>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <InputLabel htmlFor={`calificacion-${i}`}>Seleccione un valor *</InputLabel>
+                                                        <Select
+                                                            required
+                                                            value={
+                                                                this.state.calificaciones[i] ? (
+                                                                    this.state.calificaciones[i].calificacion
+                                                                ) : ""
+                                                            }
+                                                            onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
+                                                            input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                        >
+                                                            <MenuItem value={1}>1</MenuItem>
+                                                            <MenuItem value={2}>2</MenuItem>
+                                                            <MenuItem value={3}>3</MenuItem>
+                                                            <MenuItem value={4}>4</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </div>
                                             </Grid>
                                         </Grid>
                                     </Paper>

@@ -19,7 +19,8 @@ import HowToReg from '@material-ui/icons/HowToReg';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import ViewList from '@material-ui/icons/ViewList';
+import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
+import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -38,6 +39,7 @@ import Pagina404 from "../pagina404/pagina404";
 import PracticaRevision from "../practicas/practicasRevision";
 import PreentrevistaRevision from "../preentrevista/preentrevistaRevision";
 import EntrevistaRevision from "../entrevista/entrevistaRevision";
+import Calificaciones from "../calificaciones/calificaciones";
 
 class LoginCheck extends Component {
     constructor() {
@@ -89,9 +91,15 @@ class LoginCheck extends Component {
                 break;
             case "EVALUADOR":
                 this.datosPerfil = {
-                    nombre: "John Doe",
+                    nombre: "Jane Doe",
                     imgSrc: ""
                 }
+                break;
+            case "SUPERADMIN":
+                
+                break;
+            case "ADMIN":
+
                 break;
             default:
                 break;
@@ -105,6 +113,27 @@ class LoginCheck extends Component {
     }
 
     render() {
+        let tituloLabelUsuarios = "";
+        switch (this.state.tipo) {
+            case "GOBIERNO":
+                tituloLabelUsuarios = <T phrase="instituciones-corto"/>;
+                break;
+            case "INSTITUCION":
+                tituloLabelUsuarios = <T phrase="establecimientos-corto"/>;
+                break;
+            case "ESTABLECIMIENTO":
+                tituloLabelUsuarios = <T phrase="docentes"/>;
+                break;
+            case "SUPERADMIN":
+            case "ADMIN":
+                tituloLabelUsuarios = <T phrase="gobiernos"/>
+                break;
+            case "DOCENTE":
+            case "EVALUADOR":
+            default:
+                break;
+        }
+
         return (
             <I18n locale={this.state.locale} phrases={frases[this.state.locale]}>
                 <Router>
@@ -124,23 +153,37 @@ class LoginCheck extends Component {
                                             </Link>
                                         </Tooltip>
                                         {
-                                            this.state.tipo !== "DOCENTE" ? (
-                                                <Tooltip title="Usuarios" placement="bottom">
+                                            this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
+                                                <Tooltip title={tituloLabelUsuarios} placement="bottom">
                                                     <Link to="/usuarios">
                                                         <IconButton style={{ color: "#ffffff" }}>
                                                             <HowToReg />
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
-                                            ) : (
+                                            ) : ""
+                                        }
+                                        {
+                                            this.state.tipo === "DOCENTE" ? (
                                                 <Tooltip title="Procesos" placement="bottom">
                                                     <Link to="/procesos">
                                                         <IconButton style={{ color: "#ffffff" }}>
-                                                            <ViewList />
+                                                            <FormatListNumbered />
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
-                                            )
+                                            ) : ""
+                                        }
+                                        {
+                                            this.state.tipo === "EVALUADOR" ? (
+                                                <Tooltip title="Calificaciones" placement="bottom">
+                                                    <Link to="/calificaciones">
+                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                            <PlaylistAddCheck />
+                                                        </IconButton>
+                                                    </Link>
+                                                </Tooltip>
+                                            ) : ""
                                         }
                                         <Tooltip title="Inicio" placement="bottom">
                                             <Link to="/">
@@ -191,10 +234,14 @@ class LoginCheck extends Component {
                                             <Route path="/preentrevista/" component={Preentrevista} />
                                             <Route path="/entrevista/" component={Entrevista} />
                                             <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
-                                            <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                             {
-                                                this.state.tipo !== "DOCENTE" || this.state.tipo !== "EVALUADOR" ? (
+                                                this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
                                                     <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                ) : ""
+                                            }
+                                            {
+                                                this.state.tipo === "DOCENTE" ? (
+                                                    <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                 ) : ""
                                             }
                                             {
@@ -203,6 +250,7 @@ class LoginCheck extends Component {
                                                         <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                         <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                         <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                        <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                     </React.Fragment>
                                                 ) : ""
                                             }

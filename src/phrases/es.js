@@ -10,7 +10,10 @@ const es = {
     "indice-tic": "Índice de apropiación TIC",
     "docentes": "Docentes",
     "instituciones": "Instituciones Educativas",
+    "instituciones-corto": "Instituciones",
     "establecimientos": "Establecimientos Educativos",
+    "establecimientos-corto": "Establecimientos",
+    "gobiernos": "Gobiernos",
     "barrio": "Barrio",
     "localidad": "Localidad",
     "vereda": "Vereda",
@@ -272,6 +275,7 @@ const es = {
     "filtros.version": "Versión del instrumento",
     "filtros.descendente": "Descendente",
     "filtros.ascendente": "Ascendente",
+    "calificaciones.titulo": "Calificaciones asignadas",
 }
 
 export default es;
