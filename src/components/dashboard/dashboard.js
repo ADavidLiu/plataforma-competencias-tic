@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import DashboardDocente from "./dashboardDocente";
 import DashboardEstablecimientoEducativo from "./dashboardEstablecimientoEducativo";
 import DashboardGobierno from "./dashboardGobierno";
+import DashboardEvaluador from "./dashboardEvaluador";
 
 class Dashboard extends Component {
     constructor() {
@@ -23,6 +24,9 @@ class Dashboard extends Component {
                 break;
             case "GOBIERNO":
                 this.dashboard = <DashboardGobierno />;
+                break;
+            case "EVALUADOR":
+                this.dashboard = <DashboardEvaluador />;
                 break;
             default:
                 break;
