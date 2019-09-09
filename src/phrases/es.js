@@ -1,4 +1,5 @@
 const es = {
+    "ID": "ID",
     "si": "Sí",
     "no": "No",
     "caracteres-maximos": "Máximo 400 caracteres",
@@ -23,9 +24,13 @@ const es = {
     "oficial": "Oficial",
     "privado": "Privado",
     "concesion": "Concesión",
+    "nombre": "Nombre",
     "calificacion": "Calificación",
     "descriptor": "Descriptor",
     "descripcion": "Descripción",
+    "de": "de",
+    "filasPorPagina": "Filas por página",
+    "buscar": "Buscar...",
     "login.titulo": "Inicio de sesión",
     "login.usuario": "Usuario",
     "login.contrasenia": "Contraseña",
@@ -54,7 +59,9 @@ const es = {
     "procesoPaso.1": "Prueba de conocimiento",
     "procesoPaso.2": "Prácticas educativas",
     "procesoPaso.3": "Pre-entrevista",
+    "procesoPaso.3-plural": "Pre-entrevistas",
     "procesoPaso.4": "Entrevista",
+    "procesoPaso.4-plural": "Entrevistas",
     "practicas.titulo": "Práctica Educativa",
     "practicas.label-informacion-general": "Información general",
     "practicas.informacion-general": 'A continuación, se le pedirá información sobre una práctica educativa apoyada en TIC. Se entiende por práctica educativa "la actividad o conjunto de actividades intencionalmente diseñadas, implementadas y evaluadas por agentes educativos para favorecer la apropiación de conocimiento". Tenga en cuenta que una práctica educativa puede implicar actividades para explorar conocimientos previos, presentar contenidos, brindar oportunidades de práctica y evaluar el aprendizaje.',
@@ -278,6 +285,8 @@ const es = {
     "filtros.descendente": "Descendente",
     "filtros.ascendente": "Ascendente",
     "calificaciones.titulo": "Calificaciones otorgadas",
+    "calificaciones.fecha-asignacion": "Fecha de asignación",
+    "calificaciones.fecha-calificacion": "Fecha de calificación",
 }
 
 export default es;

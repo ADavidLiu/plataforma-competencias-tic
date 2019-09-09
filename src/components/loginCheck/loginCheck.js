@@ -51,7 +51,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "GOBIERNO",
+            tipo: "EVALUADOR",
             id: "loremipsum"
         }
 
@@ -152,6 +152,13 @@ class LoginCheck extends Component {
                                     <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
                                     <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
                                     <div className="d-flex align-items-center justify-content-end flex-grow-1">
+                                        <Tooltip title="Inicio" placement="bottom">
+                                            <Link to="/">
+                                                <IconButton style={{ color: "#ffffff" }}>
+                                                    <Home />
+                                                </IconButton>
+                                            </Link>
+                                        </Tooltip>
                                         <Tooltip title="Configuración" placement="bottom">
                                             <Link to="/configuracion">
                                                 <IconButton style={{ color: "#ffffff" }}>
@@ -181,13 +188,6 @@ class LoginCheck extends Component {
                                                 </Tooltip>
                                             ) : ""
                                         }
-                                        <Tooltip title="Inicio" placement="bottom">
-                                            <Link to="/">
-                                                <IconButton style={{ color: "#ffffff" }}>
-                                                    <Home />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
                                         <Tooltip title="Cerrar sesión" placement="bottom">
                                             <Link to="/">
                                                 <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
