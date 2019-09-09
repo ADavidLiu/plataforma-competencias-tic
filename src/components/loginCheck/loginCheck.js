@@ -16,6 +16,8 @@ import Container from "@material-ui/core/Container";
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import HowToReg from '@material-ui/icons/HowToReg';
+import AccountBalance from "@material-ui/icons/AccountBalance";
+import School from "@material-ui/icons/School";
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
@@ -49,7 +51,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "GOBIERNO",
             id: "loremipsum"
         }
 
@@ -114,22 +116,27 @@ class LoginCheck extends Component {
 
     render() {
         let tituloLabelUsuarios = "";
+        let iconUsers;
         switch (this.state.tipo) {
             case "GOBIERNO":
                 tituloLabelUsuarios = <T phrase="instituciones-corto"/>;
+                iconUsers = <AccountBalance />;
                 break;
             case "INSTITUCION":
                 tituloLabelUsuarios = <T phrase="establecimientos-corto"/>;
+                iconUsers = <AccountBalance />;
                 break;
             case "ESTABLECIMIENTO":
                 tituloLabelUsuarios = <T phrase="docentes"/>;
+                iconUsers = <School />;
                 break;
             case "SUPERADMIN":
             case "ADMIN":
                 tituloLabelUsuarios = <T phrase="gobiernos"/>
+                iconUsers = <HowToReg />;
                 break;
-            case "DOCENTE":
             case "EVALUADOR":
+            case "DOCENTE":
             default:
                 break;
         }
@@ -153,22 +160,11 @@ class LoginCheck extends Component {
                                             </Link>
                                         </Tooltip>
                                         {
-                                            this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
+                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
                                                 <Tooltip title={tituloLabelUsuarios} placement="bottom">
                                                     <Link to="/usuarios">
                                                         <IconButton style={{ color: "#ffffff" }}>
-                                                            <HowToReg />
-                                                        </IconButton>
-                                                    </Link>
-                                                </Tooltip>
-                                            ) : ""
-                                        }
-                                        {
-                                            this.state.tipo === "DOCENTE" ? (
-                                                <Tooltip title="Procesos" placement="bottom">
-                                                    <Link to="/procesos">
-                                                        <IconButton style={{ color: "#ffffff" }}>
-                                                            <FormatListNumbered />
+                                                            { iconUsers }
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>

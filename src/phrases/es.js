@@ -228,7 +228,9 @@ const es = {
     "configuracion.label-eliminar-confirmacion-2": "Todas las cuentas que se encuentren asociadas a la suya también serán eliminadas.",
     "configuracion.label-radio": "Sí, estoy seguro(a) de que quiero eliminar mi cuenta.",
     "configuracion.label-btn-eliminar": "Eliminar mi cuenta",
+    "usuarios.label-registro-admins": "Registrar Administradores",
     "usuarios.label-registro-instituciones": "Registrar Instituciones",
+    "usuarios.label-usuarios-gobiernos": "Lista de Gobiernos",
     "usuarios.label-usuarios-instituciones": "Lista de Instituciones",
     "usuarios.registro-pais": "País",
     "usuarios.registro-departamento": "Provincia, Estado o Departamento",
@@ -275,7 +277,7 @@ const es = {
     "filtros.version": "Versión del instrumento",
     "filtros.descendente": "Descendente",
     "filtros.ascendente": "Ascendente",
-    "calificaciones.titulo": "Calificaciones asignadas",
+    "calificaciones.titulo": "Calificaciones otorgadas",
 }
 
 export default es;

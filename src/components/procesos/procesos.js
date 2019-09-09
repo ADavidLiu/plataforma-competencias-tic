@@ -229,7 +229,7 @@ class Procesos extends Component {
                         </Grid>
                         <Grid item xs={12} md={8} lg={9} className="d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
                             <FormControl>
-                                <Typography variant="body1" className="mb-2"><strong><T phrase="filtros.categoria"/></strong></Typography>
+                                <Typography variant="body2" className="mb-2"><strong><T phrase="filtros.categoria"/></strong></Typography>
                                 <Select
                                     value={this.state.filtros.categoria}
                                     onChange={this.handleFiltroChange}
@@ -240,7 +240,7 @@ class Procesos extends Component {
                                 </Select>
                             </FormControl>
                             <FormControl className="ml-3">
-                                <Typography variant="body1" className="mb-2"><strong><T phrase="filtros.orden"/></strong></Typography>
+                                <Typography variant="body2" className="mb-2"><strong><T phrase="filtros.orden"/></strong></Typography>
                                 <Select
                                     value={this.state.filtros.orden}
                                     onChange={this.handleFiltroChange}
