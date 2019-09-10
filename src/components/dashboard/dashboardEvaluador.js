@@ -172,6 +172,17 @@ class DashboardEvaluador extends Component {
                         }
                     </Grid>
                 </Grid>
+                <Grid item xs={12}>
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <Typography variant="h5">Mi actividad</Typography>
+                            <hr/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         );
     }

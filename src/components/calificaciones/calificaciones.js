@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { T } from "react-polyglot-hooks";
 import sortBy from "sort-by";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -13,7 +14,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from '@material-ui/core/TablePagination';
 
-import FormControl from "@material-ui/core/FormControl";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,6 +28,7 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 
 class Calificaciones extends Component {
     constructor() {
@@ -40,13 +41,16 @@ class Calificaciones extends Component {
             page: 0,
             searchTerm: "",
             isLoading: true,
+            isRevisando: false,
+            isFiltering: false,
             headCells: {
-                practicas: ["ID", "nombre", "calificacion", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version"],
-                preentrevistas: [],
-                entrevistas: []
+                practicas: ["ID", "nombre", "calificacion", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"],
+                preentrevistas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"],
+                entrevistas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"]
             },
             filtros: {
                 categoria: "calificaciones.fecha-calificacion",
+                categoriaFormatted: "fechaCalificacion",
                 orden: "descendente"
             },
             practicas: [
@@ -54,92 +58,42 @@ class Calificaciones extends Component {
                     id: "2",
                     nombre: "Jane Doe",
                     calificacion: 3,
-                    fechaAsignacion: "01-07-2019",
-                    fechaCalificacion: "10-07-2019",
+                    fechaAsignacion: "2019-07-01",
+                    fechaCalificacion: "2019-07-10",
                     version: "1.0.1"
                 },
                 {
                     id: "1",
                     nombre: "John Doe",
                     calificacion: 2,
-                    fechaAsignacion: "29-06-2018",
-                    fechaCalificacion: "08-07-2018",
+                    fechaAsignacion: "2018-06-20",
+                    fechaCalificacion: "2018-07-08",
                     version: "1.0.0"
                 }
             ],
             preentrevistas: [
                 {
+                    id: "2",
                     nombre: "John Doe",
-                    fechaAsignacion: {
-                        raw: "20180213",
-                        formatted: "13-02-2018"
-                    },
-                    fechaCalificacion: {
-                        raw: "20190228",
-                        formatted: "28-02-2018"
-                    },
-                    descriptores: [
-                        {
-                            descriptor: "I2a",
-                            calificacion: 1
-                        },
-                        {
-                            descriptor: "I1b",
-                            calificacion: 1
-                        }
-                    ]
+                    fechaAsignacion: "2019-09-19",
+                    fechaCalificacion: "2019-10-31",
+                    version: "1.0.1"
                 },
                 {
-                    nombre: "John Doe",
-                    fechaAsignacion: {
-                        raw: "20190931",
-                        formatted: "19-09-2019"
-                    },
-                    fechaCalificacion: {
-                        raw: "20191031",
-                        formatted: "31-10-2019"
-                    },
-                    descriptores: [
-                        {
-                            descriptor: "R1tb",
-                            calificacion: 1
-                        },
-                        {
-                            descriptor: "E2ub",
-                            calificacion: 2
-                        }
-                    ]
+                    id: "1",
+                    nombre: "Jane Doe",
+                    fechaAsignacion: "2018-02-13",
+                    fechaCalificacion: "2018-02-28",
+                    version: "1.0.0"
                 }
             ],
             entrevistas: [
                 {
-                    nombre: "Jane Doe",
-                    fechaAsignacion: {
-                        raw: "20190314",
-                        formatted: "14-03-2019"
-                    },
-                    fechaCalificacion: {
-                        raw: "20190414",
-                        formatted: "14-04-2019"
-                    },
-                    descriptores: [
-                        {
-                            descriptor: "R1tb",
-                            calificacion: 1
-                        },
-                        {
-                            descriptor: "E2ub",
-                            calificacion: 2
-                        },
-                        {
-                            descriptor: "I2a",
-                            calificacion: 1
-                        },
-                        {
-                            descriptor: "I1b",
-                            calificacion: 1
-                        }
-                    ]
+                    id: "1",
+                    nombre: "John Doe",
+                    fechaAsignacion: "2019-03-14",
+                    fechaCalificacion: "2019-04-14",
+                    version: "1.0.1"
                 }
             ],
             elementosMostrados: []
@@ -154,10 +108,31 @@ class Calificaciones extends Component {
     }
 
     handleTabChange = (e, newIndex) => {
+        let newCategory = "";
+
+        switch (newIndex) {
+            case 0:
+                newCategory = "practicas";
+                break;
+            case 1:
+                newCategory = "preentrevistas";
+                break;
+            case 2:
+                newCategory = "entrevistas";
+                break;
+        }
+
         this.setState({
             divisionMostrada: newIndex,
+            categoriaDivisionMostrada: newCategory,
             searchTerm: "",
-            isLoading: true
+            isLoading: true,
+            elementosMostrados: [...this.state[newCategory]],
+            filtros: {
+                categoria: "calificaciones.fecha-calificacion",
+                categoriaFormatted: "fechaCalificacion",
+                orden: "descendente"
+            }
         });
 
         // Aquí cargar la nueva información del backend
@@ -183,27 +158,60 @@ class Calificaciones extends Component {
     }
 
     handleFiltroChange = e => {
-        const copiaElementos = [...this.state[this.state.categoriaDivisionMostrada]];
+        /* const copiaElementos = [...this.state[this.state.categoriaDivisionMostrada]]; */
+        const copiaElementos = [...this.state.elementosMostrados];
+
+        this.setState({
+            isFiltering: true
+        });
 
         switch (e.target.name) {
             case "categoria":
-                const dash = this.state.filtros.orden === "descendente" ? "-" : "";
-
                 switch (e.target.value) {
                     case "nombre":
-                        copiaElementos.sort(sortBy(`${dash}nombre`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "nombre",
+                                categoriaFormatted: "nombre"
+                            }
+                        });
                         break;
                     case "calificacion":
-                        copiaElementos.sort(sortBy(`${dash}calificacion`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "calificacion",
+                                categoriaFormatted: "calificacion"
+                            }
+                        });
                         break;
                     case "calificaciones.fecha-asignacion":
-                        copiaElementos.sort(sortBy(`${dash}fechaAsignacion`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "calificaciones.fecha-asignacion",
+                                categoriaFormatted: "fechaAsignacion"
+                            }
+                        });
                         break;
                     case "calificaciones.fecha-calificacion":
-                        copiaElementos.sort(sortBy(`${dash}fechaCalificacion`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "calificaciones.fecha-calificacion",
+                                categoriaFormatted: "fechaCalificacion"
+                            }
+                        });
                         break;
                     case "configuracion.label-version":
-                        copiaElementos.sort(sortBy(`${dash}version`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "configuracion.label-version",
+                                categoriaFormatted: "version"
+                            }
+                        });
                         break;
                     default:
                         break;
@@ -212,10 +220,20 @@ class Calificaciones extends Component {
             case "orden":
                 switch (e.target.value) {
                     case "descendente":
-                        copiaElementos.sort(sortBy(`-${this.state.filtros.categoria}`));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                orden: "descendente"
+                            }
+                        });
                         break;
                     case "ascendente":
-                        copiaElementos.sort(sortBy(this.state.filtros.categoria));
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                orden: "ascendente"
+                            }
+                        });
                         break;
                     default:
                         break;
@@ -225,13 +243,17 @@ class Calificaciones extends Component {
                 break;
         }
 
-        this.setState({
-            elementosMostrados: copiaElementos,
-            filtros: {
-                ...this.state.filtros,
-                [e.target.name]: e.target.value
-            }
-        });
+        const timeout = setTimeout(() => {
+            const dash = this.state.filtros.orden === "descendente" ? "-" : "";
+            copiaElementos.sort(sortBy(`${dash}${this.state.filtros.categoriaFormatted}`));
+
+            this.setState({
+                elementosMostrados: copiaElementos,
+                isFiltering: false
+            });
+
+            clearTimeout(timeout);
+        }, 1000);
     }
 
     handleSearch = e => {
@@ -268,71 +290,31 @@ class Calificaciones extends Component {
                 });
             });
 
+            matchedArrays.sort(sortBy("-fechaCalificacion"));
+
             this.setState({
-                elementosMostrados: matchedArrays
+                elementosMostrados: matchedArrays,
+                filtros: {
+                    categoria: "calificaciones.fecha-calificacion",
+                    orden: "descendente"
+                }
             });
         }
     }
 
+    openFormRevision = () => {
+        this.setState({
+            isRevisando: true
+        });
+    }
+
+    handleClose = () => {
+        this.setState({
+            isRevisando: false
+        });
+    }
+
     render() {
-        let selectedTab;
-        switch (this.state.divisionMostrada) {
-            case 0:
-                selectedTab = (
-                    <Paper className="scrolling-table-outer">
-                        <div className="scrolling-table-wrapper">
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        {
-                                            this.state.headCells.practicas.map((cellLabel, i) => (
-                                                <TableCell key={i}><T phrase={cellLabel}/></TableCell>
-                                            ))
-                                        }
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {
-                                        this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                            const values = Object.values(elemento);
-                                            return (
-                                                <TableRow key={i}>
-                                                    {
-                                                        values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                    }
-                                                </TableRow>
-                                            );
-                                        })
-                                    }
-                                </TableBody>
-                            </Table>
-                            <TablePagination
-                                labelDisplayedRows={({from, to, count}) => {
-                                    return `${from}-${to} / ${count}`;
-                                }}
-                                labelRowsPerPage={<T phrase="filasPorPagina"/>}
-                                rowsPerPageOptions={[10, 25, 100]}
-                                component="div"
-                                count={this.state.elementosMostrados.length}
-                                rowsPerPage={this.state.rowsPerPage}
-                                page={this.state.page}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                            />
-                        </div>
-                    </Paper>
-                );
-                break;
-            case 1:
-                
-                break;
-            case 2:
-
-                break;
-            default:
-                break;
-        }
-
         return (
             <Grid container spacing={5}>
                 <Grid item xs={12}>
@@ -341,6 +323,7 @@ class Calificaciones extends Component {
                 <Grid item xs={12}>
                     <Paper>
                         <Tabs
+                            variant="scrollable"
                             indicatorColor="primary"
                             textColor="primary"
                             value={this.state.divisionMostrada}
@@ -352,7 +335,7 @@ class Calificaciones extends Component {
                         </Tabs>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} md={5} lg={4} className="pb-0">
+                <Grid item xs={12} md={6} className="pb-0">
                     <TextField
                         placeholder="Buscar..."
                         fullWidth
@@ -368,24 +351,27 @@ class Calificaciones extends Component {
                         }}
                     />
                 </Grid>
-                <Grid item xs={12} md={7} lg={8} className="pb-0">
+                <Grid item xs={12} md={6} className="pb-0">
                     <div className="d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                         <Select
                             value={this.state.filtros.categoria}
                             onChange={this.handleFiltroChange}
                             input={<OutlinedInput required name="categoria"/>}
+                            className="w-50"
                         >
                             {
-                                this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
-                                    <MenuItem value={cellLabel} key={i}><T phrase={cellLabel}/></MenuItem>
-                                ))
+                                this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => {
+                                    if (i < this.state.headCells[this.state.categoriaDivisionMostrada].length - 1) {
+                                        return <MenuItem value={cellLabel} key={i}><T phrase={cellLabel}/></MenuItem>
+                                    }
+                                })
                             }
                         </Select>
                         <Select
                             value={this.state.filtros.orden}
                             onChange={this.handleFiltroChange}
                             input={<OutlinedInput required name="orden"/>}
-                            className="ml-3"
+                            className="ml-3 w-50"
                         >
                             <MenuItem value="descendente"><T phrase="filtros.descendente"/></MenuItem>
                             <MenuItem value="ascendente"><T phrase="filtros.ascendente"/></MenuItem>
@@ -394,7 +380,72 @@ class Calificaciones extends Component {
                 </Grid>
                 <Grid item xs={12}>
                     {
-                        this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : selectedTab
+                        this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
+                            <Paper className="scrolling-table-outer">
+                                <div className="scrolling-table-wrapper">
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                {
+                                                    this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
+                                                        <TableCell key={i}><T phrase={cellLabel}/></TableCell>
+                                                    ))
+                                                }
+                                            </TableRow>
+                                        </TableHead>
+                                        {
+                                            this.state.isFiltering ? (
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell colSpan={Object.keys(this.state[this.state.categoriaDivisionMostrada][0]).length + 1}>
+                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            ) : (
+                                                <TableBody>
+                                                    {
+                                                        this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                            const values = Object.values(elemento);
+                                                            return (
+                                                                <TableRow key={i}>
+                                                                    {
+                                                                        values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                    }
+                                                                    <TableCell>
+                                                                        <Link to={{
+                                                                            pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
+                                                                            state: {
+                                                                                tipoUsuario: "EVALUADOR"
+                                                                            }
+                                                                        }}>
+                                                                            <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
+                                                                        </Link>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        })
+                                                    }
+                                                </TableBody>
+                                            )
+                                        }
+                                    </Table>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={<T phrase="filasPorPagina"/>}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados.length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
+                                </div>
+                            </Paper>
+                        )
                     }
                 </Grid>
             </Grid>

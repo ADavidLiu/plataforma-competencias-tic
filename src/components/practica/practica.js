@@ -27,7 +27,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-class Practicas extends Component {
+class Practica extends Component {
     constructor() {
         super();
 
@@ -1040,4 +1040,4 @@ class Practicas extends Component {
     }
 }
 
-export default Practicas;
+export default Practica;

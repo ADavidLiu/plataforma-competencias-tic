@@ -375,7 +375,7 @@ class DashboardDocente extends Component {
                         <Step key="Prueba de conocimiento">
                             <StepLabel>{this.pasosNames[1]}</StepLabel>
                         </Step>
-                        <Step key="Prácticas educativas">
+                        <Step key="Práctica educativa">
                             <StepLabel>{this.pasosNames[2]}</StepLabel>
                         </Step>
                         <Step key="Preentrevista">

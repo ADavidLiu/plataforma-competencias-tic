@@ -31,6 +31,8 @@ const es = {
     "de": "de",
     "filasPorPagina": "Filas por página",
     "buscar": "Buscar...",
+    "editar-calificacion": "Editar calificación",
+    "revisar": "Revisar",
     "login.titulo": "Inicio de sesión",
     "login.usuario": "Usuario",
     "login.contrasenia": "Contraseña",

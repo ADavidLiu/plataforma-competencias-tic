@@ -73,6 +73,11 @@ body {
     white-space: nowrap;
 }
 
+.scrolling-table-wrapper th,
+.scrolling-table-wrapper td {
+    white-space: nowrap;
+}
+
 @media screen and (min-width: 500px) {
     .text-ellipsis {
         width: 60%;

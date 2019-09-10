@@ -31,14 +31,14 @@ import Dashboard from "../dashboard/dashboard";
 import DashboardDocente from "../dashboard/dashboardDocente";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
 import DashboardGobierno from "../dashboard/dashboardGobierno";
-import Practicas from "../practicas/practicas";
+import Practica from "../practica/practica";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
 import Configuracion from "../configuracion/configuracion";
 import Usuarios from "../usuarios/usuarios";
 import Procesos from "../procesos/procesos";
 import Pagina404 from "../pagina404/pagina404";
-import PracticaRevision from "../practicas/practicasRevision";
+import PracticaRevision from "../practica/practicaRevision";
 import PreentrevistaRevision from "../preentrevista/preentrevistaRevision";
 import EntrevistaRevision from "../entrevista/entrevistaRevision";
 import Calificaciones from "../calificaciones/calificaciones";
@@ -226,7 +226,7 @@ class LoginCheck extends Component {
                                             <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
                                             <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
                                             <Route path="/prueba/" component={Prueba} />
-                                            <Route path="/practicas/" component={Practicas} />
+                                            <Route path="/practica/" component={Practica} />
                                             <Route path="/preentrevista/" component={Preentrevista} />
                                             <Route path="/entrevista/" component={Entrevista} />
                                             <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
