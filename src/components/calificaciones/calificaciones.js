@@ -54,28 +54,16 @@ class Calificaciones extends Component {
                     id: "2",
                     nombre: "Jane Doe",
                     calificacion: 3,
-                    fechaAsignacion: {
-                        raw: "2019-07-01",
-                        formatted: "01-07-2019"
-                    },
-                    fechaCalificacion: {
-                        raw: "2019-07-10",
-                        formatted: "10-07-2019"
-                    },
+                    fechaAsignacion: "01-07-2019",
+                    fechaCalificacion: "10-07-2019",
                     version: "1.0.1"
                 },
                 {
                     id: "1",
                     nombre: "John Doe",
                     calificacion: 2,
-                    fechaAsignacion: {
-                        raw: "2019-06-29",
-                        formatted: "29-06-2018"
-                    },
-                    fechaCalificacion: {
-                        raw: "2019-07-08",
-                        formatted: "08-07-2018"
-                    },
+                    fechaAsignacion: "29-06-2018",
+                    fechaCalificacion: "08-07-2018",
                     version: "1.0.0"
                 }
             ],
@@ -209,10 +197,10 @@ class Calificaciones extends Component {
                         copiaElementos.sort(sortBy(`${dash}calificacion`));
                         break;
                     case "calificaciones.fecha-asignacion":
-                        copiaElementos.sort(sortBy(`${dash}fechaAsignacion.raw`));
+                        copiaElementos.sort(sortBy(`${dash}fechaAsignacion`));
                         break;
                     case "calificaciones.fecha-calificacion":
-                        copiaElementos.sort(sortBy(`${dash}fechaCalificacion.raw`));
+                        copiaElementos.sort(sortBy(`${dash}fechaCalificacion`));
                         break;
                     case "configuracion.label-version":
                         copiaElementos.sort(sortBy(`${dash}version`));
@@ -238,7 +226,7 @@ class Calificaciones extends Component {
         }
 
         this.setState({
-            [this.state.categoriaDivisionMostrada]: copiaElementos,
+            elementosMostrados: copiaElementos,
             filtros: {
                 ...this.state.filtros,
                 [e.target.name]: e.target.value
@@ -249,45 +237,30 @@ class Calificaciones extends Component {
     handleSearch = e => {
         const copiaElementos = [...this.state[this.state.categoriaDivisionMostrada]];
         const searchTerm = e.target.value;
-        console.log(copiaElementos);
 
         this.setState({
             searchTerm: searchTerm
         });
 
         if (e.target.value === "" || e.target.value === null || e.target.value === undefined) {
-            console.log("Vacío");
-            console.log(copiaElementos);
             this.setState({
-                [this.state.categoriaDivisionMostrada]: copiaElementos
+                elementosMostrados: copiaElementos
             });
         } else {
             const rawValuesToSearchFrom = [];
             const arraysValuesToSearchFrom = [];
             const matchedArrays = [];
 
-            copiaElementos.forEach(elem => {
-                Object.keys(elem).forEach(key => {
-                    const value = elem[key];
-                    if (typeof value === "object") {
-                        Object.values(value).forEach(val => {
-                            rawValuesToSearchFrom.push(val);
-                        });
-                    } else if (Array.isArray(value)) {
-                        value.forEach(val => {
-                            rawValuesToSearchFrom.push(val);
-                        });
-                    } else {
-                        rawValuesToSearchFrom.push(value);
-                    }
+            this.state[this.state.categoriaDivisionMostrada].forEach(elem => {
+                Object.values(elem).forEach(val => {
+                    rawValuesToSearchFrom.push(val);
                 });
             });
 
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += 8) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i+8));
+            for (let i = 0; i < rawValuesToSearchFrom.length; i += 6) {
+                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 6));
             }
             arraysValuesToSearchFrom.forEach(array => {
-                /* const hasMatch = array.filter(elem => elem[key].toLowerCase().includes(searchTerm.toLowerCase())); */
                 array.forEach(val => {
                     if (val.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
                         matchedArrays.push(array);
@@ -296,7 +269,7 @@ class Calificaciones extends Component {
             });
 
             this.setState({
-                [this.state.categoriaDivisionMostrada]: matchedArrays
+                elementosMostrados: matchedArrays
             });
         }
     }
@@ -325,13 +298,7 @@ class Calificaciones extends Component {
                                             return (
                                                 <TableRow key={i}>
                                                     {
-                                                        values.map((val, j) => {
-                                                            if (typeof val === "object") {
-                                                                return <TableCell key={j}>{val.formatted}</TableCell>;
-                                                            } else {
-                                                                return <TableCell key={j}>{val}</TableCell>;
-                                                            }
-                                                        })
+                                                        values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
                                                     }
                                                 </TableRow>
                                             );
