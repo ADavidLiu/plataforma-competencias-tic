@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
 

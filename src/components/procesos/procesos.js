@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
-import { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18next";
 import sortBy from "sort-by";
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -214,192 +214,198 @@ class Procesos extends Component {
 
     render() {
         return(
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant="h5">
-                        <T phrase="procesos.titulo"/>
-                    </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container alignItems="flex-end">
-                        <Grid item xs={12} md={4} lg={3}>
-                            <Typography variant="body1">
-                                <strong><T phrase="procesos.total"/> {this.state.procesos.length}</strong>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12} md={8} lg={9} className="d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
-                            <FormControl>
-                                <Typography variant="body2" className="mb-2"><strong><T phrase="filtros.categoria"/></strong></Typography>
-                                <Select
-                                    value={this.state.filtros.categoria}
-                                    onChange={this.handleFiltroChange}
-                                    input={<OutlinedInput required name="categoria"/>}
-                                >
-                                    <MenuItem value="fecha"><T phrase="filtros.fecha-finalizacion"/></MenuItem>
-                                    <MenuItem value="version"><T phrase="filtros.version"/></MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl className="ml-3">
-                                <Typography variant="body2" className="mb-2"><strong><T phrase="filtros.orden"/></strong></Typography>
-                                <Select
-                                    value={this.state.filtros.orden}
-                                    onChange={this.handleFiltroChange}
-                                    input={<OutlinedInput required name="orden"/>}
-                                >
-                                    <MenuItem value="descendente"><T phrase="filtros.descendente"/></MenuItem>
-                                    <MenuItem value="ascendente"><T phrase="filtros.ascendente"/></MenuItem>
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <hr/>
-                </Grid>
+            <Translation>
                 {
-                    this.state.procesos.map((proceso, i) => (
-                        <Grid item xs={12} key={proceso.vez}>
-                            <ExpansionPanel>
-                                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                                    <div className="d-flex align-items-center">
-                                        <Avatar className="mr-3" style={{backgroundColor: "#3f51b5"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
-                                        <div className="d-md-flex align-items-center">
-                                            <Typography className="d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong><T phrase="procesos.fecha-inicio"/></strong>&nbsp;{proceso.fechaInicio}</Typography>
-                                            <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong><T phrase="procesos.fecha-final"/></strong>&nbsp;{proceso.fechaFinal}</Typography>
-                                            <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Build className="mr-2" fontSize="small" /><strong><T phrase="procesos.version"/></strong>&nbsp;{proceso.version}</Typography>
-                                        </div>
-                                    </div>
-                                </ExpansionPanelSummary>
-                                <ExpansionPanelDetails className="d-block">
-                                    <Typography variant="h6" className="mb-2"><T phrase="indice-tic"/>: {proceso.reporte.indiceTic}</Typography>
-                                    <Typography variant="body1">{proceso.reporte.descripcion}</Typography>
-                                    <hr/>
-                                    <Typography variant="h6" className="mb-2"><T phrase="procesos.resultados"/></Typography>
-                                    <Tabs
-                                        indicatorColor="primary"
-                                        variant="scrollable"
-                                        className="mb-4"
-                                        value={this.state.procesos[i].currentTab}
-                                        onChange={(e, newValue) => { this.handleTabChange(e, newValue, i); }}>
-                                            <Tab label={<T phrase="procesoPaso.1"/>} />
-                                            <Tab label={<T phrase="practicas.titulo"/>} />
-                                            <Tab label={<T phrase="procesoPaso.3"/>} />
-                                            <Tab label={<T phrase="procesoPaso.4"/>} />
-                                            <Tab label={<T phrase="dashboardGobierno.ruta"/>} />
-                                    </Tabs>
-                                    {
-                                        this.state.procesos[i].currentTab === 0 ? (
-                                            <Grid container spacing={3}>
-                                                <Grid item xs={12}>
-                                                    <Link to={{
-                                                        pathname: "/prueba",
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE"
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
-                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
-                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
-                                                        </Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={6} md={4}>
-                                                    <Paper className="p-3">
-                                                        <Typography variant="h4" color="primary"><strong>{proceso.prueba.correctas}</strong></Typography>
-                                                        <Typography variant="subtitle2"><T phrase="procesos.prueba-correctas"/></Typography>
-                                                    </Paper>
-                                                </Grid>
-                                                <Grid item xs={6} md={4}>
-                                                    <Paper className="p-3">
-                                                        <Typography variant="h4" color="primary"><strong>{proceso.prueba.incorrectas}</strong></Typography>
-                                                        <Typography variant="subtitle2"><T phrase="procesos.prueba-incorrectas"/></Typography>
-                                                    </Paper>
-                                                </Grid>
-                                            </Grid>
-                                        ) : this.state.procesos[i].currentTab === 1 ? (
-                                            <Grid container spacing={3}>
-                                                <Grid item xs={12}>
-                                                    <Link to={{
-                                                        pathname: "/practicas",
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE"
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
-                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
-                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
-                                                        </Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={6} md={4}>
-                                                    <Paper className="p-3">
-                                                        <Typography variant="h4" color="primary"><strong>{proceso.practica.calificacion}</strong></Typography>
-                                                        <Typography variant="subtitle2"><T phrase="calificacion"/></Typography>
-                                                    </Paper>
-                                                </Grid>
-                                            </Grid>
-                                        ) : this.state.procesos[i].currentTab === 2 ? (
-                                            <Grid container spacing={3}>
-                                                <Grid item xs={12}>
-                                                    <Link to={{
-                                                        pathname: "/preentrevista",
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE"
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
-                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
-                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
-                                                        </Button>
-                                                    </Link>
-                                                </Grid>
+                    t => (
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <Typography variant="h5">
+                                    {t("procesos.titulo")}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container alignItems="flex-end">
+                                    <Grid item xs={12} md={4} lg={3}>
+                                        <Typography variant="body1">
+                                            <strong>{t("procesos.total")} {this.state.procesos.length}</strong>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} md={8} lg={9} className="d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
+                                        <FormControl>
+                                            <Typography variant="body2" className="mb-2"><strong>{t("filtros.categoria")}</strong></Typography>
+                                            <Select
+                                                value={this.state.filtros.categoria}
+                                                onChange={this.handleFiltroChange}
+                                                input={<OutlinedInput required name="categoria"/>}
+                                            >
+                                                <MenuItem value="fecha">{t("filtros.fecha-finalizacion")}</MenuItem>
+                                                <MenuItem value="version">{t("filtros.version")}</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        <FormControl className="ml-3">
+                                            <Typography variant="body2" className="mb-2"><strong>{t("filtros.orden")}</strong></Typography>
+                                            <Select
+                                                value={this.state.filtros.orden}
+                                                onChange={this.handleFiltroChange}
+                                                input={<OutlinedInput required name="orden"/>}
+                                            >
+                                                <MenuItem value="descendente">{t("filtros.descendente")}</MenuItem>
+                                                <MenuItem value="ascendente">{t("filtros.ascendente")}</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <hr/>
+                            </Grid>
+                            {
+                                this.state.procesos.map((proceso, i) => (
+                                    <Grid item xs={12} key={proceso.vez}>
+                                        <ExpansionPanel>
+                                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                                <div className="d-flex align-items-center">
+                                                    <Avatar className="mr-3" style={{backgroundColor: "#3f51b5"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
+                                                    <div className="d-md-flex align-items-center">
+                                                        <Typography className="d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-inicio")}</strong>&nbsp;{proceso.fechaInicio}</Typography>
+                                                        <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-final")}</strong>&nbsp;{proceso.fechaFinal}</Typography>
+                                                        <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Build className="mr-2" fontSize="small" /><strong>{t("procesos.version")}</strong>&nbsp;{proceso.version}</Typography>
+                                                    </div>
+                                                </div>
+                                            </ExpansionPanelSummary>
+                                            <ExpansionPanelDetails className="d-block">
+                                                <Typography variant="h6" className="mb-2">{t("indice-tic")}: {proceso.reporte.indiceTic}</Typography>
+                                                <Typography variant="body1">{proceso.reporte.descripcion}</Typography>
+                                                <hr/>
+                                                <Typography variant="h6" className="mb-2">{t("procesos.resultados")}</Typography>
+                                                <Tabs
+                                                    indicatorColor="primary"
+                                                    variant="scrollable"
+                                                    className="mb-4"
+                                                    value={this.state.procesos[i].currentTab}
+                                                    onChange={(e, newValue) => { this.handleTabChange(e, newValue, i); }}>
+                                                        <Tab label={t("procesoPaso.1")} />
+                                                        <Tab label={t("practicas.titulo")} />
+                                                        <Tab label={t("procesoPaso.3")} />
+                                                        <Tab label={t("procesoPaso.4")} />
+                                                        <Tab label={t("dashboardGobierno.ruta")} />
+                                                </Tabs>
                                                 {
-                                                    proceso.preentrevista.map(item => (
-                                                        <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
-                                                            <Paper className="p-3">
-                                                                <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
-                                                                <Typography variant="subtitle2"><T phrase="descriptor"/> <strong>{item.descriptor}</strong></Typography>
-                                                            </Paper>
+                                                    this.state.procesos[i].currentTab === 0 ? (
+                                                        <Grid container spacing={3}>
+                                                            <Grid item xs={12}>
+                                                                <Link to={{
+                                                                    pathname: "/prueba",
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE"
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                                        <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1">{t("perfil.ver-detalles")}</Typography>
+                                                                        <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                                    </Button>
+                                                                </Link>
+                                                            </Grid>
+                                                            <Grid item xs={6} md={4}>
+                                                                <Paper className="p-3">
+                                                                    <Typography variant="h4" color="primary"><strong>{proceso.prueba.correctas}</strong></Typography>
+                                                                    <Typography variant="subtitle2">{t("procesos.prueba-correctas")}</Typography>
+                                                                </Paper>
+                                                            </Grid>
+                                                            <Grid item xs={6} md={4}>
+                                                                <Paper className="p-3">
+                                                                    <Typography variant="h4" color="primary"><strong>{proceso.prueba.incorrectas}</strong></Typography>
+                                                                    <Typography variant="subtitle2">{t("procesos.prueba-incorrectas")}</Typography>
+                                                                </Paper>
+                                                            </Grid>
                                                         </Grid>
-                                                    ))
-                                                }
-                                            </Grid>
-                                        ) : this.state.procesos[i].currentTab === 3 ? (
-                                            <Grid container spacing={3}>
-                                                <Grid item xs={12}>
-                                                    <Link to={{
-                                                        pathname: "/entrevista",
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE"
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
-                                                            <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1"><T phrase="perfil.ver-detalles"/></Typography>
-                                                            <Launch className="ml-2" style={{color: "#ffffff"}}/>
-                                                        </Button>
-                                                    </Link>
-                                                </Grid>
-                                                {
-                                                    proceso.entrevista.map(item => (
-                                                        <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
-                                                            <Paper className="p-3">
-                                                                <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
-                                                                <Typography variant="subtitle2"><T phrase="descriptor"/> <strong>{item.descriptor}</strong></Typography>
-                                                            </Paper>
+                                                    ) : this.state.procesos[i].currentTab === 1 ? (
+                                                        <Grid container spacing={3}>
+                                                            <Grid item xs={12}>
+                                                                <Link to={{
+                                                                    pathname: "/practicas",
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE"
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                                        <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1">{t("perfil.ver-detalles")}</Typography>
+                                                                        <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                                    </Button>
+                                                                </Link>
+                                                            </Grid>
+                                                            <Grid item xs={6} md={4}>
+                                                                <Paper className="p-3">
+                                                                    <Typography variant="h4" color="primary"><strong>{proceso.practica.calificacion}</strong></Typography>
+                                                                    <Typography variant="subtitle2">{t("calificacion")}</Typography>
+                                                                </Paper>
+                                                            </Grid>
                                                         </Grid>
-                                                    ))
+                                                    ) : this.state.procesos[i].currentTab === 2 ? (
+                                                        <Grid container spacing={3}>
+                                                            <Grid item xs={12}>
+                                                                <Link to={{
+                                                                    pathname: "/preentrevista",
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE"
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                                        <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1">{t("perfil.ver-detalles")}</Typography>
+                                                                        <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                                    </Button>
+                                                                </Link>
+                                                            </Grid>
+                                                            {
+                                                                proceso.preentrevista.map(item => (
+                                                                    <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
+                                                                        <Paper className="p-3">
+                                                                            <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
+                                                                            <Typography variant="subtitle2">{t("descriptor")} <strong>{item.descriptor}</strong></Typography>
+                                                                        </Paper>
+                                                                    </Grid>
+                                                                ))
+                                                            }
+                                                        </Grid>
+                                                    ) : this.state.procesos[i].currentTab === 3 ? (
+                                                        <Grid container spacing={3}>
+                                                            <Grid item xs={12}>
+                                                                <Link to={{
+                                                                    pathname: "/entrevista",
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE"
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
+                                                                        <Typography style={{color: "#ffffff", textTransform: "none"}} variant="body1">{t("perfil.ver-detalles")}</Typography>
+                                                                        <Launch className="ml-2" style={{color: "#ffffff"}}/>
+                                                                    </Button>
+                                                                </Link>
+                                                            </Grid>
+                                                            {
+                                                                proceso.entrevista.map(item => (
+                                                                    <Grid item xs={6} md={3} lg={2} key={item.descriptor}>
+                                                                        <Paper className="p-3">
+                                                                            <Typography variant="h4" color="primary"><strong>{item.calificacion}</strong></Typography>
+                                                                            <Typography variant="subtitle2">{t("descriptor")} <strong>{item.descriptor}</strong></Typography>
+                                                                        </Paper>
+                                                                    </Grid>
+                                                                ))
+                                                            }
+                                                        </Grid>
+                                                    ) : this.state.procesos[i].currentTab === 4 ? (
+                                                        <RutaAprendizaje cursos={proceso.cursos} />
+                                                    ) : ""
                                                 }
-                                            </Grid>
-                                        ) : this.state.procesos[i].currentTab === 4 ? (
-                                            <RutaAprendizaje cursos={proceso.cursos} />
-                                        ) : ""
-                                    }
-                                </ExpansionPanelDetails>
-                            </ExpansionPanel>
+                                            </ExpansionPanelDetails>
+                                        </ExpansionPanel>
+                                    </Grid>
+                                ))
+                            }
                         </Grid>
-                    ))
+                    )
                 }
-            </Grid>
+            </Translation>
         );
     }
 }

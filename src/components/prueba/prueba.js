@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18next";
 
 import moment from "moment";
 
@@ -195,82 +195,88 @@ class Prueba extends Component {
         }
 
         return (
-            <React.Fragment>
-                <Grid container justify="center">
-                    <Grid item xs={12} sm={8} md={6}>
-                        <form onSubmit={this.revisarRespuestas}>
-                            {!this.state.isPruebaIniciada ? (
-                                <React.Fragment>
-                                    <Grid item xs={12}>
-                                        <Typography variant="h5" className="mb-5 text-center"><T phrase="prueba.titulo"/></Typography>
-                                        <Typography variant="h6" className="mb-2"><T phrase="prueba.label-introduccion"/></Typography>
-                                        <Typography variant="body1" className="mb-4"><T phrase="prueba.introduccion"/></Typography>
-                                        <Typography variant="h6" className="mb-2"><T phrase="prueba.label-instrucciones"/></Typography>
-                                        <Typography variant="body1"><T phrase="prueba.instrucciones"/></Typography>
-                                    </Grid>
-                                    <Grid item xs={12} className="mt-5">
-                                        <Button
-                                            type="button"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            className="mt-2"
-                                            size="large"
-                                            onClick={this.iniciarPrueba}
-                                        >
-                                            <T phrase="prueba.btn-iniciar"/>
-                                        </Button>
-                                    </Grid>
-                                </React.Fragment>
-                            ) : (
-                                <React.Fragment>
-                                    <Grid item xs={12}>
-                                        <Typography variant="h5" className="text-center"><T phrase="prueba.titulo-cuestionario"/></Typography>
-                                        <hr className="my-5" />
-                                        {this.finalQuestions.map(pregunta => {
-                                            return <Pregunta key={pregunta.id} id={pregunta.id} data={pregunta} actualizarRespuestas={this.actualizarRespuestas} />
-                                        })}
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="contained"
-                                            color="primary"
-                                            className="mt-2"
-                                            size="large"
-                                        >
-                                            <T phrase="prueba.btn-enviar"/>
-                                        </Button>
-                                    </Grid>
-                                </React.Fragment>
-                            )}
-                        </form>
-                    </Grid>
-                </Grid>
-                <Dialog open={this.state.isPruebaTerminada} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title"><T phrase="prueba.label-resultados"/></DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            <T phrase="prueba.ayuda-label-resultados"/>
-                            <br/><br/>
-                            <strong><T phrase="prueba.label-correctas"/></strong> {this.state.revision.numCorrectas}
-                            <br/>
-                            <strong><T phrase="prueba.label-correctas"/></strong> {this.state.revision.numIncorrectas}
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color="primary" onClick={this.terminarPrueba}><T phrase="prueba.btn-volver-inicio"/></Button>
-                    </DialogActions>
-                </Dialog>
-                <Snackbar
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                    key="tiempo-restante"
-                    open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
-                    ContentProps={{ 'aria-describedby': 'message-id' }}
-                    message={<span>{<T phrase="prueba.label-tiempo"/>} {this.state.tiempoRestante}</span>}
-                />
-            </React.Fragment>
+            <Translation>
+                {
+                    t => (
+                        <React.Fragment>
+                            <Grid container justify="center">
+                                <Grid item xs={12} sm={8} md={6}>
+                                    <form onSubmit={this.revisarRespuestas}>
+                                        {!this.state.isPruebaIniciada ? (
+                                            <React.Fragment>
+                                                <Grid item xs={12}>
+                                                    <Typography variant="h5" className="mb-5 text-center">{t("prueba.titulo")}</Typography>
+                                                    <Typography variant="h6" className="mb-2">{t("prueba.label-introduccion")}</Typography>
+                                                    <Typography variant="body1" className="mb-4">{t("prueba.introduccion")}</Typography>
+                                                    <Typography variant="h6" className="mb-2">{t("prueba.label-instrucciones")}</Typography>
+                                                    <Typography variant="body1">{t("prueba.instrucciones")}</Typography>
+                                                </Grid>
+                                                <Grid item xs={12} className="mt-5">
+                                                    <Button
+                                                        type="button"
+                                                        fullWidth
+                                                        variant="contained"
+                                                        color="primary"
+                                                        className="mt-2"
+                                                        size="large"
+                                                        onClick={this.iniciarPrueba}
+                                                    >
+                                                        {t("prueba.btn-iniciar")}
+                                                    </Button>
+                                                </Grid>
+                                            </React.Fragment>
+                                        ) : (
+                                            <React.Fragment>
+                                                <Grid item xs={12}>
+                                                    <Typography variant="h5" className="text-center">{t("prueba.titulo-cuestionario")}</Typography>
+                                                    <hr className="my-5" />
+                                                    {this.finalQuestions.map(pregunta => {
+                                                        return <Pregunta key={pregunta.id} id={pregunta.id} data={pregunta} actualizarRespuestas={this.actualizarRespuestas} />
+                                                    })}
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <Button
+                                                        type="submit"
+                                                        fullWidth
+                                                        variant="contained"
+                                                        color="primary"
+                                                        className="mt-2"
+                                                        size="large"
+                                                    >
+                                                        {t("prueba.btn-enviar")}
+                                                    </Button>
+                                                </Grid>
+                                            </React.Fragment>
+                                        )}
+                                    </form>
+                                </Grid>
+                            </Grid>
+                            <Dialog open={this.state.isPruebaTerminada} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">{t("prueba.label-resultados")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {t("prueba.ayuda-label-resultados")}
+                                        <br/><br/>
+                                        <strong>{t("prueba.label-correctas")}</strong> {this.state.revision.numCorrectas}
+                                        <br/>
+                                        <strong>{t("prueba.label-correctas")}</strong> {this.state.revision.numIncorrectas}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.terminarPrueba}>{t("prueba.btn-volver-inicio")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Snackbar
+                                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                                key="tiempo-restante"
+                                open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
+                                ContentProps={{ 'aria-describedby': 'message-id' }}
+                                message={<span>{t("prueba.label-tiempo")} {this.state.tiempoRestante}</span>}
+                            />
+                        </React.Fragment>
+                    )
+                }
+            </Translation>
         );
     }
 }

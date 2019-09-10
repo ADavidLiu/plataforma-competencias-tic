@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";

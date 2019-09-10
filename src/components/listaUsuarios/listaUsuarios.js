@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18next";
 import locationData from "countrycitystatejson";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
@@ -306,400 +306,430 @@ class ListaUsuarios extends Component {
         switch (this.props.userType) {
             case "GOBIERNO":
                 tabla = (
-                    <Paper className="scrolling-table-outer">
-                        <div className="scrolling-table-wrapper">
-                            <Table className="scrolling-table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell><T phrase="usuarios.registro-idNacional"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-nombre-ie"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-pais"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-departamento"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-municipio"/></TableCell>
-                                        <TableCell><T phrase="usuarios.acciones"/></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                {
-                                    this.state.usuarios.length > 0 ? (
-                                        <TableBody>
-                                            {
-                                                this.state.usuarios.map(usuario => {
-                                                    return (
-                                                        <TableRow key={usuario.idNacional}>
-                                                            <TableCell>{usuario.idNacional}</TableCell>
-                                                            <TableCell>{usuario.nombre}</TableCell>
-                                                            <TableCell>{usuario.pais.split("-")[1]}</TableCell>
-                                                            <TableCell>{usuario.departamento}</TableCell>
-                                                            <TableCell>{usuario.municipio}</TableCell>
-                                                            <TableCell>
-                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
-                                                                <Link to={{
-                                                                    pathname: "/dashboard-institucion",
-                                                                    state: {
-                                                                        institucionID: usuario.idNacional
-                                                                    }
-                                                                }} style={{textDecoration: "none"}}>
-                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                </Link>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    );
-                                                })
-                                            }
-                                        </TableBody>
-                                    ) : (
-                                        <TableBody>
+                    <Translation>
+                    {
+                        t => (
+                            <Paper className="scrolling-table-outer">
+                                <div className="scrolling-table-wrapper">
+                                    <Table className="scrolling-table">
+                                        <TableHead>
                                             <TableRow>
-                                                <TableCell colSpan="6" align="center"><T phrase="usuarios.no-datos"/></TableCell>
+                                                <TableCell>{t("usuarios.registro-idNacional")}</TableCell>
+                                                <TableCell>{t("usuarios.registro-nombre-ie")}</TableCell>
+                                                <TableCell>{t("usuarios.registro-pais")}</TableCell>
+                                                <TableCell>{t("usuarios.registro-departamento")}</TableCell>
+                                                <TableCell>{t("usuarios.registro-municipio")}</TableCell>
+                                                <TableCell>{t("usuarios.acciones")}</TableCell>
                                             </TableRow>
-                                        </TableBody>
-                                    )
-                                }
-                            </Table>
-                        </div>
-                    </Paper>
+                                        </TableHead>
+                                        {
+                                            this.state.usuarios.length > 0 ? (
+                                                <TableBody>
+                                                    {
+                                                        this.state.usuarios.map(usuario => {
+                                                            return (
+                                                                <TableRow key={usuario.idNacional}>
+                                                                    <TableCell>{usuario.idNacional}</TableCell>
+                                                                    <TableCell>{usuario.nombre}</TableCell>
+                                                                    <TableCell>{usuario.pais.split("-")[1]}</TableCell>
+                                                                    <TableCell>{usuario.departamento}</TableCell>
+                                                                    <TableCell>{usuario.municipio}</TableCell>
+                                                                    <TableCell>
+                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
+                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                        <Link to={{
+                                                                            pathname: "/dashboard-institucion",
+                                                                            state: {
+                                                                                institucionID: usuario.idNacional
+                                                                            }
+                                                                        }} style={{textDecoration: "none"}}>
+                                                                            <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                        </Link>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        })
+                                                    }
+                                                </TableBody>
+                                            ) : (
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            )
+                                        }
+                                    </Table>
+                                </div>
+                            </Paper>
+                        )
+                    }
+                    </Translation>
                 );
 
                 formularioEdicion = (
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-idNacional"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="idNacional"
-                                value={this.state.editingForm.idNacional}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={8}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-nombre-ie"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="nombre"
-                                value={this.state.editingForm.nombre}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-pais"/></Typography>
-                            <Select
-                                className="w-100"
-                                value={this.state.editingForm.pais}
-                                onChange={this.handleChangeLocationDropdown}
-                                input={<OutlinedInput required name="pais"/>}
-                            >
-                                <MenuItem value="CO-Colombia">Colombia</MenuItem>
-                                <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
-                                <MenuItem value="PA-Panamá">Panamá</MenuItem>
-                                <MenuItem value="PE-Perú">Perú</MenuItem>
-                                <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
-                                <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
-                                <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
-                                <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
-                                <MenuItem value="CL-Chile">Chile</MenuItem>
-                                <MenuItem value="BR-Brasil">Brasil</MenuItem>
-                                <MenuItem value="AR-Argentina">Argentina</MenuItem>
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-departamento"/></Typography>
-                            <Select
-                                className="w-100"
-                                value={this.state.editingForm.departamento}
-                                onChange={this.handleChangeLocationDropdown}
-                                input={<OutlinedInput required name="departamento"/>}
-                            >
-                                { this.state.departamentos }
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-municipio"/></Typography>
-                            <Select
-                                className="w-100"
-                                value={this.state.editingForm.municipio}
-                                onChange={this.handleChangeLocationDropdown}
-                                input={<OutlinedInput required name="municipio"/>}
-                            >
-                                { this.state.municipios }
-                            </Select>
-                        </Grid>
-                    </Grid>
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacional"
+                                            value={this.state.editingForm.idNacional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={8}>
+                                        <Typography variant="body1">{t("usuarios.registro-nombre-ie")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombre"
+                                            value={this.state.editingForm.nombre}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-pais")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.pais}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="pais"/>}
+                                        >
+                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                            <MenuItem value="PA-Panamá">Panamá</MenuItem>
+                                            <MenuItem value="PE-Perú">Perú</MenuItem>
+                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-departamento")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.departamento}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="departamento"/>}
+                                        >
+                                            { this.state.departamentos }
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-municipio")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.municipio}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="municipio"/>}
+                                        >
+                                            { this.state.municipios }
+                                        </Select>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case "INSTITUCION":
                 tabla = (
-                    <Paper className="scrolling-table-outer">
-                        <div className="scrolling-table-wrapper">
-                            <Table className="scrolling-table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell><T phrase="usuarios.registro-ee-id"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-nombre"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-departamento"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-direccion"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-tipo-ubicacion"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-nombre-ubicacion"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-zona"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-regimen"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-telefono"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-email"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-ee-web"/></TableCell>
-                                        <TableCell><T phrase="usuarios.acciones"/></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                {
-                                    this.state.usuarios.length > 0 ? (
-                                        <TableBody>
+                    <Translation>
+                        {
+                            t => (
+                                <Paper className="scrolling-table-outer">
+                                    <div className="scrolling-table-wrapper">
+                                        <Table className="scrolling-table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell>{t("usuarios.registro-ee-id")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-nombre")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-departamento")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-direccion")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-tipo-ubicacion")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-nombre-ubicacion")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-zona")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-regimen")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-telefono")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-email")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-ee-web")}</TableCell>
+                                                    <TableCell>{t("usuarios.acciones")}</TableCell>
+                                                </TableRow>
+                                            </TableHead>
                                             {
-                                                this.state.usuarios.map(usuario => {
-                                                    return (
-                                                        <TableRow key={usuario.idNacional}>
-                                                            <TableCell>{usuario.idNacional}</TableCell>
-                                                            <TableCell>{usuario.nombre}</TableCell>
-                                                            <TableCell>{usuario.departamento}</TableCell>
-                                                            <TableCell>{usuario.direccion}</TableCell>
-                                                            <TableCell>{usuario.tipoUbicacion}</TableCell>
-                                                            <TableCell>{usuario.nombreUbicacion}</TableCell>
-                                                            <TableCell>{usuario.zona}</TableCell>
-                                                            <TableCell>{usuario.regimen}</TableCell>
-                                                            <TableCell><a href={"tel:" + usuario.telefono} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.telefono}</a></TableCell>
-                                                            <TableCell><a href={"mailto:" + usuario.emailInstitucional} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.emailInstitucional}</a></TableCell>
-                                                            <TableCell><a href={"https://" + usuario.sitioWeb} style={{textDecoration: "none", color:"rgba(0,0,0,0.87)"}}>{usuario.sitioWeb}</a></TableCell>
-                                                            <TableCell>
-                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
-                                                                <Link to={{
-                                                                    pathname: "/dashboard-docente",
-                                                                    state: {
-                                                                        docenteID: usuario.idNacional
-                                                                    }
-                                                                }} style={{textDecoration: "none"}}>
-                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                </Link>
-                                                            </TableCell>
+                                                this.state.usuarios.length > 0 ? (
+                                                    <TableBody>
+                                                        {
+                                                            this.state.usuarios.map(usuario => {
+                                                                return (
+                                                                    <TableRow key={usuario.idNacional}>
+                                                                        <TableCell>{usuario.idNacional}</TableCell>
+                                                                        <TableCell>{usuario.nombre}</TableCell>
+                                                                        <TableCell>{usuario.departamento}</TableCell>
+                                                                        <TableCell>{usuario.direccion}</TableCell>
+                                                                        <TableCell>{usuario.tipoUbicacion}</TableCell>
+                                                                        <TableCell>{usuario.nombreUbicacion}</TableCell>
+                                                                        <TableCell>{usuario.zona}</TableCell>
+                                                                        <TableCell>{usuario.regimen}</TableCell>
+                                                                        <TableCell><a href={"tel:" + usuario.telefono} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.telefono}</a></TableCell>
+                                                                        <TableCell><a href={"mailto:" + usuario.emailInstitucional} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.emailInstitucional}</a></TableCell>
+                                                                        <TableCell><a href={"https://" + usuario.sitioWeb} style={{textDecoration: "none", color:"rgba(0,0,0,0.87)"}}>{usuario.sitioWeb}</a></TableCell>
+                                                                        <TableCell>
+                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
+                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                            <Link to={{
+                                                                                pathname: "/dashboard-docente",
+                                                                                state: {
+                                                                                    docenteID: usuario.idNacional
+                                                                                }
+                                                                            }} style={{textDecoration: "none"}}>
+                                                                                <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                            </Link>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                );
+                                                            })
+                                                        }
+                                                    </TableBody>
+                                                ) : (
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell colSpan="12" align="center">{t("usuarios.no-datos")}</TableCell>
                                                         </TableRow>
-                                                    );
-                                                })
+                                                    </TableBody>
+                                                )
                                             }
-                                        </TableBody>
-                                    ) : (
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell colSpan="12" align="center"><T phrase="usuarios.no-datos"/></TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    )
-                                }
-                            </Table>
-                        </div>
-                    </Paper>
+                                        </Table>
+                                    </div>
+                                </Paper>
+                            )
+                        }
+                    </Translation>
                 );
 
                 formularioEdicion = (
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-id"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="idNacional"
-                                value={this.state.editingForm.idNacional}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-nombre"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="nombre"
-                                value={this.state.editingForm.nombre}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-departamento"/></Typography>
-                            <Select
-                                className="w-100 mt-3"
-                                value={this.state.editingForm.departamento}
-                                onChange={this.handleEdicionChange}
-                                input={<OutlinedInput required name="departamento"/>}
-                            >
-                                { this.state.departamentos }
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-direccion"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="direccion"
-                                value={this.state.editingForm.direccion}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-tipo-ubicacion"/></Typography>
-                            <Select
-                                className="w-100 mt-3"
-                                value={this.state.editingForm.tipoUbicacion}
-                                onChange={this.handleEdicionChange}
-                                input={<OutlinedInput required name="tipoUbicacion"/>}
-                            >
-                                <MenuItem value="Barrio">{<T phrase="barrio"/>}</MenuItem>
-                                <MenuItem value="Localidad">{<T phrase="localidad"/>}</MenuItem>
-                                <MenuItem value="Vereda">{<T phrase="vereda"/>}</MenuItem>
-                                <MenuItem value="Corregimiento">{<T phrase="corregimiento"/>}</MenuItem>
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-nombre-ubicacion"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="nombreUbicacion"
-                                value={this.state.editingForm.nombreUbicacion}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-zona"/></Typography>
-                            <Select
-                                className="w-100 mt-3"
-                                value={this.state.editingForm.zona}
-                                onChange={this.handleEdicionChange}
-                                input={<OutlinedInput required name="zona"/>}
-                            >
-                                <MenuItem value="Rural">{<T phrase="rural"/>}</MenuItem>
-                                <MenuItem value="Urbana">{<T phrase="urbana"/>}</MenuItem>
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-regimen"/></Typography>
-                            <Select
-                                className="w-100 mt-3"
-                                value={this.state.editingForm.regimen}
-                                onChange={this.handleEdicionChange}
-                                input={<OutlinedInput required name="regimen"/>}
-                            >
-                                <MenuItem value="Oficial">{<T phrase="oficial"/>}</MenuItem>
-                                <MenuItem value="Privado">{<T phrase="privado"/>}</MenuItem>
-                                <MenuItem value="Concesión">{<T phrase="concesion"/>}</MenuItem>
-                            </Select>
-                        </Grid>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-telefono"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="telefono"
-                                type="tel"
-                                value={this.state.editingForm.telefono}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={5}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-email"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="emailInstitucional"
-                                type="email"
-                                value={this.state.editingForm.emailInstitucional}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-ee-web"/></Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="sitioWeb"
-                                value={this.state.editingForm.sitioWeb}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                    </Grid>
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-id")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacional"
+                                            value={this.state.editingForm.idNacional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-nombre")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombre"
+                                            value={this.state.editingForm.nombre}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-departamento")}</Typography>
+                                        <Select
+                                            className="w-100 mt-3"
+                                            value={this.state.editingForm.departamento}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="departamento"/>}
+                                        >
+                                            { this.state.departamentos }
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-direccion")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="direccion"
+                                            value={this.state.editingForm.direccion}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-tipo-ubicacion")}</Typography>
+                                        <Select
+                                            className="w-100 mt-3"
+                                            value={this.state.editingForm.tipoUbicacion}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="tipoUbicacion"/>}
+                                        >
+                                            <MenuItem value="Barrio">{t("barrio")}</MenuItem>
+                                            <MenuItem value="Localidad">{t("localidad")}</MenuItem>
+                                            <MenuItem value="Vereda">{t("vereda")}</MenuItem>
+                                            <MenuItem value="Corregimiento">{t("corregimiento")}</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-nombre-ubicacion")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombreUbicacion"
+                                            value={this.state.editingForm.nombreUbicacion}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-zona")}</Typography>
+                                        <Select
+                                            className="w-100 mt-3"
+                                            value={this.state.editingForm.zona}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="zona"/>}
+                                        >
+                                            <MenuItem value="Rural">{t("rural")}</MenuItem>
+                                            <MenuItem value="Urbana">{t("urbana")}</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-regimen")}</Typography>
+                                        <Select
+                                            className="w-100 mt-3"
+                                            value={this.state.editingForm.regimen}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="regimen"/>}
+                                        >
+                                            <MenuItem value="Oficial">{t("oficial")}</MenuItem>
+                                            <MenuItem value="Privado">{t("privado")}</MenuItem>
+                                            <MenuItem value="Concesión">{t("concesion")}</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-telefono")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="telefono"
+                                            type="tel"
+                                            value={this.state.editingForm.telefono}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={5}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-email")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="emailInstitucional"
+                                            type="email"
+                                            value={this.state.editingForm.emailInstitucional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-web")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="sitioWeb"
+                                            value={this.state.editingForm.sitioWeb}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case "ESTABLECIMIENTO":
                 tabla = (
-                    <Paper className="scrolling-table-outer">
-                        <div className="scrolling-table-wrapper">
-                            <Table className="scrolling-table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell><T phrase="usuarios.registro-idNacional"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-nombre-docente"/></TableCell>
-                                        <TableCell><T phrase="usuarios.registro-idEstablecimiento"/></TableCell>
-                                        <TableCell><T phrase="usuarios.acciones"/></TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                {
-                                    this.state.usuarios.length > 0 ? (
-                                        <TableBody>
+                    <Translation>
+                        {
+                            t => (
+                                <Paper className="scrolling-table-outer">
+                                    <div className="scrolling-table-wrapper">
+                                        <Table className="scrolling-table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell>{t("usuarios.registro-idNacional")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-nombre-docente")}</TableCell>
+                                                    <TableCell>{t("usuarios.registro-idEstablecimiento")}</TableCell>
+                                                    <TableCell>{t("usuarios.acciones")}</TableCell>
+                                                </TableRow>
+                                            </TableHead>
                                             {
-                                                this.state.usuarios.map(usuario => {
-                                                    return (
-                                                        <TableRow key={usuario.idNacional}>
-                                                            <TableCell>{usuario.idNacional}</TableCell>
-                                                            <TableCell>{usuario.nombreCompleto}</TableCell>
-                                                            <TableCell>{usuario.idEstablecimiento}</TableCell>
-                                                            <TableCell>
-                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
-                                                                <Link to={{
-                                                                    pathname: "/dashboard-docente",
-                                                                    state: {
-                                                                        docenteID: usuario.idNacional
-                                                                    }
-                                                                }} style={{textDecoration: "none"}}>
-                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                </Link>
-                                                            </TableCell>
+                                                this.state.usuarios.length > 0 ? (
+                                                    <TableBody>
+                                                        {
+                                                            this.state.usuarios.map(usuario => {
+                                                                return (
+                                                                    <TableRow key={usuario.idNacional}>
+                                                                        <TableCell>{usuario.idNacional}</TableCell>
+                                                                        <TableCell>{usuario.nombreCompleto}</TableCell>
+                                                                        <TableCell>{usuario.idEstablecimiento}</TableCell>
+                                                                        <TableCell>
+                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
+                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                            <Link to={{
+                                                                                pathname: "/dashboard-docente",
+                                                                                state: {
+                                                                                    docenteID: usuario.idNacional
+                                                                                }
+                                                                            }} style={{textDecoration: "none"}}>
+                                                                                <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                            </Link>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                );
+                                                            })
+                                                        }
+                                                    </TableBody>
+                                                ) : (
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell colSpan="4" align="center">{t("usuarios.no-datos")}</TableCell>
                                                         </TableRow>
-                                                    );
-                                                })
+                                                    </TableBody>
+                                                )
                                             }
-                                        </TableBody>
-                                    ) : (
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell colSpan="4" align="center"><T phrase="usuarios.no-datos"/></TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    )
-                                }
-                            </Table>
-                        </div>
-                    </Paper>
+                                        </Table>
+                                    </div>
+                                </Paper>
+                            )
+                        }
+                    </Translation>
                 );
 
                 formularioEdicion = (
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={3}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-idNacional"/></Typography>
+                            <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -711,7 +741,7 @@ class ListaUsuarios extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={4}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-nombre-docente"/></Typography>
+                            <Typography variant="body1">{t("usuarios.registro-nombre-docente")}</Typography>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -723,7 +753,7 @@ class ListaUsuarios extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={5}>
-                            <Typography variant="body1"><T phrase="usuarios.registro-idEstablecimiento"/></Typography>
+                            <Typography variant="body1">{t("usuarios.registro-idEstablecimiento")}</Typography>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -742,33 +772,39 @@ class ListaUsuarios extends Component {
         }
 
 		return (
-            <React.Fragment>
-                { this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : tabla }
+            <Translation>
+                {
+                    t => (
+                        <React.Fragment>
+                            { this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : tabla }
 
-                <Dialog open={this.state.isEditing} onClose={this.toggleEditor} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
-                    <DialogTitle id="form-dialog-title"><T phrase="usuarios.editar"/></DialogTitle>
-                    <DialogContent>
-                        { formularioEdicion }
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color="primary" onClick={this.saveUpdatedUser}><T phrase="usuarios.btn-guardar"/></Button>
-                    </DialogActions>
-                </Dialog>
-                
-                <Dialog open={this.state.isDeleting} onClose={this.toggleDeleting} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title"><T phrase="usuarios.borrar"/></DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            <strong><T phrase="usuarios.ayuda-borrar-0"/></strong>
-                            <br/>
-                            <T phrase="usuarios.ayuda-borrar-1"/>
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button color="primary" onClick={this.confirmUserDeletion}><T phrase="usuarios.btn-borrar"/></Button>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
+                            <Dialog open={this.state.isEditing} onClose={this.toggleEditor} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+                                <DialogTitle id="form-dialog-title">{t("usuarios.editar")}</DialogTitle>
+                                <DialogContent>
+                                    { formularioEdicion }
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.saveUpdatedUser}>{t("usuarios.btn-guardar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                            
+                            <Dialog open={this.state.isDeleting} onClose={this.toggleDeleting} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">{t("usuarios.borrar")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        <strong>{t("usuarios.ayuda-borrar-0")}</strong>
+                                        <br/>
+                                        {t("usuarios.ayuda-borrar-1")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.confirmUserDeletion}>{t("usuarios.btn-borrar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                        </React.Fragment>
+                    )
+                }
+            </Translation>
         );
 	}
 }

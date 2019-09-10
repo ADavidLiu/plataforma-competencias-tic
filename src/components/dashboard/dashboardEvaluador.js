@@ -3,6 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
+
+
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Phone from "@material-ui/icons/Phone";
@@ -86,7 +88,7 @@ class DashboardEvaluador extends Component {
                 <Grid item xs={12} md={4}>
                     <Grid container>
                         <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5">Prácticas educativas</Typography>
+                            <Typography variant="h5"><T phrase="procesoPaso.2"/></Typography>
                             <hr/>
                         </Grid>
                         {
@@ -102,7 +104,7 @@ class DashboardEvaluador extends Component {
                                         <Paper className="p-4">
                                             <Typography color="textPrimary" variant="body1"><strong>{practica.nombre}</strong></Typography>
                                             <Typography color="textPrimary" variant="body2" className="my-1">{practica.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2">Asignado para revisión el: {practica.fechaAsignacion}</Typography>
+                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {practica.fechaAsignacion}</Typography>
                                         </Paper>
                                     </Link>
                                 );
@@ -113,7 +115,7 @@ class DashboardEvaluador extends Component {
                 <Grid item xs={12} md={4}>
                     <Grid container>
                         <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5">Pre-entrevistas</Typography>
+                            <Typography variant="h5"><T phrase="procesoPaso.3-plural"/></Typography>
                             <hr/>
                         </Grid>
                         {
@@ -129,7 +131,7 @@ class DashboardEvaluador extends Component {
                                         <Paper className="p-4">
                                             <Typography color="textPrimary" variant="body1"><strong>{preentrevista.nombre}</strong></Typography>
                                             <Typography color="textPrimary" variant="body2" className="my-1">{preentrevista.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2">Asignado para revisión el: {preentrevista.fechaAsignacion}</Typography>
+                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {preentrevista.fechaAsignacion}</Typography>
                                         </Paper>
                                     </Link>
                                 );
@@ -140,7 +142,7 @@ class DashboardEvaluador extends Component {
                 <Grid item xs={12} md={4}>
                     <Grid container>
                         <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5">Entrevistas</Typography>
+                            <Typography variant="h5"><T phrase="procesoPaso.4-plural"/></Typography>
                             <hr/>
                         </Grid>
                         {
@@ -156,9 +158,9 @@ class DashboardEvaluador extends Component {
                                         <Paper className="p-4">
                                             <Typography color="textPrimary" variant="body1"><strong>{entrevista.nombre}</strong></Typography>
                                             <Typography color="textPrimary" variant="body2" className="my-1">{entrevista.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2">Asignado para revisión el: {entrevista.fechaAsignacion}</Typography>
+                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {entrevista.fechaAsignacion}</Typography>
                                             <hr/>
-                                            <Typography variant="subtitle2" className="mb-2">Datos de contacto</Typography>
+                                            <Typography variant="subtitle2" className="mb-2"><T phrase="dashboardEvaluador.datos-contacto"/></Typography>
                                             <Typography variant="body2" className="mb-2">
                                                 <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
                                             </Typography>
@@ -175,11 +177,11 @@ class DashboardEvaluador extends Component {
                 <Grid item xs={12}>
                     <Grid container>
                         <Grid item xs={12}>
-                            <Typography variant="h5">Mi actividad</Typography>
+                            <Typography variant="h5"><T phrase="calificaciones.titulo-actividad"/></Typography>
                             <hr/>
                         </Grid>
                         <Grid item xs={12}>
-                            
+
                         </Grid>
                     </Grid>
                 </Grid>

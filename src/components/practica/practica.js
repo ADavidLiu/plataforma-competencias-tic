@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18n";
 
 import { Redirect } from "react-router-dom";
 
@@ -424,550 +424,534 @@ class Practica extends Component {
         const itemsEvidencias = [];
         for (let i = 0; i < this.state.formActividad.numMateriales; i++) {
             itemsMateriales.push(
-                <TextField
-                    key={i}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label={<T phrase="practicas.elemento"/>}
-                    name="materiales"
-                    type="text"
-                    className="my-2"
-                    onChange={e => { this.actualizarFormActividadListItem(e, i) }}
-                />
+                <Translation>
+                    {
+                        t => (
+                            <TextField
+                                key={i}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label={t("practicas.elemento")}
+                                name="materiales"
+                                type="text"
+                                className="my-2"
+                                onChange={e => { this.actualizarFormActividadListItem(e, i) }}
+                            />
+                        )
+                    }
+                </Translation>
             );
         }
         for (let i = 0; i < this.state.formActividad.numEscenarios; i++) {
             itemsEscenarios.push(
-                <TextField
-                    key={i}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label={<T phrase="practicas.elemento"/>}
-                    name="escenarios"
-                    type="text"
-                    className="my-2"
-                    onChange={e => { this.actualizarFormActividadListItem(e, i) }}
-                />
+                <Translation>
+                    {
+                        t => (
+                            <TextField
+                                key={i}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label={t("practicas.elemento")}
+                                name="escenarios"
+                                type="text"
+                                className="my-2"
+                                onChange={e => { this.actualizarFormActividadListItem(e, i) }}
+                            />
+                        )
+                    }
+                </Translation>
             );
         }
         for (let i = 0; i < this.state.formActividad.numProcedimientos; i++) {
             itemsProcedimientos.push(
-                <TextField
-                    key={i}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    label={<T phrase="practicas.elemento"/>}
-                    name="procedimientos"
-                    type="text"
-                    className="my-2"
-                    onChange={e => { this.actualizarFormActividadListItem(e, i) }}
-                />
+                <Translation>
+                    {
+                        t => (
+                            <TextField
+                                key={i}
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label={t("practicas.elemento")}
+                                name="procedimientos"
+                                type="text"
+                                className="my-2"
+                                onChange={e => { this.actualizarFormActividadListItem(e, i) }}
+                            />
+                        )
+                    }
+                </Translation>
             );
         }
         for (let i = 0; i < this.state.formActividad.numEvidencias; i++) {
             itemsEvidencias.push(
-                <div key={i} className="mt-3">
-                    <hr/>
-                    <Button
-                        variant="contained"
-                        component="label"
-                        fullWidth
-                    >
-                        <T phrase="seleccionar-archivo"/>
-                        <input type="file" required accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.xlsx,.txt" onChange={e => { this.actualizarArchivoEvidencia(e, i) }} style={{ display: "none" }} />
-                    </Button>
+                <Translation>
                     {
-                        this.state.formActividad.evidencias[i] ? (
-                            <strong className="mt-3 d-block">Archivo: {this.state.formActividad.evidencias[i].archivo.nombre}</strong>
-                        ) : ""
+                        t => (
+                            <div key={i} className="mt-3">
+                                <hr/>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    fullWidth
+                                >
+                                    {t("seleccionar-archivo")}
+                                    <input type="file" required accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.xlsx,.txt" onChange={e => { this.actualizarArchivoEvidencia(e, i) }} style={{ display: "none" }} />
+                                </Button>
+                                {
+                                    this.state.formActividad.evidencias[i] ? (
+                                        <strong className="mt-3 d-block">Archivo: {this.state.formActividad.evidencias[i].archivo.nombre}</strong>
+                                    ) : ""
+                                }
+                                <TextField
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    multiline
+                                    rows={3}
+                                    label={t("practicas.descripcion-contenido")}
+                                    name="evidenciasDescripcion"
+                                    className="mt-3"
+                                    onChange={e => { this.actualizarDescripcionEvidencia(e, i) }}
+                                />
+                            </div>
+                        )
                     }
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        multiline
-                        rows={3}
-                        label={<T phrase="practicas.descripcion-contenido"/>}
-                        name="evidenciasDescripcion"
-                        className="mt-3"
-                        onChange={e => { this.actualizarDescripcionEvidencia(e, i) }}
-                    />
-                </div>
+                </Translation>
             );
         }
 
         return (
-            <React.Fragment>
-                <Grid container justify="center">
-                    <Grid item xs={12} sm={8} md={6}>
-                        <form onSubmit={this.handleSubmit}>
-                            <Typography variant="h5" className="mb-5 text-center"><T phrase="practicas.titulo" /></Typography>
-                            <Typography variant="h6" className="mb-2"><T phrase="practicas.label-informacion-general" /></Typography>
-                            <Typography variant="body1" className="mb-3"><T phrase="practicas.informacion-general"/></Typography>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="nombre"
-                                        label={<T phrase="practicas.nombre" />}
-                                        name="nombre"
-                                        value={this.state.nombre}
-                                        onChange={this.handleTextChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        multiline
-                                        inputProps={{ maxLength: 400 }}
-                                        rows="5"
-                                        id="resenia"
-                                        label={<T phrase="practicas.resenia" />}
-                                        name="resenia"
-                                        type="text"
-                                        value={this.state.resenia}
-                                        onChange={this.handleTextChange}
-                                    />
-                                    <em><T phrase="practicas.ayuda-resenia" /></em>
-                                    <br/><strong><T phrase="caracteres-maximos"/></strong>.
-                                </Grid>
-                                <Grid item xs={12} className="mt-2">
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="palabraClaveInput"
-                                        label={<T phrase="practicas.tags" />}
-                                        name="palabraClaveInput"
-                                        value={this.state.palabraClaveInput}
-                                        onChange={this.handleTextChange}
-                                    />
-                                    <em><T phrase="practicas.ayuda-tags"/></em>
-                                    <br/>
-                                    <Button
-                                        type="button"
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                        onClick={this.agregarPalabraClave}
-                                    ><T phrase="practicas.btn-agregar"/></Button>
-                                    <div className="mt-4">
-                                        {
-                                            this.state.palabrasClave.map((palabra, i) => {
-                                                return (
-                                                    <Chip
-                                                        key={i}
-                                                        label={palabra}
-                                                        onDelete={() => {this.borrarPalabraClave(palabra)}}
-                                                        className="m-1"
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </div>
-                                </Grid>
-                            </Grid>
-                            <hr/>
-                            <Typography variant="h6" className="mb-2"><T phrase="practicas.poblacion" /></Typography>
-                            <Typography variant="body1" className="mb-4"><T phrase="practicas.ayuda-poblacion"/></Typography>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12}>
-                                    <FormGroup>
-                                        <Typography variant="body1" className="mb-2"><T phrase="practicas.niveles"/></Typography>
-                                        {
-                                            this.state.nivelesEducativos.map((nivel, i) => {
-                                                return (
-                                                    <Grid key={i} container>
-                                                        <Grid item xs={12} className="py-0">
-                                                            <FormControlLabel
-                                                                control={<Checkbox color="primary" onChange={() => {
-                                                                    this.actualizarSelecciones("nivelesEducativos", nivel);
-                                                                }} value={nivel.label} />}
-                                                                label={nivel.label}
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
-                                                );
-                                            })
-                                        }
-                                    </FormGroup>
-                                </Grid>
-                                <Grid item xs={12} className="py-0">
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="cantidadPersonas"
-                                        label={<T phrase="practicas.num-personas" />}
-                                        name="cantidadPersonas"
-                                        type="number"
-                                        inputProps={{"min": 1}}
-                                        value={this.state.cantidadPersonas}
-                                        onInput={this.handleTextChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} className="py-0">
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="cantidadGrupos"
-                                        label={<T phrase="practicas.num-grupos" />}
-                                        name="cantidadGrupos"
-                                        type="number"
-                                        inputProps={{"min": 1}}
-                                        value={this.state.cantidadGrupos}
-                                        onInput={this.handleTextChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} className="py-0">
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="personasPorGrupo"
-                                        label={<T phrase="practicas.num-personas-grupo" />}
-                                        name="personasPorGrupo"
-                                        type="number"
-                                        inputProps={{"min": 1}}
-                                        value={this.state.personasPorGrupo}
-                                        onInput={this.handleTextChange}
-                                    />
-                                </Grid>
-                                <Grid item xs={12} className="py-0 mt-3">
-                                    <Typography variant="body1" className="mb-3"><T phrase="practicas.ayuda-edad"/></Typography>
-                                    <FormControl variant="outlined" className="w-100">
-                                        <InputLabel htmlFor="rangoEdadParticipantes"><T phrase="practicas.label-rango"/></InputLabel>
-                                        <Select
-                                            value={this.state.selectedRangoEdadParticipantes}
-                                            onChange={this.handleTextChange}
-                                            input={<OutlinedInput required name="selectedRangoEdadParticipantes" id="rangoEdadParticipantes"/>}
-                                        >
-                                            {
-                                                this.state.rangoEdadParticipantes.map((rango, i) => {
-                                                    return (
-                                                        <MenuItem key={i} value={rango}>{rango}</MenuItem>
-                                                    );
-                                                })
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} className="py-0 mt-3">
-                                    <Typography variant="body1" className="mb-3"><T phrase="practicas.necesidades-especiales"/></Typography>
-                                    <FormControl variant="outlined" className="w-100">
-                                        <RadioGroup
-                                            name="hasNecesidadesEspeciales"
-                                            value={this.state.hasNecesidadesEspeciales.toString()}
-                                            onChange={this.actualizarHasNecesidadesEspeciales}
-                                        >
-                                            <FormControlLabel
-                                                key="Sí"
-                                                value="true"
-                                                control={<Radio required color="primary" />}
-                                                label={<T phrase="si"/>}
-                                            />
-                                            <FormControlLabel
-                                                key="No"
-                                                value="false"
-                                                control={<Radio required color="primary" />}
-                                                label={<T phrase="no"/>}
-                                            />
-                                        </RadioGroup>
-                                    </FormControl>
-                                </Grid>
-                                {
-                                    this.state.hasNecesidadesEspeciales ? (
-                                        <Grid item xs={12}>
-                                            <Typography variant="body1" className="mb-4"><T phrase="practicas.que-necesidades-especiales"/></Typography>
-                                            <FormControl variant="outlined" className="w-100">
-                                                <InputLabel htmlFor="necesidadesEspeciales"><T phrase="practicas.seleccione-necesidad-especial"/></InputLabel>
-                                                <Select
-                                                    value={this.state.selectedNecesidadesEspeciales}
+            <Translation>
+                {
+                    t => (
+                        <React.Fragment>
+                            <Grid container justify="center">
+                                <Grid item xs={12} sm={8} md={6}>
+                                    <form onSubmit={this.handleSubmit}>
+                                        <Typography variant="h5" className="mb-5 text-center">{t("practicas.titulo")}</Typography>
+                                        <Typography variant="h6" className="mb-2">{t("practicas.label-informacion-general")}</Typography>
+                                        <Typography variant="body1" className="mb-3">{t("practicas.informacion-general")}</Typography>
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    id="nombre"
+                                                    label={t("practicas.nombre")}
+                                                    name="nombre"
+                                                    value={this.state.nombre}
                                                     onChange={this.handleTextChange}
-                                                    input={<OutlinedInput required name="selectedNecesidadesEspeciales" id="necesidadesEspeciales"/>}
-                                                >
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    multiline
+                                                    inputProps={{ maxLength: 400 }}
+                                                    rows="5"
+                                                    id="resenia"
+                                                    label={t("practicas.resenia")}
+                                                    name="resenia"
+                                                    type="text"
+                                                    value={this.state.resenia}
+                                                    onChange={this.handleTextChange}
+                                                />
+                                                <em>{t("practicas.ayuda-resenia")}</em>
+                                                <br/><strong>{t("caracteres-maximos")}</strong>.
+                                            </Grid>
+                                            <Grid item xs={12} className="mt-2">
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    id="palabraClaveInput"
+                                                    label={t("practicas.tags")}
+                                                    name="palabraClaveInput"
+                                                    value={this.state.palabraClaveInput}
+                                                    onChange={this.handleTextChange}
+                                                />
+                                                <em>{t("practicas.ayuda-tags")}</em>
+                                                <br/>
+                                                <Button
+                                                    type="button"
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    className="mt-3"
+                                                    size="medium"
+                                                    onClick={this.agregarPalabraClave}
+                                                >{t("practicas.btn-agregar")}</Button>
+                                                <div className="mt-4">
                                                     {
-                                                        this.state.necesidadesEspeciales.map((necesidad, i) => {
+                                                        this.state.palabrasClave.map((palabra, i) => {
                                                             return (
-                                                                <MenuItem key={i} value={necesidad}>{necesidad}</MenuItem>
+                                                                <Chip
+                                                                    key={i}
+                                                                    label={palabra}
+                                                                    onDelete={() => {this.borrarPalabraClave(palabra)}}
+                                                                    className="m-1"
+                                                                />
                                                             );
                                                         })
                                                     }
-                                                </Select>
-                                            </FormControl>
+                                                </div>
+                                            </Grid>
                                         </Grid>
-                                    ) : ""
-                                }
-                                {
-                                    this.state.selectedNecesidadesEspeciales === "Otras" ? (
-                                        <Grid item xs={12} className="py-0">
+                                        <hr/>
+                                        <Typography variant="h6" className="mb-2">{t("practicas.poblacion")}</Typography>
+                                        <Typography variant="body1" className="mb-4">{t("practicas.ayuda-poblacion")}</Typography>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <FormGroup>
+                                                    <Typography variant="body1" className="mb-2">{t("practicas.niveles")}</Typography>
+                                                    {
+                                                        this.state.nivelesEducativos.map((nivel, i) => {
+                                                            return (
+                                                                <Grid key={i} container>
+                                                                    <Grid item xs={12} className="py-0">
+                                                                        <FormControlLabel
+                                                                            control={<Checkbox color="primary" onChange={() => {
+                                                                                this.actualizarSelecciones("nivelesEducativos", nivel);
+                                                                            }} value={nivel.label} />}
+                                                                            label={nivel.label}
+                                                                        />
+                                                                    </Grid>
+                                                                </Grid>
+                                                            );
+                                                        })
+                                                    }
+                                                </FormGroup>
+                                            </Grid>
+                                            <Grid item xs={12} className="py-0">
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    id="cantidadPersonas"
+                                                    label={t("practicas.num-personas")}
+                                                    name="cantidadPersonas"
+                                                    type="number"
+                                                    inputProps={{"min": 1}}
+                                                    value={this.state.cantidadPersonas}
+                                                    onInput={this.handleTextChange}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6} className="py-0">
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    id="cantidadGrupos"
+                                                    label={t("practicas.num-grupos")}
+                                                    name="cantidadGrupos"
+                                                    type="number"
+                                                    inputProps={{"min": 1}}
+                                                    value={this.state.cantidadGrupos}
+                                                    onInput={this.handleTextChange}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={6} className="py-0">
+                                                <TextField
+                                                    variant="outlined"
+                                                    margin="normal"
+                                                    required
+                                                    fullWidth
+                                                    id="personasPorGrupo"
+                                                    label={t("practicas.num-personas-grupo")}
+                                                    name="personasPorGrupo"
+                                                    type="number"
+                                                    inputProps={{"min": 1}}
+                                                    value={this.state.personasPorGrupo}
+                                                    onInput={this.handleTextChange}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} className="py-0 mt-3">
+                                                <Typography variant="body1" className="mb-3">{t("practicas.ayuda-edad")}</Typography>
+                                                <FormControl variant="outlined" className="w-100">
+                                                    <InputLabel htmlFor="rangoEdadParticipantes">{t("practicas.label-rango")}</InputLabel>
+                                                    <Select
+                                                        value={this.state.selectedRangoEdadParticipantes}
+                                                        onChange={this.handleTextChange}
+                                                        input={<OutlinedInput required name="selectedRangoEdadParticipantes" id="rangoEdadParticipantes"/>}
+                                                    >
+                                                        {
+                                                            this.state.rangoEdadParticipantes.map((rango, i) => {
+                                                                return (
+                                                                    <MenuItem key={i} value={rango}>{rango}</MenuItem>
+                                                                );
+                                                            })
+                                                        }
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} className="py-0 mt-3">
+                                                <Typography variant="body1" className="mb-3">{t("practicas.necesidades-especiales")}</Typography>
+                                                <FormControl variant="outlined" className="w-100">
+                                                    <RadioGroup
+                                                        name="hasNecesidadesEspeciales"
+                                                        value={this.state.hasNecesidadesEspeciales.toString()}
+                                                        onChange={this.actualizarHasNecesidadesEspeciales}
+                                                    >
+                                                        <FormControlLabel
+                                                            key="Sí"
+                                                            value="true"
+                                                            control={<Radio required color="primary" />}
+                                                            label={t("si")}
+                                                        />
+                                                        <FormControlLabel
+                                                            key="No"
+                                                            value="false"
+                                                            control={<Radio required color="primary" />}
+                                                            label={t("no")}
+                                                        />
+                                                    </RadioGroup>
+                                                </FormControl>
+                                            </Grid>
+                                            {
+                                                this.state.hasNecesidadesEspeciales ? (
+                                                    <Grid item xs={12}>
+                                                        <Typography variant="body1" className="mb-4">{t("practicas.que-necesidades-especiales")}</Typography>
+                                                        <FormControl variant="outlined" className="w-100">
+                                                            <InputLabel htmlFor="necesidadesEspeciales">{t("practicas.seleccione-necesidad-especial")}</InputLabel>
+                                                            <Select
+                                                                value={this.state.selectedNecesidadesEspeciales}
+                                                                onChange={this.handleTextChange}
+                                                                input={<OutlinedInput required name="selectedNecesidadesEspeciales" id="necesidadesEspeciales"/>}
+                                                            >
+                                                                {
+                                                                    this.state.necesidadesEspeciales.map((necesidad, i) => {
+                                                                        return (
+                                                                            <MenuItem key={i} value={necesidad}>{necesidad}</MenuItem>
+                                                                        );
+                                                                    })
+                                                                }
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                ) : ""
+                                            }
+                                            {
+                                                this.state.selectedNecesidadesEspeciales === "Otras" ? (
+                                                    <Grid item xs={12} className="py-0">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            margin="normal"
+                                                            required
+                                                            fullWidth
+                                                            id="otrasNecesidadesEspeciales"
+                                                            label={t("practicas.otras-necesidades-cuales")}
+                                                            name="otrasNecesidadesEspeciales"
+                                                            value={this.state.otrasNecesidadesEspeciales}
+                                                            onInput={this.handleTextChange}
+                                                        />
+                                                    </Grid>
+                                                ) : ""
+                                            }
+                                        </Grid>
+                                        <hr/>
+                                        <Typography variant="h6" className="mb-2">{t("practicas.area")}</Typography>
+                                        <FormGroup>
+                                            <Typography variant="body1" className="mb-2">{t("practicas.ayuda-area")}</Typography>
+                                                    {
+                                                        this.state.areasDisciplinares.map((area, i) => {
+                                                            return (
+                                                                <Grid key={i} container>
+                                                                    <Grid item xs={12} className="py-0">
+                                                                        <FormControlLabel
+                                                                            control={<Checkbox color="primary" onChange={() => {
+                                                                                this.actualizarSelecciones("areasDisciplinares", area);
+                                                                            }} value={area.label} />}
+                                                                            label={area.label}
+                                                                        />
+                                                                    </Grid>
+                                                                </Grid>
+                                                            );
+                                                        })
+                                                    }
+                                                </FormGroup>
+                                        <hr/>
+                                        <Typography variant="h6" className="mb-4">{t("practicas.label-descripcion-detallada")}</Typography>
+                                        <FormGroup className="mb-4">
+                                            <Typography variant="body1">{t("practicas.necesidad-problema")}</Typography>
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
-                                                id="otrasNecesidadesEspeciales"
-                                                label={<T phrase="practicas.otras-necesidades-cuales"/>}
-                                                name="otrasNecesidadesEspeciales"
-                                                value={this.state.otrasNecesidadesEspeciales}
-                                                onInput={this.handleTextChange}
+                                                multiline
+                                                inputProps={{ maxLength: 400 }}
+                                                rows="5"
+                                                id="necesidadOProblema"
+                                                label={t("practicas.ayuda-necesidad-problema")}
+                                                name="necesidadOProblema"
+                                                value={this.state.necesidadOProblema}
+                                                onChange={this.handleTextChange}
                                             />
-                                        </Grid>
-                                    ) : ""
-                                }
-                            </Grid>
-                            <hr/>
-                            <Typography variant="h6" className="mb-2"><T phrase="practicas.area"/></Typography>
-                            <FormGroup>
-                                <Typography variant="body1" className="mb-2"><T phrase="practicas.ayuda-area"/></Typography>
+                                            <strong>{t("caracteres-maximos")}</strong>
+                                        </FormGroup>
+                                        <FormGroup className="mb-4">
+                                            <Typography variant="body1"><T phrase="practicas.principal-objetivo"/></Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                multiline
+                                                inputProps={{ maxLength: 400 }}
+                                                rows="5"
+                                                id="objetivoPrincipal"
+                                                label={<T phrase="practicas.ayuda-principal-objetivo" />}
+                                                name="objetivoPrincipal"
+                                                value={this.state.objetivoPrincipal}
+                                                onChange={this.handleTextChange}
+                                            />
+                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                        </FormGroup>
+                                        <FormGroup className="mb-4">
+                                            <Typography variant="body1"><T phrase="practicas.label-resultados"/></Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                multiline
+                                                inputProps={{ maxLength: 400 }}
+                                                rows="5"
+                                                id="resultadosEsperados"
+                                                label={<T phrase="practicas.resultados"/>}
+                                                name="resultadosEsperados"
+                                                value={this.state.resultadosEsperados}
+                                                onChange={this.handleTextChange}
+                                            />
+                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                        </FormGroup>
+                                        <Typography variant="body1" className="mb-3"><T phrase="practicas.label-actividades"/></Typography>
                                         {
-                                            this.state.areasDisciplinares.map((area, i) => {
+                                            this.state.actividades.length > 0 ? <Typography variant="body2"><strong><T phrase="practicas.label-actividades-agregadas"/></strong></Typography> : ""
+                                        }
+                                        {
+                                            this.state.actividades.map((actividad, i) => {
                                                 return (
-                                                    <Grid key={i} container>
-                                                        <Grid item xs={12} className="py-0">
-                                                            <FormControlLabel
-                                                                control={<Checkbox color="primary" onChange={() => {
-                                                                    this.actualizarSelecciones("areasDisciplinares", area);
-                                                                }} value={area.label} />}
-                                                                label={area.label}
-                                                            />
-                                                        </Grid>
-                                                    </Grid>
+                                                    <React.Fragment>
+                                                        <hr/>
+                                                        <Typography variant="body2" className="mb-2">{"Actividad " + (i + 1) + ": " + (actividad.nombre)}</Typography>
+                                                    </React.Fragment>
                                                 );
                                             })
                                         }
-                                    </FormGroup>
-                            <hr/>
-                            <Typography variant="h6" className="mb-4"><T phrase="practicas.label-descripcion-detallada"/></Typography>
-                            <FormGroup className="mb-4">
-                                <Typography variant="body1"><T phrase="practicas.necesidad-problema"/></Typography>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    inputProps={{ maxLength: 400 }}
-                                    rows="5"
-                                    id="necesidadOProblema"
-                                    label={<T phrase="practicas.ayuda-necesidad-problema"/>}
-                                    name="necesidadOProblema"
-                                    value={this.state.necesidadOProblema}
-                                    onChange={this.handleTextChange}
-                                />
-                                <strong><T phrase="caracteres-maximos"/></strong>
-                            </FormGroup>
-                            <FormGroup className="mb-4">
-                                <Typography variant="body1"><T phrase="practicas.principal-objetivo"/></Typography>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    inputProps={{ maxLength: 400 }}
-                                    rows="5"
-                                    id="objetivoPrincipal"
-                                    label={<T phrase="practicas.ayuda-principal-objetivo" />}
-                                    name="objetivoPrincipal"
-                                    value={this.state.objetivoPrincipal}
-                                    onChange={this.handleTextChange}
-                                />
-                                <strong><T phrase="caracteres-maximos"/></strong>
-                            </FormGroup>
-                            <FormGroup className="mb-4">
-                                <Typography variant="body1"><T phrase="practicas.label-resultados"/></Typography>
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    fullWidth
-                                    multiline
-                                    inputProps={{ maxLength: 400 }}
-                                    rows="5"
-                                    id="resultadosEsperados"
-                                    label={<T phrase="practicas.resultados"/>}
-                                    name="resultadosEsperados"
-                                    value={this.state.resultadosEsperados}
-                                    onChange={this.handleTextChange}
-                                />
-                                <strong><T phrase="caracteres-maximos"/></strong>
-                            </FormGroup>
-                            <Typography variant="body1" className="mb-3"><T phrase="practicas.label-actividades"/></Typography>
-                            {
-                                this.state.actividades.length > 0 ? <Typography variant="body2"><strong><T phrase="practicas.label-actividades-agregadas"/></strong></Typography> : ""
-                            }
-                            {
-                                this.state.actividades.map((actividad, i) => {
-                                    return (
-                                        <React.Fragment>
-                                            <hr/>
-                                            <Typography variant="body2" className="mb-2">{"Actividad " + (i + 1) + ": " + (actividad.nombre)}</Typography>
-                                        </React.Fragment>
-                                    );
-                                })
-                            }
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="outlined"
-                                color="primary"
-                                className="mt-2"
-                                size="medium"
-                                onClick={this.abrirFormActividad}
-                            ><T phrase="practicas.btn-agregar-actividad"/></Button>
-                            <hr className="mt-5 mb-4"/>
-                            <FormGroup>
-                                <FormControlLabel
-                                    required
-                                    control={<Checkbox onChange={this.asegurarCorrecto} color="primary" checked={this.state.asegurarCorrecto} value="asegura-correcto" />}
-                                    label={<T phrase="practicas.label-checkbox"/>}
-                                />
-                            </FormGroup>
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="mt-2"
-                                size="large"
-                            ><T phrase="practicas.btn-enviar"/></Button>
-                        </form>
-                    </Grid>
-                </Grid>
+                                        <Button
+                                            type="button"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-2"
+                                            size="medium"
+                                            onClick={this.abrirFormActividad}
+                                        ><T phrase="practicas.btn-agregar-actividad"/></Button>
+                                        <hr className="mt-5 mb-4"/>
+                                        <FormGroup>
+                                            <FormControlLabel
+                                                required
+                                                control={<Checkbox onChange={this.asegurarCorrecto} color="primary" checked={this.state.asegurarCorrecto} value="asegura-correcto" />}
+                                                label={<T phrase="practicas.label-checkbox"/>}
+                                            />
+                                        </FormGroup>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            className="mt-2"
+                                            size="large"
+                                        ><T phrase="practicas.btn-enviar"/></Button>
+                                    </form>
+                                </Grid>
+                            </Grid>
 
-                <Dialog open={this.state.isFormActividadOpen} onClose={this.cerrarFormActividad} fullWidth>
-                    <form onSubmit={this.guardarActividad}>
-                        <DialogTitle id="form-dialog-title"><T phrase="practicas.label-detalles-actividad"/></DialogTitle>
-                        <DialogContent>
-                            <DialogContentText><T phrase="practicas.ayuda-detalles-actividad"/></DialogContentText>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="nombreActividad"
-                                label={<T phrase="practicas.actividad-nombre"/>}
-                                name="nombre"
-                                type="text"
-                                value={this.state.formActividad.nombre}
-                                onChange={this.actualizarFormActividad}
-                            />
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                multiline
-                                rows={5}
-                                inputProps={{ maxLength: 400 }}
-                                fullWidth
-                                id="propositoActividad"
-                                label={<T phrase="practicas.actividad-proposito"/>}
-                                name="proposito"
-                                type="text"
-                                value={this.state.formActividad.proposito}
-                                onChange={this.actualizarFormActividad}
-                            />
-                            <strong><T phrase="caracteres-maximos"/></strong>
-                            <FormControl variant="outlined" className="w-100 mt-3">
-                                <InputLabel htmlFor="modalidadTrabajoActividad"><T phrase="practicas.actividad-modalidad-trabajo"/></InputLabel>
-                                <Select
-                                    value={this.state.formActividad.modalidadTrabajo}
-                                    onChange={this.actualizarFormActividad}
-                                    input={<OutlinedInput required name="modalidadTrabajo" id="modalidadTrabajoActividad"/>}
-                                >
-                                    <MenuItem value="Grupal"><T phrase="practicas.actividad-grupal"/></MenuItem>
-                                    <MenuItem value="Individual"><T phrase="practicas.actividad-individual"/></MenuItem>
-                                    <MenuItem value="Mixta"><T phrase="practicas.actividad-mixta"/></MenuItem>
-                                </Select>
-                            </FormControl>
-                            <div className="mt-4">
-                                <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-materiales-educativos"/></strong></Typography>
-                                {itemsMateriales}
-                                {
-                                    this.state.formActividad.numMateriales > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Materiales") }} color="primary" variant="outlined">-</Button> : ""
-                                }
-                                <Button className="mt-2" onClick={() => { this.agregarItem("Materiales") }} color="primary" variant="outlined">+</Button>
-                            </div>
-                            <div className="mt-4">
-                                <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-escenarios"/></strong></Typography>
-                                {itemsEscenarios}
-                                {
-                                    this.state.formActividad.numEscenarios > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Escenarios") }} color="primary" variant="outlined">-</Button> : ""
-                                }
-                                <Button className="mt-2" onClick={() => { this.agregarItem("Escenarios") }} color="primary" variant="outlined">+</Button>
-                            </div>
-                            <div className="mt-4">
-                                <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-procedimientos"/></strong></Typography>
-                                {itemsProcedimientos}
-                                {
-                                    this.state.formActividad.numProcedimientos > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Procedimientos") }} color="primary" variant="outlined">-</Button> : ""
-                                }
-                                <Button className="mt-2" onClick={() => { this.agregarItem("Procedimientos") }} color="primary" variant="outlined">+</Button>
-                            </div>
-                            <div className="mt-4">
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    required
-                                    multiline
-                                    rows={5}
-                                    inputProps={{ maxLength: 400 }}
-                                    fullWidth
-                                    id="consignaActividad"
-                                    label={<T phrase="practicas.actividad-consigna"/>}
-                                    name="consigna"
-                                    type="text"
-                                    value={this.state.formActividad.consigna}
-                                    onChange={this.actualizarFormActividad}
-                                />
-                                <strong><T phrase="caracteres-maximos"/></strong>
-                            </div>
-                            <div className="mt-4">
-                                <Typography variant="body1" className="mb-3"><T phrase="practicas.actividad-evalua"/></Typography>
-                                <FormControl variant="outlined" className="w-100">
-                                    <RadioGroup
-                                        name="evaluaActividad"
-                                        value={this.state.formActividad.evalua.toString()}
-                                        onChange={this.actualizarEvaluaActividad}
-                                    >
-                                        <FormControlLabel
-                                            key="Sí"
-                                            value="true"
-                                            control={<Radio required color="primary" />}
-                                            label={<T phrase="si"/>}
+                            <Dialog open={this.state.isFormActividadOpen} onClose={this.cerrarFormActividad} fullWidth>
+                                <form onSubmit={this.guardarActividad}>
+                                    <DialogTitle id="form-dialog-title"><T phrase="practicas.label-detalles-actividad"/></DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText><T phrase="practicas.ayuda-detalles-actividad"/></DialogContentText>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="nombreActividad"
+                                            label={<T phrase="practicas.actividad-nombre"/>}
+                                            name="nombre"
+                                            type="text"
+                                            value={this.state.formActividad.nombre}
+                                            onChange={this.actualizarFormActividad}
                                         />
-                                        <FormControlLabel
-                                            key="No"
-                                            value="false"
-                                            control={<Radio required color="primary" />}
-                                            label={<T phrase="no"/>}
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            multiline
+                                            rows={5}
+                                            inputProps={{ maxLength: 400 }}
+                                            fullWidth
+                                            id="propositoActividad"
+                                            label={<T phrase="practicas.actividad-proposito"/>}
+                                            name="proposito"
+                                            type="text"
+                                            value={this.state.formActividad.proposito}
+                                            onChange={this.actualizarFormActividad}
                                         />
-                                    </RadioGroup>
-                                </FormControl>
-                                {
-                                    this.state.formActividad.evalua ? (
-                                        <React.Fragment>
-                                            <Typography variant="body1" className="mb-2"><T phrase="practicas.actividad-label-evaluar-desempenio"/></Typography>
+                                        <strong><T phrase="caracteres-maximos"/></strong>
+                                        <FormControl variant="outlined" className="w-100 mt-3">
+                                            <InputLabel htmlFor="modalidadTrabajoActividad"><T phrase="practicas.actividad-modalidad-trabajo"/></InputLabel>
+                                            <Select
+                                                value={this.state.formActividad.modalidadTrabajo}
+                                                onChange={this.actualizarFormActividad}
+                                                input={<OutlinedInput required name="modalidadTrabajo" id="modalidadTrabajoActividad"/>}
+                                            >
+                                                <MenuItem value="Grupal"><T phrase="practicas.actividad-grupal"/></MenuItem>
+                                                <MenuItem value="Individual"><T phrase="practicas.actividad-individual"/></MenuItem>
+                                                <MenuItem value="Mixta"><T phrase="practicas.actividad-mixta"/></MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        <div className="mt-4">
+                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-materiales-educativos"/></strong></Typography>
+                                            {itemsMateriales}
+                                            {
+                                                this.state.formActividad.numMateriales > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Materiales") }} color="primary" variant="outlined">-</Button> : ""
+                                            }
+                                            <Button className="mt-2" onClick={() => { this.agregarItem("Materiales") }} color="primary" variant="outlined">+</Button>
+                                        </div>
+                                        <div className="mt-4">
+                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-escenarios"/></strong></Typography>
+                                            {itemsEscenarios}
+                                            {
+                                                this.state.formActividad.numEscenarios > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Escenarios") }} color="primary" variant="outlined">-</Button> : ""
+                                            }
+                                            <Button className="mt-2" onClick={() => { this.agregarItem("Escenarios") }} color="primary" variant="outlined">+</Button>
+                                        </div>
+                                        <div className="mt-4">
+                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-procedimientos"/></strong></Typography>
+                                            {itemsProcedimientos}
+                                            {
+                                                this.state.formActividad.numProcedimientos > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Procedimientos") }} color="primary" variant="outlined">-</Button> : ""
+                                            }
+                                            <Button className="mt-2" onClick={() => { this.agregarItem("Procedimientos") }} color="primary" variant="outlined">+</Button>
+                                        </div>
+                                        <div className="mt-4">
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
@@ -976,66 +960,112 @@ class Practica extends Component {
                                                 rows={5}
                                                 inputProps={{ maxLength: 400 }}
                                                 fullWidth
-                                                id="comoEvaluaActividad"
-                                                label={<T phrase="practicas.actividad-describa-proceso"/>}
-                                                name="comoEvalua"
+                                                id="consignaActividad"
+                                                label={<T phrase="practicas.actividad-consigna"/>}
+                                                name="consigna"
                                                 type="text"
-                                                value={this.state.formActividad.comoEvalua}
+                                                value={this.state.formActividad.consigna}
                                                 onChange={this.actualizarFormActividad}
                                             />
-                                            <strong className="d-block mb-4"><T phrase="caracteres-maximos"/></strong>
-                                        </React.Fragment>
-                                    ) : ""
-                                }
-                            </div>
-                            <div className="mt-1">
-                                <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-evidencias"/></Typography>
-                                <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
-                                {itemsEvidencias}
-                                {
-                                    this.state.formActividad.numEvidencias > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Evidencias") }} color="primary" variant="outlined">-</Button> : ""
-                                }
-                                <Button className="mt-2" onClick={() => { this.agregarItem("Evidencias") }} color="primary" variant="outlined">+</Button>
-                            </div>
-                            <div className="mt-4">
-                                <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-produccion"/></Typography>
-                                <strong className="d-block mb-2"><T phrase="practicas.actividad-ayuda-adjunte-produccion"/></strong>
-                                <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
-                                <hr/>
-                                <Button
-                                    variant="contained"
-                                    component="label"
-                                    fullWidth
-                                >
-                                    <T phrase="seleccionar-archivo"/>
-                                    <input type="file" accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.xlsx,.txt" onChange={this.actualizarArchivoRetroalimentacion} style={{ display: "none" }} />
-                                </Button>
-                                {
-                                    this.state.formActividad.retroalimentacion.archivo.nombre !== "" ? (
-                                        <strong className="mt-3 d-block"><T phrase="archivo"/>: {this.state.formActividad.retroalimentacion.archivo.nombre}</strong>
-                                    ) : ""
-                                }
-                                <TextField
-                                    variant="outlined"
-                                    margin="normal"
-                                    fullWidth
-                                    multiline
-                                    rows={3}
-                                    label={<T phrase="practicas.descripcion-contenido"/>}
-                                    name="retroalimentacionDescripcion"
-                                    className="mt-3"
-                                    onChange={this.actualizarDescripcionRetroalimentacion}
-                                />
-                            </div>
-                            <hr/>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button type="button" onClick={this.cerrarFormActividad} color="primary"><T phrase="cancelar"/></Button>
-                            <Button type="submit" color="primary" variant="contained"><T phrase="practicas.actividad-btn-agregar"/></Button>
-                        </DialogActions>
-                    </form>
-                </Dialog>
-            </React.Fragment>
+                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                        </div>
+                                        <div className="mt-4">
+                                            <Typography variant="body1" className="mb-3"><T phrase="practicas.actividad-evalua"/></Typography>
+                                            <FormControl variant="outlined" className="w-100">
+                                                <RadioGroup
+                                                    name="evaluaActividad"
+                                                    value={this.state.formActividad.evalua.toString()}
+                                                    onChange={this.actualizarEvaluaActividad}
+                                                >
+                                                    <FormControlLabel
+                                                        key="Sí"
+                                                        value="true"
+                                                        control={<Radio required color="primary" />}
+                                                        label={<T phrase="si"/>}
+                                                    />
+                                                    <FormControlLabel
+                                                        key="No"
+                                                        value="false"
+                                                        control={<Radio required color="primary" />}
+                                                        label={<T phrase="no"/>}
+                                                    />
+                                                </RadioGroup>
+                                            </FormControl>
+                                            {
+                                                this.state.formActividad.evalua ? (
+                                                    <React.Fragment>
+                                                        <Typography variant="body1" className="mb-2"><T phrase="practicas.actividad-label-evaluar-desempenio"/></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            margin="normal"
+                                                            required
+                                                            multiline
+                                                            rows={5}
+                                                            inputProps={{ maxLength: 400 }}
+                                                            fullWidth
+                                                            id="comoEvaluaActividad"
+                                                            label={<T phrase="practicas.actividad-describa-proceso"/>}
+                                                            name="comoEvalua"
+                                                            type="text"
+                                                            value={this.state.formActividad.comoEvalua}
+                                                            onChange={this.actualizarFormActividad}
+                                                        />
+                                                        <strong className="d-block mb-4"><T phrase="caracteres-maximos"/></strong>
+                                                    </React.Fragment>
+                                                ) : ""
+                                            }
+                                        </div>
+                                        <div className="mt-1">
+                                            <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-evidencias"/></Typography>
+                                            <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
+                                            {itemsEvidencias}
+                                            {
+                                                this.state.formActividad.numEvidencias > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Evidencias") }} color="primary" variant="outlined">-</Button> : ""
+                                            }
+                                            <Button className="mt-2" onClick={() => { this.agregarItem("Evidencias") }} color="primary" variant="outlined">+</Button>
+                                        </div>
+                                        <div className="mt-4">
+                                            <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-produccion"/></Typography>
+                                            <strong className="d-block mb-2"><T phrase="practicas.actividad-ayuda-adjunte-produccion"/></strong>
+                                            <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
+                                            <hr/>
+                                            <Button
+                                                variant="contained"
+                                                component="label"
+                                                fullWidth
+                                            >
+                                                <T phrase="seleccionar-archivo"/>
+                                                <input type="file" accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.xlsx,.txt" onChange={this.actualizarArchivoRetroalimentacion} style={{ display: "none" }} />
+                                            </Button>
+                                            {
+                                                this.state.formActividad.retroalimentacion.archivo.nombre !== "" ? (
+                                                    <strong className="mt-3 d-block"><T phrase="archivo"/>: {this.state.formActividad.retroalimentacion.archivo.nombre}</strong>
+                                                ) : ""
+                                            }
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                label={<T phrase="practicas.descripcion-contenido"/>}
+                                                name="retroalimentacionDescripcion"
+                                                className="mt-3"
+                                                onChange={this.actualizarDescripcionRetroalimentacion}
+                                            />
+                                        </div>
+                                        <hr/>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button type="button" onClick={this.cerrarFormActividad} color="primary"><T phrase="cancelar"/></Button>
+                                        <Button type="submit" color="primary" variant="contained"><T phrase="practicas.actividad-btn-agregar"/></Button>
+                                    </DialogActions>
+                                </form>
+                            </Dialog>
+                        </React.Fragment>
+                    )
+                }
+            </Translation>
         );
     }
 }

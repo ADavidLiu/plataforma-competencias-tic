@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
 import sortBy from "sort-by";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { Translation } from "react-i18next";
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -316,139 +317,148 @@ class Calificaciones extends Component {
 
     render() {
         return (
-            <Grid container spacing={5}>
-                <Grid item xs={12}>
-                    <Typography variant="h5"><T phrase="calificaciones.titulo"/></Typography>
-                </Grid>
-                <Grid item xs={12}>
-                    <Paper>
-                        <Tabs
-                            variant="scrollable"
-                            indicatorColor="primary"
-                            textColor="primary"
-                            value={this.state.divisionMostrada}
-                            onChange={this.handleTabChange}
-                        >
-                            <Tab label={<T phrase="procesoPaso.2"/>}/>
-                            <Tab label={<T phrase="procesoPaso.3-plural"/>}/>
-                            <Tab label={<T phrase="procesoPaso.4-plural"/>}/>
-                        </Tabs>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6} className="pb-0">
-                    <TextField
-                        placeholder="Buscar..."
-                        fullWidth
-                        variant="outlined"
-                        onChange={this.handleSearch}
-                        value={this.state.searchTerm}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="start">
-                                    <Search color="primary" />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6} className="pb-0">
-                    <div className="d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-                        <Select
-                            value={this.state.filtros.categoria}
-                            onChange={this.handleFiltroChange}
-                            input={<OutlinedInput required name="categoria"/>}
-                            className="w-50"
-                        >
-                            {
-                                this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => {
-                                    if (i < this.state.headCells[this.state.categoriaDivisionMostrada].length - 1) {
-                                        return <MenuItem value={cellLabel} key={i}><T phrase={cellLabel}/></MenuItem>
-                                    }
-                                })
-                            }
-                        </Select>
-                        <Select
-                            value={this.state.filtros.orden}
-                            onChange={this.handleFiltroChange}
-                            input={<OutlinedInput required name="orden"/>}
-                            className="ml-3 w-50"
-                        >
-                            <MenuItem value="descendente"><T phrase="filtros.descendente"/></MenuItem>
-                            <MenuItem value="ascendente"><T phrase="filtros.ascendente"/></MenuItem>
-                        </Select>
-                    </div>
-                </Grid>
-                <Grid item xs={12}>
-                    {
-                        this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
-                            <Paper className="scrolling-table-outer">
-                                <div className="scrolling-table-wrapper">
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                {
-                                                    this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
-                                                        <TableCell key={i}><T phrase={cellLabel}/></TableCell>
-                                                    ))
-                                                }
-                                            </TableRow>
-                                        </TableHead>
+            <Translation>
+                {
+                    t => (
+                        <Grid container spacing={5}>
+                            <Helmet>
+                                <title>{t("titulo.no-login")}</title>
+                            </Helmet>
+                            <Grid item xs={12}>
+                                <Typography variant="h5">{t("calificaciones.titulo")}</Typography>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Paper>
+                                    <Tabs
+                                        variant="scrollable"
+                                        indicatorColor="primary"
+                                        textColor="primary"
+                                        value={this.state.divisionMostrada}
+                                        onChange={this.handleTabChange}
+                                    >
+                                        <Tab label={t("procesoPaso.2")}/>
+                                        <Tab label={t("procesoPaso.3-plural")}/>
+                                        <Tab label={t("procesoPaso.4-plural")}/>
+                                    </Tabs>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} className="pb-0">
+                                <TextField
+                                    placeholder="Buscar..."
+                                    fullWidth
+                                    variant="outlined"
+                                    onChange={this.handleSearch}
+                                    value={this.state.searchTerm}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="start">
+                                                <Search color="primary" />
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} md={6} className="pb-0">
+                                <div className="d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
+                                    <Select
+                                        value={this.state.filtros.categoria}
+                                        onChange={this.handleFiltroChange}
+                                        input={<OutlinedInput required name="categoria"/>}
+                                        className="w-50"
+                                    >
                                         {
-                                            this.state.isFiltering ? (
-                                                <TableBody>
-                                                    <TableRow>
-                                                        <TableCell colSpan={Object.keys(this.state[this.state.categoriaDivisionMostrada][0]).length + 1}>
-                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                </TableBody>
-                                            ) : (
-                                                <TableBody>
+                                            this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => {
+                                                if (i < this.state.headCells[this.state.categoriaDivisionMostrada].length - 1) {
+                                                    return <MenuItem value={cellLabel} key={i}>{t(cellLabel)}</MenuItem>
+                                                }
+                                            })
+                                        }
+                                    </Select>
+                                    <Select
+                                        value={this.state.filtros.orden}
+                                        onChange={this.handleFiltroChange}
+                                        input={<OutlinedInput required name="orden"/>}
+                                        className="ml-3 w-50"
+                                    >
+                                        <MenuItem value="descendente">{t("filtros.descendente")}</MenuItem>
+                                        <MenuItem value="ascendente">{t("filtros.ascendente")}</MenuItem>
+                                    </Select>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12}>
+                                {
+                                    this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
+                                        <Paper className="scrolling-table-outer">
+                                            <div className="scrolling-table-wrapper">
+                                                <Table>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            {
+                                                                this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
+                                                                    <TableCell key={i}>{t(cellLabel)}</TableCell>
+                                                                ))
+                                                            }
+                                                        </TableRow>
+                                                    </TableHead>
                                                     {
-                                                        this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                            const values = Object.values(elemento);
-                                                            return (
-                                                                <TableRow key={i}>
-                                                                    {
-                                                                        values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                    }
-                                                                    <TableCell>
-                                                                        <Link to={{
-                                                                            pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
-                                                                            state: {
-                                                                                tipoUsuario: "EVALUADOR"
-                                                                            }
-                                                                        }}>
-                                                                            <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
-                                                                        </Link>
+                                                        this.state.isFiltering ? (
+                                                            <TableBody>
+                                                                <TableRow>
+                                                                    <TableCell colSpan={Object.keys(this.state[this.state.categoriaDivisionMostrada][0]).length + 1}>
+                                                                        <CircularProgress color="primary" className="d-block mx-auto"/>
                                                                     </TableCell>
                                                                 </TableRow>
-                                                            );
-                                                        })
+                                                            </TableBody>
+                                                        ) : (
+                                                            <TableBody>
+                                                                {
+                                                                    this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                        const values = Object.values(elemento);
+                                                                        return (
+                                                                            <TableRow key={i}>
+                                                                                {
+                                                                                    values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                                }
+                                                                                <TableCell>
+                                                                                    <Link to={{
+                                                                                        pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
+                                                                                        state: {
+                                                                                            tipoUsuario: "EVALUADOR"
+                                                                                        }
+                                                                                    }}>
+                                                                                        <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
+                                                                                    </Link>
+                                                                                </TableCell>
+                                                                            </TableRow>
+                                                                        );
+                                                                    })
+                                                                }
+                                                            </TableBody>
+                                                        )
                                                     }
-                                                </TableBody>
-                                            )
-                                        }
-                                    </Table>
-                                    <TablePagination
-                                        labelDisplayedRows={({from, to, count}) => {
-                                            return `${from}-${to} / ${count}`;
-                                        }}
-                                        labelRowsPerPage={<T phrase="filasPorPagina"/>}
-                                        rowsPerPageOptions={[10, 25, 100]}
-                                        component="div"
-                                        count={this.state.elementosMostrados.length}
-                                        rowsPerPage={this.state.rowsPerPage}
-                                        page={this.state.page}
-                                        onChangePage={this.handleChangePage}
-                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                    />
-                                </div>
-                            </Paper>
-                        )
-                    }
-                </Grid>
-            </Grid>
+                                                </Table>
+                                                <TablePagination
+                                                    labelDisplayedRows={({from, to, count}) => {
+                                                        return `${from}-${to} / ${count}`;
+                                                    }}
+                                                    labelRowsPerPage={t("filasPorPagina")}
+                                                    rowsPerPageOptions={[10, 25, 100]}
+                                                    component="div"
+                                                    count={this.state.elementosMostrados.length}
+                                                    rowsPerPage={this.state.rowsPerPage}
+                                                    page={this.state.page}
+                                                    onChangePage={this.handleChangePage}
+                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                                />
+                                            </div>
+                                        </Paper>
+                                    )
+                                }
+                            </Grid>
+                        </Grid>
+                    )
+                }
+            </Translation>
         );
     }
 }

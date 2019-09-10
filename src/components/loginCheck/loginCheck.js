@@ -4,6 +4,8 @@ import { I18n } from "react-polyglot-hooks";
 import frases from "../../phrases/main";
 import { T } from 'react-polyglot-hooks';
 
+import { Translation } from "react-i18next";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -21,7 +23,6 @@ import School from "@material-ui/icons/School";
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
-import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 
 import Registro from "../registro/registro";
@@ -132,7 +133,7 @@ class LoginCheck extends Component {
                 break;
             case "SUPERADMIN":
             case "ADMIN":
-                tituloLabelUsuarios = <T phrase="gobiernos"/>
+                tituloLabelUsuarios = <T phrase="gobiernos"/>;
                 iconUsers = <HowToReg />;
                 break;
             case "EVALUADOR":
@@ -142,124 +143,129 @@ class LoginCheck extends Component {
         }
 
         return (
-            <I18n locale={this.state.locale} phrases={frases[this.state.locale]}>
-                <Router>
-                    <CssBaseline />
-                    {
-                        this.state.isLogeado ? (
-                            <AppBar position="static" color="primary">
-                                <Toolbar>
-                                    <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
-                                    <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
-                                    <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                        <Tooltip title="Inicio" placement="bottom">
-                                            <Link to="/">
-                                                <IconButton style={{ color: "#ffffff" }}>
-                                                    <Home />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
-                                        <Tooltip title="Configuración" placement="bottom">
-                                            <Link to="/configuracion">
-                                                <IconButton style={{ color: "#ffffff" }}>
-                                                    <SettingsApplications />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
-                                        {
-                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
-                                                <Tooltip title={tituloLabelUsuarios} placement="bottom">
-                                                    <Link to="/usuarios">
+            <Translation>
+                {
+                    t => (
+                        <Router>
+                            <CssBaseline />
+                            {
+                                this.state.isLogeado ? (
+                                    <AppBar position="static" color="primary">
+                                        <Toolbar>
+                                            <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
+                                            <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
+                                            <div className="d-flex align-items-center justify-content-end flex-grow-1">
+                                                <Tooltip title="Inicio" placement="bottom">
+                                                    <Link to="/">
                                                         <IconButton style={{ color: "#ffffff" }}>
-                                                            { iconUsers }
+                                                            <Home />
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
-                                            ) : ""
-                                        }
-                                        {
-                                            this.state.tipo === "EVALUADOR" ? (
-                                                <Tooltip title="Calificaciones" placement="bottom">
-                                                    <Link to="/calificaciones">
+                                                <Tooltip title="Configuración" placement="bottom">
+                                                    <Link to="/configuracion">
                                                         <IconButton style={{ color: "#ffffff" }}>
-                                                            <PlaylistAddCheck />
+                                                            <SettingsApplications />
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
+                                                {
+                                                    this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
+                                                        <Tooltip title={tituloLabelUsuarios} placement="bottom">
+                                                            <Link to="/usuarios">
+                                                                <IconButton style={{ color: "#ffffff" }}>
+                                                                    { iconUsers }
+                                                                </IconButton>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    ) : ""
+                                                }
+                                                {
+                                                    this.state.tipo === "EVALUADOR" ? (
+                                                        <Tooltip title="Calificaciones" placement="bottom">
+                                                            <Link to="/calificaciones">
+                                                                <IconButton style={{ color: "#ffffff" }}>
+                                                                    <PlaylistAddCheck />
+                                                                </IconButton>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    ) : ""
+                                                }
+                                                <Tooltip title="Cerrar sesión" placement="bottom">
+                                                    <Link to="/">
+                                                        <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
+                                                            <ExitToApp />
+                                                        </IconButton>
+                                                    </Link>
+                                                </Tooltip>
+                                            </div>
+                                        </Toolbar>
+                                    </AppBar>
+                                ) : (
+                                    <AppBar position="static" color="primary">
+                                        <Toolbar>
+                                            <Typography variant="h6" color="inherit"><T phrase="loginCheck.mensaje-navbar" /></Typography>
+                                        </Toolbar>
+                                    </AppBar>
+                                )
+                            }
+                            <Container component="main">
+                                <div className="py-5">
+                                    <Switch>
+                                        <Route path="/" exact render={(...routeProps) => {
+                                            if (this.state.isLogeado) {
+                                                return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
+                                            } else {
+                                                return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
+                                            }
+                                        }} />
+                                        <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                                        <Route path="/registro/" component={Registro} />
+                                        {
+                                            this.state.isLogeado ? (
+                                                <Switch>
+                                                    <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
+                                                    <Route path="/dashboard-docente/" component={DashboardDocente} />
+                                                    <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
+                                                    <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
+                                                    <Route path="/prueba/" component={Prueba} />
+                                                    <Route path="/practica/" component={Practica} />
+                                                    <Route path="/preentrevista/" component={Preentrevista} />
+                                                    <Route path="/entrevista/" component={Entrevista} />
+                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
+                                                    {
+                                                        this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
+                                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                        ) : ""
+                                                    }
+                                                    {
+                                                        this.state.tipo === "DOCENTE" ? (
+                                                            <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                        ) : ""
+                                                    }
+                                                    {
+                                                        this.state.tipo === "EVALUADOR" ? (
+                                                            <React.Fragment>
+                                                                <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                {/* <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} /> */}
+                                                                <Route path="/calificaciones" component={Calificaciones} />
+                                                            </React.Fragment>
+                                                        ) : ""
+                                                    }
+                                                    <Route component={Pagina404} />
+                                                </Switch>
                                             ) : ""
                                         }
-                                        <Tooltip title="Cerrar sesión" placement="bottom">
-                                            <Link to="/">
-                                                <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
-                                                    <ExitToApp />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
-                                    </div>
-                                </Toolbar>
-                            </AppBar>
-                        ) : (
-                            <AppBar position="static" color="primary">
-                                <Toolbar>
-                                    <Typography variant="h6" color="inherit"><T phrase="loginCheck.mensaje-navbar" /></Typography>
-                                </Toolbar>
-                            </AppBar>       
-                        )
-                    }
-                    <Container component="main">
-                        <div className="py-5">
-                            <Switch>
-                                <Route path="/" exact render={(...routeProps) => {
-                                    if (this.state.isLogeado) {
-                                        return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
-                                    } else {
-                                        return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
-                                    }
-                                }} />
-                                <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                                <Route path="/registro/" component={Registro} />
-                                {
-                                    this.state.isLogeado ? (
-                                        <Switch>
-                                            <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
-                                            <Route path="/dashboard-docente/" component={DashboardDocente} />
-                                            <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
-                                            <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
-                                            <Route path="/prueba/" component={Prueba} />
-                                            <Route path="/practica/" component={Practica} />
-                                            <Route path="/preentrevista/" component={Preentrevista} />
-                                            <Route path="/entrevista/" component={Entrevista} />
-                                            <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
-                                            {
-                                                this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
-                                                    <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                ) : ""
-                                            }
-                                            {
-                                                this.state.tipo === "DOCENTE" ? (
-                                                    <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                ) : ""
-                                            }
-                                            {
-                                                this.state.tipo === "EVALUADOR" ? (
-                                                    <React.Fragment>
-                                                        <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                    </React.Fragment>
-                                                ) : ""
-                                            }
-                                            <Route component={Pagina404} />
-                                        </Switch>
-                                    ) : ""
-                                }
-                                <Route component={Pagina404} />
-                            </Switch>
-                        </div>
-                    </Container>
-                </Router>
-            </I18n>
+                                        <Route component={Pagina404} />
+                                    </Switch>
+                                </div>
+                            </Container>
+                        </Router>
+                    )
+                }
+            </Translation>
         );
     };
 }

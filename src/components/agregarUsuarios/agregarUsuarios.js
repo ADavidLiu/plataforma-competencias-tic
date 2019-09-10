@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import locationData from "countrycitystatejson";
 
-import { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18next";
 
 import Add from "@material-ui/icons/Add";
 import Remove from "@material-ui/icons/Remove";
@@ -247,267 +247,285 @@ class AgregarUsuarios extends Component {
             case "GOBIERNO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-4 mb-3" key={i}>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container spacing={3} alignItems="flex-end">
-                                        <Grid item xs={6} md={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-idNacional"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="idNacional"
-                                                value={this.state.nuevosUsuarios[i].idNacional}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
-                                            />
+                        <Translation>
+                            {
+                                t => (
+                                    <Paper className="p-4 mb-3" key={i}>
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={3} alignItems="flex-end">
+                                                    <Grid item xs={6} md={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idNacional"
+                                                            value={this.state.nuevosUsuarios[i].idNacional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombre"
+                                                            value={this.state.nuevosUsuarios[i].nombre}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-pais")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].pais}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
+                                                            input={<OutlinedInput required name="pais"/>}
+                                                        >
+                                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                                            <MenuItem value="PA-Panamá">Panamá</MenuItem>
+                                                            <MenuItem value="PE-Perú">Perú</MenuItem>
+                                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-departamento")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].departamento}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
+                                                            input={<OutlinedInput required name="departamento"/>}
+                                                        >
+                                                            { states[i] }
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-municipio")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].municipio}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
+                                                            input={<OutlinedInput required name="municipio"/>}
+                                                        >
+                                                            { cities[i] }
+                                                        </Select>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={6} md={3}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-nombre-ie"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="nombre"
-                                                value={this.state.nuevosUsuarios[i].nombre}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6} md={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-pais"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].pais}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
-                                                input={<OutlinedInput required name="pais"/>}
-                                            >
-                                                <MenuItem value="CO-Colombia">Colombia</MenuItem>
-                                                <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
-                                                <MenuItem value="PA-Panamá">Panamá</MenuItem>
-                                                <MenuItem value="PE-Perú">Perú</MenuItem>
-                                                <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
-                                                <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
-                                                <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
-                                                <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
-                                                <MenuItem value="CL-Chile">Chile</MenuItem>
-                                                <MenuItem value="BR-Brasil">Brasil</MenuItem>
-                                                <MenuItem value="AR-Argentina">Argentina</MenuItem>
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={6} md={3}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-departamento"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].departamento}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
-                                                input={<OutlinedInput required name="departamento"/>}
-                                            >
-                                                { states[i] }
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={12} md={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-municipio"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].municipio}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "INSTITUCION", i); }}
-                                                input={<OutlinedInput required name="municipio"/>}
-                                            >
-                                                { cities[i] }
-                                            </Select>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                                    </Paper>
+                                )
+                            }
+                        </Translation>
                     );
                 }
                 break;
             case "INSTITUCION":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-4 mb-3" key={i}>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container spacing={3} alignItems="flex-end">
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-id"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="idNacional"
-                                                value={this.state.nuevosUsuarios[i].idNacional}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
+                        <Translation>
+                            {
+                                t => (
+                                    <Paper className="p-4 mb-3" key={i}>
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={3} alignItems="flex-end">
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-id")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idNacional"
+                                                            value={this.state.nuevosUsuarios[i].idNacional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-nombre")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombre"
+                                                            value={this.state.nuevosUsuarios[i].nombre}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="text-center"><strong>{t("usuarios.registro-ee-departamento")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100 mt-3"
+                                                            value={this.state.nuevosUsuarios[i].departamento}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                            input={<OutlinedInput required name="departamento"/>}
+                                                        >
+                                                            { states[i] }
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-direccion")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="direccion"
+                                                            value={this.state.nuevosUsuarios[i].direccion}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-tipo-ubicacion")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].tipoUbicacion}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                            input={<OutlinedInput required name="tipoUbicacion"/>}
+                                                        >
+                                                            <MenuItem value="Barrio">{t("barrio")}</MenuItem>
+                                                            <MenuItem value="Localidad">{t("localidad")}</MenuItem>
+                                                            <MenuItem value="Vereda">{t("vereda")}</MenuItem>
+                                                            <MenuItem value="Corregimiento">{t("corregimiento")}</MenuItem>
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-nombre-ubicacion")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombreUbicacion"
+                                                            value={this.state.nuevosUsuarios[i].nombreUbicacion}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-zona")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].zona}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                            input={<OutlinedInput required name="zona"/>}
+                                                        >
+                                                            <MenuItem value="Rural">{t("rural")}</MenuItem>
+                                                            <MenuItem value="Urbana">{t("urbana")}</MenuItem>
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={6} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-regimen")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].regimen}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                            input={<OutlinedInput required name="regimen"/>}
+                                                        >
+                                                            <MenuItem value="Oficial">{t("oficial")}</MenuItem>
+                                                            <MenuItem value="Privado">{t("privado")}</MenuItem>
+                                                            <MenuItem value="Concesión">{t("concesion")}</MenuItem>
+                                                        </Select>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={3} lg={2}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-telefono")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="telefono"
+                                                            value={this.state.nuevosUsuarios[i].telefono}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={5} lg={3}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-email")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="emailInstitucional"
+                                                            value={this.state.nuevosUsuarios[i].emailInstitucional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4} lg={3}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-web")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="sitioWeb"
+                                                            value={this.state.nuevosUsuarios[i].sitioWeb}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-nombre"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="nombre"
-                                                value={this.state.nuevosUsuarios[i].nombre}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="text-center"><strong><T phrase="usuarios.registro-ee-departamento"/></strong></Typography>
-                                            <Select
-                                                className="w-100 mt-3"
-                                                value={this.state.nuevosUsuarios[i].departamento}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                                input={<OutlinedInput required name="departamento"/>}
-                                            >
-                                                { states[i] }
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-direccion"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="direccion"
-                                                value={this.state.nuevosUsuarios[i].direccion}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-tipo-ubicacion"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].tipoUbicacion}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                                input={<OutlinedInput required name="tipoUbicacion"/>}
-                                            >
-                                                <MenuItem value="Barrio">{<T phrase="barrio"/>}</MenuItem>
-                                                <MenuItem value="Localidad">{<T phrase="localidad"/>}</MenuItem>
-                                                <MenuItem value="Vereda">{<T phrase="vereda"/>}</MenuItem>
-                                                <MenuItem value="Corregimiento">{<T phrase="corregimiento"/>}</MenuItem>
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-nombre-ubicacion"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="nombreUbicacion"
-                                                value={this.state.nuevosUsuarios[i].nombreUbicacion}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-zona"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].zona}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                                input={<OutlinedInput required name="zona"/>}
-                                            >
-                                                <MenuItem value="Rural">{<T phrase="rural"/>}</MenuItem>
-                                                <MenuItem value="Urbana">{<T phrase="urbana"/>}</MenuItem>
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={6} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-regimen"/></strong></Typography>
-                                            <Select
-                                                className="w-100"
-                                                value={this.state.nuevosUsuarios[i].regimen}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                                input={<OutlinedInput required name="regimen"/>}
-                                            >
-                                                <MenuItem value="Oficial">{<T phrase="oficial"/>}</MenuItem>
-                                                <MenuItem value="Privado">{<T phrase="privado"/>}</MenuItem>
-                                                <MenuItem value="Concesión">{<T phrase="concesion"/>}</MenuItem>
-                                            </Select>
-                                        </Grid>
-                                        <Grid item xs={12} md={3} lg={2}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-telefono"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="telefono"
-                                                value={this.state.nuevosUsuarios[i].telefono}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={5} lg={3}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-email"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="emailInstitucional"
-                                                value={this.state.nuevosUsuarios[i].emailInstitucional}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={4} lg={3}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-ee-web"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="sitioWeb"
-                                                value={this.state.nuevosUsuarios[i].sitioWeb}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "ESTABLECIMIENTO", i); }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                                    </Paper>
+                                )
+                            }
+                        </Translation>
                     );
                 }
                 break;
             case "ESTABLECIMIENTO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
-                        <Paper className="p-4 mb-3" key={i}>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container spacing={3} alignItems="flex-end">
-                                        <Grid item xs={6} md={4}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-idNacional"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="idNacional"
-                                                value={this.state.nuevosUsuarios[i].idNacional}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
-                                            />
+                        <Translation>
+                            {
+                                t => (
+                                    <Paper className="p-4 mb-3" key={i}>
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={3} alignItems="flex-end">
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idNacional"
+                                                            value={this.state.nuevosUsuarios[i].idNacional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-docente")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombreCompleto"
+                                                            value={this.state.nuevosUsuarios[i].nombreCompleto}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idEstablecimiento")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idEstablecimiento"
+                                                            value={this.state.nuevosUsuarios[i].idEstablecimiento}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={6} md={4}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-nombre-docente"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="nombreCompleto"
-                                                value={this.state.nuevosUsuarios[i].nombreCompleto}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} md={4}>
-                                            <Typography variant="body1" className="mb-3 text-center"><strong><T phrase="usuarios.registro-idEstablecimiento"/></strong></Typography>
-                                            <TextField
-                                                variant="outlined"
-                                                required
-                                                fullWidth
-                                                name="idEstablecimiento"
-                                                value={this.state.nuevosUsuarios[i].idEstablecimiento}
-                                                onChange={e => { this.actualizarDatosNuevos(e, "DOCENTE", i); }}
-                                            />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                                    </Paper>
+                                )
+                            }
+                        </Translation>
                     );
                 }
                 break;
@@ -517,22 +535,28 @@ class AgregarUsuarios extends Component {
         }
 
         return (
-            <Grid container>
-                <Grid item xs={12}>
-                    { itemsUsers }
-                </Grid>
-                <Grid item xs={6} className="mt-4">
-                    {
-                        this.state.numNuevosUsuarios > 1 ? (
-                            <Button color="primary" variant="outlined" size="large" className="mr-3" onClick={this.eliminarPosicion}><Remove/></Button>
-                        ) : ""
-                    }
-                    <Button color="primary" variant="outlined" size="large" onClick={this.agregarPosicion}><Add/></Button>
-                </Grid>
-                <Grid item xs={6} className="text-right mt-4">
-                    <Button color="primary" variant="contained" size="large" onClick={this.crearUsuarios}><T phrase="usuarios.registro-btn-agregar"/></Button>
-                </Grid>
-            </Grid>
+            <Translation>
+                {
+                    t => (
+                        <Grid container>
+                            <Grid item xs={12}>
+                                { itemsUsers }
+                            </Grid>
+                            <Grid item xs={6} className="mt-4">
+                                {
+                                    this.state.numNuevosUsuarios > 1 ? (
+                                        <Button color="primary" variant="outlined" size="large" className="mr-3" onClick={this.eliminarPosicion}><Remove/></Button>
+                                    ) : ""
+                                }
+                                <Button color="primary" variant="outlined" size="large" onClick={this.agregarPosicion}><Add/></Button>
+                            </Grid>
+                            <Grid item xs={6} className="text-right mt-4">
+                                <Button color="primary" variant="contained" size="large" onClick={this.crearUsuarios}>{t("usuarios.registro-btn-agregar")}</Button>
+                            </Grid>
+                        </Grid>
+                    )
+                }
+            </Translation>
         );
     }
 

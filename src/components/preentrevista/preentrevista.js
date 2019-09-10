@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from "react-polyglot-hooks";
+
 
 import { Redirect } from "react-router-dom";
 
