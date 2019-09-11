@@ -424,11 +424,10 @@ class Practica extends Component {
         const itemsEvidencias = [];
         for (let i = 0; i < this.state.formActividad.numMateriales; i++) {
             itemsMateriales.push(
-                <Translation>
+                <Translation key={i}>
                     {
                         t => (
                             <TextField
-                                key={i}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -446,11 +445,10 @@ class Practica extends Component {
         }
         for (let i = 0; i < this.state.formActividad.numEscenarios; i++) {
             itemsEscenarios.push(
-                <Translation>
+                <Translation key={i}>
                     {
                         t => (
                             <TextField
-                                key={i}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -468,11 +466,10 @@ class Practica extends Component {
         }
         for (let i = 0; i < this.state.formActividad.numProcedimientos; i++) {
             itemsProcedimientos.push(
-                <Translation>
+                <Translation key={i}>
                     {
                         t => (
                             <TextField
-                                key={i}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -490,10 +487,10 @@ class Practica extends Component {
         }
         for (let i = 0; i < this.state.formActividad.numEvidencias; i++) {
             itemsEvidencias.push(
-                <Translation>
+                <Translation key={i}>
                     {
                         t => (
-                            <div key={i} className="mt-3">
+                            <div className="mt-3">
                                 <hr/>
                                 <Button
                                     variant="contained"

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import frases from "../../phrases/main";
-
 import { Translation } from "react-i18next";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -50,7 +48,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "DOCENTE",
             id: "loremipsum"
         }
 
@@ -212,33 +210,33 @@ class LoginCheck extends Component {
                                     <Switch>
                                         <Route path="/" exact render={(...routeProps) => {
                                             if (this.state.isLogeado) {
-                                                return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />;
+                                                return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;
                                             } else {
                                                 return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
                                             }
                                         }} />
                                         <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                                        <Route path="/registro/" component={Registro} />
+                                        <Route path="/registro/" render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
                                         {
                                             this.state.isLogeado ? (
                                                 <Switch>
-                                                    <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} />} />
+                                                    <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                     <Route path="/dashboard-docente/" component={DashboardDocente} />
                                                     <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
                                                     <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
-                                                    <Route path="/prueba/" component={Prueba} />
+                                                    <Route path="/prueba/" render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
                                                     <Route path="/practica/" component={Practica} />
-                                                    <Route path="/preentrevista/" component={Preentrevista} />
-                                                    <Route path="/entrevista/" component={Entrevista} />
-                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
+                                                    <Route path="/preentrevista/" render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                    <Route path="/entrevista/" render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} />}/>
                                                     {
                                                         this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
-                                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                         ) : ""
                                                     }
                                                     {
                                                         this.state.tipo === "DOCENTE" ? (
-                                                            <Route path="/procesos/" render={(...routeProps) => <Procesos {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                            <Route path="/procesos/" render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                         ) : ""
                                                     }
                                                     {
@@ -247,8 +245,7 @@ class LoginCheck extends Component {
                                                                 <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                {/* <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} /> */}
-                                                                <Route path="/calificaciones" component={Calificaciones} />
+                                                                <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                             </React.Fragment>
                                                         ) : ""
                                                     }

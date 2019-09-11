@@ -564,7 +564,7 @@ class DashboardDocente extends Component {
                                     >{t("dashboardDocente.btn-prueba")}</Button>
                                 </Link>
                                 <Link to={{
-                                    pathname: "/practicas",
+                                    pathname: "/practica",
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }

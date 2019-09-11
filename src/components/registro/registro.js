@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
 import Button from "@material-ui/core/Button";
@@ -219,6 +220,9 @@ class Registro extends Component {
                 {
                     t => (
                         <React.Fragment>
+                            <Helmet>
+                                <title>{`${t("procesoPaso.0")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
                             <Typography variant="body1" className="mb-2"><strong>{t("registro.titulo")}</strong></Typography>
                             <form onSubmit={this.registrar}>
                                 <Grid container spacing={2} className="mb-2">

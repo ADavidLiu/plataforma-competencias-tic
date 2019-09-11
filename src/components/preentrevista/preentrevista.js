@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
 import { Redirect } from "react-router-dom";
@@ -462,6 +463,9 @@ class Preentrevista extends Component {
                 {
                     t => (
                         <Grid container justify="center">
+                            <Helmet>
+                                <title>{`${t("procesoPaso.3")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
                             <Grid item xs={12} sm={8} md={6}>
                                 <form onSubmit={this.handleSubmit}>
                                     <div className="mb-5">

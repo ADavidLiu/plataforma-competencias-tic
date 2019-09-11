@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import  { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
@@ -55,9 +56,11 @@ class Usuarios extends Component {
         }
         
         let tabs;
+        let tituloPagina = "";
         switch (this.props.userType) {
             case "SUPERADMIN":
             case "ADMIN":
+                tituloPagina = <Translation>{ t => t("usuarios") }</Translation>;
                 tabs = (
                     <Translation>
                         {
@@ -81,6 +84,7 @@ class Usuarios extends Component {
                 );
                 break;
             case "GOBIERNO":
+                tituloPagina = <Translation>{ t => t("instituciones") }</Translation>;
                 tabs = (
                     <Translation>
                         {
@@ -103,6 +107,7 @@ class Usuarios extends Component {
                 );
                 break;
             case "INSTITUCION":
+                tituloPagina = <Translation>{ t => t("establecimientos") }</Translation>;
                 tabs = (
                     <Translation>
                         {
@@ -124,6 +129,7 @@ class Usuarios extends Component {
                 );
                 break;
             case "ESTABLECIMIENTO":
+                tituloPagina = <Translation>{ t => t("docentes") }</Translation>;
                 tabs = (
                     <Translation>
                         {
@@ -203,16 +209,43 @@ class Usuarios extends Component {
         }
 
         return (
-            <Grid container spacing={5}>
-                <Grid item xs={12}>
-                    <Paper>
-                        { tabs }
-                    </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                    { divisionMostrada }
-                </Grid>
-            </Grid>
+            <Translation>
+                {
+                    t => {
+                        switch (this.props.userType) {
+                            case "SUPERADMIN":
+                            case "ADMIN":
+                                tituloPagina = t("usuarios");
+                                break;
+                            case "GOBIERNO":
+                                tituloPagina = t("instituciones");
+                                break;
+                            case "INSTITUCION":
+                                tituloPagina = t("establecimientos");
+                                break;
+                            case "ESTABLECIMIENTO":
+                                tituloPagina = t("docentes");
+                                break;
+                            default:
+                                break;
+                        }
+
+                        return <Grid container spacing={5}>
+                            <Helmet>
+                                <title>{`${tituloPagina} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                            <Grid item xs={12}>
+                                <Paper>
+                                    { tabs }
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12}>
+                                { divisionMostrada }
+                            </Grid>
+                        </Grid>
+                    }
+                }
+            </Translation>
         );
     }
 }

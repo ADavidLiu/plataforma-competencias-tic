@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
 import Typography from "@material-ui/core/Typography";
@@ -67,6 +68,9 @@ class Entrevista extends Component {
 				{
 					t => (
 						<Grid container justify="center">
+							<Helmet>
+                                <title>{`${t("procesoPaso.4")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
 							<Grid item xs={12} md={8} lg={9}>
 								{this.state.isRequerida ? (
 									<React.Fragment>

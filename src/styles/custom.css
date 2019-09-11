@@ -78,6 +78,11 @@ body {
     white-space: nowrap;
 }
 
+::selection {
+    background-color: #3f51b5;
+    color: #FFFFFF;
+}
+
 @media screen and (min-width: 500px) {
     .text-ellipsis {
         width: 60%;

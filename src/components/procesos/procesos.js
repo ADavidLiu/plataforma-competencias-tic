@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
+
 import sortBy from "sort-by";
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -218,6 +221,9 @@ class Procesos extends Component {
                 {
                     t => (
                         <Grid container spacing={2}>
+                            <Helmet>
+                                <title>{`${t("procesos.titulo")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
                             <Grid item xs={12}>
                                 <Typography variant="h5">
                                     {t("procesos.titulo")}

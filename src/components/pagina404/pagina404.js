@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
 import Button from "@material-ui/core/Button";
@@ -13,6 +14,9 @@ const Pagina404 = props => {
             {
                 t => (
                     <React.Fragment>
+                        <Helmet>
+                            <title>{t("titulo.404")}</title>
+                        </Helmet>
                         <Typography variant="h4">{t("404.titulo")}</Typography>
                         <Link to="/">
                             <Button type="button" className="mt-4" color="primary" variant="contained" size="large">{t("404.btn")}</Button>

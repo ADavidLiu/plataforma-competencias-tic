@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
+import { Translation } from "react-i18next";
+
 import DashboardDocente from "./dashboardDocente";
 import DashboardEstablecimientoEducativo from "./dashboardEstablecimientoEducativo";
 import DashboardGobierno from "./dashboardGobierno";
@@ -14,19 +17,19 @@ class Dashboard extends Component {
     render() {
         switch (this.props.userType) {
             case "DOCENTE":
-                this.dashboard = <DashboardDocente />;
+                this.dashboard = <DashboardDocente userProfile={this.props.userProfile} />;
                 break;
             case "INSTITUCIÓN":
                 
                 break;
             case "ESTABLECIMIENTO":
-                this.dashboard = <DashboardEstablecimientoEducativo />;
+                this.dashboard = <DashboardEstablecimientoEducativo userProfile={this.props.userProfile} />;
                 break;
             case "GOBIERNO":
-                this.dashboard = <DashboardGobierno />;
+                this.dashboard = <DashboardGobierno userProfile={this.props.userProfile} />;
                 break;
             case "EVALUADOR":
-                this.dashboard = <DashboardEvaluador />;
+                this.dashboard = <DashboardEvaluador userProfile={this.props.userProfile} />;
                 break;
             case "SUPERADMIN":
                 
@@ -39,9 +42,18 @@ class Dashboard extends Component {
         }
 
         return (
-            <div>
+            <React.Fragment>
+                <Translation>
+                    {
+                        t => (
+                            <Helmet>
+                                <title>{`${t("titulo.inicio")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                        )
+                    }
+                </Translation>
                 {this.dashboard}
-            </div>
+            </React.Fragment>
         );
     }
 }

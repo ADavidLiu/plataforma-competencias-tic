@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
+
+import SweetScroll from "sweet-scroll";
 
 import moment from "moment";
 
@@ -9,6 +12,13 @@ import { Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -21,19 +31,24 @@ import Snackbar from '@material-ui/core/Snackbar';
 import preguntasPrueba from "../../models/preguntasPrueba";
 import shuffleArray from "../../utils/shuffleArray";
 
-import Pregunta from "../pregunta/pregunta"
-
 class Prueba extends Component {
     constructor() {
         super();
+
+        this.scroller = new SweetScroll();
         
         this.state = {
             tipoUsuario: "",
             isPruebaIniciada: false,
             isPruebaTerminada: false,
+            progreso: 0,
+            seccionActual: 0,
             preguntas: preguntasPrueba,
+            preguntasDivididas: [],
             respuestas: [],
             revision: {},
+            preguntasRespondidas: 0,
+            isRespondidoCompleto: false,
             tiempoDisponible: 5400 * 1000,
             tiempoRestante: "calculando..."
         }
@@ -41,11 +56,29 @@ class Prueba extends Component {
         this.countdown = "";
         this.tiempoLimite = "";
 
+        this.domPreguntas = [];
+        this.domRadios = [];
+
         /* Para hacer las preguntas y el orden random */
+        this.dividedQuestions = [];
         this.shuffledQuestions = shuffleArray(this.state.preguntas);
         this.codigosDescriptores = [];
         this.selectedQuestions = [];
         this.finalQuestions = [];
+        this.finalJSXquestions = [];
+    }
+
+    componentDidMount = () => {
+        let infoCargada = {};
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                tipoUsuario: this.props.location.state.tipoUsuario
+            }
+        } else {
+            infoCargada = {
+                tipoUsuario: ""
+            }
+        }
 
         /* Se obtienen los códigos de los descriptores */
         this.shuffledQuestions.forEach(question => {
@@ -72,22 +105,52 @@ class Prueba extends Component {
 
         /* Se copian las preguntas seleccionadas al arreglo de preguntas finales */
         this.finalQuestions = [...this.selectedQuestions];
-    }
-
-    componentDidMount = () => {
-        let infoCargada = {};
-        if (this.props.location && this.props.location.state !== undefined) {
-            infoCargada = {
-                tipoUsuario: this.props.location.state.tipoUsuario
-            }
-        } else {
-            infoCargada = {
-                tipoUsuario: ""
-            }
+        for (let i = 0; i < this.finalQuestions.length; i+=4) {
+            this.dividedQuestions.push(this.finalQuestions.slice(i, i+4));
         }
 
+        /* Se renderizan las preguntas de cada sección */
+        this.dividedQuestions.forEach((section, i) => {
+            this.finalJSXquestions[i] = [];
+            this.state.respuestas[i] = [];
+
+            section.forEach((question, j) => {
+                this.state.respuestas[i][j] = {
+                    id: question.id,
+                    respuestaSeleccionada: ""
+                };
+
+                this.finalJSXquestions[i].push(
+                    <React.Fragment key={question.id}>
+                        <Typography variant="body1" className="mb-4"><strong>{question.enunciado}</strong></Typography>
+                        <FormControl component="fieldset" className="mb-4">
+                            <RadioGroup
+                                ref={elem => { this.domPreguntas.push(elem); }}
+                                aria-label="Respuesta Seleccionada"
+                                name={`respuestaSeleccionada-${question.codigoDescriptor}-${question.id}-${i}-${j}`}
+                                onChange={this.actualizarRespuestas}
+                            >
+                                {shuffleArray(question.opciones).map((opcion, k) => {
+                                    return <FormControlLabel
+                                        ref={elem => { this.domRadios.push(elem); }}
+                                        key={k}
+                                        value={opcion}
+                                        control={<Radio required color="primary" />}
+                                        label={opcion}
+                                    />;
+                                })}
+                            </RadioGroup>
+                        </FormControl>
+                        <hr className="mb-5"/>
+                    </React.Fragment>
+                );
+            });
+        });
+
         this.setState({
-            tipoUsuario: infoCargada.tipoUsuario
+            tipoUsuario: infoCargada.tipoUsuario,
+            preguntasDivididas: this.finalJSXquestions,
+            progreso: 100/this.dividedQuestions.length
         });
     }
 
@@ -96,16 +159,34 @@ class Prueba extends Component {
         clearInterval(this.countdown);
     }
 
-    actualizarRespuestas = preguntaRespondida => {
-        const encontrado = this.state.respuestas.find(respuesta => respuesta.id === preguntaRespondida.id);
+    actualizarRespuestas = e => {
+        const domNode = e.target.parentNode.parentNode.parentNode;
+        const copiaRespuestas = [...this.state.respuestas];
+        const respondidas = this.state.preguntasRespondidas;
+        const i = e.target.name.split("-")[3];
+        const j = e.target.name.split("-")[4];
 
-        if (encontrado === undefined) {
-            // el ID aún no está. Agregar.
-            this.state.respuestas.push(preguntaRespondida);
-        } else {
-            // La pregunta ya había sido respondida. Actualizar.
-            encontrado.respuestaSeleccionada = preguntaRespondida.respuestaSeleccionada;
-        }
+        const preguntaRespondida = {
+            id: e.target.name.split("-")[2],
+            respuestaSeleccionada: e.target.value
+        };
+
+        this.state.respuestas.forEach(seccionRespuestas => {
+            let encontrado = seccionRespuestas.find(respuesta => respuesta.id === preguntaRespondida.id);
+
+            if (encontrado) {
+                copiaRespuestas[i][j] = preguntaRespondida;
+                this.setState({
+                    respuestas: copiaRespuestas
+                });
+
+                if (encontrado.respuestaSeleccionada === "") {
+                    this.setState({
+                        preguntasRespondidas: respondidas + 1
+                    });
+                }
+            }
+        });
     }
 
     revisarRespuestas = e => {
@@ -189,6 +270,61 @@ class Prueba extends Component {
         this.props.history.push("/dashboard");
     }
 
+    cambiarSeccion = direccion => {
+        this.domPreguntas = [];
+        this.domRadios = [];
+        let nuevaSeccionActual;
+        let nuevoProgreso;
+        let seccionActual = this.state.seccionActual;
+        let siguienteSeccion = seccionActual + 1;
+        let anteriorSeccion = seccionActual - 1;
+        if (anteriorSeccion < 0) {
+            anteriorSeccion = 0;
+        }
+
+        if (direccion === "SIGUIENTE") {
+            nuevaSeccionActual = seccionActual += 1;
+            nuevoProgreso = (100/this.state.preguntasDivididas.length) * (siguienteSeccion + 1);
+        } else {
+            nuevaSeccionActual = seccionActual -= 1;
+            nuevoProgreso = (100/this.state.preguntasDivididas.length) * (anteriorSeccion + 1);
+        }
+
+        this.setState({
+            seccionActual: nuevaSeccionActual,
+            progreso: nuevoProgreso
+        });
+
+        this.scroller.to("#cuestionario-top");
+
+        const timeout = setTimeout(() => {
+            const seccionRespuestasSeleccionadas = [...this.state.respuestas[this.state.seccionActual]];
+            this.domPreguntas = this.domPreguntas.filter(pregunta => pregunta !== null);
+            this.domRadios = this.domRadios.filter(radio => radio !== null);
+            
+            const radiosArray = [];
+            for (let i = 0; i < this.domRadios.length; i+=4) {
+                radiosArray.push(this.domRadios.slice(i, i+4));
+            }
+            /* console.log(seccionRespuestasSeleccionadas);
+            console.log(radiosArray); */
+            radiosArray.forEach((labels, i) => {
+                labels.forEach((label, j) => {
+                    const respuestaLabel = label.lastChild.textContent;
+                    if (seccionRespuestasSeleccionadas[i].respuestaSeleccionada !== "" && seccionRespuestasSeleccionadas[i].respuestaSeleccionada === respuestaLabel) {
+                        label.firstChild.classList.add("Mui-checked")
+                        label.firstChild.firstChild.firstChild.lastChild.style.transform = "none";
+                    } else {
+                        label.firstChild.classList.remove("Mui-checked")
+                        label.firstChild.firstChild.firstChild.lastChild.style.transform = "scale(0)";
+                    }
+                });
+            });
+
+            clearTimeout(timeout);
+        }, 500);
+    }
+
     render() {
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
@@ -199,8 +335,11 @@ class Prueba extends Component {
                 {
                     t => (
                         <React.Fragment>
-                            <Grid container justify="center">
-                                <Grid item xs={12} sm={8} md={6}>
+                            <Helmet>
+                                <title>{`${t("procesoPaso.1")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                            <Grid container justify="center" id="cuestionario-top">
+                                <Grid item xs={12} sm={10} md={8}>
                                     <form onSubmit={this.revisarRespuestas}>
                                         {!this.state.isPruebaIniciada ? (
                                             <React.Fragment>
@@ -229,10 +368,29 @@ class Prueba extends Component {
                                             <React.Fragment>
                                                 <Grid item xs={12}>
                                                     <Typography variant="h5" className="text-center">{t("prueba.titulo-cuestionario")}</Typography>
+                                                    <LinearProgress variant="determinate" value={this.state.progreso} className="mt-5"/>
                                                     <hr className="my-5" />
-                                                    {this.finalQuestions.map(pregunta => {
-                                                        return <Pregunta key={pregunta.id} id={pregunta.id} data={pregunta} actualizarRespuestas={this.actualizarRespuestas} />
-                                                    })}
+                                                    <Paper className="pt-3 pr-3 pl-3 pt-5 pr-5 pl-5">
+                                                        { this.state.preguntasDivididas[this.state.seccionActual] }
+                                                    </Paper>
+                                                </Grid>
+                                                <Grid item xs={12} className="mb-3 pb-1">
+                                                    <Grid container>
+                                                        <Grid item xs={6}>
+                                                            {
+                                                                this.state.seccionActual !== 0 ? <Button onClick={() => {
+                                                                    this.cambiarSeccion("ANTERIOR");
+                                                                }} color="primary" variant="contained">{t("visorPerfiles.anteriores")}</Button> : ""
+                                                            }
+                                                        </Grid>
+                                                        <Grid item xs={6} className="text-right">
+                                                            {
+                                                                this.state.seccionActual !== this.state.preguntasDivididas.length - 1 ? <Button onClick={() => {
+                                                                    this.cambiarSeccion("SIGUIENTE");
+                                                                }} color="primary" variant="contained">{t("visorPerfiles.siguientes")}</Button> : ""
+                                                            }
+                                                        </Grid>
+                                                    </Grid>
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <Button
@@ -242,6 +400,7 @@ class Prueba extends Component {
                                                         color="primary"
                                                         className="mt-2"
                                                         size="large"
+                                                        disabled={!this.state.isRespondidoCompleto}
                                                     >
                                                         {t("prueba.btn-enviar")}
                                                     </Button>
@@ -255,7 +414,7 @@ class Prueba extends Component {
                                 <DialogTitle id="form-dialog-title">{t("prueba.label-resultados")}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        {t("prueba.ayuda-label-resultados")}
+                                        {t("prueba.label-ayuda-resultados")}
                                         <br/><br/>
                                         <strong>{t("prueba.label-correctas")}</strong> {this.state.revision.numCorrectas}
                                         <br/>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { Helmet } from "react-helmet";
 import { Redirect } from "react-router-dom";
 import { Translation } from "react-i18next";
 
@@ -136,6 +137,9 @@ class Configuracion extends Component {
                 {
                     t => (
                         <Grid container>
+                            <Helmet>
+                                <title>{`${t("titulo.configuracion")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
                             <Grid item xs={12} className="mb-5">
                                 <Typography variant="h5">
                                     {t("configuracion.titulo")}
