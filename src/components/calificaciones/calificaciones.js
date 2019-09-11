@@ -322,7 +322,7 @@ class Calificaciones extends Component {
                     t => (
                         <Grid container spacing={5}>
                             <Helmet>
-                                <title>{t("titulo.no-login")}</title>
+                                <title>{t("titulo.calificaciones")}</title>
                             </Helmet>
                             <Grid item xs={12}>
                                 <Typography variant="h5">{t("calificaciones.titulo")}</Typography>

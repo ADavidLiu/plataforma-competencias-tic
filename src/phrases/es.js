@@ -39,6 +39,7 @@ const es = {
         "login.contrasenia": "Contraseña",
         "login.btn": "Ingresar",
         "titulo.no-login": "Plataforma de Competencias TIC",
+        "titulo.calificaciones": "Calificaciones",
         "incipiente": "Incipiente",
         "en-desarrollo": "En Desarrollo",
         "establecido": "Establecido",
