@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Translation } from "react-i18n";
+import { Translation } from "react-i18next";
 
 import { Redirect } from "react-router-dom";
 
@@ -804,7 +804,7 @@ class Practica extends Component {
                                             <strong>{t("caracteres-maximos")}</strong>
                                         </FormGroup>
                                         <FormGroup className="mb-4">
-                                            <Typography variant="body1"><T phrase="practicas.principal-objetivo"/></Typography>
+                                            <Typography variant="body1">{t("practicas.principal-objetivo")}</Typography>
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
@@ -814,15 +814,15 @@ class Practica extends Component {
                                                 inputProps={{ maxLength: 400 }}
                                                 rows="5"
                                                 id="objetivoPrincipal"
-                                                label={<T phrase="practicas.ayuda-principal-objetivo" />}
+                                                label={t("practicas.ayuda-principal-objetivo")}
                                                 name="objetivoPrincipal"
                                                 value={this.state.objetivoPrincipal}
                                                 onChange={this.handleTextChange}
                                             />
-                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                            <strong>{t("caracteres-maximos")}</strong>
                                         </FormGroup>
                                         <FormGroup className="mb-4">
-                                            <Typography variant="body1"><T phrase="practicas.label-resultados"/></Typography>
+                                            <Typography variant="body1">{t("practicas.label-resultados")}</Typography>
                                             <TextField
                                                 variant="outlined"
                                                 margin="normal"
@@ -832,16 +832,16 @@ class Practica extends Component {
                                                 inputProps={{ maxLength: 400 }}
                                                 rows="5"
                                                 id="resultadosEsperados"
-                                                label={<T phrase="practicas.resultados"/>}
+                                                label={t("practicas.resultados")}
                                                 name="resultadosEsperados"
                                                 value={this.state.resultadosEsperados}
                                                 onChange={this.handleTextChange}
                                             />
-                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                            <strong>{t("caracteres-maximos")}</strong>
                                         </FormGroup>
-                                        <Typography variant="body1" className="mb-3"><T phrase="practicas.label-actividades"/></Typography>
+                                        <Typography variant="body1" className="mb-3">{t("practicas.label-actividades")}</Typography>
                                         {
-                                            this.state.actividades.length > 0 ? <Typography variant="body2"><strong><T phrase="practicas.label-actividades-agregadas"/></strong></Typography> : ""
+                                            this.state.actividades.length > 0 ? <Typography variant="body2"><strong>{t("practicas.label-actividades-agregadas")}</strong></Typography> : ""
                                         }
                                         {
                                             this.state.actividades.map((actividad, i) => {
@@ -861,13 +861,13 @@ class Practica extends Component {
                                             className="mt-2"
                                             size="medium"
                                             onClick={this.abrirFormActividad}
-                                        ><T phrase="practicas.btn-agregar-actividad"/></Button>
+                                        >{t("practicas.btn-agregar-actividad")}</Button>
                                         <hr className="mt-5 mb-4"/>
                                         <FormGroup>
                                             <FormControlLabel
                                                 required
                                                 control={<Checkbox onChange={this.asegurarCorrecto} color="primary" checked={this.state.asegurarCorrecto} value="asegura-correcto" />}
-                                                label={<T phrase="practicas.label-checkbox"/>}
+                                                label={t("practicas.label-checkbox")}
                                             />
                                         </FormGroup>
                                         <Button
@@ -877,23 +877,23 @@ class Practica extends Component {
                                             color="primary"
                                             className="mt-2"
                                             size="large"
-                                        ><T phrase="practicas.btn-enviar"/></Button>
+                                        >{t("practicas.btn-enviar")}</Button>
                                     </form>
                                 </Grid>
                             </Grid>
 
                             <Dialog open={this.state.isFormActividadOpen} onClose={this.cerrarFormActividad} fullWidth>
                                 <form onSubmit={this.guardarActividad}>
-                                    <DialogTitle id="form-dialog-title"><T phrase="practicas.label-detalles-actividad"/></DialogTitle>
+                                    <DialogTitle id="form-dialog-title">{t("practicas.label-detalles-actividad")}</DialogTitle>
                                     <DialogContent>
-                                        <DialogContentText><T phrase="practicas.ayuda-detalles-actividad"/></DialogContentText>
+                                        <DialogContentText>{t("practicas.ayuda-detalles-actividad")}</DialogContentText>
                                         <TextField
                                             variant="outlined"
                                             margin="normal"
                                             required
                                             fullWidth
                                             id="nombreActividad"
-                                            label={<T phrase="practicas.actividad-nombre"/>}
+                                            label={t("practicas.actividad-nombre")}
                                             name="nombre"
                                             type="text"
                                             value={this.state.formActividad.nombre}
@@ -908,27 +908,27 @@ class Practica extends Component {
                                             inputProps={{ maxLength: 400 }}
                                             fullWidth
                                             id="propositoActividad"
-                                            label={<T phrase="practicas.actividad-proposito"/>}
+                                            label={t("practicas.actividad-proposito")}
                                             name="proposito"
                                             type="text"
                                             value={this.state.formActividad.proposito}
                                             onChange={this.actualizarFormActividad}
                                         />
-                                        <strong><T phrase="caracteres-maximos"/></strong>
+                                        <strong>{t("caracteres-maximos")}</strong>
                                         <FormControl variant="outlined" className="w-100 mt-3">
-                                            <InputLabel htmlFor="modalidadTrabajoActividad"><T phrase="practicas.actividad-modalidad-trabajo"/></InputLabel>
+                                            <InputLabel htmlFor="modalidadTrabajoActividad">{t("practicas.actividad-modalidad-trabajo")}</InputLabel>
                                             <Select
                                                 value={this.state.formActividad.modalidadTrabajo}
                                                 onChange={this.actualizarFormActividad}
                                                 input={<OutlinedInput required name="modalidadTrabajo" id="modalidadTrabajoActividad"/>}
                                             >
-                                                <MenuItem value="Grupal"><T phrase="practicas.actividad-grupal"/></MenuItem>
-                                                <MenuItem value="Individual"><T phrase="practicas.actividad-individual"/></MenuItem>
-                                                <MenuItem value="Mixta"><T phrase="practicas.actividad-mixta"/></MenuItem>
+                                                <MenuItem value="Grupal">{t("practicas.actividad-grupal")}</MenuItem>
+                                                <MenuItem value="Individual">{t("practicas.actividad-individual")}</MenuItem>
+                                                <MenuItem value="Mixta">{t("practicas.actividad-mixta")}</MenuItem>
                                             </Select>
                                         </FormControl>
                                         <div className="mt-4">
-                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-materiales-educativos"/></strong></Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>{t("practicas.actividad-materiales-educativos")}</strong></Typography>
                                             {itemsMateriales}
                                             {
                                                 this.state.formActividad.numMateriales > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Materiales") }} color="primary" variant="outlined">-</Button> : ""
@@ -936,7 +936,7 @@ class Practica extends Component {
                                             <Button className="mt-2" onClick={() => { this.agregarItem("Materiales") }} color="primary" variant="outlined">+</Button>
                                         </div>
                                         <div className="mt-4">
-                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-escenarios"/></strong></Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>{t("practicas.actividad-escenarios")}</strong></Typography>
                                             {itemsEscenarios}
                                             {
                                                 this.state.formActividad.numEscenarios > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Escenarios") }} color="primary" variant="outlined">-</Button> : ""
@@ -944,7 +944,7 @@ class Practica extends Component {
                                             <Button className="mt-2" onClick={() => { this.agregarItem("Escenarios") }} color="primary" variant="outlined">+</Button>
                                         </div>
                                         <div className="mt-4">
-                                            <Typography variant="body1" className="mb-2"><strong><T phrase="practicas.actividad-procedimientos"/></strong></Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>{t("practicas.actividad-procedimientos")}</strong></Typography>
                                             {itemsProcedimientos}
                                             {
                                                 this.state.formActividad.numProcedimientos > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Procedimientos") }} color="primary" variant="outlined">-</Button> : ""
@@ -961,16 +961,16 @@ class Practica extends Component {
                                                 inputProps={{ maxLength: 400 }}
                                                 fullWidth
                                                 id="consignaActividad"
-                                                label={<T phrase="practicas.actividad-consigna"/>}
+                                                label={t("practicas.actividad-consigna")}
                                                 name="consigna"
                                                 type="text"
                                                 value={this.state.formActividad.consigna}
                                                 onChange={this.actualizarFormActividad}
                                             />
-                                            <strong><T phrase="caracteres-maximos"/></strong>
+                                            <strong>{t("caracteres-maximos")}</strong>
                                         </div>
                                         <div className="mt-4">
-                                            <Typography variant="body1" className="mb-3"><T phrase="practicas.actividad-evalua"/></Typography>
+                                            <Typography variant="body1" className="mb-3">{t("practicas.actividad-evalua")}</Typography>
                                             <FormControl variant="outlined" className="w-100">
                                                 <RadioGroup
                                                     name="evaluaActividad"
@@ -981,20 +981,20 @@ class Practica extends Component {
                                                         key="Sí"
                                                         value="true"
                                                         control={<Radio required color="primary" />}
-                                                        label={<T phrase="si"/>}
+                                                        label={t("si")}
                                                     />
                                                     <FormControlLabel
                                                         key="No"
                                                         value="false"
                                                         control={<Radio required color="primary" />}
-                                                        label={<T phrase="no"/>}
+                                                        label={t("no")}
                                                     />
                                                 </RadioGroup>
                                             </FormControl>
                                             {
                                                 this.state.formActividad.evalua ? (
                                                     <React.Fragment>
-                                                        <Typography variant="body1" className="mb-2"><T phrase="practicas.actividad-label-evaluar-desempenio"/></Typography>
+                                                        <Typography variant="body1" className="mb-2">{t("practicas.actividad-label-evaluar-desempenio")}</Typography>
                                                         <TextField
                                                             variant="outlined"
                                                             margin="normal"
@@ -1004,20 +1004,20 @@ class Practica extends Component {
                                                             inputProps={{ maxLength: 400 }}
                                                             fullWidth
                                                             id="comoEvaluaActividad"
-                                                            label={<T phrase="practicas.actividad-describa-proceso"/>}
+                                                            label={t("practicas.actividad-describa-proceso")}
                                                             name="comoEvalua"
                                                             type="text"
                                                             value={this.state.formActividad.comoEvalua}
                                                             onChange={this.actualizarFormActividad}
                                                         />
-                                                        <strong className="d-block mb-4"><T phrase="caracteres-maximos"/></strong>
+                                                        <strong className="d-block mb-4">{t("caracteres-maximos")}</strong>
                                                     </React.Fragment>
                                                 ) : ""
                                             }
                                         </div>
                                         <div className="mt-1">
-                                            <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-evidencias"/></Typography>
-                                            <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
+                                            <Typography variant="body1" className="mb-1">{t("practicas.actividad-label-adjunte-evidencias")}</Typography>
+                                            <em className="d-block mb-3"><strong>{t("practicas.actividad-ayuda-evidencias")}</strong></em>
                                             {itemsEvidencias}
                                             {
                                                 this.state.formActividad.numEvidencias > 1 ? <Button className="mt-2 mr-2" onClick={() => { this.eliminarItem("Evidencias") }} color="primary" variant="outlined">-</Button> : ""
@@ -1025,21 +1025,21 @@ class Practica extends Component {
                                             <Button className="mt-2" onClick={() => { this.agregarItem("Evidencias") }} color="primary" variant="outlined">+</Button>
                                         </div>
                                         <div className="mt-4">
-                                            <Typography variant="body1" className="mb-1"><T phrase="practicas.actividad-label-adjunte-produccion"/></Typography>
-                                            <strong className="d-block mb-2"><T phrase="practicas.actividad-ayuda-adjunte-produccion"/></strong>
-                                            <em className="d-block mb-3"><strong><T phrase="practicas.actividad-ayuda-evidencias"/></strong></em>
+                                            <Typography variant="body1" className="mb-1">{t("practicas.actividad-label-adjunte-produccion")}</Typography>
+                                            <strong className="d-block mb-2">{t("practicas.actividad-ayuda-adjunte-produccion")}</strong>
+                                            <em className="d-block mb-3"><strong>{t("practicas.actividad-ayuda-evidencias")}</strong></em>
                                             <hr/>
                                             <Button
                                                 variant="contained"
                                                 component="label"
                                                 fullWidth
                                             >
-                                                <T phrase="seleccionar-archivo"/>
+                                                {t("seleccionar-archivo")}
                                                 <input type="file" accept="image/*,video/*,audio/*,.doc,.docx,.pdf,.ppt,.pptx,.xlsm,.xlsx,.txt" onChange={this.actualizarArchivoRetroalimentacion} style={{ display: "none" }} />
                                             </Button>
                                             {
                                                 this.state.formActividad.retroalimentacion.archivo.nombre !== "" ? (
-                                                    <strong className="mt-3 d-block"><T phrase="archivo"/>: {this.state.formActividad.retroalimentacion.archivo.nombre}</strong>
+                                                    <strong className="mt-3 d-block">{t("archivo")}: {this.state.formActividad.retroalimentacion.archivo.nombre}</strong>
                                                 ) : ""
                                             }
                                             <TextField
@@ -1048,7 +1048,7 @@ class Practica extends Component {
                                                 fullWidth
                                                 multiline
                                                 rows={3}
-                                                label={<T phrase="practicas.descripcion-contenido"/>}
+                                                label={t("practicas.descripcion-contenido")}
                                                 name="retroalimentacionDescripcion"
                                                 className="mt-3"
                                                 onChange={this.actualizarDescripcionRetroalimentacion}
@@ -1057,8 +1057,8 @@ class Practica extends Component {
                                         <hr/>
                                     </DialogContent>
                                     <DialogActions>
-                                        <Button type="button" onClick={this.cerrarFormActividad} color="primary"><T phrase="cancelar"/></Button>
-                                        <Button type="submit" color="primary" variant="contained"><T phrase="practicas.actividad-btn-agregar"/></Button>
+                                        <Button type="button" onClick={this.cerrarFormActividad} color="primary">{t("cancelar")}</Button>
+                                        <Button type="submit" color="primary" variant="contained">{t("practicas.actividad-btn-agregar")}</Button>
                                     </DialogActions>
                                 </form>
                             </Dialog>

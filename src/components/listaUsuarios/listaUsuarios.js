@@ -727,44 +727,50 @@ class ListaUsuarios extends Component {
                 );
 
                 formularioEdicion = (
-                    <Grid container spacing={4}>
-                        <Grid item xs={12} md={3}>
-                            <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="idNacional"
-                                value={this.state.editingForm.idNacional}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <Typography variant="body1">{t("usuarios.registro-nombre-docente")}</Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="nombreCompleto"
-                                value={this.state.editingForm.nombreCompleto}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={5}>
-                            <Typography variant="body1">{t("usuarios.registro-idEstablecimiento")}</Typography>
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="idEstablecimiento"
-                                value={this.state.editingForm.idEstablecimiento}
-                                onChange={this.handleEdicionChange}
-                            />
-                        </Grid>
-                    </Grid>
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacional"
+                                            value={this.state.editingForm.idNacional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-nombre-docente")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombreCompleto"
+                                            value={this.state.editingForm.nombreCompleto}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={5}>
+                                        <Typography variant="body1">{t("usuarios.registro-idEstablecimiento")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idEstablecimiento"
+                                            value={this.state.editingForm.idEstablecimiento}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             default:

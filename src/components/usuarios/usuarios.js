@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-
+import  { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
 
@@ -59,64 +59,88 @@ class Usuarios extends Component {
             case "SUPERADMIN":
             case "ADMIN":
                 tabs = (
-                    <Tabs
-                        variant="scrollable"
-						indicatorColor="primary"
-						textColor="primary"
-						value={this.state.divisionMostrada}
-						onChange={this.handleTabChange}
-					>
-                        <Tab label={<T phrase="usuarios.label-registro-admins"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-gobiernos"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-instituciones"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-establecimientos"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-docentes"/>}/>
-					</Tabs>
+                    <Translation>
+                        {
+                            t => (
+                                <Tabs
+                                    variant="scrollable"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    value={this.state.divisionMostrada}
+                                    onChange={this.handleTabChange}
+                                >
+                                    <Tab label={t("usuarios.label-registro-admins")}/>
+                                    <Tab label={t("usuarios.label-usuarios-gobiernos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-instituciones")}/>
+                                    <Tab label={t("usuarios.label-usuarios-establecimientos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-docentes")}/>
+                                </Tabs>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case "GOBIERNO":
                 tabs = (
-                    <Tabs
-                        variant="scrollable"
-						indicatorColor="primary"
-						textColor="primary"
-						value={this.state.divisionMostrada}
-						onChange={this.handleTabChange}
-					>
-                        <Tab label={<T phrase="usuarios.label-registro-instituciones"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-instituciones"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-establecimientos"/>}/>
-					    <Tab label={<T phrase="usuarios.label-usuarios-docentes"/>}/>
-					</Tabs>
+                    <Translation>
+                        {
+                            t => (
+                                <Tabs
+                                    variant="scrollable"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    value={this.state.divisionMostrada}
+                                    onChange={this.handleTabChange}
+                                >
+                                    <Tab label={t("usuarios.label-registro-instituciones")}/>
+                                    <Tab label={t("usuarios.label-usuarios-instituciones")}/>
+                                    <Tab label={t("usuarios.label-usuarios-establecimientos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-docentes")}/>
+                                </Tabs>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case "INSTITUCION":
                 tabs = (
-                    <Tabs
-                        variant="scrollable"
-                        indicatorColor="primary"
-                        textColor="primary"
-                        value={this.state.divisionMostrada}
-                        onChange={this.handleTabChange}
-                    >
-                        <Tab label={<T phrase="usuarios.label-registro-establecimientos"/>}/>
-                        <Tab label={<T phrase="usuarios.label-usuarios-establecimientos"/>}/>
-                        <Tab label={<T phrase="usuarios.label-usuarios-docentes"/>}/>
-                    </Tabs>
+                    <Translation>
+                        {
+                            t => (
+                                <Tabs
+                                    variant="scrollable"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    value={this.state.divisionMostrada}
+                                    onChange={this.handleTabChange}
+                                >
+                                    <Tab label={t("usuarios.label-registro-establecimientos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-establecimientos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-docentes")}/>
+                                </Tabs>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case "ESTABLECIMIENTO":
                 tabs = (
-                    <Tabs
-                        variant="scrollable"
-                        indicatorColor="primary"
-                        textColor="primary"
-                        value={this.state.divisionMostrada}
-                        onChange={this.handleTabChange}
-                    >
-                        <Tab label={<T phrase="usuarios.label-registro-docentes"/>}/>
-                        <Tab label={<T phrase="usuarios.label-usuarios-docentes"/>}/>
-                    </Tabs>
+                    <Translation>
+                        {
+                            t => (
+                                <Tabs
+                                    variant="scrollable"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    value={this.state.divisionMostrada}
+                                    onChange={this.handleTabChange}
+                                >
+                                    <Tab label={t("usuarios.label-registro-docentes")}/>
+                                    <Tab label={t("usuarios.label-usuarios-docentes")}/>
+                                </Tabs>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             default:

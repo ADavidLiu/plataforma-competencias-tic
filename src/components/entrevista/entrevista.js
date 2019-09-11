@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-
+import { Translation } from "react-i18next";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -63,88 +63,94 @@ class Entrevista extends Component {
 		}
 
         return (
-			<Grid container justify="center">
-				<Grid item xs={12} md={8} lg={9}>
-					{this.state.isRequerida ? (
-						<React.Fragment>
-							{this.state.isEvaluada ? (
-								<React.Fragment>
-									<Typography
-										variant="h5"
-										className="mb-4"
-									>
-										<T phrase="entrevista.titulo"/>
-									</Typography>
-									<Grid item xs={12}>
-										<Typography variant="body1">
-											<T phrase="entrevista.ayuda"/>
-										</Typography>
-										<hr className="mt-4" />
-									</Grid>
-									<List>
-										{this.state.evidenciasNecesarias.map(
-											evidencia => {
-												return (
-													<ListItem
-														key={
-															evidencia.tipoEvidencia
+			<Translation>
+				{
+					t => (
+						<Grid container justify="center">
+							<Grid item xs={12} md={8} lg={9}>
+								{this.state.isRequerida ? (
+									<React.Fragment>
+										{this.state.isEvaluada ? (
+											<React.Fragment>
+												<Typography
+													variant="h5"
+													className="mb-4"
+												>
+													{t("entrevista.titulo")}
+												</Typography>
+												<Grid item xs={12}>
+													<Typography variant="body1">
+														{t("entrevista.ayuda")}
+													</Typography>
+													<hr className="mt-4" />
+												</Grid>
+												<List>
+													{this.state.evidenciasNecesarias.map(
+														evidencia => {
+															return (
+																<ListItem
+																	key={
+																		evidencia.tipoEvidencia
+																	}
+																>
+																	<ListItemIcon>
+																		<CheckCircleOutline />
+																	</ListItemIcon>
+																	<ListItemText
+																		primary={
+																			evidencia.tipoEvidencia
+																		}
+																	/>
+																</ListItem>
+															);
 														}
-													>
-														<ListItemIcon>
-															<CheckCircleOutline />
-														</ListItemIcon>
-														<ListItemText
-															primary={
-																evidencia.tipoEvidencia
-															}
-														/>
-													</ListItem>
-												);
-											}
+													)}
+												</List>
+											</React.Fragment>
+										) : (
+											<React.Fragment>
+												<Typography
+													variant="h5"
+													color="secondary"
+													className="mb-3"
+												>
+													<strong>
+														{t("entrevista.label-no-evaluado")}
+													</strong>
+												</Typography>
+												<Typography variant="body1">
+													{t("entrevista.ayuda-no-evaluado")}
+												</Typography>
+											</React.Fragment>
 										)}
-									</List>
-								</React.Fragment>
-							) : (
-								<React.Fragment>
-									<Typography
-										variant="h5"
-										color="secondary"
-										className="mb-3"
-									>
-										<strong>
-											<T phrase="entrevista.label-no-evaluado"/>
-										</strong>
-									</Typography>
-									<Typography variant="body1">
-										<T phrase="entrevista.ayuda-no-evaluado"/>
-									</Typography>
-								</React.Fragment>
-							)}
-						</React.Fragment>
-					) : (
-						<React.Fragment>
-							<Typography
-								variant="h5"
-								color="secondary"
-								className="mb-3"
-							>
-								<strong>
-									<T phrase="entrevista.no-requerido"/>
-								</strong>
-							</Typography>
-							<Typography variant="body1">
-								<T phrase="entrevista.ayuda-no-requerido-0"/>
-							</Typography>
-							<Typography variant="body1">
-								<T phrase="entrevista.ayuda-no-requerido-1"/>
-							</Typography>
-							<Typography variant="body1">
-								<T phrase="entrevista.ayuda-no-requerido-2"/>
-							</Typography>
-						</React.Fragment>
-					)}
-				</Grid>
-			</Grid>
+									</React.Fragment>
+								) : (
+									<React.Fragment>
+										<Typography
+											variant="h5"
+											color="secondary"
+											className="mb-3"
+										>
+											<strong>
+												{t("entrevista.no-requerido")}
+											</strong>
+										</Typography>
+										<Typography variant="body1">
+											{t("entrevista.ayuda-no-requerido-0")}
+										</Typography>
+										<Typography variant="body1">
+											{t("entrevista.ayuda-no-requerido-1")}
+										</Typography>
+										<Typography variant="body1">
+											{t("entrevista.ayuda-no-requerido-2")}
+										</Typography>
+									</React.Fragment>
+								)}
+							</Grid>
+						</Grid>
+					)
+				}
+			</Translation>
 		);
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { T } from 'react-polyglot-hooks';
+import { Translation } from "react-i18next";
 
 import { Grid } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -416,280 +416,286 @@ class DashboardGobierno extends Component {
 
     render() {
         return (
-			<Grid container spacing={5}>
-				<Grid item xs={12}>
-					<Paper>
-						<Tabs
-							indicatorColor="primary"
-							textColor="primary"
-							value={this.state.divisionMostrada}
-							onChange={this.handleTabChange}
-						>
-							{this.state.divisiones.map(division => {
-								return (
-									<Tab
-										key={division.nombre}
-										label={division.nombre}
-									/>
-								);
-							})}
-						</Tabs>
-					</Paper>
-				</Grid>
-				{!this.state.isLoading ? (
-                    <React.Fragment>
-                        <Grid item xs={12}>
-                            <div className="d-flex align-items-center justify-content-start">
-                                <Typography variant="body1" className="mr-3"><T phrase="dashboardGobierno.division" /></Typography>
-                                <FormControl variant="filled" className="col-6 col-md-auto">
-                                    <Select
-                                        value={this.state.subdivisionSeleccionada}
-                                        onChange={this.handleSubdivisionChange}
-                                        variant="filled"
-                                        input={<OutlinedInput required name="subdivisionSeleccionada" id="modalidadTrabajoActividad"/>}
+            <Translation>
+                {
+                    t => (
+                        <Grid container spacing={5}>
+                            <Grid item xs={12}>
+                                <Paper>
+                                    <Tabs
+                                        indicatorColor="primary"
+                                        textColor="primary"
+                                        value={this.state.divisionMostrada}
+                                        onChange={this.handleTabChange}
                                     >
+                                        {this.state.divisiones.map(division => {
+                                            return (
+                                                <Tab
+                                                    key={division.nombre}
+                                                    label={division.nombre}
+                                                />
+                                            );
+                                        })}
+                                    </Tabs>
+                                </Paper>
+                            </Grid>
+                            {!this.state.isLoading ? (
+                                <React.Fragment>
+                                    <Grid item xs={12}>
+                                        <div className="d-flex align-items-center justify-content-start">
+                                            <Typography variant="body1" className="mr-3">{t("dashboardGobierno.division")}</Typography>
+                                            <FormControl variant="filled" className="col-6 col-md-auto">
+                                                <Select
+                                                    value={this.state.subdivisionSeleccionada}
+                                                    onChange={this.handleSubdivisionChange}
+                                                    variant="filled"
+                                                    input={<OutlinedInput required name="subdivisionSeleccionada" id="modalidadTrabajoActividad"/>}
+                                                >
+                                                    {
+                                                        this.state.subdivisionesDisponibles.map((subdivision, i) => {
+                                                            return (
+                                                                <MenuItem key={i} value={subdivision}>{subdivision}</MenuItem>
+                                                            );
+                                                        })
+                                                    }
+                                                </Select>
+                                            </FormControl>
+                                        </div>
+                                        <hr/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h5" className="mb-4">{t("dashboardGobierno.general")}</Typography>
+                                        <Grid container spacing={5}>
+                                            <Grid item xs={12} sm={4}>
+                                                <Paper className="p-4 text-center">
+                                                    <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].indiceApropiacion}</Typography>
+                                                    <Typography component="p">{t("dashboardGobierno.indice")}</Typography>
+                                                </Paper>
+                                            </Grid>
+                                            <Grid item xs={6} sm={4}>
+                                                <Paper className="p-4 text-center">
+                                                    <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numEE}</Typography>
+                                                    <Typography component="p">{t("dashboardGobierno.establecimientos")}</Typography>
+                                                </Paper>
+                                            </Grid>
+                                            <Grid item xs={6} sm={4}>
+                                                <Paper className="p-4 text-center">
+                                                    <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numDocentes}</Typography>
+                                                    <Typography component="p">{t("dashboardGobierno.docentes")}</Typography>
+                                                </Paper>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="h6" className="mb-3">{t("dashboardGobierno.descriptores")}</Typography>
                                         {
-                                            this.state.subdivisionesDisponibles.map((subdivision, i) => {
-                                                return (
-                                                    <MenuItem key={i} value={subdivision}>{subdivision}</MenuItem>
-                                                );
+                                            this.currentData.forEach((division, i) => {
+                                                if (division.titulo === this.state.subdivisionSeleccionada) {
+                                                    const descriptores = [];
+                                                    division.descriptores.forEach(descriptor => {
+                                                        descriptores.push(
+                                                            <Paper
+                                                                className="p-3 mb-3"
+                                                                key={descriptor.label}
+                                                            >
+                                                                <Grid container spacing={5}>
+                                                                    <Grid item xs={6}>
+                                                                        <Typography variant="body1">
+                                                                            {descriptor.label}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                    <Grid item xs={6}>
+                                                                        <Typography variant="body1">
+                                                                            {descriptor.items.map(item => " • " + item)}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Paper>
+                                                        );
+                                                    });
+                                                    return descriptores;
+                                                }
                                             })
                                         }
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <hr/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="h5" className="mb-4"><T phrase="dashboardGobierno.general" /></Typography>
-                            <Grid container spacing={5}>
-                                <Grid item xs={12} sm={4}>
-                                    <Paper className="p-4 text-center">
-                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].indiceApropiacion}</Typography>
-                                        <Typography component="p"><T phrase="dashboardGobierno.indice" /></Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={6} sm={4}>
-                                    <Paper className="p-4 text-center">
-                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numEE}</Typography>
-                                        <Typography component="p"><T phrase="dashboardGobierno.establecimientos"/></Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={6} sm={4}>
-                                    <Paper className="p-4 text-center">
-                                        <Typography variant="h3" component="p" className="mb-2">{this.currentData[this.state.subdivisionSeleccionadaIndex].numDocentes}</Typography>
-                                        <Typography component="p"><T phrase="dashboardGobierno.docentes" /></Typography>
-                                    </Paper>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="h6" className="mb-3"><T phrase="dashboardGobierno.descriptores" /></Typography>
-                            {
-                                this.currentData.forEach((division, i) => {
-                                    if (division.titulo === this.state.subdivisionSeleccionada) {
-                                        const descriptores = [];
-                                        division.descriptores.forEach(descriptor => {
-                                            descriptores.push(
-                                                <Paper
-                                                    className="p-3 mb-3"
-                                                    key={descriptor.label}
-                                                >
-                                                    <Grid container spacing={5}>
-                                                        <Grid item xs={6}>
-                                                            <Typography variant="body1">
-                                                                {descriptor.label}
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={6}>
-                                                            <Typography variant="body1">
-                                                                {descriptor.items.map(item => " • " + item)}
-                                                            </Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Paper>
-                                            );
-                                        });
-                                        return descriptores;
-                                    }
-                                })
-                            }
-                            <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.frecuencia-absoluta" /></strong></Typography>
-                                <Bar 
-                                    data={{
-                                        labels: ["Estado de descriptores"],
-                                        datasets: [
-                                            {
-                                                label: "Incipiente",
-                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length],
-                                                borderWidth: 0,
-                                                backgroundColor: ["#3f51b5"]
-                                            },
-                                            {
-                                                label: "En Desarrollo",
-                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length],
-                                                borderWidth: 0,
-                                                backgroundColor: ["#3f51b5"]
-                                            },
-                                            {
-                                                label: "Establecido",
-                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
-                                                borderWidth: 0,
-                                                backgroundColor: ["#3f51b5"]
-                                            }
-                                        ]
-                                    }}
-                                    options={{
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                    beginAtZero: true,
-                                                    stepSize: 1
-                                                }
-                                            }]
-                                        }
-                                    }}
-                                />
-                            </div>
-                            <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.frecuencia-relativa" /></strong></Typography>
-                                <Doughnut
-                                    data={() => {
-                                        return {
-                                            labels: ["Incipiente", "En Desarrollo", "Establecido"],
-                                            datasets: [
-                                                {
-                                                    data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
-                                                    backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"]
-                                                }
-                                            ]
-                                        }
-                                    }}
-                                    options={{
-                                        tooltips: {
-                                            callbacks: {
-                                                label: (tooltipItem, data) => {
-                                                    const dataset = data.datasets[tooltipItem.datasetIndex];
-                                                    const label = data.labels[tooltipItem.index];
-                                                    const absoluteValue = dataset.data[tooltipItem.index];
-                                                    const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                                        return previousValue + currentValue;
-                                                    });
-                                                    const currentValue = dataset.data[tooltipItem.index];
-                                                    const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                                        <div className="mt-5">
+                                            <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-absoluta")}</strong></Typography>
+                                            <Bar 
+                                                data={{
+                                                    labels: ["Estado de descriptores"],
+                                                    datasets: [
+                                                        {
+                                                            label: `${t("incipiente")}`,
+                                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length],
+                                                            borderWidth: 0,
+                                                            backgroundColor: ["#3f51b5"]
+                                                        },
+                                                        {
+                                                            label: `${t("en-desarrollo")}`,
+                                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length],
+                                                            borderWidth: 0,
+                                                            backgroundColor: ["#3f51b5"]
+                                                        },
+                                                        {
+                                                            label: `${t("establecido")}`,
+                                                            data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
+                                                            borderWidth: 0,
+                                                            backgroundColor: ["#3f51b5"]
+                                                        }
+                                                    ]
+                                                }}
+                                                options={{
+                                                        scales: {
+                                                            yAxes: [{
+                                                                ticks: {
+                                                                beginAtZero: true,
+                                                                stepSize: 1
+                                                            }
+                                                        }]
+                                                    }
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="mt-5">
+                                            <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-relativa")}</strong></Typography>
+                                            <Doughnut
+                                                data={() => {
+                                                    return {
+                                                        labels: [`${t("incipiente")}`, `${t("en-desarrollo")}`, `${t("establecido")}`],
+                                                        datasets: [
+                                                            {
+                                                                data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
+                                                                backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"]
+                                                            }
+                                                        ]
+                                                    }
+                                                }}
+                                                options={{
+                                                    tooltips: {
+                                                        callbacks: {
+                                                            label: (tooltipItem, data) => {
+                                                                const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                                const label = data.labels[tooltipItem.index];
+                                                                const absoluteValue = dataset.data[tooltipItem.index];
+                                                                const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                                    return previousValue + currentValue;
+                                                                });
+                                                                const currentValue = dataset.data[tooltipItem.index];
+                                                                const percentage = Math.floor(((currentValue/total) * 100)+0.5);
 
-                                                    return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                                return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                            }
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="h6" className="mb-3">{t("dashboardGobierno.niveles")}</Typography>
+                                        {
+                                            this.currentData.forEach((division, i) => {
+                                                if (division.titulo === this.state.subdivisionSeleccionada) {
+                                                    const niveles = [];
+                                                    division.niveles.forEach(nivel => {
+                                                        niveles.push(
+                                                            <Paper
+                                                                className="p-3 mb-3"
+                                                                key={nivel.label}
+                                                            >
+                                                                <Grid container spacing={5}>
+                                                                    <Grid item xs={6}>
+                                                                        <Typography variant="body1">
+                                                                            {nivel.label}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                    <Grid item xs={6}>
+                                                                        <Typography variant="body1">
+                                                                            {nivel.estado}
+                                                                        </Typography>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Paper>
+                                                        );
+                                                    });
+                                                    return niveles;
                                                 }
-                                            }
+                                            })
                                         }
-                                    }}
-                                />
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="h6" className="mb-3"><T phrase="dashboardGobierno.niveles" /></Typography>
-                            {
-                                this.currentData.forEach((division, i) => {
-                                    if (division.titulo === this.state.subdivisionSeleccionada) {
-                                        const niveles = [];
-                                        division.niveles.forEach(nivel => {
-                                            niveles.push(
-                                                <Paper
-                                                    className="p-3 mb-3"
-                                                    key={nivel.label}
-                                                >
-                                                    <Grid container spacing={5}>
-                                                        <Grid item xs={6}>
-                                                            <Typography variant="body1">
-                                                                {nivel.label}
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={6}>
-                                                            <Typography variant="body1">
-                                                                {nivel.estado}
-                                                            </Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Paper>
-                                            );
-                                        });
-                                        return niveles;
-                                    }
-                                })
-                            }
-                            <div className="mt-5">
-                                <Typography variant="body1" className="mb-3"><strong><T phrase="dashboardGobierno.distribucion-relativa" /></strong></Typography>
-                                <Radar height={300} data={{
-                                    labels: ["Integración", "Reorientación", "Evolución"],
-                                    datasets: [{
-                                        label: "Estado actual",
-                                        data: [this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[0].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[1].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[2].porcentaje],
-                                        backgroundColor: "rgba(63,81,181, .5)",
-                                        pointBackgroundColor: "#3f51b5",
-                                        borderColor: "#3f51b5"
-                                    }]
-                                }}
-                                    options={{
-                                        scale: {
-                                            ticks: {
-                                                stepSize: 20,
-                                                min: 0,
-                                                max: 100,
-                                                beginAtZero: false
-                                            }
-                                        },
-                                        tooltips: {
-                                        enabled: true,
-                                        callbacks: {
-                                            label: (tooltipItem, data) => {
-                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                            }
-                                        }
-                                    }
-                                }} />
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <hr className="mb-5" />
-                            <Typography variant="h5" className="mb-4">Información detallada</Typography>
-                            <Grid container spacing={5}>
-                                <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" className="mb-1">Establecimientos educativos</Typography>
-                                    <hr className="mb-3" />
-                                    {
-                                        this.state.didEstablecimientosLoad ? (
-                                            <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={this.state.establecimientosSubdivision} />
-                                        ) : (
-                                            <CircularProgress color="primary" />
-                                        )
-                                    }
+                                        <div className="mt-5">
+                                            <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.distribucion-relativa")}</strong></Typography>
+                                            <Radar height={300} data={{
+                                                labels: [`${t("integracion")}`, `${t("reorientacion")}`, `${t("evolucion")}`],
+                                                datasets: [{
+                                                    label: `${t("estado-actual")}`,
+                                                    data: [this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[0].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[1].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[2].porcentaje],
+                                                    backgroundColor: "rgba(63,81,181, .5)",
+                                                    pointBackgroundColor: "#3f51b5",
+                                                    borderColor: "#3f51b5"
+                                                }]
+                                            }}
+                                                options={{
+                                                    scale: {
+                                                        ticks: {
+                                                            stepSize: 20,
+                                                            min: 0,
+                                                            max: 100,
+                                                            beginAtZero: false
+                                                        }
+                                                    },
+                                                    tooltips: {
+                                                    enabled: true,
+                                                    callbacks: {
+                                                        label: (tooltipItem, data) => {
+                                                            return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                        }
+                                                    }
+                                                }
+                                            }} />
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <hr className="mb-5" />
+                                        <Typography variant="h5" className="mb-4">{t("dashboardGobierno.detallada")}</Typography>
+                                        <Grid container spacing={5}>
+                                            <Grid item xs={12} md={6}>
+                                                <Typography variant="h6" className="mb-1">{t("dashboardGobierno.establecimientos")}</Typography>
+                                                <hr className="mb-3" />
+                                                {
+                                                    this.state.didEstablecimientosLoad ? (
+                                                        <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={this.state.establecimientosSubdivision} />
+                                                    ) : (
+                                                        <CircularProgress color="primary" />
+                                                    )
+                                                }
+                                            </Grid>
+                                            <Grid item xs={12} md={6}>
+                                                <Typography variant="h6" className="mb-1">{t("dashboardGobierno.docentes")}</Typography>
+                                                <hr className="mb-3" />
+                                                {
+                                                    this.state.didDocentesLoad ? (
+                                                        <VisorPerfiles tipo="DOCENTES" numPorPagina={2} perfiles={this.state.docentesSubdivision} />
+                                                    ) : (
+                                                        <CircularProgress color="primary" />
+                                                    )
+                                                }
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <hr className="mb-5" />
+                                        <Typography variant="h5" className="mb-4">{t("dashboardGobierno.ruta")}</Typography>
+                                        <RutaAprendizaje cursos={cursos} />
+                                    </Grid>
+                                </React.Fragment>
+                            ) : (
+                                <Grid item xs={12} className="text-center">
+                                    <CircularProgress color="primary" />
                                 </Grid>
-                                <Grid item xs={12} md={6}>
-                                    <Typography variant="h6" className="mb-1">Docentes</Typography>
-                                    <hr className="mb-3" />
-                                    {
-                                        this.state.didDocentesLoad ? (
-                                            <VisorPerfiles tipo="DOCENTES" numPorPagina={2} perfiles={this.state.docentesSubdivision} />
-                                        ) : (
-                                            <CircularProgress color="primary" />
-                                        )
-                                    }
-                                </Grid>
-                            </Grid>
+                            )}
                         </Grid>
-                        <Grid item xs={12}>
-                            <hr className="mb-5" />
-                            <Typography variant="h5" className="mb-4">Ruta de aprendizaje sugerida</Typography>
-                            <RutaAprendizaje cursos={cursos} />
-                        </Grid>
-                    </React.Fragment>
-				) : (
-					<Grid item xs={12} className="text-center">
-						<CircularProgress color="primary" />
-					</Grid>
-				)}
-			</Grid>
+                    )
+                }
+            </Translation>
 		);
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import  { T } from "react-polyglot-hooks";
+import { Translation } from "react-i18next";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -95,146 +95,152 @@ class DashboardExtablecimientoEducativo extends Component {
         }
 
         return (
-			<Grid container spacing={5}>
-				<Grid item xs={12}>
-					<Typography variant="h5">
-						<T phrase="dashboardEE.label-docentes"/>
-					</Typography>
-                    <hr/>
-				</Grid>
-				<Grid item xs={12} md={7}>
-					{this.state.didPerfilesLoad ? (
-                        <React.Fragment>
-                            <VisorPerfiles tipo="DOCENTES" numPorPagina={4} perfiles={this.state.perfiles} />
-                        </React.Fragment>
-					) : (
-						<CircularProgress color="primary" />
-					)}
-				</Grid>
-				<Grid item xs={12} md={5}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Paper className="p-4 text-center">
-                                <Typography variant="h3" component="p" className="mb-2">{this.state.indiceApropiacion}</Typography>
-                                <Typography component="p"><T phrase="indice-tic"/></Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Paper className="p-4 text-center mb-5">
-                                <Typography variant="h3" component="p" className="mb-2">{this.state.perfiles.length}</Typography>
-                                <Typography component="p"><T phrase="dashboardEE.docentes"/></Typography>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Paper className="p-4 text-center mb-5">
-                                <Typography variant="h3" component="p" className="mb-2">{this.state.cuentaNoIngreso}</Typography>
-                                <Typography component="p"><T phrase="dashboardEE.nunca-ingreso"/></Typography>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-					{this.state.didPerfilesLoad ? (
-                        <React.Fragment>
-                            <Typography variant="h6" className="mb-3"><T phrase="dashboardEE.label-estado-general"/></Typography>
-                            <Typography variant="body1"><strong><T phrase="dashboardEE.label-frecuencia-absoluta"/></strong></Typography>
-                            <hr className="mt-2 mb-4"/>
-                            <Bar
-                                data={() => {
-                                    const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
-
-                                    this.state.perfiles.forEach((perfil, i) => {
-                                        numPerfilesPasos[perfil.pasoActual] += 1;
-                                    });
-
-                                    const barDatasets = [];
-                                    pasos.avanzado.forEach(paso => {
-                                        barDatasets.push({
-                                            label: paso.nombre,
-                                            data: [numPerfilesPasos[paso.index]],
-                                            borderWidth: 0,
-                                            backgroundColor: ["#3f51b5"]
-                                        });
-                                    });
-
-                                    return {
-                                        labels: ["Paso actual"],
-                                        datasets: barDatasets
-                                    }
-                                }}
-                                options={{
-                                    scales: {
-                                        yAxes: [
-                                            {
-                                                ticks: {
-                                                    beginAtZero: true,
-                                                    stepSize: 5
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }}
-                            />
-                            <div className="mt-4">
-                                <Typography variant="body1"><strong><T phrase="dashboardEE.label-frecuencia-relativa"/></strong></Typography>
-                                <hr className="mt-2 mb-4"/>
-                                <Doughnut height={200} data={() => {
-                                    const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
-                                    this.state.perfiles.forEach((perfil, i) => {
-                                        numPerfilesPasos[perfil.pasoActual] += 1;
-                                    });
-
-                                    const doughnutDatasets = [{
-                                        data: [],
-                                        backgroundColor: ["#5f77ff", "#546bf0", "#4b60d6", "#4357c5", "#4154c0", "#3f51b5"]
-                                    }];
-                                    pasos.avanzado.forEach(paso => {
-                                        doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);
-                                    });
-
-                                    const labelsArray = [];
-                                    pasos.avanzado.forEach(paso => {
-                                        labelsArray.push(paso.nombre);
-                                    });
-
-                                    return {
-                                        labels: labelsArray,
-                                        datasets: [doughnutDatasets[0]]
-                                    }
-                                }} options={{
-                                    tooltips: {
-                                        callbacks: {
-                                            label: (tooltipItem, data) => {
-                                                const dataset = data.datasets[tooltipItem.datasetIndex];
-                                                const label = data.labels[tooltipItem.index];
-                                                const absoluteValue = dataset.data[tooltipItem.index];
-                                                const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                                    return previousValue + currentValue;
-                                                });
-                                                const currentValue = dataset.data[tooltipItem.index];
-                                                const percentage = Math.floor(((currentValue/total) * 100)+0.5);
-
-                                                return `${label}: ${absoluteValue} (${percentage}%)`;
-                                            }
-                                        }
-                                    }
-                                }} />
-                            </div>
-                        </React.Fragment>
-					) : (
-						<CircularProgress color="primary" />
-					)}
-				</Grid>
-                <Grid item xs={12} className="mt-4">
-					<Typography variant="h5"><T phrase="dashboardEE.ruta"/></Typography>
-                    <hr/>
-				</Grid>
+            <Translation>
                 {
-                    this.state.didRutaLoad ? (
-                        <Grid item xs={12}>
-                            <RutaAprendizaje cursos={this.state.cursosSugeridos} />
+                    t => (
+                        <Grid container spacing={5}>
+                            <Grid item xs={12}>
+                                <Typography variant="h5">
+                                    {t("dashboardEE.label-docentes")}
+                                </Typography>
+                                <hr/>
+                            </Grid>
+                            <Grid item xs={12} md={7}>
+                                {this.state.didPerfilesLoad ? (
+                                    <React.Fragment>
+                                        <VisorPerfiles tipo="DOCENTES" numPorPagina={4} perfiles={this.state.perfiles} />
+                                    </React.Fragment>
+                                ) : (
+                                    <CircularProgress color="primary" />
+                                )}
+                            </Grid>
+                            <Grid item xs={12} md={5}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <Paper className="p-4 text-center">
+                                            <Typography variant="h3" component="p" className="mb-2">{this.state.indiceApropiacion}</Typography>
+                                            <Typography component="p">{t("indice-tic")}</Typography>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Paper className="p-4 text-center mb-5">
+                                            <Typography variant="h3" component="p" className="mb-2">{this.state.perfiles.length}</Typography>
+                                            <Typography component="p">{t("dashboardEE.docentes")}</Typography>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Paper className="p-4 text-center mb-5">
+                                            <Typography variant="h3" component="p" className="mb-2">{this.state.cuentaNoIngreso}</Typography>
+                                            <Typography component="p">{t("dashboardEE.nunca-ingreso")}</Typography>
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                                {this.state.didPerfilesLoad ? (
+                                    <React.Fragment>
+                                        <Typography variant="h6" className="mb-3">{t("dashboardEE.label-estado-general")}</Typography>
+                                        <Typography variant="body1"><strong>{t("dashboardEE.label-frecuencia-absoluta")}</strong></Typography>
+                                        <hr className="mt-2 mb-4"/>
+                                        <Bar
+                                            data={() => {
+                                                const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
+
+                                                this.state.perfiles.forEach((perfil, i) => {
+                                                    numPerfilesPasos[perfil.pasoActual] += 1;
+                                                });
+
+                                                const barDatasets = [];
+                                                pasos.avanzado.forEach(paso => {
+                                                    barDatasets.push({
+                                                        label: paso.nombre,
+                                                        data: [numPerfilesPasos[paso.index]],
+                                                        borderWidth: 0,
+                                                        backgroundColor: ["#3f51b5"]
+                                                    });
+                                                });
+
+                                                return {
+                                                    labels: ["Paso actual"],
+                                                    datasets: barDatasets
+                                                }
+                                            }}
+                                            options={{
+                                                scales: {
+                                                    yAxes: [
+                                                        {
+                                                            ticks: {
+                                                                beginAtZero: true,
+                                                                stepSize: 5
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }}
+                                        />
+                                        <div className="mt-4">
+                                            <Typography variant="body1"><strong>{t("dashboardEE.label-frecuencia-relativa")}</strong></Typography>
+                                            <hr className="mt-2 mb-4"/>
+                                            <Doughnut height={200} data={() => {
+                                                const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
+                                                this.state.perfiles.forEach((perfil, i) => {
+                                                    numPerfilesPasos[perfil.pasoActual] += 1;
+                                                });
+
+                                                const doughnutDatasets = [{
+                                                    data: [],
+                                                    backgroundColor: ["#5f77ff", "#546bf0", "#4b60d6", "#4357c5", "#4154c0", "#3f51b5"]
+                                                }];
+                                                pasos.avanzado.forEach(paso => {
+                                                    doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);
+                                                });
+
+                                                const labelsArray = [];
+                                                pasos.avanzado.forEach(paso => {
+                                                    labelsArray.push(paso.nombre);
+                                                });
+
+                                                return {
+                                                    labels: labelsArray,
+                                                    datasets: [doughnutDatasets[0]]
+                                                }
+                                            }} options={{
+                                                tooltips: {
+                                                    callbacks: {
+                                                        label: (tooltipItem, data) => {
+                                                            const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                            const label = data.labels[tooltipItem.index];
+                                                            const absoluteValue = dataset.data[tooltipItem.index];
+                                                            const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                                return previousValue + currentValue;
+                                                            });
+                                                            const currentValue = dataset.data[tooltipItem.index];
+                                                            const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+                                                            return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                        }
+                                                    }
+                                                }
+                                            }} />
+                                        </div>
+                                    </React.Fragment>
+                                ) : (
+                                    <CircularProgress color="primary" />
+                                )}
+                            </Grid>
+                            <Grid item xs={12} className="mt-4">
+                                <Typography variant="h5">{t("dashboardEE.ruta")}</Typography>
+                                <hr/>
+                            </Grid>
+                            {
+                                this.state.didRutaLoad ? (
+                                    <Grid item xs={12}>
+                                        <RutaAprendizaje cursos={this.state.cursosSugeridos} />
+                                    </Grid>
+                                ) : <CircularProgress color="primary" className="mx-auto" />
+                            }
                         </Grid>
-                    ) : <CircularProgress color="primary" className="mx-auto" />
+                    )
                 }
-			</Grid>
+            </Translation>
 		);
     }
 }

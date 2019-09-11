@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-
+import { Translation } from "react-i18next";
 
 import { Redirect } from "react-router-dom";
 
@@ -458,24 +458,30 @@ class Preentrevista extends Component {
         }
 
         return (
-            <Grid container justify="center">
-                <Grid item xs={12} sm={8} md={6}>
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="mb-5">
-                            <Typography variant="h5" className="mb-5 text-center"><T phrase="preentrevista.titulo"/></Typography>
-                            <Typography variant="body1" className="mb-3"><T phrase="preentrevista.ayuda"/></Typography>
-                        </div>
-                        {
-                            this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
-                                <div className="preentrevista-preguntas">
-                                    {this.state.preguntasVisibles}
-                                    <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large"><T phrase="enviar"/></Button>
-                                </div>
-                            )
-                        }
-                    </form>
-                </Grid>
-            </Grid>
+            <Translation>
+                {
+                    t => (
+                        <Grid container justify="center">
+                            <Grid item xs={12} sm={8} md={6}>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="mb-5">
+                                        <Typography variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
+                                        <Typography variant="body1" className="mb-3">{t("preentrevista.ayuda")}</Typography>
+                                    </div>
+                                    {
+                                        this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
+                                            <div className="preentrevista-preguntas">
+                                                {this.state.preguntasVisibles}
+                                                <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large">{t("enviar")}</Button>
+                                            </div>
+                                        )
+                                    }
+                                </form>
+                            </Grid>
+                        </Grid>
+                    )
+                }
+            </Translation>
         );
     }
 }

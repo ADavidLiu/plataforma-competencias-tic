@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
-import { I18n } from "react-polyglot-hooks";
 import frases from "../../phrases/main";
-import { T } from 'react-polyglot-hooks';
 
 import { Translation } from "react-i18next";
 
@@ -120,20 +118,20 @@ class LoginCheck extends Component {
         let iconUsers;
         switch (this.state.tipo) {
             case "GOBIERNO":
-                tituloLabelUsuarios = <T phrase="instituciones-corto"/>;
+                tituloLabelUsuarios = <Translation>{ t => t("instituciones-corto") }</Translation>;
                 iconUsers = <AccountBalance />;
                 break;
             case "INSTITUCION":
-                tituloLabelUsuarios = <T phrase="establecimientos-corto"/>;
+                tituloLabelUsuarios = <Translation>{ t => t("establecimientos-corto") }</Translation>;
                 iconUsers = <AccountBalance />;
                 break;
             case "ESTABLECIMIENTO":
-                tituloLabelUsuarios = <T phrase="docentes"/>;
+                tituloLabelUsuarios = <Translation>{ t => t("docentes") }</Translation>;
                 iconUsers = <School />;
                 break;
             case "SUPERADMIN":
             case "ADMIN":
-                tituloLabelUsuarios = <T phrase="gobiernos"/>;
+                tituloLabelUsuarios = <Translation>{ t => t("gobiernos") }</Translation>;
                 iconUsers = <HowToReg />;
                 break;
             case "EVALUADOR":
@@ -204,7 +202,7 @@ class LoginCheck extends Component {
                                 ) : (
                                     <AppBar position="static" color="primary">
                                         <Toolbar>
-                                            <Typography variant="h6" color="inherit"><T phrase="loginCheck.mensaje-navbar" /></Typography>
+                                            <Typography variant="h6" color="inherit">{t("loginCheck.mensaje-navbar")}</Typography>
                                         </Toolbar>
                                     </AppBar>
                                 )

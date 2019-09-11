@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
-
+import { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -84,108 +84,114 @@ class DashboardEvaluador extends Component {
 
     render() {
         return (
-            <Grid container spacing={5}>
-                <Grid item xs={12} md={4}>
-                    <Grid container>
-                        <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5"><T phrase="procesoPaso.2"/></Typography>
-                            <hr/>
-                        </Grid>
-                        {
-                            this.state.practicas.map((practica, i) => {
-                                return (
-                                    <Link key={i} to={{
-                                        pathname: "/practica-revision",
-                                        state: {
-                                            docenteID: practica.docenteID,
-                                            docenteNombre: practica.nombre
-                                        }
-                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                        <Paper className="p-4">
-                                            <Typography color="textPrimary" variant="body1"><strong>{practica.nombre}</strong></Typography>
-                                            <Typography color="textPrimary" variant="body2" className="my-1">{practica.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {practica.fechaAsignacion}</Typography>
-                                        </Paper>
-                                    </Link>
-                                );
-                            })
-                        }
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Grid container>
-                        <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5"><T phrase="procesoPaso.3-plural"/></Typography>
-                            <hr/>
-                        </Grid>
-                        {
-                            this.state.preentrevistas.map((preentrevista, i) => {
-                                return (
-                                    <Link key={i} to={{
-                                        pathname: "/preentrevista-revision",
-                                        state: {
-                                            docenteID: preentrevista.docenteID,
-                                            docenteNombre: preentrevista.nombre
-                                        }
-                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                        <Paper className="p-4">
-                                            <Typography color="textPrimary" variant="body1"><strong>{preentrevista.nombre}</strong></Typography>
-                                            <Typography color="textPrimary" variant="body2" className="my-1">{preentrevista.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {preentrevista.fechaAsignacion}</Typography>
-                                        </Paper>
-                                    </Link>
-                                );
-                            })
-                        }
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Grid container>
-                        <Grid item xs={12} className="mb-3">
-                            <Typography variant="h5"><T phrase="procesoPaso.4-plural"/></Typography>
-                            <hr/>
-                        </Grid>
-                        {
-                            this.state.entrevistas.map((entrevista, i) => {
-                                return (
-                                    <Link key={i} to={{
-                                        pathname: "/entrevista-revision",
-                                        state: {
-                                            docenteID: entrevista.docenteID,
-                                            docenteNombre: entrevista.nombre
-                                        }
-                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                        <Paper className="p-4">
-                                            <Typography color="textPrimary" variant="body1"><strong>{entrevista.nombre}</strong></Typography>
-                                            <Typography color="textPrimary" variant="body2" className="my-1">{entrevista.establecimientoEducativo}</Typography>
-                                            <Typography color="textPrimary" variant="body2"><T phrase="dashboardEvaluador.asignado-revision"/> {entrevista.fechaAsignacion}</Typography>
-                                            <hr/>
-                                            <Typography variant="subtitle2" className="mb-2"><T phrase="dashboardEvaluador.datos-contacto"/></Typography>
-                                            <Typography variant="body2" className="mb-2">
-                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
-                                            </Typography>
-                                        </Paper>
-                                    </Link>
-                                );
-                            })
-                        }
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container>
-                        <Grid item xs={12}>
-                            <Typography variant="h5"><T phrase="calificaciones.titulo-actividad"/></Typography>
-                            <hr/>
-                        </Grid>
-                        <Grid item xs={12}>
+            <Translation>
+                {
+                    t => (
+                        <Grid container spacing={5}>
+                            <Grid item xs={12} md={4}>
+                                <Grid container>
+                                    <Grid item xs={12} className="mb-3">
+                                        <Typography variant="h5">{t("procesoPaso.2")}</Typography>
+                                        <hr/>
+                                    </Grid>
+                                    {
+                                        this.state.practicas.map((practica, i) => {
+                                            return (
+                                                <Link key={i} to={{
+                                                    pathname: "/practica-revision",
+                                                    state: {
+                                                        docenteID: practica.docenteID,
+                                                        docenteNombre: practica.nombre
+                                                    }
+                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                    <Paper className="p-4">
+                                                        <Typography color="textPrimary" variant="body1"><strong>{practica.nombre}</strong></Typography>
+                                                        <Typography color="textPrimary" variant="body2" className="my-1">{practica.establecimientoEducativo}</Typography>
+                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {practica.fechaAsignacion}</Typography>
+                                                    </Paper>
+                                                </Link>
+                                            );
+                                        })
+                                    }
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Grid container>
+                                    <Grid item xs={12} className="mb-3">
+                                        <Typography variant="h5">{t("procesoPaso.3-plural")}</Typography>
+                                        <hr/>
+                                    </Grid>
+                                    {
+                                        this.state.preentrevistas.map((preentrevista, i) => {
+                                            return (
+                                                <Link key={i} to={{
+                                                    pathname: "/preentrevista-revision",
+                                                    state: {
+                                                        docenteID: preentrevista.docenteID,
+                                                        docenteNombre: preentrevista.nombre
+                                                    }
+                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                    <Paper className="p-4">
+                                                        <Typography color="textPrimary" variant="body1"><strong>{preentrevista.nombre}</strong></Typography>
+                                                        <Typography color="textPrimary" variant="body2" className="my-1">{preentrevista.establecimientoEducativo}</Typography>
+                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {preentrevista.fechaAsignacion}</Typography>
+                                                    </Paper>
+                                                </Link>
+                                            );
+                                        })
+                                    }
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Grid container>
+                                    <Grid item xs={12} className="mb-3">
+                                        <Typography variant="h5">{t("procesoPaso.4-plural")}</Typography>
+                                        <hr/>
+                                    </Grid>
+                                    {
+                                        this.state.entrevistas.map((entrevista, i) => {
+                                            return (
+                                                <Link key={i} to={{
+                                                    pathname: "/entrevista-revision",
+                                                    state: {
+                                                        docenteID: entrevista.docenteID,
+                                                        docenteNombre: entrevista.nombre
+                                                    }
+                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                    <Paper className="p-4">
+                                                        <Typography color="textPrimary" variant="body1"><strong>{entrevista.nombre}</strong></Typography>
+                                                        <Typography color="textPrimary" variant="body2" className="my-1">{entrevista.establecimientoEducativo}</Typography>
+                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {entrevista.fechaAsignacion}</Typography>
+                                                        <hr/>
+                                                        <Typography variant="subtitle2" className="mb-2">{t("dashboardEvaluador.datos-contacto")}</Typography>
+                                                        <Typography variant="body2" className="mb-2">
+                                                            <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
+                                                        </Typography>
+                                                        <Typography variant="body2">
+                                                            <span style={{color: "#3f51b5", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
+                                                        </Typography>
+                                                    </Paper>
+                                                </Link>
+                                            );
+                                        })
+                                    }
+                                </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
+                                        <hr/>
+                                    </Grid>
+                                    <Grid item xs={12}>
 
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+                    )
+                }
+            </Translation>
         );
     }
 }
