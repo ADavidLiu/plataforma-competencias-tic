@@ -239,8 +239,13 @@ const es = {
         "dashboardDocente.btn-practica": "Ver práctica educativa",
         "dashboardDocente.btn-preentrevista": "Ver pre-entrevista",
         "dashboardDocente.btn-entrevista": "Ver entrevista",
+        
+        
         "dashboardEvaluador.asignado-revision": "Asignado para revisión el:",
         "dashboardEvaluador.datos-contacto": "Datos de contacto",
+        "dashboardEvaluador.distribucion-asignaciones": "Distribución de asignaciones",
+
+
         "configuracion.titulo": "Configuración",
         "configuracion.ajustes-plataforma": "Ajustes de la plataforma",
         "configuracion.label-version": "Versión del instrumento",

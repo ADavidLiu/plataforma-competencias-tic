@@ -7,6 +7,8 @@ import { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import { Bar, Radar, Pie } from "react-chartjs-2";
+
 import Phone from "@material-ui/icons/Phone";
 import Email from "@material-ui/icons/Email";
 
@@ -18,7 +20,23 @@ class DashboardEvaluador extends Component {
             evaluadorID: "",
             practicas: [],
             preentrevistas: [],
-            entrevistas: []
+            entrevistas: [],
+            estadisticas: {
+                asignaciones: [
+                    {
+                        type: "practicas",
+                        percentage: 15
+                    },
+                    {
+                        type: "preentrevistas",
+                        percentage: 25
+                    },
+                    {
+                        type: "entrevistas",
+                        percentage: 60
+                    }
+                ]
+            }
         }
     }
 
@@ -179,12 +197,52 @@ class DashboardEvaluador extends Component {
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={12} className="mb-4">
                                         <Typography variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
                                         <hr/>
                                     </Grid>
                                     <Grid item xs={12}>
+                                        <Grid container>
+                                            <Grid item xs={12} md={6}>
+                                                <Typography variant="h6">{t("dashboardEvaluador.distribucion-asignaciones")}</Typography>
+                                                <hr/>
+                                                <Pie height={125} data={() => {
+                                                    const dataPercentages = [];
 
+                                                    this.state.estadisticas.asignaciones.forEach(asignacion => {
+                                                        dataPercentages.push(asignacion.percentage);
+                                                    });
+
+                                                    return {
+                                                        datasets: [
+                                                            {
+                                                                data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"],
+                                                                borderColor: "#FFFFFF"
+                                                            }
+                                                        ],
+                                                        labels: [t("procesoPaso.2"), t("procesoPaso.3-plural"), t("procesoPaso.4-plural")]
+                                                    }
+                                                }} options={{
+                                                    tooltips: {
+                                                        enabled: true,
+                                                        callbacks: {
+                                                            label: (tooltipItem, data) => {
+                                                                const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                                const label = data.labels[tooltipItem.index];
+                                                                const absoluteValue = dataset.data[tooltipItem.index];
+                                                                const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                                    return previousValue + currentValue;
+                                                                });
+                                                                const currentValue = dataset.data[tooltipItem.index];
+                                                                const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+                                                                return `${label}: ${percentage}%`;
+                                                            }
+                                                        }
+                                                    },
+                                                }} />
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
