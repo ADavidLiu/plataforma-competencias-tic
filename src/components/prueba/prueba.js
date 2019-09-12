@@ -356,7 +356,7 @@ class Prueba extends Component {
     }
 
     render() {
-        if (this.props.location && this.props.location.state === undefined || this.state.shouldRedirect) {
+        if ((this.props.location && this.props.location.state === undefined) || this.state.shouldRedirect) {
             return <Redirect to="/" />
         }
 
