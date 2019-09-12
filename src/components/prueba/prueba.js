@@ -26,7 +26,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import Tooltip from "@material-ui/core/Tooltip";
 import Snackbar from '@material-ui/core/Snackbar';
+import Fab from '@material-ui/core/Fab';
+
+import Save from "@material-ui/icons/Save";
 
 import preguntasPrueba from "../../models/preguntasPrueba";
 import shuffleArray from "../../utils/shuffleArray";
@@ -47,10 +51,12 @@ class Prueba extends Component {
             preguntasDivididas: [],
             respuestas: [],
             revision: {},
+            totalPreguntas: preguntasPrueba.length,
             preguntasRespondidas: 0,
             isRespondidoCompleto: false,
             tiempoDisponible: 5400 * 1000,
-            tiempoRestante: "calculando..."
+            tiempoRestante: "calculando...",
+            shouldRedirect: false,
         }
 
         this.countdown = "";
@@ -135,7 +141,7 @@ class Prueba extends Component {
                                         ref={elem => { this.domRadios.push(elem); }}
                                         key={k}
                                         value={opcion}
-                                        control={<Radio required color="primary" />}
+                                        control={<Radio color="primary" />}
                                         label={opcion}
                                     />;
                                 })}
@@ -150,7 +156,8 @@ class Prueba extends Component {
         this.setState({
             tipoUsuario: infoCargada.tipoUsuario,
             preguntasDivididas: this.finalJSXquestions,
-            progreso: 100/this.dividedQuestions.length
+            progreso: 100/this.dividedQuestions.length,
+            totalPreguntas: this.finalQuestions.length
         });
     }
 
@@ -160,6 +167,7 @@ class Prueba extends Component {
     }
 
     actualizarRespuestas = e => {
+        e.target.parentNode.firstChild.lastChild.style.transform = "none";
         const domNode = e.target.parentNode.parentNode.parentNode.parentNode;
         const labels = domNode.childNodes;
         labels.forEach(label => {
@@ -193,6 +201,12 @@ class Prueba extends Component {
                     this.setState({
                         preguntasRespondidas: respondidas + 1
                     });
+
+                    if (respondidas + 1 === this.state.totalPreguntas) {
+                        this.setState({
+                            isRespondidoCompleto: true
+                        });
+                    }
                 }
             }
         });
@@ -213,24 +227,22 @@ class Prueba extends Component {
             correctas: [],
             incorrectas: []
         }
-        
-        this.state.respuestas.forEach(respuesta => {
-            this.state.preguntas.find(pregunta => {
-                if (respuesta.id === pregunta.id) {
-                    const preguntaRevisada = {
-                        id: pregunta.id,
-                        codigoDescriptor: pregunta.codigoDescriptor
-                    };
 
-                    if (respuesta.respuestaSeleccionada === pregunta.respuesta) {
-                        revision.numCorrectas++;
-                        revision.correctas.push(preguntaRevisada);
-                    } else {
-                        revision.numIncorrectas++;
-                        revision.incorrectas.push(preguntaRevisada);   
-                    }
+        this.state.respuestas.forEach(preguntasSeccion => {
+            preguntasSeccion.forEach(pregunta => {
+                const encontrada = this.state.preguntas.find(preguntaCuestionario => pregunta.id === preguntaCuestionario.id);
+                const preguntaRevisada = {
+                    id: encontrada.id,
+                    codigoDescriptor: encontrada.codigoDescriptor
+                };
+                
+                if (encontrada.respuesta === pregunta.respuestaSeleccionada) {
+                    revision.numCorrectas++;
+                    revision.correctas.push(preguntaRevisada);
+                } else {
+                    revision.numIncorrectas++;
+                    revision.incorrectas.push(preguntaRevisada);
                 }
-                return null;
             });
         });
 
@@ -241,7 +253,8 @@ class Prueba extends Component {
         });
 
         console.log(revision);
-        // Enviar al backend ahora!
+        /* Enviar al backend aquí! */
+
     }
 
     iniciarPrueba = () => {
@@ -275,8 +288,10 @@ class Prueba extends Component {
     }
 
     terminarPrueba = () => {
-        /* Realmente, volver a la página de inicio de cada usuario */
-        this.props.history.push("/dashboard");
+        this.scroller.to("#header-top");
+        this.setState({
+            shouldRedirect: true
+        });
     }
 
     cambiarSeccion = direccion => {
@@ -304,7 +319,7 @@ class Prueba extends Component {
             progreso: nuevoProgreso
         });
 
-        this.scroller.to("#cuestionario-top");
+        this.scroller.to("#header-top");
 
         const timeout = setTimeout(() => {
             const seccionRespuestasSeleccionadas = [...this.state.respuestas[this.state.seccionActual]];
@@ -331,8 +346,17 @@ class Prueba extends Component {
         }, 500);
     }
 
+    pausarPrueba = () => {
+        /* Conectarse al backend para guardar el estado de la prueba */
+        console.log("Prueba guardada!");
+        this.scroller.to("#header-top");
+        this.setState({
+            shouldRedirect: true
+        });
+    }
+
     render() {
-        if (this.props.location && this.props.location.state === undefined) {
+        if (this.props.location && this.props.location.state === undefined || this.state.shouldRedirect) {
             return <Redirect to="/" />
         }
 
@@ -346,7 +370,7 @@ class Prueba extends Component {
                             </Helmet>
                             <Grid container justify="center" id="cuestionario-top">
                                 <Grid item xs={12} sm={10} md={8}>
-                                    <form onSubmit={this.revisarRespuestas}>
+                                    <form>
                                         {!this.state.isPruebaIniciada ? (
                                             <React.Fragment>
                                                 <Grid item xs={12}>
@@ -384,14 +408,14 @@ class Prueba extends Component {
                                                     <Grid container>
                                                         <Grid item xs={6}>
                                                             {
-                                                                this.state.seccionActual !== 0 ? <Button onClick={() => {
+                                                                this.state.seccionActual !== 0 ? <Button type="button" onClick={() => {
                                                                     this.cambiarSeccion("ANTERIOR");
                                                                 }} color="primary" variant="contained">{t("visorPerfiles.anteriores")}</Button> : ""
                                                             }
                                                         </Grid>
                                                         <Grid item xs={6} className="text-right">
                                                             {
-                                                                this.state.seccionActual !== this.state.preguntasDivididas.length - 1 ? <Button onClick={() => {
+                                                                this.state.seccionActual !== this.state.preguntasDivididas.length - 1 ? <Button type="button" onClick={() => {
                                                                     this.cambiarSeccion("SIGUIENTE");
                                                                 }} color="primary" variant="contained">{t("visorPerfiles.siguientes")}</Button> : ""
                                                             }
@@ -406,6 +430,7 @@ class Prueba extends Component {
                                                         color="primary"
                                                         className="mt-2"
                                                         size="large"
+                                                        onClick={this.revisarRespuestas}
                                                         disabled={!this.state.isRespondidoCompleto}
                                                     >
                                                         {t("prueba.btn-enviar")}
@@ -438,6 +463,15 @@ class Prueba extends Component {
                                 ContentProps={{ 'aria-describedby': 'message-id' }}
                                 message={<span>{t("prueba.label-tiempo")} {this.state.tiempoRestante}</span>}
                             />
+                            {
+                                this.state.isPruebaIniciada ? (
+                                    <Tooltip title={t("prueba.pausar")} placement="left">
+                                        <Fab size="medium" color="primary" onClick={this.pausarPrueba} className="prueba-fab">
+                                            <Save fontSize="small"/>
+                                        </Fab>
+                                    </Tooltip>
+                                ) : ""
+                            }
                         </React.Fragment>
                     )
                 }

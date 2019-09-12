@@ -146,7 +146,7 @@ class LoginCheck extends Component {
                             <CssBaseline />
                             {
                                 this.state.isLogeado ? (
-                                    <AppBar position="static" color="primary">
+                                    <AppBar position="static" color="primary" id="header-top">
                                         <Toolbar>
                                             <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
                                             <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
@@ -198,7 +198,7 @@ class LoginCheck extends Component {
                                         </Toolbar>
                                     </AppBar>
                                 ) : (
-                                    <AppBar position="static" color="primary">
+                                    <AppBar position="static" color="primary" id="header-top">
                                         <Toolbar>
                                             <Typography variant="h6" color="inherit">{t("loginCheck.mensaje-navbar")}</Typography>
                                         </Toolbar>

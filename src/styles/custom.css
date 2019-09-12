@@ -83,6 +83,14 @@ body {
     color: #FFFFFF;
 }
 
+.prueba-fab {
+    position: fixed !important;
+    bottom: 5rem;
+    right: 8px;
+    top: auto;
+    left: auto;
+}
+
 @media screen and (min-width: 500px) {
     .text-ellipsis {
         width: 60%;
@@ -92,5 +100,9 @@ body {
 @media screen and (min-width: 768px) {
     .configuracion-img {
         width: 50%;
+    }
+    .prueba-fab {
+        right: 1.5rem;
+        bottom: 1.5rem;
     }
 }
