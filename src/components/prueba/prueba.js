@@ -160,7 +160,16 @@ class Prueba extends Component {
     }
 
     actualizarRespuestas = e => {
-        const domNode = e.target.parentNode.parentNode.parentNode;
+        const domNode = e.target.parentNode.parentNode.parentNode.parentNode;
+        const labels = domNode.childNodes;
+        labels.forEach(label => {
+            const labelInputChecked = label.querySelector(".Mui-checked");
+            if (labelInputChecked !== null) {
+                labelInputChecked.classList.remove("Mui-checked");
+                labelInputChecked.firstChild.firstChild.lastChild.style.transform = "scale(0)";
+            }
+        });
+
         const copiaRespuestas = [...this.state.respuestas];
         const respondidas = this.state.preguntasRespondidas;
         const i = e.target.name.split("-")[3];
@@ -314,9 +323,6 @@ class Prueba extends Component {
                     if (seccionRespuestasSeleccionadas[i].respuestaSeleccionada !== "" && seccionRespuestasSeleccionadas[i].respuestaSeleccionada === respuestaLabel) {
                         label.firstChild.classList.add("Mui-checked")
                         label.firstChild.firstChild.firstChild.lastChild.style.transform = "none";
-                    } else {
-                        label.firstChild.classList.remove("Mui-checked")
-                        label.firstChild.firstChild.firstChild.lastChild.style.transform = "scale(0)";
                     }
                 });
             });
