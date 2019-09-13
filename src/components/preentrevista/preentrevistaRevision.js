@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import Helmet from "react-helmet";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -14,10 +16,12 @@ import Select from "@material-ui/core/Select";
 
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
+import Avatar from '@material-ui/core/Avatar';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Paper } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+import { Translation } from "react-i18next";
 
 class PreentrevistaRevision extends Component {
     constructor() {
@@ -26,6 +30,7 @@ class PreentrevistaRevision extends Component {
         this.state = {
             docenteID: "",
             docenteNombre: "",
+            docenteImg: "",
             preguntas: [],
             preguntasPreparadas: [],
             calificaciones: [],
@@ -75,18 +80,25 @@ class PreentrevistaRevision extends Component {
         if (this.props[0].location.state === undefined) {
             infoCargada = {
                 docenteID: "",
-                docenteNombre: ""
+                docenteNombre: "",
+                imgSrc: ""
             }
         } else {
             infoCargada = {
                 docenteID: this.props[0].location.state.docenteID,
-                docenteNombre: this.props[0].location.state.docenteNombre
+                docenteNombre: this.props[0].location.state.docenteNombre,
+                imgSrc: this.props[0].location.state.docenteImg
             }
+        }
+
+        if (infoCargada.imgSrc === "") {
+            infoCargada.imgSrc = "https://via.placeholder.com/500";
         }
 
         this.setState({
             docenteID: infoCargada.docenteID,
             docenteNombre: infoCargada.docenteNombre,
+            docenteImg: infoCargada.imgSrc,
             preguntas: preguntasCargadas
         });
 
@@ -125,23 +137,29 @@ class PreentrevistaRevision extends Component {
         let preguntaArray = [...arrayBase];
 
         preguntaArray.push(
-            <React.Fragment key={pregunta.label}>
+            <Translation key={pregunta.label}>
                 {
-                    pregunta.descriptores ? (
+                    t => (
                         <React.Fragment>
-                            <Typography variant="body1"><strong>Descriptores asociados: </strong>{pregunta.descriptores.map((descriptor, i) => {
-                                return <Typography key={i} component="span" className="mr-2">• {descriptor}</Typography>
+                            {
+                                pregunta.descriptores ? (
+                                    <React.Fragment>
+                                        <Typography variant="body1"><strong>{t("revision.descriptores-asociados")}: </strong>{pregunta.descriptores.map((descriptor, i) => {
+                                            return <Typography key={i} component="span" className="mr-2">• {descriptor}</Typography>
+                                        })}</Typography>
+                                        <hr/>
+                                    </React.Fragment>
+                                ) : ""
+                            }
+                            <Typography variant="body1"><strong>{t("pregunta")}: </strong>{pregunta.label}</Typography>
+                            <Typography variant="body1"><strong>{t("respuestas")}: </strong>{pregunta.respuestas.map((respuesta, i) => {
+                                return <Typography key={i} component="span" className="d-block">• {respuesta}</Typography>
                             })}</Typography>
                             <hr/>
                         </React.Fragment>
-                    ) : ""
+                    )
                 }
-                <Typography variant="body1"><strong>Pregunta: </strong>{pregunta.label}</Typography>
-                <Typography variant="body1"><strong>Respuestas: </strong>{pregunta.respuestas.map((respuesta, i) => {
-                    return <Typography key={i} component="span" className="d-block">• {respuesta}</Typography>
-                })}</Typography>
-                <hr/>
-            </React.Fragment>
+            </Translation>
         );
         
         if (pregunta.subPregunta) {
@@ -166,90 +184,104 @@ class PreentrevistaRevision extends Component {
         console.log(this.state.calificaciones);
 
         return (
-            <React.Fragment>
-                <Grid container spacing={5} justify="center">
-                    <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <Typography variant="h5" className="mb-2">Revisión de pre-entrevista</Typography>
-                                <Typography variant="body1">Nombre del(a) docente evaluado(a): <strong>{this.state.docenteNombre}</strong></Typography>
-                                <hr className="mb-4" />
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={3} className="mb-4">
-                            <Grid item xs={12} sm={8} md={9} className="mb-5">
-                                <Typography variant="body1" className="mb-3">Señor(a) evaluador(a), a continuación se relacionan las respuestas registradas por el(la) docente.</Typography>
-                                <Typography variant="body1">Tenga en cuenta que si se presentan múltiples respuestas, éstas hacen referencia a las respuestas del nivel inmediatamente superior y en el mismo orden.</Typography>
-                            </Grid>
-                            <Grid item xs={12} sm={4} md={3}>
-                                <Typography variant="body1" className="mb-2"><strong>Definición de valores</strong></Typography>
-                                <Typography variant="body1" className="mb-2"><strong>1: Nulo</strong> - No se cuenta con evidencias.</Typography>
-                                <Typography variant="body1" className="mb-2"><strong>2: Parcial</strong> - Se cuenta con evidencias de manera incipiente, parcial, o desordenada.</Typography>
-                                <Typography variant="body1" className="mb-2"><strong>3: Totalmente</strong> - Se cuenta con evidencia clara y consolidada.</Typography>
-                                <Typography variant="body1"><strong>4: Enviar a entrevista</strong> - Debe indagarse más acerca de este descriptor.</Typography>
-                            </Grid>
-                        </Grid>
-                        {
-                            this.state.preguntas.map((pregunta, i) => {
-                                return (
-                                    <Paper key={i} className="p-4 mb-4">
-                                        <Grid container spacing={5}>
-                                            <Grid item xs={12} sm={8} md={9}>
-                                                {this.state.preguntasPreparadas[i]}
-                                            </Grid>
-                                            <Grid item xs={12} sm={4} md={3} className="d-md-flex flex-column">
-                                                <div className="order-md-2 mt-md-4">
-                                                    {
-                                                        pregunta.evidencia ? (
-                                                            <a href={pregunta.evidencia}>
-                                                                <Button color="primary" variant="contained"
-                                                                fullWidth>Descargar evidencia</Button>
-                                                            </a>
-                                                        ) : ""
-                                                    }
+            <Translation>
+                {
+                    t => (
+                        <React.Fragment>
+                            <Helmet>
+                                <title>{`${t("titulo.preentrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                            <Grid container spacing={5} justify="center">
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <div className="d-flex align-items-center justify-content-start">
+                                                <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
+                                                <div>
+                                                    <Typography variant="h5" className="mb-2">{t("revision.preentrevista-titulo")}</Typography>
+                                                    <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
                                                 </div>
-                                                <div className="order-md-1">
-                                                    <Typography variant="body1" className="mb-3"><strong>Calificación</strong></Typography>
-                                                    <FormControl variant="outlined" className="w-100">
-                                                        <InputLabel htmlFor={`calificacion-${i}`}>Seleccione un valor *</InputLabel>
-                                                        <Select
-                                                            required
-                                                            value={
-                                                                this.state.calificaciones[i] ? (
-                                                                    this.state.calificaciones[i].calificacion
-                                                                ) : ""
-                                                            }
-                                                            onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
-                                                            input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                        >
-                                                            <MenuItem value={1}>1</MenuItem>
-                                                            <MenuItem value={2}>2</MenuItem>
-                                                            <MenuItem value={3}>3</MenuItem>
-                                                            <MenuItem value={4}>4</MenuItem>
-                                                        </Select>
-                                                    </FormControl>
-                                                </div>
-                                            </Grid>
+                                            </div>
+                                            <hr className="mb-4" />
                                         </Grid>
-                                    </Paper>
-                                );
-                            })
-                        }
-                        <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar}>Enviar</Button>
-                    </Grid>
-                </Grid>
-                <Dialog open={this.state.isEnviado}>
-                    <DialogTitle>Revisión enviada</DialogTitle>
-                    <DialogContent>
-                    <DialogContentText>La calificación ha sido asignada exitosamente.</DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Link to="/" style={{textDecoration: "none"}}>
-                            <Button color="primary">Volver a inicio</Button>
-                        </Link>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
+                                    </Grid>
+                                    <Grid container spacing={3} className="mb-4">
+                                        <Grid item xs={12} sm={8} md={9} className="mb-5">
+                                            <Typography variant="body1" className="mb-3">{t("revision.preentrevista-ayuda-1")}</Typography>
+                                            <Typography variant="body1">{t("revision.preentrevista-ayuda-2")}</Typography>
+                                        </Grid>
+                                        <Grid item xs={12} sm={4} md={3}>
+                                            <Typography variant="body1" className="mb-2"><strong>{t("revision.calificacion-ayuda")}</strong></Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>2: {t("revision.calificacion-parcial-titulo")}</strong> - {t("revision.calificacion-parcial-ayuda")}.</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
+                                            <Typography variant="body1"><strong>4: {t("revision.calificacion-enviar-titulo")}</strong> - {t("revision.calificacion-enviar-ayuda")}.</Typography>
+                                        </Grid>
+                                    </Grid>
+                                    {
+                                        this.state.preguntas.map((pregunta, i) => {
+                                            return (
+                                                <Paper key={i} className="p-4 mb-4">
+                                                    <Grid container spacing={5}>
+                                                        <Grid item xs={12} sm={8} md={9}>
+                                                            {this.state.preguntasPreparadas[i]}
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={4} md={3} className="d-md-flex flex-column">
+                                                            <div className="order-md-2 mt-md-4">
+                                                                {
+                                                                    pregunta.evidencia ? (
+                                                                        <a href={pregunta.evidencia}>
+                                                                            <Button color="primary" variant="contained"
+                                                                            fullWidth>{t("revision.descargar-evidencia")}</Button>
+                                                                        </a>
+                                                                    ) : ""
+                                                                }
+                                                            </div>
+                                                            <div className="order-md-1">
+                                                                <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
+                                                                <FormControl variant="outlined" className="w-100">
+                                                                    <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
+                                                                    <Select
+                                                                        required
+                                                                        value={
+                                                                            this.state.calificaciones[i] ? (
+                                                                                this.state.calificaciones[i].calificacion
+                                                                            ) : ""
+                                                                        }
+                                                                        onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
+                                                                        input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                                    >
+                                                                        <MenuItem value={1}>1</MenuItem>
+                                                                        <MenuItem value={2}>2</MenuItem>
+                                                                        <MenuItem value={3}>3</MenuItem>
+                                                                        <MenuItem value={4}>4</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </div>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Paper>
+                                            );
+                                        })
+                                    }
+                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar}>{t("enviar")}</Button>
+                                </Grid>
+                            </Grid>
+                            <Dialog open={this.state.isEnviado}>
+                                <DialogTitle>{t("revision.enviada")}</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>{t("revision.enviada-ayuda")}</DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Link to="/" style={{textDecoration: "none"}}>
+                                        <Button color="primary">{t("volver-inicio")}</Button>
+                                    </Link>
+                                </DialogActions>
+                            </Dialog>
+                        </React.Fragment>
+                    )
+                }
+            </Translation>
         );
     }
 }

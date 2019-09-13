@@ -21,6 +21,7 @@ class DashboardEvaluador extends Component {
             practicas: [],
             preentrevistas: [],
             entrevistas: [],
+            encuestas: [],
             estadisticas: {
                 asignaciones: [
                     {
@@ -33,7 +34,11 @@ class DashboardEvaluador extends Component {
                     },
                     {
                         type: "entrevistas",
-                        percentage: 60
+                        percentage: 50
+                    },
+                    {
+                        type: "encuestas",
+                        percentage: 10
                     }
                 ]
             }
@@ -96,6 +101,15 @@ class DashboardEvaluador extends Component {
                         email: "jane.doe@universidad.edu.co"
                     }
                 }
+            ],
+            encuestas: [
+                {
+                    docenteID: "docente-1",
+                    nombre: "John Doe",
+                    establecimientoEducativo: "Lorem Ipsum Dolor Sit Amet",
+                    imgSrc: "",
+                    fechaAsignacion: "13-09-2019"
+                }
             ]
         });
     }
@@ -119,7 +133,8 @@ class DashboardEvaluador extends Component {
                                                     pathname: "/practica-revision",
                                                     state: {
                                                         docenteID: practica.docenteID,
-                                                        docenteNombre: practica.nombre
+                                                        docenteNombre: practica.nombre,
+                                                        docenteImg: practica.imgSrc
                                                     }
                                                 }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                     <Paper className="p-4">
@@ -146,7 +161,8 @@ class DashboardEvaluador extends Component {
                                                     pathname: "/preentrevista-revision",
                                                     state: {
                                                         docenteID: preentrevista.docenteID,
-                                                        docenteNombre: preentrevista.nombre
+                                                        docenteNombre: preentrevista.nombre,
+                                                        docenteImg: preentrevista.imgSrc
                                                     }
                                                 }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                     <Paper className="p-4">
@@ -173,7 +189,8 @@ class DashboardEvaluador extends Component {
                                                     pathname: "/entrevista-revision",
                                                     state: {
                                                         docenteID: entrevista.docenteID,
-                                                        docenteNombre: entrevista.nombre
+                                                        docenteNombre: entrevista.nombre,
+                                                        docenteImg: entrevista.imgSrc
                                                     }
                                                 }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                     <Paper className="p-4">
@@ -216,11 +233,11 @@ class DashboardEvaluador extends Component {
                                                     return {
                                                         datasets: [
                                                             {
-                                                                data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"],
+                                                                data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5", "#37479e"],
                                                                 borderColor: "#FFFFFF"
                                                             }
                                                         ],
-                                                        labels: [t("procesoPaso.2"), t("procesoPaso.3-plural"), t("procesoPaso.4-plural")]
+                                                        labels: [t("procesoPaso.2"), t("procesoPaso.3-plural"), t("procesoPaso.4-plural"), t("procesoPaso.5")]
                                                     }
                                                 }} options={{
                                                     tooltips: {

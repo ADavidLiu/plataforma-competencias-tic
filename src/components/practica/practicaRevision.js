@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import Helmet from "react-helmet";
+import { Translation } from "react-i18next";
+
 import { StickyContainer, Sticky } from 'react-sticky';
 
 import GetApp from "@material-ui/icons/GetApp";
@@ -146,191 +149,200 @@ class PracticaRevision extends Component {
         }
 
         return (
-            <React.Fragment>
-                <Grid container justify="center" spacing={5}>
-                    <Grid item xs={12}>
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <Typography variant="h5" className="mb-2">Revisión de práctica educativa</Typography>
-                                <Typography variant="body1">Nombre del(a) docente evaluado(a): <strong>{this.state.docenteNombre}</strong></Typography>
-                                <hr className="mb-5" />
-                            </Grid>
-                        </Grid>
-                        <StickyContainer>
-                            <Grid container spacing={5}>
-                                <Grid item xs={12} sm={8} md={9}>
-                                    <Typography variant="h6">Información general</Typography>
-                                    <hr/>
-                                    <div>
-                                        <Typography variant="body1" className="mb-2"><strong>Nombre: </strong>{this.state.info.nombre}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Reseña: </strong>{this.state.info.resenia}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Palabras clave: </strong>{
-                                            this.state.info.palabrasClave !== undefined ? (
-                                                this.state.info.palabrasClave.map((palabra, i) => {
-                                                    return <Typography key={i} component="span" className="d-block">• {palabra}</Typography>
-                                                })
-                                            ) : ""
-                                        }</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Niveles educativos a los que está dirigida: </strong>{
-                                            this.state.info.nivelesEducativos !== undefined ? (
-                                                this.state.info.nivelesEducativos.map((nivel, i) => {
-                                                    return <Typography key={i} component="span" className="d-block">• {nivel}</Typography>
-                                                })
-                                            ) : ""
-                                        }</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Cantidad de personas: </strong>{this.state.info.cantidadPersonas}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Cantidad de grupos: </strong>{this.state.info.cantidadGrupos}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Cantidad de personas por grupo: </strong>{this.state.info.personasPorGrupo}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Rango de edad promedia de los participantes: </strong>{this.state.info.selectedRangoEdadParticipantes}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>Género de los participantes: </strong>{this.state.info.selectedGenero}</Typography>
-                                        {
-                                            this.state.info.hasNecesidadesEspeciales ? (
-                                                <div className="mb-2">
-                                                    <Typography variant="body1" className="mb-2"><strong>¿La práctica atiende a población con necesidades educativas especiales?: </strong>Sí</Typography>
-                                                    <Typography variant="body1" className="pl-5 mb-2"><strong>¿A qué necesidades educativas especiales atiende la práctica?: </strong>{this.state.info.selectedNecesidadesEspeciales}</Typography>
+            <Translation>
+                {
+                    t => (
+                        <React.Fragment>
+                            <Helmet>
+                                <title>{`${t("titulo.practica-revision")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                            <Grid container justify="center" spacing={5}>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <Typography variant="h5" className="mb-2">{t("titulo.practica-revision")}</Typography>
+                                            <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
+                                            <hr className="mb-5" />
+                                        </Grid>
+                                    </Grid>
+                                    <StickyContainer>
+                                        <Grid container spacing={5}>
+                                            <Grid item xs={12} sm={8} md={9}>
+                                                <Typography variant="h6">{t("practicas.label-informacion-general")}</Typography>
+                                                <hr/>
+                                                <div>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("nombre")}: </strong>{this.state.info.nombre}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.resenia")}: </strong>{this.state.info.resenia}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.tags")}: </strong>{
+                                                        this.state.info.palabrasClave !== undefined ? (
+                                                            this.state.info.palabrasClave.map((palabra, i) => {
+                                                                return <Typography key={i} component="span" className="d-block">• {palabra}</Typography>
+                                                            })
+                                                        ) : ""
+                                                    }</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("revision.practica-niveles")}: </strong>{
+                                                        this.state.info.nivelesEducativos !== undefined ? (
+                                                            this.state.info.nivelesEducativos.map((nivel, i) => {
+                                                                return <Typography key={i} component="span" className="d-block">• {nivel}</Typography>
+                                                            })
+                                                        ) : ""
+                                                    }</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.num-personas")}: </strong>{this.state.info.cantidadPersonas}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.num-grupos")}: </strong>{this.state.info.cantidadGrupos}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.num-personas-grupo")}: </strong>{this.state.info.personasPorGrupo}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("revision.practica-rango-edad")}: </strong>{this.state.info.selectedRangoEdadParticipantes}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("revision.practica-genero")}: </strong>{this.state.info.selectedGenero}</Typography>
                                                     {
-                                                        this.state.info.selectedNecesidadesEspeciales === "Otras" ? (
-                                                            <Typography variant="body1" className="pl-5 ml-5">
-                                                            <strong>¿Cuál(es)?: </strong>{this.state.info.otrasNecesidadesEspeciales}</Typography>
+                                                        this.state.info.hasNecesidadesEspeciales ? (
+                                                            <div className="mb-2">
+                                                                <Typography variant="body1" className="mb-2"><strong>{t("practicas.necesidades-especiales")} </strong>{t("si")}</Typography>
+                                                                <Typography variant="body1" className="pl-5 mb-2"><strong>¿A qué necesidades educativas especiales atiende la práctica?: </strong>{this.state.info.selectedNecesidadesEspeciales}</Typography>
+                                                                {
+                                                                    this.state.info.selectedNecesidadesEspeciales === "Otras" ? (
+                                                                        <Typography variant="body1" className="pl-5 ml-5">
+                                                                        <strong>{t("registro.areas-otras")}: </strong>{this.state.info.otrasNecesidadesEspeciales}</Typography>
+                                                                    ) : ""
+                                                                }
+                                                            </div>
+                                                        ) : (
+                                                            <Typography variant="body1" className="mb-2"><strong>{t("practicas.necesidades-especiales")}: </strong>{t("no")}</Typography>
+                                                        )
+                                                    }
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("revision.practica-areas")}: </strong>{
+                                                        this.state.info.areasDisciplinares !== undefined ? (
+                                                            this.state.info.areasDisciplinares.map((area, i) => {
+                                                                return <span key={i} className="d-block">• {area}</span>
+                                                            })
+                                                        ) : ""
+                                                    }</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.necesidad-problema")}: </strong>{this.state.info.necesidadOProblema}</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>{t("practicas.principal-objetivo")}: </strong>{this.state.info.objetivoPrincipal}</Typography>
+                                                    <Typography variant="body1" className="mb-4"><strong>{t("practicas.label-resultados")}: </strong>{this.state.info.resultadosEsperados}</Typography>
+                                                    <Typography variant="h6">{t("actividades")}</Typography>
+                                                    <hr/>
+                                                    {
+                                                        this.state.info.actividades !== undefined ? (
+                                                            <Grid container spacing={5}>
+                                                                {this.state.info.actividades.map((actividad, i) => {
+                                                                    return (
+                                                                        <Grid item xs={12} key={i}>
+                                                                            <Paper className="p-4 mb-3">
+                                                                                <Typography className="mb-2"><strong>{t("nombre")}: </strong>{actividad.nombre}</Typography>
+                                                                                <Typography className="mb-2"><strong>{t("practicas.actividad-proposito")}: </strong>{actividad.proposito}</Typography>
+                                                                                <Typography className="mb-2"><strong>{t("practicas.actividad-modalidad-trabajo")}: </strong>{actividad.modalidadTrabajo}</Typography>
+                                                                                <Typography className="mb-2"><strong>{t("practicas.actividad-materiales-educativos")}:</strong>
+                                                                                {
+                                                                                    actividad.materiales.map((material, i) => {
+                                                                                        return <Typography key={i} variant="body1" className="d-block" component="span">• {material}</Typography>
+                                                                                    })
+                                                                                }
+                                                                                </Typography>
+                                                                                <Typography className="mb-2"><strong>Escenarios:</strong>
+                                                                                {
+                                                                                    actividad.escenarios.map((escenario, i) => {
+                                                                                        return <Typography key={i} variant="body1" className="d-block" component="span">• {escenario}</Typography>
+                                                                                    })
+                                                                                }
+                                                                                </Typography>
+                                                                                <Typography className="mb-2"><strong>Procedimiento:</strong>
+                                                                                {
+                                                                                    actividad.procedimientos.map((procedimiento, i) => {
+                                                                                        return <Typography key={i} variant="body1" component="span" className="d-block">• {procedimiento}</Typography>
+                                                                                    })
+                                                                                }
+                                                                                </Typography>
+                                                                                <Typography className="mb-2"><strong>{t("practicas.actividad-consigna")}: </strong>{actividad.consigna}</Typography>
+                                                                                {
+                                                                                    actividad.evalua ? (
+                                                                                        <div className="mb-2">
+                                                                                            <Typography className="mb-2"><strong>{t("practicas.actividad-evalua")}: </strong>{t("si")}</Typography>
+                                                                                            <Typography><strong>{t("practicas.actividad-label-evaluar-desempenio")}: </strong>{actividad.comoEvalua}</Typography>
+                                                                                        </div>
+                                                                                    ) : (
+                                                                                        <Typography className="mb-2"><strong>{t("practicas.actividad-evalua")}: </strong>{t("no")}</Typography>
+                                                                                    )
+                                                                                }
+                                                                                <Typography variant="body1" className="mb-3"><strong>{t("revision.evidencias")}</strong></Typography>
+                                                                                {
+                                                                                    actividad.evidencias.map((evidencia, i) => {
+                                                                                        return (
+                                                                                            <React.Fragment key={i}>
+                                                                                                <div className="d-flex align-items-center justify-content-between mb-2">
+                                                                                                    <Typography><em>{evidencia.archivo.nombre}</em></Typography>
+                                                                                                    <a href={evidencia.archivo.linkDescarga}>
+                                                                                                        <GetApp color="primary" />
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                                <Typography variant="body2">{evidencia.descripcion}</Typography>
+                                                                                                <hr/>
+                                                                                            </React.Fragment>
+                                                                                        );
+                                                                                    })
+                                                                                }
+                                                                                {
+                                                                                    actividad.retroalimentacion !== undefined ? (
+                                                                                        <React.Fragment>
+                                                                                            <Typography variant="body1" className="mb-3"><strong>{t("revision.produccion-retroalimentada")}</strong></Typography>
+                                                                                            <div className="d-flex align-items-center justify-content-between mb-2">
+                                                                                                <Typography><em>{actividad.retroalimentacion.archivo.nombre}</em></Typography>
+                                                                                                <a href={actividad.retroalimentacion.archivo.linkDescarga}>
+                                                                                                    <GetApp color="primary" />
+                                                                                                </a>
+                                                                                            </div>
+                                                                                            <Typography variant="body2">{actividad.retroalimentacion.descripcion}</Typography>
+                                                                                        </React.Fragment>
+                                                                                    ) : ""
+                                                                                }
+                                                                            </Paper>
+                                                                        </Grid>
+                                                                    );
+                                                                })}
+                                                            </Grid>
                                                         ) : ""
                                                     }
                                                 </div>
-                                            ) : (
-                                                <Typography variant="body1" className="mb-2"><strong>¿La práctica atiende a población con necesidades educativas especiales?: </strong>No</Typography>
-                                            )
-                                        }
-                                        <Typography variant="body1" className="mb-2"><strong>¿En qué áreas disciplinares hace énfasis su práctica educativa?: </strong>{
-                                            this.state.info.areasDisciplinares !== undefined ? (
-                                                this.state.info.areasDisciplinares.map((area, i) => {
-                                                    return <span key={i} className="d-block">• {area}</span>
-                                                })
-                                            ) : ""
-                                        }</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>¿A qué necesidad o problema atiende su práctica educativa apoyada en TIC?: </strong>{this.state.info.necesidadOProblema}</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>¿Cuál es el principal objetivo de aprendizaje de la práctica educativa?: </strong>{this.state.info.objetivoPrincipal}</Typography>
-                                        <Typography variant="body1" className="mb-4"><strong>¿Cuáles son los resultados de aprendizaje esperados a partir de la práctica educativa?: </strong>{this.state.info.resultadosEsperados}</Typography>
-                                        <Typography variant="h6">Actividades</Typography>
-                                        <hr/>
-                                        {
-                                            this.state.info.actividades !== undefined ? (
-                                                <Grid container spacing={5}>
-                                                    {this.state.info.actividades.map((actividad, i) => {
-                                                        return (
-                                                            <Grid item xs={12} key={i}>
-                                                                <Paper className="p-4 mb-3">
-                                                                    <Typography className="mb-2"><strong>Nombre: </strong>{actividad.nombre}</Typography>
-                                                                    <Typography className="mb-2"><strong>Propósito: </strong>{actividad.proposito}</Typography>
-                                                                    <Typography className="mb-2"><strong>Modalidad de trabajo: </strong>{actividad.modalidadTrabajo}</Typography>
-                                                                    <Typography className="mb-2"><strong>Materiales educativos:</strong>
-                                                                    {
-                                                                        actividad.materiales.map((material, i) => {
-                                                                            return <Typography key={i} variant="body1" className="d-block" component="span">• {material}</Typography>
-                                                                        })
-                                                                    }
-                                                                    </Typography>
-                                                                    <Typography className="mb-2"><strong>Escenarios:</strong>
-                                                                    {
-                                                                        actividad.escenarios.map((escenario, i) => {
-                                                                            return <Typography key={i} variant="body1" className="d-block" component="span">• {escenario}</Typography>
-                                                                        })
-                                                                    }
-                                                                    </Typography>
-                                                                    <Typography className="mb-2"><strong>Procedimiento:</strong>
-                                                                    {
-                                                                        actividad.procedimientos.map((procedimiento, i) => {
-                                                                            return <Typography key={i} variant="body1" component="span" className="d-block">• {procedimiento}</Typography>
-                                                                        })
-                                                                    }
-                                                                    </Typography>
-                                                                    <Typography className="mb-2"><strong>Consigna: </strong>{actividad.consigna}</Typography>
-                                                                    {
-                                                                        actividad.evalua ? (
-                                                                            <div className="mb-2">
-                                                                                <Typography className="mb-2"><strong>¿Evalúa las producciones de los estudiantes?: </strong>Sí</Typography>
-                                                                                <Typography><strong>¿Qué hace para evaluar los desempeños de los estudiantes?: </strong>{actividad.comoEvalua}</Typography>
-                                                                            </div>
-                                                                        ) : (
-                                                                            <Typography className="mb-2"><strong>¿Evalúa las producciones de los estudiantes?: </strong>No</Typography>
-                                                                        )
-                                                                    }
-                                                                    <Typography variant="body1" className="mb-3"><strong>Archivos de evidencias</strong></Typography>
-                                                                    {
-                                                                        actividad.evidencias.map((evidencia, i) => {
-                                                                            return (
-                                                                                <React.Fragment key={i}>
-                                                                                    <div className="d-flex align-items-center justify-content-between mb-2">
-                                                                                        <Typography><em>{evidencia.archivo.nombre}</em></Typography>
-                                                                                        <a href={evidencia.archivo.linkDescarga}>
-                                                                                            <GetApp color="primary" />
-                                                                                        </a>
-                                                                                    </div>
-                                                                                    <Typography variant="body2">{evidencia.descripcion}</Typography>
-                                                                                    <hr/>
-                                                                                </React.Fragment>
-                                                                            );
-                                                                        })
-                                                                    }
-                                                                    {
-                                                                        actividad.retroalimentacion !== undefined ? (
-                                                                            <React.Fragment>
-                                                                                <Typography variant="body1" className="mb-3"><strong>Producción de un estudiante retroalimentada</strong></Typography>
-                                                                                <div className="d-flex align-items-center justify-content-between mb-2">
-                                                                                    <Typography><em>{actividad.retroalimentacion.archivo.nombre}</em></Typography>
-                                                                                    <a href={actividad.retroalimentacion.archivo.linkDescarga}>
-                                                                                        <GetApp color="primary" />
-                                                                                    </a>
-                                                                                </div>
-                                                                                <Typography variant="body2">{actividad.retroalimentacion.descripcion}</Typography>
-                                                                            </React.Fragment>
-                                                                        ) : ""
-                                                                    }
-                                                                </Paper>
-                                                            </Grid>
-                                                        );
-                                                    })}
-                                                </Grid>
-                                            ) : ""
-                                        }
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12} sm={4} md={3}>
-                                    <form onSubmit={this.enviarCalificacion}>
-                                        <Typography variant="h6" className="mb-3">Asignar calificación</Typography>
-                                        <FormControl variant="outlined" className="w-100 mb-4">
-                                            <InputLabel htmlFor="calificacion">Seleccione un valor *</InputLabel>
-                                            <Select
-                                                required
-                                                value={this.state.calificacion}
-                                                onChange={this.handleChange}
-                                                input={<OutlinedInput name="calificacion" id="calificacion"/>}
-                                            >
-                                                <MenuItem value={1}>1</MenuItem>
-                                                <MenuItem value={2}>2</MenuItem>
-                                                <MenuItem value={3}>3</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                        <Typography variant="body1" className="mb-2"><strong>1: Nulo</strong> - No se cuenta con evidencias.</Typography>
-                                        <Typography variant="body1" className="mb-2"><strong>2: Parcial</strong> - Se cuenta con evidencias de manera incipiente, parcial, o desordenada.</Typography>
-                                        <Typography variant="body1"><strong>3: Totalmente</strong> - Se cuenta con evidencia clara y consolidada.</Typography>
-                                        <Button fullWidth type="submit" variant="contained" size="large" color="primary" className="mt-4">Enviar</Button>
-                                    </form>
+                                            </Grid>
+                                            <Grid item xs={12} sm={4} md={3}>
+                                                <form onSubmit={this.enviarCalificacion}>
+                                                    <Typography variant="h6" className="mb-3">{t("revision.produccion-asignar-calificacion")}</Typography>
+                                                    <FormControl variant="outlined" className="w-100 mb-4">
+                                                        <InputLabel htmlFor="calificacion">{t("revision.seleccione-valor")}</InputLabel>
+                                                        <Select
+                                                            required
+                                                            value={this.state.calificacion}
+                                                            onChange={this.handleChange}
+                                                            input={<OutlinedInput name="calificacion" id="calificacion"/>}
+                                                        >
+                                                            <MenuItem value={1}>1</MenuItem>
+                                                            <MenuItem value={2}>2</MenuItem>
+                                                            <MenuItem value={3}>3</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
+                                                    <Typography variant="body1" className="mb-2"><strong>2: {t("revision.calificacion-parcial-titulo")}</strong> - {t("revision.calificacion-parcial-ayuda")}.</Typography>
+                                                    <Typography variant="body1"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
+                                                    <Button fullWidth type="submit" variant="contained" size="large" color="primary" className="mt-4">{t("enviar")}</Button>
+                                                </form>
+                                            </Grid>
+                                        </Grid>
+                                    </StickyContainer>
                                 </Grid>
                             </Grid>
-                        </StickyContainer>
-                    </Grid>
-                </Grid>
-                <Dialog open={this.state.isEnviado}>
-                    <DialogTitle>Revisión enviada</DialogTitle>
-                    <DialogContent>
-                    <DialogContentText>La calificación ha sido asignada exitosamente.</DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Link to="/" style={{textDecoration: "none"}}>
-                            <Button color="primary">Volver a inicio</Button>
-                        </Link>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
+                            <Dialog open={this.state.isEnviado}>
+                                <DialogTitle>{t("revision.enviada")}</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>{t("revision.enviada-ayuda")}</DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Link to="/" style={{textDecoration: "none"}}>
+                                        <Button color="primary">{t("volver-inicio")}</Button>
+                                    </Link>
+                                </DialogActions>
+                            </Dialog>
+                        </React.Fragment>
+                    )
+                }
+            </Translation>
         );
     }
 }

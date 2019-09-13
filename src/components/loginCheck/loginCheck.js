@@ -242,9 +242,9 @@ class LoginCheck extends Component {
                                                     {
                                                         this.state.tipo === "EVALUADOR" ? (
                                                             <React.Fragment>
-                                                                <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                             </React.Fragment>
                                                         ) : ""
