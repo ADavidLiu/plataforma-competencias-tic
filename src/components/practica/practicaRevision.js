@@ -19,6 +19,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -33,6 +34,7 @@ class PracticaRevision extends Component {
         this.state = {
             docenteID: "",
             docenteNombre: "",
+            docenteImg: "",
             info: {},
             calificacion: "",
             isEnviado: false
@@ -106,18 +108,25 @@ class PracticaRevision extends Component {
         if (this.props[0].location.state === undefined) {
             newData = {
                 docenteID: "",
-                docenteNombre: ""
+                docenteNombre: "",
+                docenteImg: ""
             }
         } else {
             newData = {
                 docenteID: this.props[0].location.state.docenteID,
-                docenteNombre: this.props[0].location.state.docenteNombre
+                docenteNombre: this.props[0].location.state.docenteNombre,
+                docenteImg: this.props[0].location.state.docenteImg
             }
+        }
+
+        if (newData.docenteImg === "") {
+            newData.docenteImg = "https://via.placeholder.com/500";
         }
 
         this.setState({
             docenteID: newData.docenteID,
             docenteNombre: newData.docenteNombre,
+            docenteImg: newData.docenteImg,
             info: infoCargada
         });
     }
@@ -160,8 +169,13 @@ class PracticaRevision extends Component {
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Typography variant="h5" className="mb-2">{t("titulo.practica-revision")}</Typography>
-                                            <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
+                                            <div className="d-flex align-items-center justify-content-start">
+                                                <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
+                                                <div>
+                                                    <Typography variant="h5" className="mb-2">{t("titulo.practica-revision")}</Typography>
+                                                    <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
+                                                </div>
+                                            </div>
                                             <hr className="mb-5" />
                                         </Grid>
                                     </Grid>

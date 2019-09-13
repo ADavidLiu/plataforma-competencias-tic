@@ -104,11 +104,11 @@ class DashboardEvaluador extends Component {
             ],
             encuestas: [
                 {
-                    docenteID: "docente-1",
+                    userID: "docente-1",
                     nombre: "John Doe",
                     establecimientoEducativo: "Lorem Ipsum Dolor Sit Amet",
                     imgSrc: "",
-                    fechaAsignacion: "13-09-2019"
+                    fechaAsignacion: "01-09-2019"
                 }
             ]
         });
@@ -119,151 +119,184 @@ class DashboardEvaluador extends Component {
             <Translation>
                 {
                     t => (
-                        <Grid container spacing={5}>
-                            <Grid item xs={12} md={4}>
-                                <Grid container>
-                                    <Grid item xs={12} className="mb-3">
-                                        <Typography variant="h5">{t("procesoPaso.2")}</Typography>
-                                        <hr/>
-                                    </Grid>
-                                    {
-                                        this.state.practicas.map((practica, i) => {
-                                            return (
-                                                <Link key={i} to={{
-                                                    pathname: "/practica-revision",
-                                                    state: {
-                                                        docenteID: practica.docenteID,
-                                                        docenteNombre: practica.nombre,
-                                                        docenteImg: practica.imgSrc
-                                                    }
-                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                                    <Paper className="p-4">
-                                                        <Typography color="textPrimary" variant="body1"><strong>{practica.nombre}</strong></Typography>
-                                                        <Typography color="textPrimary" variant="body2" className="my-1">{practica.establecimientoEducativo}</Typography>
-                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {practica.fechaAsignacion}</Typography>
-                                                    </Paper>
-                                                </Link>
-                                            );
-                                        })
-                                    }
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <Grid container>
-                                    <Grid item xs={12} className="mb-3">
-                                        <Typography variant="h5">{t("procesoPaso.3-plural")}</Typography>
-                                        <hr/>
-                                    </Grid>
-                                    {
-                                        this.state.preentrevistas.map((preentrevista, i) => {
-                                            return (
-                                                <Link key={i} to={{
-                                                    pathname: "/preentrevista-revision",
-                                                    state: {
-                                                        docenteID: preentrevista.docenteID,
-                                                        docenteNombre: preentrevista.nombre,
-                                                        docenteImg: preentrevista.imgSrc
-                                                    }
-                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                                    <Paper className="p-4">
-                                                        <Typography color="textPrimary" variant="body1"><strong>{preentrevista.nombre}</strong></Typography>
-                                                        <Typography color="textPrimary" variant="body2" className="my-1">{preentrevista.establecimientoEducativo}</Typography>
-                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {preentrevista.fechaAsignacion}</Typography>
-                                                    </Paper>
-                                                </Link>
-                                            );
-                                        })
-                                    }
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12} md={4}>
-                                <Grid container>
-                                    <Grid item xs={12} className="mb-3">
-                                        <Typography variant="h5">{t("procesoPaso.4-plural")}</Typography>
-                                        <hr/>
-                                    </Grid>
-                                    {
-                                        this.state.entrevistas.map((entrevista, i) => {
-                                            return (
-                                                <Link key={i} to={{
-                                                    pathname: "/entrevista-revision",
-                                                    state: {
-                                                        docenteID: entrevista.docenteID,
-                                                        docenteNombre: entrevista.nombre,
-                                                        docenteImg: entrevista.imgSrc
-                                                    }
-                                                }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
-                                                    <Paper className="p-4">
-                                                        <Typography color="textPrimary" variant="body1"><strong>{entrevista.nombre}</strong></Typography>
-                                                        <Typography color="textPrimary" variant="body2" className="my-1">{entrevista.establecimientoEducativo}</Typography>
-                                                        <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {entrevista.fechaAsignacion}</Typography>
-                                                        <hr/>
-                                                        <Typography variant="subtitle2" className="mb-2">{t("dashboardEvaluador.datos-contacto")}</Typography>
-                                                        <Typography variant="body2" className="mb-2">
-                                                            <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
-                                                        </Typography>
-                                                        <Typography variant="body2">
-                                                            <span style={{color: "#3f51b5", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
-                                                        </Typography>
-                                                    </Paper>
-                                                </Link>
-                                            );
-                                        })
-                                    }
-                                </Grid>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Grid container>
-                                    <Grid item xs={12} className="mb-4">
-                                        <Typography variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
-                                        <hr/>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography variant="h6">{t("dashboardEvaluador.distribucion-asignaciones")}</Typography>
-                                                <hr/>
-                                                <Pie height={125} data={() => {
-                                                    const dataPercentages = [];
-
-                                                    this.state.estadisticas.asignaciones.forEach(asignacion => {
-                                                        dataPercentages.push(asignacion.percentage);
-                                                    });
-
-                                                    return {
-                                                        datasets: [
-                                                            {
-                                                                data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5", "#37479e"],
-                                                                borderColor: "#FFFFFF"
-                                                            }
-                                                        ],
-                                                        labels: [t("procesoPaso.2"), t("procesoPaso.3-plural"), t("procesoPaso.4-plural"), t("procesoPaso.5")]
-                                                    }
-                                                }} options={{
-                                                    tooltips: {
-                                                        enabled: true,
-                                                        callbacks: {
-                                                            label: (tooltipItem, data) => {
-                                                                const dataset = data.datasets[tooltipItem.datasetIndex];
-                                                                const label = data.labels[tooltipItem.index];
-                                                                const absoluteValue = dataset.data[tooltipItem.index];
-                                                                const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                                                    return previousValue + currentValue;
-                                                                });
-                                                                const currentValue = dataset.data[tooltipItem.index];
-                                                                const percentage = Math.floor(((currentValue/total) * 100)+0.5);
-
-                                                                return `${label}: ${percentage}%`;
-                                                            }
+                        <React.Fragment>
+                            <Grid container spacing={5}>
+                                <Grid item xs={12} md={6} lg={3}>
+                                    <Grid container>
+                                        <Grid item xs={12} className="mb-3">
+                                            <Typography variant="h5">{t("procesoPaso.2")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        {
+                                            this.state.practicas.map((practica, i) => {
+                                                return (
+                                                    <Link key={i} to={{
+                                                        pathname: "/practica-revision",
+                                                        state: {
+                                                            docenteID: practica.docenteID,
+                                                            docenteNombre: practica.nombre,
+                                                            docenteImg: practica.imgSrc
                                                         }
-                                                    },
-                                                }} />
+                                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                        <Paper className="p-4">
+                                                            <Typography color="textPrimary" variant="body1"><strong>{practica.nombre}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2" className="my-1">{practica.establecimientoEducativo}</Typography>
+                                                            <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {practica.fechaAsignacion}</Typography>
+                                                        </Paper>
+                                                    </Link>
+                                                );
+                                            })
+                                        }
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={3}>
+                                    <Grid container>
+                                        <Grid item xs={12} className="mb-3">
+                                            <Typography variant="h5">{t("procesoPaso.3-plural")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        {
+                                            this.state.preentrevistas.map((preentrevista, i) => {
+                                                return (
+                                                    <Link key={i} to={{
+                                                        pathname: "/preentrevista-revision",
+                                                        state: {
+                                                            docenteID: preentrevista.docenteID,
+                                                            docenteNombre: preentrevista.nombre,
+                                                            docenteImg: preentrevista.imgSrc
+                                                        }
+                                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                        <Paper className="p-4">
+                                                            <Typography color="textPrimary" variant="body1"><strong>{preentrevista.nombre}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2" className="my-1">{preentrevista.establecimientoEducativo}</Typography>
+                                                            <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {preentrevista.fechaAsignacion}</Typography>
+                                                        </Paper>
+                                                    </Link>
+                                                );
+                                            })
+                                        }
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={3}>
+                                    <Grid container>
+                                        <Grid item xs={12} className="mb-3">
+                                            <Typography variant="h5">{t("procesoPaso.4-plural")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        {
+                                            this.state.entrevistas.map((entrevista, i) => {
+                                                return (
+                                                    <Link key={i} to={{
+                                                        pathname: "/entrevista-revision",
+                                                        state: {
+                                                            docenteID: entrevista.docenteID,
+                                                            docenteNombre: entrevista.nombre,
+                                                            docenteImg: entrevista.imgSrc
+                                                        }
+                                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                        <Paper className="p-4">
+                                                            <Typography color="textPrimary" variant="body1"><strong>{entrevista.nombre}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2" className="my-1">{entrevista.establecimientoEducativo}</Typography>
+                                                            <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {entrevista.fechaAsignacion}</Typography>
+                                                            <hr/>
+                                                            <Typography variant="subtitle2" className="mb-2">{t("dashboardEvaluador.datos-contacto")}</Typography>
+                                                            <Typography variant="body2" className="mb-2">
+                                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
+                                                            </Typography>
+                                                            <Typography variant="body2">
+                                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
+                                                            </Typography>
+                                                        </Paper>
+                                                    </Link>
+                                                );
+                                            })
+                                        }
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={3}>
+                                    <Grid container>
+                                        <Grid item xs={12} className="mb-3">
+                                            <Typography variant="h5">{t("procesoPaso.5")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        {
+                                            this.state.encuestas.map((encuesta, i) => {
+                                                return (
+                                                    <Link key={i} to={{
+                                                        pathname: "/encuesta-revision",
+                                                        state: {
+                                                            userID: encuesta.userID,
+                                                            userNombre: encuesta.nombre,
+                                                            userImg: encuesta.imgSrc,
+                                                            nombreEE: encuesta.establecimientoEducativo,
+                                                        }
+                                                    }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
+                                                        <Paper className="p-4">
+                                                            <Typography color="textPrimary" variant="body1" className="my-1"><strong>{encuesta.establecimientoEducativo}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2"><strong>{encuesta.nombre}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {encuesta.fechaAsignacion}</Typography>
+                                                        </Paper>
+                                                    </Link>
+                                                );
+                                            })
+                                        }
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={5}>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12} className="mb-4">
+                                            <Typography variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Grid container>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="h6">{t("dashboardEvaluador.distribucion-asignaciones")}</Typography>
+                                                    <hr/>
+                                                    <Pie height={125} data={() => {
+                                                        const dataPercentages = [];
+
+                                                        this.state.estadisticas.asignaciones.forEach(asignacion => {
+                                                            dataPercentages.push(asignacion.percentage);
+                                                        });
+
+                                                        return {
+                                                            datasets: [
+                                                                {
+                                                                    data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5", "#37479e"],
+                                                                    borderColor: "#FFFFFF"
+                                                                }
+                                                            ],
+                                                            labels: [t("procesoPaso.2"), t("procesoPaso.3-plural"), t("procesoPaso.4-plural"), t("procesoPaso.5")]
+                                                        }
+                                                    }} options={{
+                                                        tooltips: {
+                                                            enabled: true,
+                                                            callbacks: {
+                                                                label: (tooltipItem, data) => {
+                                                                    const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                                    const label = data.labels[tooltipItem.index];
+                                                                    const absoluteValue = dataset.data[tooltipItem.index];
+                                                                    const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                                        return previousValue + currentValue;
+                                                                    });
+                                                                    const currentValue = dataset.data[tooltipItem.index];
+                                                                    const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+
+                                                                    return `${label}: ${percentage}%`;
+                                                                }
+                                                            }
+                                                        },
+                                                    }} />
+                                                </Grid>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
+                        </React.Fragment>
                     )
                 }
             </Translation>

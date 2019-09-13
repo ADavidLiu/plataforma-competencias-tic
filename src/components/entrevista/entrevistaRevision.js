@@ -17,6 +17,7 @@ import Select from "@material-ui/core/Select";
 
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
+import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -29,6 +30,7 @@ class EntrevistaRevision extends Component {
         this.state = {
             docenteID: "",
             docenteNombre: "",
+            docenteImg: "",
             preguntas: [],
             calificaciones: [],
             isEnviado: false
@@ -57,18 +59,25 @@ class EntrevistaRevision extends Component {
         if (this.props[0].location.state === undefined) {
             infoCargada = {
                 docenteID: "",
-                docenteNombre: ""
+                docenteNombre: "",
+                docenteImg: "",
             }
         } else {
             infoCargada = {
                 docenteID: this.props[0].location.state.docenteID,
-                docenteNombre: this.props[0].location.state.docenteNombre
+                docenteNombre: this.props[0].location.state.docenteNombre,
+                docenteImg: this.props[0].location.state.docenteImg,
             }
+        }
+
+        if (infoCargada.docenteImg === "") {
+            infoCargada.docenteImg = "https://via.placeholder.com/500";
         }
 
         this.setState({
             docenteID: infoCargada.docenteID,
             docenteNombre: infoCargada.docenteNombre,
+            docenteImg: infoCargada.docenteImg,
             preguntas: [
                 ...this.state.preguntas,
                 ...dataCargada
@@ -112,12 +121,20 @@ class EntrevistaRevision extends Component {
                 {
                     t => (
                         <React.Fragment>
+                            <Helmet>
+                                <title>{`${t("titulo.entrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <Typography variant="h5" className="mb-2">{t("revision.entrevista-titulo")}</Typography>
-                                            <Typography variant="body1">{t("revision.nombre-evaluado")}: <strong>{this.state.docenteNombre}</strong></Typography>
+                                            <div className="d-flex align-items-center justify-content-start">
+                                                <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
+                                                <div>
+                                                    <Typography variant="h5" className="mb-2">{t("revision.entrevista-titulo")}</Typography>
+                                                    <Typography variant="body1">{t("revision.nombre-evaluado")}: <strong>{this.state.docenteNombre}</strong></Typography>
+                                                </div>
+                                            </div>
                                             <hr className="mb-4" />
                                         </Grid>
                                     </Grid>

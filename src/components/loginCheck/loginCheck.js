@@ -38,6 +38,7 @@ import Pagina404 from "../pagina404/pagina404";
 import PracticaRevision from "../practica/practicaRevision";
 import PreentrevistaRevision from "../preentrevista/preentrevistaRevision";
 import EntrevistaRevision from "../entrevista/entrevistaRevision";
+import EncuestaRevision from "../encuesta/encuestaRevision";
 import Calificaciones from "../calificaciones/calificaciones";
 
 class LoginCheck extends Component {
@@ -245,6 +246,7 @@ class LoginCheck extends Component {
                                                                 <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path="/encuesta-revision/" render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                 <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                             </React.Fragment>
                                                         ) : ""

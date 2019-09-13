@@ -23,7 +23,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
-class PreentrevistaRevision extends Component {
+class EncuestaRevision extends Component {
     constructor() {
         super();
 
@@ -42,36 +42,30 @@ class PreentrevistaRevision extends Component {
         /* Conectarse al backend para traer las preguntas de este docenteID */
         const preguntasCargadas = [
             {
-                descriptores: ["E1ub", "E1ue"],
-                label: "¿Ha propuesto cambios en otros escenarios educativos como consecuencia del uso de las TIC en su práctica educativa?",
-                respuestas: ["Sí"],
-                subPregunta: {
-                    label: "¿Cuáles? (Máximo 400 caracteres)",
-                    respuestas: ["Ex excepteur quis amet fugiat voluptate ut do nostrud aliqua. Amet pariatur nulla sunt adipisicing ut consectetur. Elit commodo enim aliquip irure."]
-                }
+                factor: 4,
+                criterio: 1,
+                label: "Reflexiones y discusiones colectivas sobre el uso de las TIC en la educación",
+                respuesta: "Magna ipsum Lorem aliquip incididunt enim amet laboris quis magna dolore sint esse sunt. Minim incididunt Lorem duis cillum. Enim id labore reprehenderit proident voluptate eiusmod sit. Quis amet sunt do magna fugiat consequat anim magna irure id. Veniam labore ea ipsum amet sunt ex."
             },
             {
-                descriptores: ["I1ta", "R1tc"],
-                label: "¿Ha realizado modificaciones al diseño de la práctica educativa apoyada en TIC que presentó?",
+                factor: 4,
+                criterio: 2,
                 evidencia: "https://www.google.com",
-                respuestas: ["Sí"],
-                subPregunta: {
-                    label: "¿Para qué ha modificado el diseño de su práctica educativa apoyada en TIC? Puede elegir más de una opción.",
-                    respuestas: ["Para facilitar la presentación, almacenamiento, transmisión o intercambio de información.", "Para utilizar herramientas TIC novedosas, estéticas o accesibles."],
-                    subPregunta: {
-                        label: "Explique (Máximo 400 caracteres)",
-                        respuestas: ["Dolor sit consequat magna culpa quis pariatur magna magna eiusmod deserunt eu. Qui quis cillum consectetur nulla elit cupidatat. Consequat aliqua cupidatat irure voluptate. Deserunt officia duis nostrud reprehenderit occaecat id id aliqua non labore.", "Reprehenderit fugiat reprehenderit minim eiusmod consequat. Velit enim Lorem cillum anim deserunt consectetur dolore ipsum id. Aliqua dolore veniam sit dolor eu eiusmod deserunt magna non adipisicing sunt elit dolore. Proident magna amet dolor non do est ea exercitation anim culpa aute."]
-                    }
-                }
+                label: "Estudios de impacto sobre el uso de las TIC en la educación y su aplicación al plan de desarrollo de la Institución",
+                respuesta: "Fugiat amet aliqua nostrud pariatur quis mollit eiusmod eu irure. Quis ad est elit irure laboris ad eiusmod proident. Ullamco ullamco officia ea duis quis deserunt ipsum cillum commodo. Veniam ad voluptate incididunt veniam. Ex quis ut enim elit laboris tempor. Anim dolore qui cupidatat cupidatat."
             },
             {
-                descriptores: ["E2uc"],
-                label: "¿Ha utilizado su práctica educativa en diferentes contextos (grados/niveles - instituciones)?",
-                respuestas: ["Sí"],
-                subPregunta: {
-                    label: "¿Cómo lo ha hecho? (Máximo 400 caracteres)",
-                    respuestas: ["Ea incididunt et occaecat laboris. Incididunt exercitation incididunt exercitation amet anim consectetur tempor ullamco nisi enim qui qui occaecat. Veniam dolore minim eiusmod enim nisi in et cillum nulla ad. Qui duis incididunt cupidatat veniam nulla reprehenderit ipsum."]
-                }
+                factor: 4,
+                criterio: 3,
+                evidencia: "https://www.google.com",
+                label: "Comparaciones de desempeño entre estudiantes que utilizan las TIC y los que no las utilizan",
+                respuesta: "Do nisi quis duis occaecat duis magna ipsum tempor velit. Quis exercitation aute fugiat tempor fugiat voluptate incididunt excepteur cupidatat laborum veniam enim aliquip sunt. Nostrud dolor duis magna ad Lorem. Nostrud aliqua fugiat qui exercitation fugiat esse aliqua veniam officia elit labore excepteur deserunt esse."
+            },
+            {
+                factor: 4,
+                criterio: 4,
+                label: "Cambio en las prácticas pedagógicas a partir de la incorporación de las TIC",
+                respuesta: "Excepteur aliqua laborum occaecat ad nulla do sunt non quis labore nostrud non elit. Nostrud quis veniam cupidatat aute sint dolore consequat eu adipisicing id est. Eiusmod exercitation laborum id commodo Lorem. Lorem ad veniam eiusmod mollit. Duis qui nulla irure dolore voluptate dolor."
             }
         ];
 
@@ -81,24 +75,24 @@ class PreentrevistaRevision extends Component {
             infoCargada = {
                 docenteID: "",
                 docenteNombre: "",
-                imgSrc: ""
+                docenteImg: ""
             }
         } else {
             infoCargada = {
                 docenteID: this.props[0].location.state.docenteID,
                 docenteNombre: this.props[0].location.state.docenteNombre,
-                imgSrc: this.props[0].location.state.docenteImg
+                docenteImg: this.props[0].location.state.userImg
             }
         }
 
-        if (infoCargada.imgSrc === "") {
-            infoCargada.imgSrc = "https://via.placeholder.com/500";
+        if (infoCargada.docenteImg === "") {
+            infoCargada.docenteImg = "https://via.placeholder.com/500";
         }
 
         this.setState({
             docenteID: infoCargada.docenteID,
             docenteNombre: infoCargada.docenteNombre,
-            docenteImg: infoCargada.imgSrc,
+            docenteImg: infoCargada.docenteImg,
             preguntas: preguntasCargadas
         });
 
@@ -120,11 +114,12 @@ class PreentrevistaRevision extends Component {
         }
     }
 
-    handleChange = (e, index, descriptores) => {
+    handleChange = (e, index, factor, criterio) => {
         const nuevasCalificaciones = [...this.state.calificaciones];
 
         nuevasCalificaciones[index] = {
-            descriptores: descriptores,
+            factor: factor,
+            criterio: criterio,
             calificacion: e.target.value
         }
 
@@ -152,10 +147,8 @@ class PreentrevistaRevision extends Component {
                                 ) : ""
                             }
                             <Typography variant="body1"><strong>{t("pregunta")}: </strong>{pregunta.label}</Typography>
-                            <Typography variant="body1"><strong>{t("respuestas")}: </strong>{pregunta.respuestas.map((respuesta, i) => {
-                                return <Typography key={i} component="span" className="d-block">• {respuesta}</Typography>
-                            })}</Typography>
                             <hr/>
+                            <Typography variant="body1"><strong>{t("respuesta")}: </strong>{pregunta.respuesta}</Typography>
                         </React.Fragment>
                     )
                 }
@@ -189,7 +182,7 @@ class PreentrevistaRevision extends Component {
                     t => (
                         <React.Fragment>
                             <Helmet>
-                                <title>{`${t("titulo.preentrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
+                                <title>{`${t("titulo.encuesta-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
@@ -198,7 +191,7 @@ class PreentrevistaRevision extends Component {
                                             <div className="d-flex align-items-center justify-content-start">
                                                 <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
                                                 <div>
-                                                    <Typography variant="h5" className="mb-2">{t("revision.preentrevista-titulo")}</Typography>
+                                                    <Typography variant="h5" className="mb-2">{t("revision.encuesta-titulo")}</Typography>
                                                     <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
                                                 </div>
                                             </div>
@@ -208,14 +201,13 @@ class PreentrevistaRevision extends Component {
                                     <Grid container spacing={3} className="mb-4">
                                         <Grid item xs={12} sm={8} md={9} className="mb-5">
                                             <Typography variant="body1" className="mb-3">{t("revision.preentrevista-ayuda-1")}</Typography>
-                                            <Typography variant="body1">{t("revision.preentrevista-ayuda-2")}</Typography>
                                         </Grid>
                                         <Grid item xs={12} sm={4} md={3}>
                                             <Typography variant="body1" className="mb-2"><strong>{t("revision.calificacion-ayuda")}</strong></Typography>
-                                            <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
-                                            <Typography variant="body1" className="mb-2"><strong>2: {t("revision.calificacion-parcial-titulo")}</strong> - {t("revision.calificacion-parcial-ayuda")}.</Typography>
-                                            <Typography variant="body1" className="mb-2"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
-                                            <Typography variant="body1"><strong>4: {t("revision.calificacion-enviar-titulo")}</strong> - {t("revision.calificacion-enviar-ayuda")}.</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>1: </strong>{t("revision.calificacion-no-iniciado")}</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>2: </strong>{t("revision.calificacion-inicial")}</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>3: </strong>{t("revision.calificacion-desarrollo")}</Typography>
+                                            <Typography variant="body1" className="mb-2"><strong>4: </strong>{t("revision.calificacion-establecido")}</Typography>
                                         </Grid>
                                     </Grid>
                                     {
@@ -248,7 +240,7 @@ class PreentrevistaRevision extends Component {
                                                                                 this.state.calificaciones[i].calificacion
                                                                             ) : ""
                                                                         }
-                                                                        onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
+                                                                        onChange={e => { this.handleChange(e, i, pregunta.factor, pregunta.criterio); }}
                                                                         input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
                                                                     >
                                                                         <MenuItem value={1}>1</MenuItem>
@@ -286,4 +278,4 @@ class PreentrevistaRevision extends Component {
     }
 }
 
-export default PreentrevistaRevision;
+export default EncuestaRevision;

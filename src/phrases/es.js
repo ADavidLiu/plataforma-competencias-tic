@@ -34,6 +34,7 @@ const es = {
         "definicion": "Definición",
         "de": "de",
         "pregunta": "Pregunta",
+        "respuesta": "Respuesta",
         "respuestas": "Respuestas",
         "filasPorPagina": "Filas por página",
         "buscar": "Buscar...",
@@ -251,14 +252,10 @@ const es = {
         "dashboardDocente.btn-practica": "Ver práctica educativa",
         "dashboardDocente.btn-preentrevista": "Ver pre-entrevista",
         "dashboardDocente.btn-entrevista": "Ver entrevista",
-        
-        
         "dashboardEvaluador.asignado-revision": "Asignado para revisión el:",
         "dashboardEvaluador.datos-contacto": "Datos de contacto",
         "dashboardEvaluador.distribucion-asignaciones": "Distribución de asignaciones",
         "curso.imagen-alt": "Imagen relativa al curso",
-
-
         "configuracion.titulo": "Configuración",
         "configuracion.ajustes-plataforma": "Ajustes de la plataforma",
         "configuracion.label-version": "Versión del instrumento",
@@ -353,6 +350,10 @@ const es = {
         "revision.calificacion-totalmente-ayuda": "Se cuenta con evidencia clara y consolidada",
         "revision.calificacion-enviar-titulo": "Enviar a entrevista",
         "revision.calificacion-enviar-ayuda": "Debe indagarse más acerca de este descriptor",
+        "revision.calificacion-no-iniciado": "No iniciado",
+        "revision.calificacion-inicial": "En estado inicial",
+        "revision.calificacion-desarrollo": "En desarrollo",
+        "revision.calificacion-establecido": "Establecido",
         "revision.descargar-evidencia": "Descargar evidencia",
         "revision.seleccione-valor": "Seleccione un valor *",
         "revision.enviada": "Revisión enviada",
@@ -371,6 +372,7 @@ const es = {
         "revision.entrevista-respuesta-original": "Respuesta original",
         "revision.entrevista-evidencia": "Evidencia requerida",
         "revision.entrevista-calificacion": "Calificación final",
+        "revision.encuesta-titulo": "Revisión de Encuesta",
     }
 }
 
