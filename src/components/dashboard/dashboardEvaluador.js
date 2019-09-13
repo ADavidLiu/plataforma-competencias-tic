@@ -7,7 +7,7 @@ import { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import { Bar, Radar, Pie } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 
 import Phone from "@material-ui/icons/Phone";
 import Email from "@material-ui/icons/Email";
@@ -40,7 +40,11 @@ class DashboardEvaluador extends Component {
                         type: "encuestas",
                         percentage: 10
                     }
-                ]
+                ],
+                revisiones: {
+                    completadas: 15,
+                    espera: 7
+                }
             }
         }
     }
@@ -251,7 +255,7 @@ class DashboardEvaluador extends Component {
                                             <hr/>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Grid container>
+                                            <Grid container spacing={5}>
                                                 <Grid item xs={12} md={6}>
                                                     <Typography variant="h6">{t("dashboardEvaluador.distribucion-asignaciones")}</Typography>
                                                     <hr/>
@@ -289,6 +293,40 @@ class DashboardEvaluador extends Component {
                                                                 }
                                                             }
                                                         },
+                                                    }} />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="h6">{t("dashboardEvaluador.revisiones")}</Typography>
+                                                    <hr/>
+                                                    <Bar height={125} data={{
+                                                        labels: [t("dashboardEvaluador.revisiones")],
+                                                        datasets: [
+                                                            {
+                                                                label: t("dashboardEvaluador.revisiones-completadas"),
+                                                                data: [this.state.estadisticas.revisiones.completadas],
+                                                                borderWidth: 0,
+                                                                backgroundColor: [
+                                                                    "#3f51b5"
+                                                                ]
+                                                            },
+                                                            {
+                                                                label: t("dashboardEvaluador.revisiones-en-espera"),
+                                                                data: [this.state.estadisticas.revisiones.espera],
+                                                                borderWidth: 0,
+                                                                backgroundColor: [
+                                                                    "#f44336"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }} options={{
+                                                        scales: {
+                                                            yAxes: [{
+                                                                ticks: {
+                                                                    beginAtZero: true,
+                                                                    stepSize: 5
+                                                                }
+                                                            }]
+                                                        }
                                                     }} />
                                                 </Grid>
                                             </Grid>

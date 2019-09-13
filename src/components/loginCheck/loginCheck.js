@@ -20,6 +20,7 @@ import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
+import Layers from "@material-ui/icons/Layers";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -40,6 +41,7 @@ import PreentrevistaRevision from "../preentrevista/preentrevistaRevision";
 import EntrevistaRevision from "../entrevista/entrevistaRevision";
 import EncuestaRevision from "../encuesta/encuestaRevision";
 import Calificaciones from "../calificaciones/calificaciones";
+import Territorios from "../territorios/territorios";
 
 class LoginCheck extends Component {
     constructor() {
@@ -49,7 +51,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "GOBIERNO",
             id: "loremipsum"
         }
 
@@ -167,6 +169,17 @@ class LoginCheck extends Component {
                                                     </Link>
                                                 </Tooltip>
                                                 {
+                                                    this.state.tipo === "GOBIERNO" ? (
+                                                        <Tooltip title={t("territorios.titulo")} placement="bottom">
+                                                            <Link to="/territorios">
+                                                                <IconButton style={{color: "#ffffff"}}>
+                                                                    <Layers/>
+                                                                </IconButton>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    ) : ""
+                                                }
+                                                {
                                                     this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
                                                         <Tooltip title={tituloLabelUsuarios} placement="bottom">
                                                             <Link to="/usuarios">
@@ -238,6 +251,11 @@ class LoginCheck extends Component {
                                                     {
                                                         this.state.tipo === "DOCENTE" ? (
                                                             <Route path="/procesos/" render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                        ) : ""
+                                                    }
+                                                    {
+                                                        this.state.tipo === "GOBIERNO" ? (
+                                                            <Route path="/territorios/" render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                         ) : ""
                                                     }
                                                     {

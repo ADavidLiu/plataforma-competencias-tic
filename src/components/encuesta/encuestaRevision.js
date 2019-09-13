@@ -34,7 +34,9 @@ class EncuestaRevision extends Component {
             preguntas: [],
             preguntasPreparadas: [],
             calificaciones: [],
-            isEnviado: false
+            isEnviado: false,
+            isCompletado: false,
+            numPreguntas: 0
         }
     }
 
@@ -93,7 +95,8 @@ class EncuestaRevision extends Component {
             docenteID: infoCargada.docenteID,
             docenteNombre: infoCargada.docenteNombre,
             docenteImg: infoCargada.docenteImg,
-            preguntas: preguntasCargadas
+            preguntas: preguntasCargadas,
+            numPreguntas: preguntasCargadas.length
         });
 
         preguntasCargadas.map(pregunta => {
@@ -126,6 +129,12 @@ class EncuestaRevision extends Component {
         this.setState({
             calificaciones: nuevasCalificaciones
         });
+
+        if (nuevasCalificaciones.length === this.state.numPreguntas) {
+            this.setState({
+                isCompletado: true
+            });
+        }
     }
 
     prepararPreguntas = (pregunta, arrayBase) => {
@@ -256,7 +265,7 @@ class EncuestaRevision extends Component {
                                             );
                                         })
                                     }
-                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar}>{t("enviar")}</Button>
+                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isCompletado}>{t("enviar")}</Button>
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>

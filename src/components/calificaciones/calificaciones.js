@@ -27,9 +27,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
 
 class Calificaciones extends Component {
     constructor() {
@@ -292,6 +290,7 @@ class Calificaciones extends Component {
             });
 
             matchedArrays.sort(sortBy("-fechaCalificacion"));
+            matchedArrays = [...new Set(matchedArrays)];
 
             this.setState({
                 elementosMostrados: matchedArrays,
@@ -344,7 +343,7 @@ class Calificaciones extends Component {
                             </Grid>
                             <Grid item xs={12} md={6} className="pb-0">
                                 <TextField
-                                    placeholder="Buscar..."
+                                    placeholder={t("buscar")}
                                     fullWidth
                                     variant="outlined"
                                     onChange={this.handleSearch}
