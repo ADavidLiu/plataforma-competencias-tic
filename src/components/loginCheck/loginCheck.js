@@ -48,20 +48,20 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.state = {
+        /* this.state = {
             isLogeado: true,
             locale: "es",
             tipo: "GOBIERNO",
             id: "loremipsum"
-        }
+        } */
 
         /* Pruebas de integración con backend */
-        /* this.state = {
+        this.state = {
             isLogeado: false,
             locale: "es",
             tipo: "",
             id: ""
-        } */
+        }
 
         /* Conectarse al backend para obtener los datos personales del usuario, IE o EE */
         this.datosPerfil = {};

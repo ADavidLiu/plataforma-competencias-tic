@@ -395,6 +395,8 @@ const es = {
         "territorios.label-desactivar": "Desactivar división territorial",
         "territorios.ayuda-borrar-0": "¿Está seguro de que desea desactivar este territorio?",
         "territorios.ayuda-borrar-1": "Todas las Instituciones, Establecimientos y Docentes que estén asociados a éste también serán desactivados.",
+        "captcha.sin-resolver": "Verificación de reCAPTCHA",
+        "captcha.sin-resolver-ayuda": 'Dé click sobre la casilla de verificación de reCAPTCHA presentada encima del botón "INGRESAR". Una vez verificada, proceda a dar click sobre el botón nuevamente para ingresar a la plataforma.',
     }
 }
 
