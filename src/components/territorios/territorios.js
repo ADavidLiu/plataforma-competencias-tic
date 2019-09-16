@@ -10,13 +10,17 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from '@material-ui/core/TablePagination';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 import sortBy from "sort-by";
 
-import Edit from "@material-ui/icons/Edit";
+import EditOutlined from "@material-ui/icons/EditOutlined";
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
-import Link from "@material-ui/icons/Link";
-import OpenInNew from "@material-ui/icons/OpenInNew";
 import Search from "@material-ui/icons/Search";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -27,7 +31,6 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -40,9 +43,11 @@ class Territorios extends Component{
             divisionMostrada: 2,
             isLoading: false,
             isFiltering: false,
+            isEditing: false,
+            isDeleting: false,
             territoriosActuales: [],
             institucionesActuales: [],
-            headCells: ["nombre", "territorios.lista-padre", "territorios.lista-fecha-creacion", "territorios.lista-acciones"],
+            headCells: ["ID", "nombre", "territorios.lista-padre", "territorios.lista-fecha-creacion", "territorios.lista-acciones"],
             crearForm: {
                 nombre: "",
                 padre: "",
@@ -61,7 +66,13 @@ class Territorios extends Component{
             elementosMostrados: [],
             page: 0,
             rowsPerPage: 10,
-            searchTerm: ""
+            searchTerm: "",
+            editingForm: {
+                nombre: "",
+                padre: "",
+                fechaCreacion: ""
+            },
+            activeTerritoryID: ""
         }
     }
 
@@ -69,36 +80,43 @@ class Territorios extends Component{
         const dataCargada = {
             territorios: [
                 {
+                    id: 0,
                     nombre: "No es subdivisión",
-                    padre: "",
+                    padre: "No es subdivisión",
                     fechaCreacion: "2019-06-29"
                 },
                 {
+                    id: 1,
                     nombre: "Veniam labore minim",
                     padre: "Culpa aliquip minim",
                     fechaCreacion: "2019-09-13"
                 },
                 {
+                    id: 2,
                     nombre: "dolore mollit",
                     padre: "",
                     fechaCreacion: "2019-02-14"
                 },
                 {
+                    id: 3,
                     nombre: "aliquip",
                     padre: "Do irure eiusmod",
                     fechaCreacion: "2019-08-14"
                 },
                 {
+                    id: 4,
                     nombre: "ad ad ex",
                     padre: "",
                     fechaCreacion: "2019-01-31"
                 },
                 {
+                    id: 5,
                     nombre: "mollit occaecat",
                     padre: "",
                     fechaCreacion: "2018-10-10"
                 },
                 {
+                    id: 6,
                     nombre: "tempor do in",
                     padre: "",
                     fechaCreacion: "2019-05-24"
@@ -137,10 +155,6 @@ class Territorios extends Component{
 
             clearTimeout(timeout);
         }, 500);
-    }
-
-    handleTerritorioSelect = e => {
-        console.log(e.target.name, e.target.value);
     }
 
     handleCrearFormChange = e => {
@@ -224,6 +238,15 @@ class Territorios extends Component{
         switch (e.target.name) {
             case "categoria":
                 switch (e.target.value) {
+                    case "ID":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "ID",
+                                categoriaFormatted: "id"
+                            }
+                        });
+                        break;
                     case "nombre":
                         this.setState({
                             filtros: {
@@ -317,8 +340,8 @@ class Territorios extends Component{
                 });
             });
 
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += 3) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 3));
+            for (let i = 0; i < rawValuesToSearchFrom.length; i += 4) {
+                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 4));
             }
             arraysValuesToSearchFrom.forEach(array => {
                 array.forEach(val => {
@@ -330,8 +353,6 @@ class Territorios extends Component{
 
             matchedArrays.sort(sortBy("-fechaCreacion"));
             matchedArrays = [...new Set(matchedArrays)];
-
-            console.log(matchedArrays);
 
             this.setState({
                 page: 0,
@@ -355,6 +376,85 @@ class Territorios extends Component{
     handleChangePage = (e, newPage) => {
         this.setState({
             page: newPage
+        });
+    }
+
+    toggleDeleting = () => {
+        this.setState({
+            isDeleting: !this.state.isDeleting
+        });
+    }
+
+    toggleEditor = () => {
+        this.setState({
+            isEditing: !this.state.isEditing
+        });
+    }
+
+    editarTerritorio = id => {
+        this.toggleEditor();
+        
+        const selected = this.state.territoriosActuales.find(territorio => territorio.id === id);
+        
+        this.setState({
+            activeTerritoryID: id,
+            editingForm: {
+                nombre: selected.nombre,
+                padre: selected.padre,
+                fechaCreacion: selected.fechaCreacion
+            }
+        });
+    }
+
+    eliminarTerritorio = id => {
+        this.toggleDeleting();
+        this.setState({
+            activeTerritoryID: id
+        });
+    }
+
+    confirmUserDeletion = () => {
+        this.toggleDeleting();
+
+        /* Conectarse al backend para hacer los cambios */
+
+        /* Luego, eliminarlo visualmente de la interfaz */
+        let newTerritorios = [...this.state.territoriosActuales];
+        newTerritorios = newTerritorios.filter(territorio => territorio.id !== this.state.activeTerritoryID);
+
+        this.setState({
+            territoriosActuales: newTerritorios,
+            elementosMostrados: newTerritorios
+        });
+    }
+
+    saveUpdatedUser = () => {
+        this.toggleEditor();
+
+        const newTerritorios = [...this.state.territoriosActuales];
+        let modified = newTerritorios.find(territorio => territorio.id === this.state.activeTerritoryID);
+        const modifiedIndex = newTerritorios.indexOf(modified);
+
+        modified = {
+            ...modified,
+            nombre: this.state.editingForm.nombre,
+            padre: this.state.editingForm.padre,
+            fechaCreacion: this.state.editingForm.fechaCreacion
+        }
+        newTerritorios[modifiedIndex] = modified;
+
+        this.setState({
+            territoriosActuales: newTerritorios,
+            elementosMostrados: newTerritorios
+        });
+    }
+
+    handleEdicionChange = e => {
+        this.setState({
+            editingForm: {
+                ...this.state.editingForm,
+                [e.target.name]: e.target.value
+            }
         });
     }
 
@@ -529,6 +629,7 @@ class Territorios extends Component{
                                                 <Table className="scrolling-table">
                                                     <TableHead>
                                                         <TableRow>
+                                                            <TableCell>{t("ID")}</TableCell>
                                                             <TableCell>{t("nombre")}</TableCell>
                                                             <TableCell>{t("territorios.lista-padre")}</TableCell>
                                                             <TableCell>{t("territorios.lista-fecha-creacion")}</TableCell>
@@ -541,7 +642,7 @@ class Territorios extends Component{
                                                                 {
                                                                     this.state.isFiltering ? (
                                                                         <TableRow>
-                                                                            <TableCell colSpan={4}>
+                                                                            <TableCell colSpan={5}>
                                                                                 <CircularProgress color="primary" className="d-block mx-auto"/>
                                                                             </TableCell>
                                                                         </TableRow>
@@ -554,7 +655,12 @@ class Territorios extends Component{
                                                                                         values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
                                                                                     }
                                                                                     <TableCell>
-
+                                                                                        <EditOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
+                                                                                            this.editarTerritorio(elemento.id);
+                                                                                        }}/>
+                                                                                        <DeleteOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
+                                                                                            this.eliminarTerritorio(elemento.id);
+                                                                                        }} className="ml-3"/>
                                                                                     </TableCell>
                                                                                 </TableRow>
                                                                             );
@@ -565,7 +671,7 @@ class Territorios extends Component{
                                                         ) : (
                                                             <TableBody>
                                                                 <TableRow>
-                                                                    <TableCell colSpan="4" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                                    <TableCell colSpan="5" align="center">{t("usuarios.no-datos")}</TableCell>
                                                                 </TableRow>
                                                             </TableBody>
                                                         )
@@ -626,6 +732,74 @@ class Territorios extends Component{
                                     }
                                 </Grid>
                             </Grid>
+
+                            <Dialog open={this.state.isEditing} onClose={this.toggleEditor} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+                                <DialogTitle>{t("territorios.label-editar")}</DialogTitle>
+                                <DialogContent>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} md={4}>
+                                            <Typography variant="body1">{t("territorios.nombre")}</Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                name="nombre"
+                                                value={this.state.editingForm.nombre}
+                                                onChange={this.handleEdicionChange}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <Typography variant="body1" className="mb-3">{t("territorios.lista-padre")}</Typography>
+                                            <Select
+                                                value={this.state.editingForm.padre}
+                                                onChange={this.handleEdicionChange}
+                                                variant="filled"
+                                                input={<OutlinedInput fullWidth required name="padre"/>}
+                                            >
+                                                {
+                                                    this.state.territoriosActuales.map((territorio, i) => {
+                                                        return (
+                                                            <MenuItem key={i} value={territorio.nombre}>{territorio.nombre}</MenuItem>
+                                                        );
+                                                    })
+                                                }
+                                            </Select>
+                                        </Grid>
+                                        <Grid item xs={12} md={4}>
+                                            <Typography variant="body1">{t("territorios.lista-fecha-creacion")}</Typography>
+                                            <TextField
+                                                type="date"
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                name="fechaCreacion"
+                                                value={this.state.editingForm.fechaCreacion}
+                                                onChange={this.handleEdicionChange}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.saveUpdatedUser}>{t("usuarios.btn-guardar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Dialog open={this.state.isDeleting} onClose={this.toggleDeleting} aria-labelledby="form-dialog-title">
+                                <DialogTitle>{t("territorios.label-desactivar")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        <strong>{t("territorios.ayuda-borrar-0")}</strong>
+                                        <br/>
+                                        {t("territorios.ayuda-borrar-1")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.confirmUserDeletion}>{t("usuarios.btn-borrar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
                         </React.Fragment>
                     )
                 }

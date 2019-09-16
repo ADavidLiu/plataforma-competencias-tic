@@ -391,6 +391,10 @@ const es = {
         "territorios.lista-padre": "Territorio padre",
         "territorios.lista-fecha-creacion": "Fecha de creación",
         "territorios.lista-acciones": "Acciones",
+        "territorios.label-editar": "Editar división territorial",
+        "territorios.label-desactivar": "Desactivar división territorial",
+        "territorios.ayuda-borrar-0": "¿Está seguro de que desea desactivar este territorio?",
+        "territorios.ayuda-borrar-1": "Todas las Instituciones, Establecimientos y Docentes que estén asociados a éste también serán desactivados.",
     }
 }
 

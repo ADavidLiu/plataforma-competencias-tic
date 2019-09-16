@@ -100,10 +100,6 @@ class ListaUsuarios extends Component {
             municipios: []
         };
     }
-
-    /* static getDerivedStateFromProps = (props, state) => {
-        
-    } */
     
     componentDidMount = () => {
         /* Simulando el delay al traer la información del backend */
@@ -154,7 +150,7 @@ class ListaUsuarios extends Component {
         const encontrado = this.state.usuarios.find(usuario => usuario.idNacional === id);
         
         switch (this.props.userType) {
-            case "GOBIENRO":
+            case "GOBIERNO":
                 const codigoPais = encontrado.pais.split("-")[0];
 
                 const states = locationData.getStatesByShort(codigoPais);
