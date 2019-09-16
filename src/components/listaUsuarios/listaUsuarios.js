@@ -16,6 +16,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from '@material-ui/core/TablePagination';
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -37,6 +38,11 @@ class ListaUsuarios extends Component {
         super(props);
         
         this.formularioPlaceholder = {};
+        this.headCells = {
+            gobierno: ["usuarios.registro-idNacional", "usuarios.registro-nombre-ie", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.acciones"],
+            institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
+            establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.acciones"],
+        };
         switch (props.userType) {
             case "GOBIERNO":
                 this.formularioPlaceholder = {
@@ -49,6 +55,7 @@ class ListaUsuarios extends Component {
                 break;
             case "INSTITUCION":
                 this.formularioPlaceholder = {
+                    idNacional: "",
                     nombre: "",
                     pais: "",
                     departamento: "",
@@ -59,8 +66,7 @@ class ListaUsuarios extends Component {
                     regimen: "",
                     telefono: "",
                     emailInstitucional: "",
-                    sitioWeb: "",
-                    idNacional: ""
+                    sitioWeb: ""
                 };
                 break;
             case "ESTABLECIMIENTO":
@@ -74,12 +80,17 @@ class ListaUsuarios extends Component {
                 break;
         }
 
-		this.state = {
-            isLoading: true,
-            isEditing: false,
-            isDeleting: false,
-            activeID: "",
-            usuarios: [
+        this.mockData = {
+            instituciones: [
+                {
+                    idNacional: "09876",
+                    nombre: "Institución Jane Doe",
+                    pais: "CO-Colombia",
+                    departamento: "Quindio",
+                    municipio: "Armenia"
+                }
+            ],
+            establecimientos: [
                 {
                     idNacional: "1234567890",
                     nombre: "Colegio John Doe",
@@ -95,10 +106,42 @@ class ListaUsuarios extends Component {
                     sitioWeb: "johndoe.edu.co"
                 }
             ],
+            docentes: [
+                {
+                    idNacional: "567890123",
+                    nombreCompleto: "John Doe",
+                    idEstablecimiento: "0981237654"
+                }
+            ]
+        }
+
+		this.state = {
+            isLoading: true,
+            isEditing: false,
+            isDeleting: false,
+            activeID: "",
+            activeCategory: "",
+            usuarios: {...this.mockData},
             editingForm: this.formularioPlaceholder,
             departamentos: [],
-            municipios: []
+            municipios: [],
+            elementosMostrados: {...this.mockData},
+            rowsPerPage: 10,
+            page: 0
         };
+    }
+
+    handleChangeRowsPerPage = e => {
+        this.setState({
+            rowsPerPage: e.target.value,
+            page: 0
+        });
+    }
+
+    handleChangePage = (e, newPage) => {
+        this.setState({
+            page: newPage
+        });
     }
     
     componentDidMount = () => {
@@ -130,11 +173,14 @@ class ListaUsuarios extends Component {
         /* Conectarse al backend para hacer los cambios */
 
         /* Luego, eliminarlo visualmente de la interfaz */
-        let newUsuarios = [...this.state.usuarios];
+        let newUsuarios = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
         newUsuarios = newUsuarios.filter(usuario => usuario.idNacional !== this.state.activeID);
 
         this.setState({
-            usuarios: newUsuarios
+            usuarios: {
+                ...this.state.usuarios,
+                [this.props.tipoUsuariosMostrados]: newUsuarios
+            }
         });
     }
 
@@ -147,7 +193,7 @@ class ListaUsuarios extends Component {
     editUser = id => {
         this.toggleEditor();
 
-        const encontrado = this.state.usuarios.find(usuario => usuario.idNacional === id);
+        const encontrado = this.state.usuarios[this.props.tipoUsuariosMostrados].find(usuario => usuario.idNacional === id);
         
         switch (this.props.userType) {
             case "GOBIERNO":
@@ -225,14 +271,21 @@ class ListaUsuarios extends Component {
     saveUpdatedUser = () => {
         this.toggleEditor();
 
-        const updatedUsers = [...this.state.usuarios];
+        const updatedUsers = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
         let updatedUser = updatedUsers.find(user => user.idNacional === this.state.activeID);
-        const updatedUserIndex = updatedUsers.findIndex(user => user.idNacional === this.state.activeID);
+        const updatedUserIndex = updatedUsers.indexOf(updatedUser);
         updatedUser = this.state.editingForm;
         updatedUsers[updatedUserIndex] = updatedUser;
 
         this.setState({
-            usuarios: updatedUsers
+            usuarios: {
+                ...this.state.usuarios,
+                [this.props.tipoUsuariosMostrados]: updatedUsers
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                [this.props.tipoUsuariosMostrados]: updatedUsers
+            }
         });
     }
 
@@ -310,33 +363,35 @@ class ListaUsuarios extends Component {
                                     <Table className="scrolling-table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell>{t("usuarios.registro-idNacional")}</TableCell>
-                                                <TableCell>{t("usuarios.registro-nombre-ie")}</TableCell>
-                                                <TableCell>{t("usuarios.registro-pais")}</TableCell>
-                                                <TableCell>{t("usuarios.registro-departamento")}</TableCell>
-                                                <TableCell>{t("usuarios.registro-municipio")}</TableCell>
-                                                <TableCell>{t("usuarios.acciones")}</TableCell>
+                                                {
+                                                    this.headCells.gobierno.map((title, i) => <TableCell key={i}>{t(title)}</TableCell>)
+                                                }
                                             </TableRow>
                                         </TableHead>
                                         {
-                                            this.state.usuarios.length > 0 ? (
+                                            this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
                                                 <TableBody>
                                                     {
-                                                        this.state.usuarios.map(usuario => {
+                                                        this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                            const values = Object.values(elemento);
                                                             return (
-                                                                <TableRow key={usuario.idNacional}>
-                                                                    <TableCell>{usuario.idNacional}</TableCell>
-                                                                    <TableCell>{usuario.nombre}</TableCell>
-                                                                    <TableCell>{usuario.pais.split("-")[1]}</TableCell>
-                                                                    <TableCell>{usuario.departamento}</TableCell>
-                                                                    <TableCell>{usuario.municipio}</TableCell>
+                                                                <TableRow key={i}>
+                                                                    {
+                                                                        values.map((val, j) => {
+                                                                            if (val.includes("-")) {
+                                                                                return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                            } else {
+                                                                                return <TableCell key={j}>{val}</TableCell>;
+                                                                            }
+                                                                        })
+                                                                    }
                                                                     <TableCell>
-                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                         <Link to={{
                                                                             pathname: "/dashboard-institucion",
                                                                             state: {
-                                                                                institucionID: usuario.idNacional
+                                                                                institucionID: elemento.idNacional
                                                                             }
                                                                         }} style={{textDecoration: "none"}}>
                                                                             <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -356,6 +411,19 @@ class ListaUsuarios extends Component {
                                             )
                                         }
                                     </Table>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={t("filasPorPagina")}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
                                 </div>
                             </Paper>
                         )
@@ -451,45 +519,35 @@ class ListaUsuarios extends Component {
                                         <Table className="scrolling-table">
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell>{t("usuarios.registro-ee-id")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-nombre")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-departamento")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-direccion")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-tipo-ubicacion")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-nombre-ubicacion")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-zona")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-regimen")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-telefono")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-email")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-ee-web")}</TableCell>
-                                                    <TableCell>{t("usuarios.acciones")}</TableCell>
+                                                    {
+                                                        this.headCells.institucion.map((title, i) => <TableCell key={i}>{t(title)}</TableCell>)
+                                                    }
                                                 </TableRow>
                                             </TableHead>
                                             {
-                                                this.state.usuarios.length > 0 ? (
+                                                this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
                                                     <TableBody>
                                                         {
-                                                            this.state.usuarios.map(usuario => {
+                                                            this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                const values = Object.values(elemento);
                                                                 return (
-                                                                    <TableRow key={usuario.idNacional}>
-                                                                        <TableCell>{usuario.idNacional}</TableCell>
-                                                                        <TableCell>{usuario.nombre}</TableCell>
-                                                                        <TableCell>{usuario.departamento}</TableCell>
-                                                                        <TableCell>{usuario.direccion}</TableCell>
-                                                                        <TableCell>{usuario.tipoUbicacion}</TableCell>
-                                                                        <TableCell>{usuario.nombreUbicacion}</TableCell>
-                                                                        <TableCell>{usuario.zona}</TableCell>
-                                                                        <TableCell>{usuario.regimen}</TableCell>
-                                                                        <TableCell><a href={"tel:" + usuario.telefono} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.telefono}</a></TableCell>
-                                                                        <TableCell><a href={"mailto:" + usuario.emailInstitucional} style={{textDecoration: "none", color: "rgba(0,0,0,0.87)"}}>{usuario.emailInstitucional}</a></TableCell>
-                                                                        <TableCell><a href={"https://" + usuario.sitioWeb} style={{textDecoration: "none", color:"rgba(0,0,0,0.87)"}}>{usuario.sitioWeb}</a></TableCell>
+                                                                    <TableRow key={i}>
+                                                                        {
+                                                                            values.map((val, j) => {
+                                                                                if (val.includes("-")) {
+                                                                                    return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                } else {
+                                                                                    return <TableCell key={j}>{val}</TableCell>;
+                                                                                }
+                                                                            })
+                                                                        }
                                                                         <TableCell>
-                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                             <Link to={{
-                                                                                pathname: "/dashboard-docente",
+                                                                                pathname: "/dashboard-institucion",
                                                                                 state: {
-                                                                                    docenteID: usuario.idNacional
+                                                                                    institucionID: elemento.idNacional
                                                                                 }
                                                                             }} style={{textDecoration: "none"}}>
                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -509,6 +567,19 @@ class ListaUsuarios extends Component {
                                                 )
                                             }
                                         </Table>
+                                        <TablePagination
+                                            labelDisplayedRows={({from, to, count}) => {
+                                                return `${from}-${to} / ${count}`;
+                                            }}
+                                            labelRowsPerPage={t("filasPorPagina")}
+                                            rowsPerPageOptions={[10, 25, 100]}
+                                            component="div"
+                                            count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                            rowsPerPage={this.state.rowsPerPage}
+                                            page={this.state.page}
+                                            onChangePage={this.handleChangePage}
+                                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                        />
                                     </div>
                                 </Paper>
                             )
@@ -673,29 +744,29 @@ class ListaUsuarios extends Component {
                                         <Table className="scrolling-table">
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell>{t("usuarios.registro-idNacional")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-nombre-docente")}</TableCell>
-                                                    <TableCell>{t("usuarios.registro-idEstablecimiento")}</TableCell>
-                                                    <TableCell>{t("usuarios.acciones")}</TableCell>
+                                                    {
+                                                        this.headCells.establecimiento.map((title, i) => <TableCell key={i}>{t(title)}</TableCell>)
+                                                    }
                                                 </TableRow>
                                             </TableHead>
                                             {
-                                                this.state.usuarios.length > 0 ? (
+                                                this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
                                                     <TableBody>
                                                         {
-                                                            this.state.usuarios.map(usuario => {
+                                                            this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                const values = Object.values(elemento);
                                                                 return (
-                                                                    <TableRow key={usuario.idNacional}>
-                                                                        <TableCell>{usuario.idNacional}</TableCell>
-                                                                        <TableCell>{usuario.nombreCompleto}</TableCell>
-                                                                        <TableCell>{usuario.idEstablecimiento}</TableCell>
+                                                                    <TableRow key={i}>
+                                                                        {
+                                                                            values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                        }
                                                                         <TableCell>
-                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(usuario.idNacional); }}/>
-                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(usuario.idNacional); }}/>
+                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                             <Link to={{
                                                                                 pathname: "/dashboard-docente",
                                                                                 state: {
-                                                                                    docenteID: usuario.idNacional
+                                                                                    docenteID: elemento.idNacional
                                                                                 }
                                                                             }} style={{textDecoration: "none"}}>
                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -715,6 +786,19 @@ class ListaUsuarios extends Component {
                                                 )
                                             }
                                         </Table>
+                                        <TablePagination
+                                            labelDisplayedRows={({from, to, count}) => {
+                                                return `${from}-${to} / ${count}`;
+                                            }}
+                                            labelRowsPerPage={t("filasPorPagina")}
+                                            rowsPerPageOptions={[10, 25, 100]}
+                                            component="div"
+                                            count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                            rowsPerPage={this.state.rowsPerPage}
+                                            page={this.state.page}
+                                            onChangePage={this.handleChangePage}
+                                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                        />
                                     </div>
                                 </Paper>
                             )

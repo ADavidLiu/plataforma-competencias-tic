@@ -168,7 +168,7 @@ class Usuarios extends Component {
                 divisionMostrada = (
                     <Grid container spacing={5}>
                         <Grid item xs={12}>
-                            <ListaUsuarios userType={this.props.userType} />
+                            <ListaUsuarios tipoUsuariosMostrados="instituciones" userType={this.props.userType} />
                         </Grid>
                     </Grid>
                 );
@@ -179,9 +179,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios userType="INSTITUCION" />
+                                    <ListaUsuarios tipoUsuariosMostrados="establecimientos" userType="INSTITUCION" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios tipoUsuariosMostrados="docentes" userType="ESTABLECIMIENTO" />
                                 ) : ""
                             }
                         </Grid>
@@ -194,9 +194,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios tipoUsuariosMostrados="docentes" userType="ESTABLECIMIENTO" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios userType="DOCENTE" />
+                                    <ListaUsuarios tipoUsuariosMostrados="none" userType="DOCENTE" />
                                 ) : ""
                             }
                         </Grid>
