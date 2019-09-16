@@ -57,6 +57,11 @@ class Usuarios extends Component {
         
         let tabs;
         let tituloPagina = "";
+        let tipoUsuariosMostrados = {
+            0: "",
+            1: "",
+            2: ""
+        };
         switch (this.props.userType) {
             case "SUPERADMIN":
             case "ADMIN":
@@ -85,6 +90,11 @@ class Usuarios extends Component {
                 break;
             case "GOBIERNO":
                 tituloPagina = <Translation>{ t => t("instituciones") }</Translation>;
+                tipoUsuariosMostrados = {
+                    0: "instituciones",
+                    1: "establecimientos",
+                    2: "docentes"
+                };
                 tabs = (
                     <Translation>
                         {
@@ -108,6 +118,10 @@ class Usuarios extends Component {
                 break;
             case "INSTITUCION":
                 tituloPagina = <Translation>{ t => t("establecimientos") }</Translation>;
+                tipoUsuariosMostrados = {
+                    0: "establecimientos",
+                    1: "docentes"
+                };
                 tabs = (
                     <Translation>
                         {
@@ -130,6 +144,9 @@ class Usuarios extends Component {
                 break;
             case "ESTABLECIMIENTO":
                 tituloPagina = <Translation>{ t => t("docentes") }</Translation>;
+                tipoUsuariosMostrados = {
+                    0: "docentes"
+                };
                 tabs = (
                     <Translation>
                         {
@@ -168,7 +185,7 @@ class Usuarios extends Component {
                 divisionMostrada = (
                     <Grid container spacing={5}>
                         <Grid item xs={12}>
-                            <ListaUsuarios tipoUsuariosMostrados="instituciones" userType={this.props.userType} />
+                            <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[0]} userType={this.props.userType} />
                         </Grid>
                     </Grid>
                 );
@@ -179,9 +196,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados="establecimientos" userType="INSTITUCION" />
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="INSTITUCION" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados="docentes" userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ESTABLECIMIENTO" />
                                 ) : ""
                             }
                         </Grid>
@@ -194,9 +211,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados="docentes" userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ESTABLECIMIENTO" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados="none" userType="DOCENTE" />
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="DOCENTE" />
                                 ) : ""
                             }
                         </Grid>

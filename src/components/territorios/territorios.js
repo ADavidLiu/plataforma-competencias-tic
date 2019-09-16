@@ -624,73 +624,75 @@ class Territorios extends Component{
                                         </div>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Paper className="scrolling-table-outer">
-                                            <div className="scrolling-table-wrapper">
-                                                <Table className="scrolling-table">
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell>{t("ID")}</TableCell>
-                                                            <TableCell>{t("nombre")}</TableCell>
-                                                            <TableCell>{t("territorios.lista-padre")}</TableCell>
-                                                            <TableCell>{t("territorios.lista-fecha-creacion")}</TableCell>
-                                                            <TableCell>{t("territorios.lista-acciones")}</TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    {
-                                                        this.state.territoriosActuales.length > 0 ? (
-                                                            <TableBody>
-                                                                {
-                                                                    this.state.isFiltering ? (
-                                                                        <TableRow>
-                                                                            <TableCell colSpan={5}>
-                                                                                <CircularProgress color="primary" className="d-block mx-auto"/>
-                                                                            </TableCell>
-                                                                        </TableRow>
-                                                                    ) : (
-                                                                        this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                            const values = Object.values(elemento);
-                                                                            return (
-                                                                                <TableRow key={i}>
-                                                                                    {
-                                                                                        values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                                    }
-                                                                                    <TableCell>
-                                                                                        <EditOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                            this.editarTerritorio(elemento.id);
-                                                                                        }}/>
-                                                                                        <DeleteOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                            this.eliminarTerritorio(elemento.id);
-                                                                                        }} className="ml-3"/>
-                                                                                    </TableCell>
-                                                                                </TableRow>
-                                                                            );
-                                                                        })
-                                                                    )
-                                                                }
-                                                            </TableBody>
-                                                        ) : (
-                                                            <TableBody>
-                                                                <TableRow>
-                                                                    <TableCell colSpan="5" align="center">{t("usuarios.no-datos")}</TableCell>
-                                                                </TableRow>
-                                                            </TableBody>
-                                                        )
-                                                    }
-                                                </Table>
-                                                <TablePagination
-                                                    labelDisplayedRows={({from, to, count}) => {
-                                                        return `${from}-${to} / ${count}`;
-                                                    }}
-                                                    labelRowsPerPage={t("filasPorPagina")}
-                                                    rowsPerPageOptions={[10, 25, 100]}
-                                                    component="div"
-                                                    count={this.state.elementosMostrados.length}
-                                                    rowsPerPage={this.state.rowsPerPage}
-                                                    page={this.state.page}
-                                                    onChangePage={this.handleChangePage}
-                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                                />
+                                        <Paper>
+                                            <div className="scrolling-table-outer">
+                                                <div className="scrolling-table-wrapper">
+                                                    <Table className="scrolling-table">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>{t("ID")}</TableCell>
+                                                                <TableCell>{t("nombre")}</TableCell>
+                                                                <TableCell>{t("territorios.lista-padre")}</TableCell>
+                                                                <TableCell>{t("territorios.lista-fecha-creacion")}</TableCell>
+                                                                <TableCell>{t("territorios.lista-acciones")}</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        {
+                                                            this.state.territoriosActuales.length > 0 ? (
+                                                                <TableBody>
+                                                                    {
+                                                                        this.state.isFiltering ? (
+                                                                            <TableRow>
+                                                                                <TableCell colSpan={5}>
+                                                                                    <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                                </TableCell>
+                                                                            </TableRow>
+                                                                        ) : (
+                                                                            this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                const values = Object.values(elemento);
+                                                                                return (
+                                                                                    <TableRow key={i}>
+                                                                                        {
+                                                                                            values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                                        }
+                                                                                        <TableCell>
+                                                                                            <EditOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
+                                                                                                this.editarTerritorio(elemento.id);
+                                                                                            }}/>
+                                                                                            <DeleteOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
+                                                                                                this.eliminarTerritorio(elemento.id);
+                                                                                            }} className="ml-3"/>
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })
+                                                                        )
+                                                                    }
+                                                                </TableBody>
+                                                            ) : (
+                                                                <TableBody>
+                                                                    <TableRow>
+                                                                        <TableCell colSpan="5" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                                    </TableRow>
+                                                                </TableBody>
+                                                            )
+                                                        }
+                                                    </Table>
+                                                </div>
                                             </div>
+                                            <TablePagination
+                                                labelDisplayedRows={({from, to, count}) => {
+                                                    return `${from}-${to} / ${count}`;
+                                                }}
+                                                labelRowsPerPage={t("filasPorPagina")}
+                                                rowsPerPageOptions={[10, 25, 100]}
+                                                component="div"
+                                                count={this.state.elementosMostrados.length}
+                                                rowsPerPage={this.state.rowsPerPage}
+                                                page={this.state.page}
+                                                onChangePage={this.handleChangePage}
+                                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                            />
                                         </Paper>
                                     </Grid>
                                 </Grid>
