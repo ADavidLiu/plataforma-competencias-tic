@@ -17,10 +17,14 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import Chip from "@material-ui/core/Chip";
+
 import Avatar from '@material-ui/core/Avatar';
 import Today from "@material-ui/icons/Today";
+import Event from "@material-ui/icons/Event";
 import Launch from "@material-ui/icons/Launch";
 import Build from "@material-ui/icons/Build";
+import Done from "@material-ui/icons/Done";
 
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
@@ -163,6 +167,12 @@ class Procesos extends Component {
         }
     }
 
+    componentDidMount = () => {
+        this.setState({
+            elementosMostrados: this.state.procesos
+        });
+    }
+
     handleTabChange = (e, newTabIndex, index) => {
         const copiaProcesos = [...this.state.procesos];
         copiaProcesos[index].currentTab = newTabIndex;
@@ -224,21 +234,18 @@ class Procesos extends Component {
                             <Helmet>
                                 <title>{`${t("procesos.titulo")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} className="mb-4">
                                 <Typography variant="h5">
                                     {t("procesos.titulo")}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
-                                <Grid container alignItems="flex-end">
-                                    <Grid item xs={12} md={4} lg={3}>
-                                        <Typography variant="body1">
-                                            <strong>{t("procesos.total")} {this.state.procesos.length}</strong>
-                                        </Typography>
+                                <Grid container spacing={5} alignItems="center">
+                                    <Grid item xs={12} md={6} className="py-0">
+                                        <Chip color="primary" label={`${t("procesos.total")} ${this.state.procesos.length}`} avatar={<Avatar><Done /></Avatar>} variant="outlined" />
                                     </Grid>
-                                    <Grid item xs={12} md={8} lg={9} className="d-flex align-items-center justify-content-md-end mt-4 mt-md-0">
-                                        <FormControl>
-                                            <Typography variant="body2" className="mb-2"><strong>{t("filtros.categoria")}</strong></Typography>
+                                    <Grid item xs={12} md={6} className="d-flex align-items-center justify-content-between">
+                                        <FormControl className="w-50">
                                             <Select
                                                 value={this.state.filtros.categoria}
                                                 onChange={this.handleFiltroChange}
@@ -248,8 +255,7 @@ class Procesos extends Component {
                                                 <MenuItem value="version">{t("filtros.version")}</MenuItem>
                                             </Select>
                                         </FormControl>
-                                        <FormControl className="ml-3">
-                                            <Typography variant="body2" className="mb-2"><strong>{t("filtros.orden")}</strong></Typography>
+                                        <FormControl className="ml-3 w-50">
                                             <Select
                                                 value={this.state.filtros.orden}
                                                 onChange={this.handleFiltroChange}
@@ -274,7 +280,7 @@ class Procesos extends Component {
                                                     <Avatar className="mr-3" style={{backgroundColor: "#3f51b5"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
                                                     <div className="d-md-flex align-items-center">
                                                         <Typography className="d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-inicio")}</strong>&nbsp;{proceso.fechaInicio}</Typography>
-                                                        <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-final")}</strong>&nbsp;{proceso.fechaFinal}</Typography>
+                                                        <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Event className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-final")}</strong>&nbsp;{proceso.fechaFinal}</Typography>
                                                         <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Build className="mr-2" fontSize="small" /><strong>{t("procesos.version")}</strong>&nbsp;{proceso.version}</Typography>
                                                     </div>
                                                 </div>

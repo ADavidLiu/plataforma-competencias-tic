@@ -852,11 +852,12 @@ class ListaUsuarios extends Component {
                                                             ) : (
                                                                 this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                     const values = Object.values(elemento);
+                                                                    const keys = Object.keys(elemento);
                                                                     return (
                                                                         <TableRow key={i}>
                                                                             {
                                                                                 values.map((val, j) => {
-                                                                                    if (val.includes("-")) {
+                                                                                    if (keys[j] === "pais") {
                                                                                         return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                     } else {
                                                                                         return <TableCell key={j}>{val}</TableCell>;
@@ -1018,11 +1019,12 @@ class ListaUsuarios extends Component {
                                                                 ) : (
                                                                     this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                         const values = Object.values(elemento);
+                                                                        const keys = Object.keys(elemento);
                                                                         return (
                                                                             <TableRow key={i}>
                                                                                 {
                                                                                     values.map((val, j) => {
-                                                                                        if (val.includes("-")) {
+                                                                                        if (keys[j] === "pais") {
                                                                                             return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                         } else {
                                                                                             return <TableCell key={j}>{val}</TableCell>;
@@ -1246,7 +1248,7 @@ class ListaUsuarios extends Component {
                                                             {
                                                                 this.state.isFiltering ? (
                                                                     <TableRow>
-                                                                        <TableCell colSpan={this.headCells[this.props.userType].length}>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
                                                                             <CircularProgress color="primary" className="d-block mx-auto"/>
                                                                         </TableCell>
                                                                     </TableRow>

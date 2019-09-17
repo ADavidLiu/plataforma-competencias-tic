@@ -21,6 +21,7 @@ import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 import Layers from "@material-ui/icons/Layers";
+import Assignment from "@material-ui/icons/Assignment";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -48,20 +49,20 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        /* this.state = {
+        this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "GOBIERNO",
+            tipo: "DOCENTE",
             id: "loremipsum"
-        } */
+        }
 
         /* Pruebas de integración con backend */
-        this.state = {
+        /* this.state = {
             isLogeado: false,
             locale: "es",
             tipo: "",
             id: ""
-        }
+        } */
 
         /* Conectarse al backend para obtener los datos personales del usuario, IE o EE */
         this.datosPerfil = {};
@@ -168,6 +169,19 @@ class LoginCheck extends Component {
                                                         </IconButton>
                                                     </Link>
                                                 </Tooltip>
+                                                {
+                                                    this.state.tipo === "DOCENTE" ? (
+                                                        <Tooltip title={t("procesos.titulo-alt")}>
+                                                            <Link to="/procesos">
+                                                                <IconButton style={{
+                                                                    color: "#ffffff"
+                                                                }}>
+                                                                    <Assignment/>
+                                                                </IconButton>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    ) : ""
+                                                }
                                                 {
                                                     this.state.tipo === "GOBIERNO" ? (
                                                         <Tooltip title={t("territorios.titulo")} placement="bottom">
