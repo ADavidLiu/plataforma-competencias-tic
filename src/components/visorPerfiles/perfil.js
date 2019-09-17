@@ -116,6 +116,39 @@ function Perfil(props) {
             );
             break;
         case "INSTITUCIONES":
+            perfilMostrado = (
+                <Translation>
+                    {
+                        t => (
+                            <Grid container alignItems="center">
+                                <Grid item xs={6}>
+                                    <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
+                                    <Typography variant="body2">{t("perfil.num-sedes")} {perfil.numSedes}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-docentes")} {perfil.numDocentes}</Typography>
+                                </Grid>
+                                <Grid item xs={6} className="text-right">
+                                    <Link to={{
+                                        pathname: "/dashboard-ie",
+                                        state: {
+                                            institucionID: userID
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            variant="outlined"
+                                            color="default"
+                                            size="medium"
+                                        >{t("perfil.ver-detalles")}</Button>
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <hr/>
+                                </Grid>
+                            </Grid>
+                        )
+                    }
+                </Translation>
+            );
             break;
         case "GOBIERNOS":
             break;

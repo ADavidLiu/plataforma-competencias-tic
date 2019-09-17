@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
-import DashboardDocente from "./dashboardDocente";
-import DashboardEstablecimientoEducativo from "./dashboardEstablecimientoEducativo";
 import DashboardGobierno from "./dashboardGobierno";
+import DashboardInstitucionEducativa from "./dashboardInstitucionEducativa";
+import DashboardEstablecimientoEducativo from "./dashboardEstablecimientoEducativo";
+import DashboardDocente from "./dashboardDocente";
 import DashboardEvaluador from "./dashboardEvaluador";
 
 class Dashboard extends Component {
@@ -19,8 +20,8 @@ class Dashboard extends Component {
             case "DOCENTE":
                 this.dashboard = <DashboardDocente userProfile={this.props.userProfile} />;
                 break;
-            case "INSTITUCIÓN":
-                
+            case "INSTITUCION":
+                this.dashboard = <DashboardInstitucionEducativa userProfile={this.props.userProfile}/>
                 break;
             case "ESTABLECIMIENTO":
                 this.dashboard = <DashboardEstablecimientoEducativo userProfile={this.props.userProfile} />;

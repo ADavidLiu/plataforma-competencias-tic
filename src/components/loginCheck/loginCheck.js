@@ -27,9 +27,10 @@ import Registro from "../registro/registro";
 import Login from "../login/login";
 import Prueba from "../prueba/prueba";
 import Dashboard from "../dashboard/dashboard";
-import DashboardDocente from "../dashboard/dashboardDocente";
-import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
 import DashboardGobierno from "../dashboard/dashboardGobierno";
+import DashboardInstitucionEducativa from "../dashboard/dashboardInstitucionEducativa";
+import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
+import DashboardDocente from "../dashboard/dashboardDocente";
 import Practica from "../practica/practica";
 import Preentrevista from "../preentrevista/preentrevista";
 import Entrevista from "../entrevista/entrevista";
@@ -52,7 +53,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "DOCENTE",
+            tipo: "INSTITUCION",
             id: "loremipsum"
         }
 
@@ -250,6 +251,7 @@ class LoginCheck extends Component {
                                                 <Switch>
                                                     <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                     <Route path="/dashboard-docente/" component={DashboardDocente} />
+                                                    <Route path="/dashboard-ie/" component={DashboardInstitucionEducativa} />
                                                     <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
                                                     <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
                                                     <Route path="/prueba/" render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
@@ -18,7 +18,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import cursos from "../../models/cursos";
-import { docentesCargados, establecimientosCargados } from "../../models/perfiles";
+import { docentesCargados, institucionesCargadas } from "../../models/perfiles";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
@@ -39,7 +39,7 @@ class DashboardGobierno extends Component {
             didDocentesLoad: false,
             didEstablecimientosLoad: false,
             docentesSubdivision: [],
-            establecimientosSubdivision: [],
+            institucionesSubdivision: [],
             isLoading: true
         }
 
@@ -331,7 +331,7 @@ class DashboardGobierno extends Component {
             didDocentesLoad: true,
             docentesSubdivision: [...docentesCargados],
             didEstablecimientosLoad: true,
-            establecimientosSubdivision: [...establecimientosCargados]
+            institucionesSubdivision: [...institucionesCargadas]
         });
 
         this.cargarDatosDivision(0);
@@ -521,7 +521,7 @@ class DashboardGobierno extends Component {
                                             <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-absoluta")}</strong></Typography>
                                             <Bar 
                                                 data={{
-                                                    labels: ["Estado de descriptores"],
+                                                    labels: [t("dashboardGobierno.descriptores")],
                                                     datasets: [
                                                         {
                                                             label: `${t("incipiente")}`,
@@ -662,7 +662,7 @@ class DashboardGobierno extends Component {
                                                 <hr className="mb-3" />
                                                 {
                                                     this.state.didEstablecimientosLoad ? (
-                                                        <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={this.state.establecimientosSubdivision} />
+                                                        <VisorPerfiles tipo="INSTITUCIONES" numPorPagina={6} perfiles={this.state.institucionesSubdivision} />
                                                     ) : (
                                                         <CircularProgress color="primary" />
                                                     )

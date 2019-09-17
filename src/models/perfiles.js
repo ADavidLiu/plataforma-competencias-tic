@@ -135,3 +135,41 @@ export const establecimientosCargados = [
         numDocentes: 5
     }
 ];
+
+export const institucionesCargadas = [
+    {
+        perfilID: "institucion-1",
+        nombre: "Incididunt do irure incididunt",
+        imgSrc: "",
+        numDocentes: 1482,
+        numSedes: 5
+    },
+    {
+        perfilID: "institucion-2",
+        nombre: "Eiusmod cupidatat",
+        imgSrc: "",
+        numDocentes: 95,
+        numSedes: 2
+    },
+    {
+        perfilID: "institucion-3",
+        nombre: "Labore do amet excepteur",
+        imgSrc: "",
+        numDocentes: 49,
+        numSedes: 1
+    },
+    {
+        perfilID: "institucion-4",
+        nombre: "Excepteur magna pariatur excepteur",
+        imgSrc: "",
+        numDocentes: 467,
+        numSedes: 3
+    },
+    {
+        perfilID: "institucion-5",
+        nombre: "Aliquip dolor nisi officia fugiat",
+        imgSrc: "",
+        numDocentes: 935,
+        numSedes: 4
+    },
+];
