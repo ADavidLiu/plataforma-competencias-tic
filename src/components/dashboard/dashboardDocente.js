@@ -13,6 +13,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from "@material-ui/core/Paper";
 
 import { Bar, Radar } from "react-chartjs-2";
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
@@ -371,23 +372,27 @@ class DashboardDocente extends Component {
                         <Grid container spacing={4} justify="center">
                             <Grid item xs={12}>
                                 <Typography variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
-                                <Stepper activeStep={this.state.pasoActual} alternativeLabel className="my-4">
-                                    <Step key="Registro">
-                                        <StepLabel>{this.pasosNames[0]}</StepLabel>
-                                    </Step>
-                                    <Step key="Prueba de conocimiento">
-                                        <StepLabel>{this.pasosNames[1]}</StepLabel>
-                                    </Step>
-                                    <Step key="Práctica educativa">
-                                        <StepLabel>{this.pasosNames[2]}</StepLabel>
-                                    </Step>
-                                    <Step key="Preentrevista">
-                                        <StepLabel>{this.pasosNames[3]}</StepLabel>
-                                    </Step>
-                                    <Step key="Entrevista">
-                                        <StepLabel>{this.pasosNames[4]}</StepLabel>
-                                    </Step>
-                                </Stepper>
+                                <Paper className="my-4" style={{
+                                    overflow: "hidden"
+                                }}>
+                                    <Stepper activeStep={this.state.pasoActual} alternativeLabel>
+                                        <Step key="Registro">
+                                            <StepLabel>{this.pasosNames[0]}</StepLabel>
+                                        </Step>
+                                        <Step key="Prueba de conocimiento">
+                                            <StepLabel>{this.pasosNames[1]}</StepLabel>
+                                        </Step>
+                                        <Step key="Práctica educativa">
+                                            <StepLabel>{this.pasosNames[2]}</StepLabel>
+                                        </Step>
+                                        <Step key="Preentrevista">
+                                            <StepLabel>{this.pasosNames[3]}</StepLabel>
+                                        </Step>
+                                        <Step key="Entrevista">
+                                            <StepLabel>{this.pasosNames[4]}</StepLabel>
+                                        </Step>
+                                    </Stepper>
+                                </Paper>
                                 {
                                     this.state.pasoActual < 5 ? 
                                         <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
@@ -542,8 +547,8 @@ class DashboardDocente extends Component {
                                     <Button
                                         type="submit"
                                         fullWidth
-                                        variant="contained"
-                                        color="default"
+                                        variant="outlined"
+                                        color="primary"
                                         className="mt-3"
                                         size="medium"
                                     >{t("dashboardDocente.btn-registro")}</Button>
@@ -557,8 +562,8 @@ class DashboardDocente extends Component {
                                     <Button
                                         type="submit"
                                         fullWidth
-                                        variant="contained"
-                                        color="default"
+                                        variant="outlined"
+                                        color="primary"
                                         className="mt-3"
                                         size="medium"
                                     >{t("dashboardDocente.btn-prueba")}</Button>
@@ -572,8 +577,8 @@ class DashboardDocente extends Component {
                                     <Button
                                         type="submit"
                                         fullWidth
-                                        variant="contained"
-                                        color="default"
+                                        variant="outlined"
+                                        color="primary"
                                         className="mt-3"
                                         size="medium"
                                     >{t("dashboardDocente.btn-practica")}</Button>
@@ -587,8 +592,8 @@ class DashboardDocente extends Component {
                                     <Button
                                         type="submit"
                                         fullWidth
-                                        variant="contained"
-                                        color="default"
+                                        variant="outlined"
+                                        color="primary"
                                         className="mt-3"
                                         size="medium"
                                     >{t("dashboardDocente.btn-preentrevista")}</Button>
@@ -602,8 +607,8 @@ class DashboardDocente extends Component {
                                     <Button
                                         type="submit"
                                         fullWidth
-                                        variant="contained"
-                                        color="default"
+                                        variant="outlined"
+                                        color="primary"
                                         className="mt-3"
                                         size="medium"
                                     >{t("dashboardDocente.btn-entrevista")}</Button>

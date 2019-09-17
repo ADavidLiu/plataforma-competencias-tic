@@ -3,6 +3,25 @@ body {
     overflow-x: hidden;
 }
 
+main {
+    position: relative;
+}
+
+main:before {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/images/bg.png");
+    background-repeat: no-repeat;
+    background-size: 70% auto;
+    background-position: center;
+    opacity: .05;
+}
+
 .MuiInputLabel-outlined.MuiInputLabel-shrink {
     background-color: #FAFAFA;
 }
@@ -104,5 +123,9 @@ body {
     .prueba-fab {
         right: 1.5rem;
         bottom: 1.5rem;
+    }
+
+    main:before {
+        background-size: 50% auto;
     }
 }
