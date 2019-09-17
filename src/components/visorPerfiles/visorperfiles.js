@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 
+import sortBy from "sort-by";
 import { Translation } from "react-i18next";
+
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+
+import Search from "@material-ui/icons/Search";
 
 import Perfil from "./perfil";
 
@@ -19,6 +27,56 @@ class VisorPerfiles extends Component {
             currentDivisionPerfiles: 0,
             hasPreviousPerfiles: false,
             hasNextPerfiles: false,
+            searchTerm: ""
+        }
+    }
+
+    handleSearch = e => {
+        const copiaElementos = [...this.state.territoriosActuales];
+        const searchTerm = e.target.value;
+
+        this.setState({
+            searchTerm: searchTerm
+        });
+
+        if (e.target.value === "" || e.target.value === null || e.target.value === undefined) {
+            this.setState({
+                elementosMostrados: copiaElementos
+            });
+        } else {
+            const rawValuesToSearchFrom = [];
+            const arraysValuesToSearchFrom = [];
+            let matchedArrays = [];
+
+            this.state.territoriosActuales.forEach(elem => {
+                Object.values(elem).forEach(val => {
+                    rawValuesToSearchFrom.push(val);
+                });
+            });
+
+            for (let i = 0; i < rawValuesToSearchFrom.length; i += 4) {
+                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 4));
+            }
+            arraysValuesToSearchFrom.forEach(array => {
+                array.forEach(val => {
+                    if (val.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
+                        matchedArrays.push(array);
+                    }
+                });
+            });
+
+            matchedArrays.sort(sortBy("-fechaCreacion"));
+            matchedArrays = [...new Set(matchedArrays)];
+
+            this.setState({
+                page: 0,
+                elementosMostrados: matchedArrays,
+                filtros: {
+                    categoria: "territorios.lista-fecha-creacion",
+                    categoriaFormatted: "fechaCreacion",
+                    orden: "descendente"
+                }
+            });
         }
     }
 
@@ -141,6 +199,21 @@ class VisorPerfiles extends Component {
                 {
                     t => (
                         <React.Fragment>
+                            <TextField
+                                className="mb-4"
+                                placeholder={t("buscar")}
+                                fullWidth
+                                variant="outlined"
+                                onChange={this.handleSearch}
+                                value={this.state.searchTerm}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="start">
+                                            <Search color="primary" />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
                             {this.state.perfilesMostrados
                                 ? this.state.perfilesMostrados.map(perfil => {
                                         return (
@@ -156,15 +229,24 @@ class VisorPerfiles extends Component {
                             <Grid container spacing={2}>
                                 <Grid item xs={4}>
                                     {this.state.perfiles.length > this.props.numPorPagina ? (
-                                        <Button
-                                            type="button"
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >
-                                            {t("visorPerfiles.todos")}
-                                        </Button>
+                                        <Link style={{
+                                            textDecoration: "none"
+                                        }} to={{
+                                            pathname: "/usuarios",
+                                            state: {
+                                                verCategoriaInicial: this.props.tipo
+                                            }
+                                        }}>
+                                            <Button
+                                                type="button"
+                                                variant="outlined"
+                                                color="primary"
+                                                className="mt-3"
+                                                size="medium"
+                                            >
+                                                {t("visorPerfiles.todos")}
+                                            </Button>
+                                        </Link>
                                     ) : (
                                         ""
                                     )}

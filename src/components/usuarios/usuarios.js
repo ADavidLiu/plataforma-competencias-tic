@@ -17,12 +17,59 @@ import ListaUsuarios from "../listaUsuarios/listaUsuarios";
 import AgregarUsuarios from "../agregarUsuarios/agregarUsuarios";
 
 class Usuarios extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        let divisionInicial = 0;
+        if (props[0].location.state !== undefined) {
+            switch (props[0].location.state.verCategoriaInicial) {
+                case "DOCENTES":
+                    switch (this.props.userType) {
+                        case "GOBIERNO":
+                            divisionInicial = 3
+                            break;
+                        case "INSTITUCION":
+                            divisionInicial = 2
+                            break;
+                        case "ESTABLECIMIENTO":
+                            divisionInicial = 1
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "ESTABLECIMIENTOS":
+                    switch (this.props.userType) {
+                        case "GOBIERNO":
+                            divisionInicial = 2
+                            break;
+                        case "INSTITUCION":
+                            divisionInicial = 1
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "INSTITUCIONES":
+                    switch (this.props.userType) {
+                        case "GOBIERNO":
+                            divisionInicial = 1
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "GOBIERNOS":
+                    break;
+                case "ADMINS":
+                    break;
+                default:
+                    break;
+            }
+        }
 
         this.state = {
             datosID: "",
-            divisionMostrada: 0
+            divisionMostrada: divisionInicial
         }
     }
 
