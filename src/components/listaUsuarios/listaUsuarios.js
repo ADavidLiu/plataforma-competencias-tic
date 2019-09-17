@@ -868,7 +868,7 @@ class ListaUsuarios extends Component {
                                                                                 <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
                                                                                 <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                                 <Link to={{
-                                                                                    pathname: "/dashboard-institucion",
+                                                                                    pathname: "/dashboard-ie",
                                                                                     state: {
                                                                                         institucionID: elemento.idNacional
                                                                                     }
@@ -1035,9 +1035,9 @@ class ListaUsuarios extends Component {
                                                                                     <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
                                                                                     <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                                     <Link to={{
-                                                                                        pathname: "/dashboard-institucion",
+                                                                                        pathname: "/dashboard-ee",
                                                                                         state: {
-                                                                                            institucionID: elemento.idNacional
+                                                                                            establecimientoID: elemento.idNacional
                                                                                         }
                                                                                     }} style={{textDecoration: "none"}}>
                                                                                         <OpenInNew color="primary" style={{cursor: "pointer"}}/>

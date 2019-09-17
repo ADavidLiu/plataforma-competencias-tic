@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import sortBy from "sort-by";
 import { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -32,7 +31,7 @@ class VisorPerfiles extends Component {
     }
 
     handleSearch = e => {
-        const copiaElementos = [...this.state.territoriosActuales];
+        const copiaElementosMostrados = [...this.state.perfiles];
         const searchTerm = e.target.value;
 
         this.setState({
@@ -40,43 +39,12 @@ class VisorPerfiles extends Component {
         });
 
         if (e.target.value === "" || e.target.value === null || e.target.value === undefined) {
-            this.setState({
-                elementosMostrados: copiaElementos
-            });
+            this.calcularNumDivisionesPerfiles(this.state.perfiles);
+            this.dividirPerfiles(this.state.perfiles);
         } else {
-            const rawValuesToSearchFrom = [];
-            const arraysValuesToSearchFrom = [];
-            let matchedArrays = [];
-
-            this.state.territoriosActuales.forEach(elem => {
-                Object.values(elem).forEach(val => {
-                    rawValuesToSearchFrom.push(val);
-                });
-            });
-
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += 4) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 4));
-            }
-            arraysValuesToSearchFrom.forEach(array => {
-                array.forEach(val => {
-                    if (val.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
-                        matchedArrays.push(array);
-                    }
-                });
-            });
-
-            matchedArrays.sort(sortBy("-fechaCreacion"));
-            matchedArrays = [...new Set(matchedArrays)];
-
-            this.setState({
-                page: 0,
-                elementosMostrados: matchedArrays,
-                filtros: {
-                    categoria: "territorios.lista-fecha-creacion",
-                    categoriaFormatted: "fechaCreacion",
-                    orden: "descendente"
-                }
-            });
+            const encontrados = this.state.perfiles.filter(perfil => perfil.nombre.toLowerCase().includes(searchTerm.toLowerCase()));
+            this.calcularNumDivisionesPerfiles(encontrados);
+            this.dividirPerfiles(encontrados);
         }
     }
 
@@ -92,13 +60,13 @@ class VisorPerfiles extends Component {
             perfilesDivididos: []
         });
 
-        this.calcularNumDivisionesPerfiles();
-        this.dividirPerfiles();
+        this.calcularNumDivisionesPerfiles(this.props.perfiles);
+        this.dividirPerfiles(this.props.perfiles);
     }
 
-    dividirPerfiles = () => {
-        const copiaPerfiles = [...this.props.perfiles];
-        const numDivisiones = Math.ceil(this.props.perfiles.length/this.props.numPorPagina);
+    dividirPerfiles = perfiles => {
+        const copiaPerfiles = [...perfiles];
+        const numDivisiones = Math.ceil(perfiles.length/this.props.numPorPagina);
         let backupArray = [];
         this.state.perfilesDivididos = [];
 
@@ -124,8 +92,8 @@ class VisorPerfiles extends Component {
         backupArray = [];
     }
 
-    calcularNumDivisionesPerfiles = () => {
-        const numDivisiones = Math.ceil(this.props.perfiles.length/this.props.numPorPagina);
+    calcularNumDivisionesPerfiles = perfiles => {
+        const numDivisiones = Math.ceil(perfiles.length/this.props.numPorPagina);
         
         this.setState({
             numDivisionesPerfiles: numDivisiones

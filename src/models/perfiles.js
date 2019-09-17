@@ -82,7 +82,7 @@ export const establecimientosCargados = [
     },
     {
         perfilID: "establecimiento-2",
-        nombre: "Lorem Ipsum Dolor Sit Amet",
+        nombre: "In non est irure minim tempor dolore dolor",
         imgSrc: "",
         numDocentes: 5
     },
@@ -94,7 +94,7 @@ export const establecimientosCargados = [
     },
     {
         perfilID: "establecimiento-4",
-        nombre: "Lorem Ipsum Dolor Sit Amet",
+        nombre: "Culpa aliquip tempor nulla",
         imgSrc: "",
         numDocentes: 5
     },
@@ -106,7 +106,7 @@ export const establecimientosCargados = [
     },
     {
         perfilID: "establecimiento-6",
-        nombre: "Lorem Ipsum Dolor Sit Amet",
+        nombre: "Nisi consectetur ad",
         imgSrc: "",
         numDocentes: 5
     },
@@ -118,7 +118,7 @@ export const establecimientosCargados = [
     },
     {
         perfilID: "establecimiento-8",
-        nombre: "Lorem Ipsum Dolor Sit Amet",
+        nombre: "Quis proident ea deserunt enim mollit eu",
         imgSrc: "",
         numDocentes: 5
     },
@@ -130,7 +130,7 @@ export const establecimientosCargados = [
     },
     {
         perfilID: "establecimiento-10",
-        nombre: "Lorem Ipsum Dolor Sit Amet",
+        nombre: "Pariatur proident sit cupidatat non",
         imgSrc: "",
         numDocentes: 5
     }
