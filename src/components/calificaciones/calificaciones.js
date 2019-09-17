@@ -20,10 +20,11 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from '@material-ui/core/InputAdornment';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import Search from "@material-ui/icons/Search";
 import OpenInNew from "@material-ui/icons/OpenInNew";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Warning from "@material-ui/icons/Warning";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -270,7 +271,7 @@ class Calificaciones extends Component {
         } else {
             const rawValuesToSearchFrom = [];
             const arraysValuesToSearchFrom = [];
-            const matchedArrays = [];
+            let matchedArrays = [];
 
             this.state[this.state.categoriaDivisionMostrada].forEach(elem => {
                 Object.values(elem).forEach(val => {
@@ -411,26 +412,41 @@ class Calificaciones extends Component {
                                                         ) : (
                                                             <TableBody>
                                                                 {
-                                                                    this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                        const values = Object.values(elemento);
-                                                                        return (
-                                                                            <TableRow key={i}>
-                                                                                {
-                                                                                    values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                                }
-                                                                                <TableCell>
-                                                                                    <Link to={{
-                                                                                        pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
-                                                                                        state: {
-                                                                                            tipoUsuario: "EVALUADOR"
-                                                                                        }
-                                                                                    }}>
-                                                                                        <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
-                                                                                    </Link>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        );
-                                                                    })
+                                                                    this.state.elementosMostrados.length === 0 ? (
+                                                                        <TableRow>
+                                                                            <TableCell colSpan={this.state.headCells[this.state.categoriaDivisionMostrada].length}>
+                                                                                <div className="d-flex align-items-center justify-content-center">
+                                                                                    <Warning className="mr-2" fontSize="small"/>
+                                                                                    {t("visorPerfiles.no-resultados")}
+                                                                                </div>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ) : (
+                                                                        <React.Fragment>
+                                                                            {
+                                                                                this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                    const values = Object.values(elemento);
+                                                                                    return (
+                                                                                        <TableRow key={i}>
+                                                                                            {
+                                                                                                values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                                            }
+                                                                                            <TableCell>
+                                                                                                <Link to={{
+                                                                                                    pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
+                                                                                                    state: {
+                                                                                                        tipoUsuario: "EVALUADOR"
+                                                                                                    }
+                                                                                                }}>
+                                                                                                    <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
+                                                                                                </Link>
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        </React.Fragment>
+                                                                    )
                                                                 }
                                                             </TableBody>
                                                         )

@@ -33,6 +33,7 @@ import Edit from "@material-ui/icons/EditOutlined";
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
 import OpenInNew from "@material-ui/icons/OpenInNewOutlined";
 import Search from "@material-ui/icons/Search";
+import Warning from "@material-ui/icons/Warning";
 
 import { CircularProgress } from "@material-ui/core";
 
@@ -850,35 +851,50 @@ class ListaUsuarios extends Component {
                                                                     </TableCell>
                                                                 </TableRow>
                                                             ) : (
-                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                    const values = Object.values(elemento);
-                                                                    const keys = Object.keys(elemento);
-                                                                    return (
-                                                                        <TableRow key={i}>
-                                                                            {
-                                                                                values.map((val, j) => {
-                                                                                    if (keys[j] === "pais") {
-                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
-                                                                                    } else {
-                                                                                        return <TableCell key={j}>{val}</TableCell>;
-                                                                                    }
-                                                                                })
-                                                                            }
-                                                                            <TableCell>
-                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
-                                                                                <Link to={{
-                                                                                    pathname: "/dashboard-ie",
-                                                                                    state: {
-                                                                                        institucionID: elemento.idNacional
-                                                                                    }
-                                                                                }} style={{textDecoration: "none"}}>
-                                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                                </Link>
-                                                                            </TableCell>
-                                                                        </TableRow>
-                                                                    );
-                                                                })
+                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <div className="d-flex align-items-center justify-content-center">
+                                                                                <Warning className="mr-2" fontSize="small"/>
+                                                                                {t("visorPerfiles.no-resultados")}
+                                                                            </div>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    <React.Fragment>
+                                                                        {
+                                                                            this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                const values = Object.values(elemento);
+                                                                                const keys = Object.keys(elemento);
+                                                                                return (
+                                                                                    <TableRow key={i}>
+                                                                                        {
+                                                                                            values.map((val, j) => {
+                                                                                                if (keys[j] === "pais") {
+                                                                                                    return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                } else {
+                                                                                                    return <TableCell key={j}>{val}</TableCell>;
+                                                                                                }
+                                                                                            })
+                                                                                        }
+                                                                                        <TableCell>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Link to={{
+                                                                                                pathname: "/dashboard-ie",
+                                                                                                state: {
+                                                                                                    institucionID: elemento.idNacional
+                                                                                                }
+                                                                                            }} style={{textDecoration: "none"}}>
+                                                                                                <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                                            </Link>
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })
+                                                                        }
+                                                                    </React.Fragment>
+                                                                )
                                                             )
                                                         }
                                                     </TableBody>
@@ -1017,35 +1033,50 @@ class ListaUsuarios extends Component {
                                                                         </TableCell>
                                                                     </TableRow>
                                                                 ) : (
-                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                        const values = Object.values(elemento);
-                                                                        const keys = Object.keys(elemento);
-                                                                        return (
-                                                                            <TableRow key={i}>
-                                                                                {
-                                                                                    values.map((val, j) => {
-                                                                                        if (keys[j] === "pais") {
-                                                                                            return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
-                                                                                        } else {
-                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <div className="d-flex align-items-center justify-content-center">
+                                                                                <Warning className="mr-2" fontSize="small"/>
+                                                                                {t("visorPerfiles.no-resultados")}
+                                                                            </div>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    <React.Fragment>
+                                                                        {
+                                                                            this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                const values = Object.values(elemento);
+                                                                                const keys = Object.keys(elemento);
+                                                                                return (
+                                                                                    <TableRow key={i}>
+                                                                                        {
+                                                                                            values.map((val, j) => {
+                                                                                                if (keys[j] === "pais") {
+                                                                                                    return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                } else {
+                                                                                                    return <TableCell key={j}>{val}</TableCell>;
+                                                                                                }
+                                                                                            })
                                                                                         }
-                                                                                    })
-                                                                                }
-                                                                                <TableCell>
-                                                                                    <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                    <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
-                                                                                    <Link to={{
-                                                                                        pathname: "/dashboard-ee",
-                                                                                        state: {
-                                                                                            establecimientoID: elemento.idNacional
-                                                                                        }
-                                                                                    }} style={{textDecoration: "none"}}>
-                                                                                        <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                                    </Link>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        );
-                                                                    })
+                                                                                        <TableCell>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Link to={{
+                                                                                                pathname: "/dashboard-ee",
+                                                                                                state: {
+                                                                                                    establecimientoID: elemento.idNacional
+                                                                                                }
+                                                                                            }} style={{textDecoration: "none"}}>
+                                                                                                <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                                            </Link>
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })
+                                                                        }
+                                                                    </React.Fragment>
+                                                                    )
                                                                 )
                                                             }
                                                         </TableBody>
@@ -1252,29 +1283,42 @@ class ListaUsuarios extends Component {
                                                                             <CircularProgress color="primary" className="d-block mx-auto"/>
                                                                         </TableCell>
                                                                     </TableRow>
+                                                                ) : this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <div className="d-flex align-items-center justify-content-center">
+                                                                                <Warning className="mr-2" fontSize="small"/>
+                                                                                {t("visorPerfiles.no-resultados")}
+                                                                            </div>
+                                                                        </TableCell>
+                                                                    </TableRow>
                                                                 ) : (
-                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                        const values = Object.values(elemento);
-                                                                        return (
-                                                                            <TableRow key={i}>
-                                                                                {
-                                                                                    values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                                }
-                                                                                <TableCell>
-                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
-                                                                                    <Link to={{
-                                                                                        pathname: "/dashboard-docente",
-                                                                                        state: {
-                                                                                            docenteID: elemento.idNacional
+                                                                    <React.Fragment>
+                                                                        {
+                                                                            this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                const values = Object.values(elemento);
+                                                                                return (
+                                                                                    <TableRow key={i}>
+                                                                                        {
+                                                                                            values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
                                                                                         }
-                                                                                    }} style={{textDecoration: "none"}}>
-                                                                                        <OpenInNew color="primary" style={{cursor: "pointer"}}/>
-                                                                                    </Link>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        );
-                                                                    })
+                                                                                        <TableCell>
+                                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Link to={{
+                                                                                                pathname: "/dashboard-docente",
+                                                                                                state: {
+                                                                                                    docenteID: elemento.idNacional
+                                                                                                }
+                                                                                            }} style={{textDecoration: "none"}}>
+                                                                                                <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                                            </Link>
+                                                                                        </TableCell>
+                                                                                    </TableRow>
+                                                                                );
+                                                                            })
+                                                                        }
+                                                                    </React.Fragment>
                                                                 )
                                                             }
                                                         </TableBody>
