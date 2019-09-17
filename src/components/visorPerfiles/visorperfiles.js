@@ -6,11 +6,13 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 
 import Search from "@material-ui/icons/Search";
+import Warning from "@material-ui/icons/Warning";
 
 import Perfil from "./perfil";
 
@@ -94,16 +96,15 @@ class VisorPerfiles extends Component {
 
     calcularNumDivisionesPerfiles = perfiles => {
         const numDivisiones = Math.ceil(perfiles.length/this.props.numPorPagina);
+        let hasNext = false;
+        if (numDivisiones > 1) {
+            hasNext = true;
+        }
         
         this.setState({
-            numDivisionesPerfiles: numDivisiones
+            numDivisionesPerfiles: numDivisiones,
+            hasNextPerfiles: hasNext
         });
-
-        if (numDivisiones > 1) {
-            this.setState({
-                hasNextPerfiles: true
-            });
-        }
     }
 
     checkCurrentDivisionPerfiles = () => {
@@ -182,18 +183,21 @@ class VisorPerfiles extends Component {
                                     )
                                 }}
                             />
-                            {this.state.perfilesMostrados
-                                ? this.state.perfilesMostrados.map(perfil => {
-                                        return (
-                                            <Perfil
-                                                key={perfil.perfilID}
-                                                tipo={this.props.tipo}
-                                                perfil={perfil}
-                                                userID={perfil.perfilID}
-                                            />
-                                        );
-                                })
-                            : ""}
+                            {
+                                this.state.perfilesMostrados !== undefined ? this.state.perfilesMostrados.map(perfil => (
+                                    <Perfil
+                                        key={perfil.perfilID}
+                                        tipo={this.props.tipo}
+                                        perfil={perfil}
+                                        userID={perfil.perfilID}
+                                    />
+                                )) : (
+                                    <div className="d-flex align-items-center justify-content-center my-5">
+                                        <Warning className="mr-2" />
+                                        <Typography variant="body1">{t("visorPerfiles.no-resultados")}</Typography>
+                                    </div>
+                                )
+                            }
                             <Grid container spacing={2}>
                                 <Grid item xs={4}>
                                     {this.state.perfiles.length > this.props.numPorPagina ? (
@@ -231,9 +235,7 @@ class VisorPerfiles extends Component {
                                         >
                                             {t("visorPerfiles.anteriores")}
                                         </Button>
-                                    ) : (
-                                        ""
-                                    )}
+                                    ) : ""}
                                     {this.state.hasNextPerfiles ? (
                                         <Button
                                             type="button"
@@ -245,9 +247,7 @@ class VisorPerfiles extends Component {
                                         >
                                             {t("visorPerfiles.siguientes")}
                                         </Button>
-                                    ) : (
-                                        ""
-                                    )}
+                                    ) : ""}
                                 </Grid>
                             </Grid>
                         </React.Fragment>

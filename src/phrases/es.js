@@ -81,6 +81,7 @@ const es = {
         "visorPerfiles.todos": "Ver todos",
         "visorPerfiles.anteriores": "◀ Anteriores",
         "visorPerfiles.siguientes": "Siguientes ▶",
+        "visorPerfiles.no-resultados": "No se encontraron resultados",
         "perfil.ingreso": "Último ingreso:",
         "perfil.nunca": "nunca ha ingresado",
         "perfil.ver-detalles": "Ver detalles",
