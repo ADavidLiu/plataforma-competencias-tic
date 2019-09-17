@@ -20,6 +20,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
+import Reaptcha from "reaptcha";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import Establecimiento from "../establecimiento/establecimiento";
 
 class Registro extends Component {
@@ -79,10 +87,37 @@ class Registro extends Component {
                 numSedes: "",
                 sedes: []
             },
-            isCompletado: false
+            isCompletado: false,
+            isCaptchaRendered: false,
+            isCaptchaSolved: false,
+            submittedWithoutCaptcha: false
         }
 
         this.state = this.initialState;
+    }
+
+    reinitDialogCaptcha = () => {
+        this.setState({
+            submittedWithoutCaptcha: false
+        });
+    }
+
+    onCaptchaVerify = () => {
+        this.setState({
+            isCaptchaSolved: true
+        });
+    }
+
+    onCaptchaRender = () => {
+        this.setState({
+            isCaptchaRendered: true
+        });
+    }
+
+    onCaptchaExpire = () => {
+        this.setState({
+            isCaptchaSolved: false
+        });
     }
 
     handleChange = e => {
@@ -197,12 +232,19 @@ class Registro extends Component {
 
     registrar = e => {
         e.preventDefault();
-        this.setState({
-            ...this.state,
-            isCompletado: true
-        });
 
-        console.log("Enviar al backend!");
+        if (!this.state.isCaptchaSolved) {
+            this.setState({
+                submittedWithoutCaptcha: true
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                isCompletado: true
+            });
+    
+            console.log("Enviar al backend!");
+        }
     }
 
     render() {
@@ -604,6 +646,10 @@ class Registro extends Component {
                                                 />
                                             </Grid>
                                         </Grid>
+                                        <Reaptcha sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} onVerify={this.onCaptchaVerify} onRender={this.onCaptchaRender} onExpire={this.onCaptchaExpire} className="my-4 d-flex align-items-center justify-content-center"/>
+                                        {
+                                            !this.state.isCaptchaRendered ? <CircularProgress color="primary" className="d-block mx-auto my-4"/> : ""
+                                        }
                                         <Button
                                             type="submit"
                                             fullWidth
@@ -642,6 +688,21 @@ class Registro extends Component {
                             >
                             </FormControl>
                             {formulario}
+                            <hr className="my-4"/>
+                            <div className="text-center">
+                                <Typography variant="body2">{t("registro.login")}</Typography>
+                                <Link to="/login">
+                                    <Typography variant="body2" color="primary"><strong>{t("registro.login-link")}</strong></Typography>
+                                </Link>
+                            </div>
+                            <Dialog open={this.state.submittedWithoutCaptcha} onClose={this.reinitDialogCaptcha} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">{t("captcha.sin-resolver")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {t("captcha.sin-resolver-ayuda")}
+                                    </DialogContentText>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     )
                 }

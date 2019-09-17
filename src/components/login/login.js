@@ -10,7 +10,6 @@ import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -160,6 +159,11 @@ class Login extends Component {
                                                     {t("login.btn")}
                                                 </Button>
                                             </form>
+                                            <hr className="my-4"/>
+                                            <Typography variant="body2">{t("login.registro")}</Typography>
+                                            <Link to="/registro">
+                                                <Typography variant="body2" color="primary"><strong>{t("login.registro-link")}</strong></Typography>
+                                            </Link>
                                         </Grid>
                                     </Grid>
                                 </FormControl>
