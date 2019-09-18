@@ -55,11 +55,11 @@ class LoginCheck extends Component {
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
         this.state = {
             isLogeado: true,
-            isPrimerIngreso: true,
+            isPrimerIngreso: false,
             locale: "es",
-            tipo: "ESTABLECIMIENTO",
+            tipo: "ADMIN",
             id: "loremipsum",
-            roles: ["ESTABLECIMIENTO", "EVALUADOR"]
+            roles: ["ADMIN"]
         }
 
         /* Pruebas de integración con backend */
@@ -105,10 +105,16 @@ class LoginCheck extends Component {
                 }
                 break;
             case "SUPERADMIN":
-                
+                this.datosPerfil = {
+                    nombre: "Súper Admin",
+                    imgSrc: ""
+                }
                 break;
             case "ADMIN":
-
+                this.datosPerfil = {
+                    nombre: "Adam Admin",
+                    imgSrc: ""
+                }
                 break;
             default:
                 break;
@@ -147,7 +153,7 @@ class LoginCheck extends Component {
                 break;
             case "SUPERADMIN":
             case "ADMIN":
-                tituloLabelUsuarios = <Translation>{ t => t("gobiernos") }</Translation>;
+                tituloLabelUsuarios = <Translation>{ t => t("usuarios") }</Translation>;
                 iconUsers = <HowToReg />;
                 break;
             case "EVALUADOR":

@@ -43,11 +43,30 @@ class ListaUsuarios extends Component {
         
         this.formularioPlaceholder = {};
         this.headCells = {
+            superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-ee-direccion", "usuarios.acciones"],
+            admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
+            evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             gobierno: ["usuarios.registro-idNacional", "usuarios.registro-nombre-ie", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.acciones"],
             institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
             establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.acciones"],
         };
         switch (props.userType) {
+            case "SUPERADMIN":
+                this.formularioPlaceholder = {
+                    idNacional: "",
+                    nombre: "",
+                    telefono: "",
+                    email: "",
+                    direccion: ""
+                };
+                break;
+            case "ADMIN":
+                this.formularioPlaceholder = {
+                    idNacional: "",
+                    nombre: "",
+                    pais: ""
+                };
+                break;
             case "GOBIERNO":
                 this.formularioPlaceholder = {
                     idNacional: "",
@@ -85,6 +104,46 @@ class ListaUsuarios extends Component {
         }
 
         this.mockData = {
+            admins: [
+                {
+                    idNacional: "123654321",
+                    nombre: "Quis aliquip et duis aliquip",
+                    telefono: "123312456",
+                    email: "mail@mail.com",
+                    direccion: "Calle 123 #45-67"
+                },
+                {
+                    idNacional: "890123456",
+                    nombre: "Nostrud duis mollit",
+                    telefono: "321456789",
+                    email: "mail@mail.com",
+                    direccion: "Calle 89 #01-23"
+                }
+            ],
+            gobiernos: [
+                {
+                    idNacional: "123098456",
+                    nombre: "Esse nisi aute excepteur",
+                    pais: "CO-Colombia"
+                },
+                {
+                    idNacional: "098123765",
+                    nombre: "Commodo consectetur sit magna ea",
+                    pais: "VE-Venezuela"
+                }
+            ],
+            evaluadores: [
+                {
+                    idNacional: "678123098",
+                    nombre: "Nulla exercitation ex occaecat",
+                    pais: "PA-Panama"
+                },
+                {
+                    idNacional: "456321789",
+                    nombre: "Adipisicing aliqua mollit",
+                    pais: "CL-Chile"
+                }
+            ],
             instituciones: [
                 {
                     idNacional: "09876",
@@ -402,6 +461,28 @@ class ListaUsuarios extends Component {
         const encontrado = this.state.usuarios[this.props.tipoUsuariosMostrados].find(usuario => usuario.idNacional === id);
         
         switch (this.props.userType) {
+            case "SUPERADMIN":
+                this.setState({
+                    activeID: id,
+                    editingForm: {
+                        idNacional: encontrado.idNacional,
+                        nombre: encontrado.nombre,
+                        telefono: encontrado.telefono,
+                        email: encontrado.email,
+                        direccion: encontrado.direccion
+                    }
+                });
+                break;
+            case "ADMIN":
+                this.setState({
+                    activeID: id,
+                    editingForm: {
+                        idNacional: id,
+                        nombre: encontrado.nombre,
+                        pais: encontrado.pais
+                    }
+                });
+                break;
             case "GOBIERNO":
                 const codigoPais = encontrado.pais.split("-")[0];
 
@@ -555,7 +636,6 @@ class ListaUsuarios extends Component {
     }
 
     handleFiltroChange = e => {
-        /* const copiaElementos = [...this.state[this.state.categoriaDivisionMostrada]]; */
         const copiaElementos = [...this.state.elementosMostrados[this.props.tipoUsuariosMostrados]];
 
         this.setState({
@@ -688,6 +768,15 @@ class ListaUsuarios extends Component {
                                 ...this.state.filtros,
                                 categoria: "usuarios.registro-ee-email",
                                 categoriaFormatted: "emailInstitucional"
+                            }
+                        });
+                        break;
+                    case "registro.email":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "registro-email",
+                                categoriaFormatted: "email"
                             }
                         });
                         break;
@@ -824,6 +913,342 @@ class ListaUsuarios extends Component {
         let formularioEdicion;
 
         switch (this.props.userType) {
+            case "SUPERADMIN":
+                tabla = (
+                    <Translation>
+                        {
+                            t => (
+                                <Paper>
+                                    <div className="scrolling-table-outer">
+                                        <div className="scrolling-table-wrapper">
+                                            <Table className="scrolling-table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        {
+                                                            this.headCells.superadmin.map((title, i) => <TableCell key={i}>{t(title)}</TableCell>)
+                                                        }
+                                                    </TableRow>
+                                                </TableHead>
+                                                {
+                                                    this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
+                                                        <TableBody>
+                                                            {
+                                                                this.state.isFiltering ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                        <TableRow>
+                                                                            <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                                <div className="d-flex align-items-center justify-content-center">
+                                                                                    <Warning className="mr-2" fontSize="small"/>
+                                                                                    {t("visorPerfiles.no-resultados")}
+                                                                                </div>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ) : (
+                                                                        <React.Fragment>
+                                                                            {
+                                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                    const values = Object.values(elemento);
+                                                                                    const keys = Object.keys(elemento);
+                                                                                    return (
+                                                                                        <TableRow key={i}>
+                                                                                            {
+                                                                                                values.map((val, j) => {
+                                                                                                    if (keys[j] === "pais") {
+                                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                    } else {
+                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    }
+                                                                                                })
+                                                                                            }
+                                                                                            <TableCell>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                                <Link to={{
+                                                                                                    pathname: "/dashboard-admin",
+                                                                                                    state: {
+                                                                                                        adminID: elemento.idNacional
+                                                                                                    }
+                                                                                                }} style={{textDecoration: "none"}}>
+                                                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                                                </Link>
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        </React.Fragment>
+                                                                    )
+                                                                )
+                                                            }
+                                                        </TableBody>
+                                                    ) : (
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    )
+                                                }
+                                            </Table>
+                                        </div>
+                                    </div>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={t("filasPorPagina")}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
+                                </Paper>
+                            )
+                        }
+                    </Translation>
+                );
+
+                formularioEdicion = (
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacional"
+                                            value={this.state.editingForm.idNacional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-nombre")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombre"
+                                            value={this.state.editingForm.nombre}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-telefono")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="telefono"
+                                            value={this.state.editingForm.telefono}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("registro.email")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="email"
+                                            value={this.state.editingForm.email}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-direccion")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="direccion"
+                                            value={this.state.editingForm.direccion}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
+                );
+                break;
+            case "ADMIN":
+                tabla = (
+                    <Translation>
+                        {
+                            t => (
+                                <Paper>
+                                    <div className="scrolling-table-outer">
+                                        <div className="scrolling-table-wrapper">
+                                            <Table className="scrolling-table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        {
+                                                            this.headCells.admin.map((title, i) => <TableCell key={i}>{t(title)}</TableCell>)
+                                                        }
+                                                    </TableRow>
+                                                </TableHead>
+                                                {
+                                                    this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
+                                                        <TableBody>
+                                                            {
+                                                                this.state.isFiltering ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                        <TableRow>
+                                                                            <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                                <div className="d-flex align-items-center justify-content-center">
+                                                                                    <Warning className="mr-2" fontSize="small"/>
+                                                                                    {t("visorPerfiles.no-resultados")}
+                                                                                </div>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ) : (
+                                                                        <React.Fragment>
+                                                                            {
+                                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                    const values = Object.values(elemento);
+                                                                                    const keys = Object.keys(elemento);
+                                                                                    return (
+                                                                                        <TableRow key={i}>
+                                                                                            {
+                                                                                                values.map((val, j) => {
+                                                                                                    if (keys[j] === "pais") {
+                                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                    } else {
+                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    }
+                                                                                                })
+                                                                                            }
+                                                                                            <TableCell>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                                <Link to={{
+                                                                                                    pathname: "/dashboard-gobierno",
+                                                                                                    state: {
+                                                                                                        gobiernoID: elemento.idNacional
+                                                                                                    }
+                                                                                                }} style={{textDecoration: "none"}}>
+                                                                                                    <OpenInNew color="primary" style={{cursor: "pointer"}}/>
+                                                                                                </Link>
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        </React.Fragment>
+                                                                    )
+                                                                )
+                                                            }
+                                                        </TableBody>
+                                                    ) : (
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    )
+                                                }
+                                            </Table>
+                                        </div>
+                                    </div>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={t("filasPorPagina")}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
+                                </Paper>
+                            )
+                        }
+                    </Translation>
+                );
+
+                formularioEdicion = (
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container spacing={4}>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacional"
+                                            value={this.state.editingForm.idNacional}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1">{t("usuarios.registro-ee-nombre")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="nombre"
+                                            value={this.state.editingForm.nombre}
+                                            onChange={this.handleEdicionChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.registro-pais")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            margin="none"
+                                            value={this.state.editingForm.pais}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="pais"/>}
+                                        >
+                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                            <MenuItem value="PA-Panama">Panamá</MenuItem>
+                                            <MenuItem value="PE-Peru">Perú</MenuItem>
+                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
+                );
+                break;
             case "GOBIERNO":
                 tabla = (
                     <Translation>
@@ -967,8 +1392,8 @@ class ListaUsuarios extends Component {
                                         >
                                             <MenuItem value="CO-Colombia">Colombia</MenuItem>
                                             <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
-                                            <MenuItem value="PA-Panamá">Panamá</MenuItem>
-                                            <MenuItem value="PE-Perú">Perú</MenuItem>
+                                            <MenuItem value="PA-Panama">Panamá</MenuItem>
+                                            <MenuItem value="PE-Peru">Perú</MenuItem>
                                             <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
                                             <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
                                             <MenuItem value="PY-Paraguay">Paraguay</MenuItem>

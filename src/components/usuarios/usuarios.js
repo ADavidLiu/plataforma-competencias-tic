@@ -24,6 +24,12 @@ class Usuarios extends Component {
             switch (props[0].location.state.verCategoriaInicial) {
                 case "DOCENTES":
                     switch (this.props.userType) {
+                        case "SUPERADMIN":
+                            divisionInicial = 6;
+                            break;
+                        case "ADMIN":
+                            divisionInicial = 5;
+                            break;
                         case "GOBIERNO":
                             divisionInicial = 3
                             break;
@@ -39,6 +45,12 @@ class Usuarios extends Component {
                     break;
                 case "ESTABLECIMIENTOS":
                     switch (this.props.userType) {
+                        case "SUPERADMIN":
+                            divisionInicial = 5;
+                            break;
+                        case "ADMIN":
+                            divisionInicial = 4;
+                            break;
                         case "GOBIERNO":
                             divisionInicial = 2
                             break;
@@ -51,6 +63,12 @@ class Usuarios extends Component {
                     break;
                 case "INSTITUCIONES":
                     switch (this.props.userType) {
+                        case "SUPERADMIN":
+                            divisionInicial = 4;
+                            break;
+                        case "ADMIN":
+                            divisionInicial = 3;
+                            break;
                         case "GOBIERNO":
                             divisionInicial = 1
                             break;
@@ -59,8 +77,13 @@ class Usuarios extends Component {
                     }
                     break;
                 case "GOBIERNOS":
+                    
                     break;
                 case "ADMINS":
+                    
+                    break;
+                case "SUPERADMIN":
+
                     break;
                 default:
                     break;
@@ -104,15 +127,18 @@ class Usuarios extends Component {
         
         let tabs;
         let tituloPagina = "";
-        let tipoUsuariosMostrados = {
-            0: "",
-            1: "",
-            2: ""
-        };
+        let tipoUsuariosMostrados = {};
         switch (this.props.userType) {
             case "SUPERADMIN":
-            case "ADMIN":
                 tituloPagina = <Translation>{ t => t("usuarios") }</Translation>;
+                tipoUsuariosMostrados = {
+                    0: "admins",
+                    1: "evaluadores",
+                    2: "gobiernos",
+                    3: "instituciones",
+                    4: "establecimientos",
+                    5: "docentes"
+                };
                 tabs = (
                     <Translation>
                         {
@@ -125,6 +151,40 @@ class Usuarios extends Component {
                                     onChange={this.handleTabChange}
                                 >
                                     <Tab label={t("usuarios.label-registro-admins")}/>
+                                    <Tab label={t("usuarios.label-usuarios-admins")}/>
+                                    <Tab label={t("usuarios.label-usuarios-evaluadores")}/>
+                                    <Tab label={t("usuarios.label-usuarios-gobiernos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-instituciones")}/>
+                                    <Tab label={t("usuarios.label-usuarios-establecimientos")}/>
+                                    <Tab label={t("usuarios.label-usuarios-docentes")}/>
+                                </Tabs>
+                            )
+                        }
+                    </Translation>
+                );
+                break;
+            case "ADMIN":
+                tituloPagina = <Translation>{ t => t("usuarios") }</Translation>;
+                tipoUsuariosMostrados = {
+                    0: "evaluadores",
+                    1: "gobiernos",
+                    2: "instituciones",
+                    3: "establecimientos",
+                    4: "docentes"
+                };
+                tabs = (
+                    <Translation>
+                        {
+                            t => (
+                                <Tabs
+                                    variant="scrollable"
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    value={this.state.divisionMostrada}
+                                    onChange={this.handleTabChange}
+                                >
+                                    <Tab label={t("usuarios.label-registro-evaluadores")}/>
+                                    <Tab label={t("usuarios.label-usuarios-evaluadores")}/>
                                     <Tab label={t("usuarios.label-usuarios-gobiernos")}/>
                                     <Tab label={t("usuarios.label-usuarios-instituciones")}/>
                                     <Tab label={t("usuarios.label-usuarios-establecimientos")}/>
@@ -246,6 +306,10 @@ class Usuarios extends Component {
                                     <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="INSTITUCION" />
                                 ) : this.props.userType === "INSTITUCION" ? (
                                     <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ESTABLECIMIENTO" />
+                                ) : this.props.userType === "ADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
+                                ) : this.props.userType === "SUPERADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
                                 ) : ""
                             }
                         </Grid>
@@ -261,6 +325,53 @@ class Usuarios extends Component {
                                     <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ESTABLECIMIENTO" />
                                 ) : this.props.userType === "INSTITUCION" ? (
                                     <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="DOCENTE" />
+                                ) : this.props.userType === "ADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="GOBIERNO" />
+                                ) : this.props.userType === "SUPERADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ADMIN" />
+                                ) : ""
+                            }
+                        </Grid>
+                    </Grid>
+                );
+                break;
+            case 4:
+                divisionMostrada = (
+                    <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                            {
+                                this.props.userType === "SUPERADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="GOBIERNO" />
+                                ) : this.props.userType === "ADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="INSTITUCION" />
+                                ) : ""
+                            }
+                        </Grid>
+                    </Grid>
+                );
+                break;
+            case 5:
+                divisionMostrada = (
+                    <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                            {
+                                this.props.userType === "SUPERADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="INSTITUCION" />
+                                ) : this.props.userType === "ADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="ESTABLECIMIENTO" />
+                                ) : ""
+                            }
+                        </Grid>
+                    </Grid>
+                );
+                break;
+            case 6:
+                divisionMostrada = (
+                    <Grid container spacing={5}>
+                        <Grid item xs={12}>
+                            {
+                                this.props.userType === "SUPERADMIN" ? (
+                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[5]} userType="ESTABLECIMIENTO" />
                                 ) : ""
                             }
                         </Grid>
