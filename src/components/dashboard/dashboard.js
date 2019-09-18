@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
+import DashboardSuperadmin from "./dashboardSuperadmin";
+import DashboardAdmin from "./dashboardAdmin";
 import DashboardGobierno from "./dashboardGobierno";
 import DashboardInstitucionEducativa from "./dashboardInstitucionEducativa";
 import DashboardEstablecimientoEducativo from "./dashboardEstablecimientoEducativo";
@@ -33,10 +35,10 @@ class Dashboard extends Component {
                 this.dashboard = <DashboardEvaluador userProfile={this.props.userProfile} />;
                 break;
             case "SUPERADMIN":
-                
+                this.dashboard = <DashboardSuperadmin userProfile={this.props.userProfile}/>
                 break;
             case "ADMIN":
-                
+                this.dashboard = <DashboardAdmin userProfile={this.props.userProfile}/>
                 break;
             default:
                 break;

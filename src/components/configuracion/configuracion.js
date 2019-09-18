@@ -31,7 +31,7 @@ class Configuracion extends Component {
 
         /* Conectarse al backend para traer la información verdadera de la configuración actual */
         this.state = {
-            rolActual: props.userType,
+            rolSeleccionado: props.userType,
             versionActual: "1.0.0",
             versionSeleccionada: "1.0.0",
             versionesDisponibles: ["1.0.0", "1.0.1"],
@@ -151,7 +151,7 @@ class Configuracion extends Component {
 
         /* Actualizar el backend de acuerdo con la configuración cambiada */
         switch (e.target.name) {
-            case "rolActual":
+            case "rolSeleccionado":
 
                 break;
             case "versionSeleccionada":
@@ -311,10 +311,10 @@ class Configuracion extends Component {
                                             <Grid item xs={6}>
                                                 <FormControl variant="outlined" className="w-100">
                                                     <Select
-                                                        value={this.state.rolActual}
+                                                        value={this.state.rolSeleccionado}
                                                         onChange={this.handleChange}
                                                         input={<OutlinedInput required 
-                                                        name="rolActual"/>}
+                                                        name="rolSeleccionado"/>}
                                                     >
                                                         {
                                                             this.props.roles.map((rol, i) => (

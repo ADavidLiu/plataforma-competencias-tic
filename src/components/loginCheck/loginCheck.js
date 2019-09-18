@@ -27,6 +27,8 @@ import Registro from "../registro/registro";
 import Login from "../login/login";
 import Prueba from "../prueba/prueba";
 import Dashboard from "../dashboard/dashboard";
+import DashboardSuperadmin from "../dashboard/dashboardSuperadmin";
+import DashboardAdmin from "../dashboard/dashboardAdmin";
 import DashboardGobierno from "../dashboard/dashboardGobierno";
 import DashboardInstitucionEducativa from "../dashboard/dashboardInstitucionEducativa";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
@@ -44,6 +46,7 @@ import EntrevistaRevision from "../entrevista/entrevistaRevision";
 import EncuestaRevision from "../encuesta/encuestaRevision";
 import Calificaciones from "../calificaciones/calificaciones";
 import Territorios from "../territorios/territorios";
+import PrimerIngreso from "../primerIngreso/primerIngreso";
 
 class LoginCheck extends Component {
     constructor() {
@@ -52,6 +55,7 @@ class LoginCheck extends Component {
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
         this.state = {
             isLogeado: true,
+            isPrimerIngreso: true,
             locale: "es",
             tipo: "ESTABLECIMIENTO",
             id: "loremipsum",
@@ -109,11 +113,19 @@ class LoginCheck extends Component {
             default:
                 break;
         }
+
+        this.links = {};
     }
 
     actualizarLogeado = nuevoEstado => {
         this.setState({
             isLogeado: nuevoEstado
+        });
+    }
+
+    actualizarIsPrimerIngreso = nuevoEstado => {
+        this.setState({
+            isPrimerIngreso: nuevoEstado
         });
     }
 
@@ -165,7 +177,7 @@ class LoginCheck extends Component {
                                                     </Link>
                                                 </Tooltip>
                                                 <Tooltip title="Configuración" placement="bottom">
-                                                    <Link to="/configuracion">
+                                                    <Link to={`/${t("link.configuracion")}`}>
                                                         <IconButton style={{ color: "#ffffff" }}>
                                                             <SettingsApplications />
                                                         </IconButton>
@@ -174,7 +186,7 @@ class LoginCheck extends Component {
                                                 {
                                                     this.state.tipo === "DOCENTE" ? (
                                                         <Tooltip title={t("procesos.titulo-alt")}>
-                                                            <Link to="/procesos">
+                                                            <Link to={`/${t("link.procesos")}`}>
                                                                 <IconButton style={{
                                                                     color: "#ffffff"
                                                                 }}>
@@ -187,7 +199,7 @@ class LoginCheck extends Component {
                                                 {
                                                     this.state.tipo === "GOBIERNO" ? (
                                                         <Tooltip title={t("territorios.titulo")} placement="bottom">
-                                                            <Link to="/territorios">
+                                                            <Link to={`/${t("link.territorios")}`}>
                                                                 <IconButton style={{color: "#ffffff"}}>
                                                                     <Layers/>
                                                                 </IconButton>
@@ -198,7 +210,7 @@ class LoginCheck extends Component {
                                                 {
                                                     this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
                                                         <Tooltip title={tituloLabelUsuarios} placement="bottom">
-                                                            <Link to="/usuarios">
+                                                            <Link to={`/${t("link.usuarios")}`}>
                                                                 <IconButton style={{ color: "#ffffff" }}>
                                                                     { iconUsers }
                                                                 </IconButton>
@@ -209,7 +221,7 @@ class LoginCheck extends Component {
                                                 {
                                                     this.state.tipo === "EVALUADOR" ? (
                                                         <Tooltip title="Calificaciones" placement="bottom">
-                                                            <Link to="/calificaciones">
+                                                            <Link to={`/${t("link.calificaciones")}`}>
                                                                 <IconButton style={{ color: "#ffffff" }}>
                                                                     <PlaylistAddCheck />
                                                                 </IconButton>
@@ -240,54 +252,72 @@ class LoginCheck extends Component {
                                     <Switch>
                                         <Route path="/" exact render={(...routeProps) => {
                                             if (this.state.isLogeado) {
-                                                return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;
+                                                if (this.state.isPrimerIngreso) {
+                                                    return <PrimerIngreso actualizarIsPrimerIngreso={this.actualizarIsPrimerIngreso} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>;
+                                                } else {
+                                                    return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;
+                                                }
                                             } else {
                                                 return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
                                             }
                                         }} />
-                                        <Route path="/login/" render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                                        <Route path="/registro/" render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
+                                        <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                                        <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
                                         {
                                             this.state.isLogeado ? (
-                                                <Switch>
-                                                    <Route path="/dashboard/" render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                    <Route path="/dashboard-docente/" component={DashboardDocente} />
-                                                    <Route path="/dashboard-ie/" component={DashboardInstitucionEducativa} />
-                                                    <Route path="/dashboard-ee/" component={DashboardEstablecimientoEducativo} />
-                                                    <Route path="/dashboard-gobierno/" component={DashboardGobierno} />
-                                                    <Route path="/prueba/" render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
-                                                    <Route path="/practica/" component={Practica} />
-                                                    <Route path="/preentrevista/" render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                    <Route path="/entrevista/" render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
-                                                    {
-                                                        this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
-                                                            <Route path="/usuarios/" render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        ) : ""
-                                                    }
-                                                    {
-                                                        this.state.tipo === "DOCENTE" ? (
-                                                            <Route path="/procesos/" render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        ) : ""
-                                                    }
-                                                    {
-                                                        this.state.tipo === "GOBIERNO" ? (
-                                                            <Route path="/territorios/" render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                        ) : ""
-                                                    }
-                                                    {
-                                                        this.state.tipo === "EVALUADOR" ? (
-                                                            <React.Fragment>
-                                                                <Route path="/practica-revision/" render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/preentrevista-revision/" render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/entrevista-revision/" render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/encuesta-revision/" render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                <Route path="/calificaciones/" render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
-                                                            </React.Fragment>
-                                                        ) : ""
-                                                    }
-                                                    <Route component={Pagina404} />
-                                                </Switch>
+                                                this.state.isPrimerIngreso ? (
+                                                    <Route path={`/${t("link.primer-ingreso")}`} render={(...routeProps) => <PrimerIngreso userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>}/>
+                                                ) : (
+                                                    <Switch>
+                                                        <Route path={`/${t("link.dashboard")}`} render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                        <Route path={`/${t("link.dashboard-docente")}`} component={DashboardDocente} />
+                                                        <Route path={`/${t("link.dashboard-ie")}`} component={DashboardInstitucionEducativa} />
+                                                        <Route path={`/${t("link.dashboard-ee")}`} component={DashboardEstablecimientoEducativo} />
+                                                        <Route path={`/${t("link.dashboard-gobierno")}`} component={DashboardGobierno} />
+                                                        <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
+                                                        <Route path={`/${t("link.practica")}`} component={Practica} />
+                                                        <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                        <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                        <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
+                                                        {
+                                                            this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
+                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "DOCENTE" ? (
+                                                                <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "GOBIERNO" ? (
+                                                                <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "EVALUADOR" ? (
+                                                                <React.Fragment>
+                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                </React.Fragment>
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "SUPERADMIN" ? (
+                                                                <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
+                                                                <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
+                                                            ) : ""
+                                                        }
+                                                        <Route component={Pagina404} />
+                                                    </Switch>
+                                                )
                                             ) : ""
                                         }
                                         <Route component={Pagina404} />
