@@ -593,7 +593,8 @@ class Registro extends Component {
                                                                     <img src={this.state.perfilIndividual.imgPerfil.src} alt="" className="w-100 mb-3"/>
                                                                 ) : ""}
                                                                 <Button
-                                                                    variant="contained"
+                                                                    variant="outlined"
+                                                                    color="primary"
                                                                     component="label"
                                                                     fullWidth
                                                                 >

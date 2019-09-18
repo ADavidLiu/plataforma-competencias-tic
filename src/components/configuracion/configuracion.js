@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Helmet } from "react-helmet";
 import { Redirect } from "react-router-dom";
-import { Translation } from "react-i18next";
+import { Translation, getI18n } from "react-i18next";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -26,11 +26,12 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Edit from '@material-ui/icons/Edit';
 
 class Configuracion extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         /* Conectarse al backend para traer la información verdadera de la configuración actual */
         this.state = {
+            rolActual: props.userType,
             versionActual: "1.0.0",
             versionSeleccionada: "1.0.0",
             versionesDisponibles: ["1.0.0", "1.0.1"],
@@ -147,6 +148,21 @@ class Configuracion extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+
+        /* Actualizar el backend de acuerdo con la configuración cambiada */
+        switch (e.target.name) {
+            case "rolActual":
+
+                break;
+            case "versionSeleccionada":
+
+                break;
+            case "idiomaSeleccionado":
+                getI18n().changeLanguage(e.target.value);
+                break;
+            default:
+                break;
+        }
     }
 
     toggleEditingAccountData = () => {
@@ -267,7 +283,7 @@ class Configuracion extends Component {
         return (
             <Translation>
                 {
-                    t => (
+                    (t, i18n) => (
                         <Grid container>
                             <Helmet>
                                 <title>{`${t("titulo.configuracion")} | ${this.props.userProfile.nombre}`}</title>
@@ -284,6 +300,33 @@ class Configuracion extends Component {
                                 <hr/>
                             </Grid>
                             <Grid item xs={12} className="mb-5">
+                                {
+                                    this.props.roles.length > 1 ? (
+                                        <Grid container spacing={5} alignItems="center">
+                                            <Grid item xs={6}>
+                                                <Typography variant="subtitle2" className="mr-4">
+                                                    {t("configuracion.label-rol")}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <FormControl variant="outlined" className="w-100">
+                                                    <Select
+                                                        value={this.state.rolActual}
+                                                        onChange={this.handleChange}
+                                                        input={<OutlinedInput required 
+                                                        name="rolActual"/>}
+                                                    >
+                                                        {
+                                                            this.props.roles.map((rol, i) => (
+                                                                <MenuItem key={i} value={rol}>{rol.charAt(0) + rol.slice(1).toLowerCase()}</MenuItem>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    ) : ""
+                                }
                                 <Grid container spacing={5} alignItems="center">
                                     <Grid item xs={6}>
                                         <Typography variant="subtitle2" className="mr-4">

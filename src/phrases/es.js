@@ -268,6 +268,7 @@ const es = {
         "curso.imagen-alt": "Imagen relativa al curso",
         "configuracion.titulo": "Configuración",
         "configuracion.ajustes-plataforma": "Ajustes de la plataforma",
+        "configuracion.label-rol": "Ver plataforma como",
         "configuracion.label-version": "Versión del instrumento",
         "configuracion.label-idioma": "Idioma de la interfaz",
         "configuracion.ajustes-cuenta": "Información de la cuenta",

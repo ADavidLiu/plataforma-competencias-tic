@@ -54,7 +54,8 @@ class LoginCheck extends Component {
             isLogeado: true,
             locale: "es",
             tipo: "ESTABLECIMIENTO",
-            id: "loremipsum"
+            id: "loremipsum",
+            roles: ["ESTABLECIMIENTO", "EVALUADOR"]
         }
 
         /* Pruebas de integración con backend */
@@ -258,7 +259,7 @@ class LoginCheck extends Component {
                                                     <Route path="/practica/" component={Practica} />
                                                     <Route path="/preentrevista/" render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                     <Route path="/entrevista/" render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} />}/>
+                                                    <Route path="/configuracion/" render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
                                                     {
                                                         this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
                                                             <Route path="/usuarios/" render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
