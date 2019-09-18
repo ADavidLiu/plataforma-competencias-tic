@@ -168,75 +168,79 @@ class LoginCheck extends Component {
                                         <Toolbar>
                                             <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
                                             <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
-                                            <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                                <Tooltip title="Inicio" placement="bottom">
-                                                    <Link to="/">
-                                                        <IconButton style={{ color: "#ffffff" }}>
-                                                            <Home />
-                                                        </IconButton>
-                                                    </Link>
-                                                </Tooltip>
-                                                <Tooltip title="Configuración" placement="bottom">
-                                                    <Link to={`/${t("link.configuracion")}`}>
-                                                        <IconButton style={{ color: "#ffffff" }}>
-                                                            <SettingsApplications />
-                                                        </IconButton>
-                                                    </Link>
-                                                </Tooltip>
-                                                {
-                                                    this.state.tipo === "DOCENTE" ? (
-                                                        <Tooltip title={t("procesos.titulo-alt")}>
-                                                            <Link to={`/${t("link.procesos")}`}>
-                                                                <IconButton style={{
-                                                                    color: "#ffffff"
-                                                                }}>
-                                                                    <Assignment/>
-                                                                </IconButton>
-                                                            </Link>
-                                                        </Tooltip>
-                                                    ) : ""
-                                                }
-                                                {
-                                                    this.state.tipo === "GOBIERNO" ? (
-                                                        <Tooltip title={t("territorios.titulo")} placement="bottom">
-                                                            <Link to={`/${t("link.territorios")}`}>
-                                                                <IconButton style={{color: "#ffffff"}}>
-                                                                    <Layers/>
-                                                                </IconButton>
-                                                            </Link>
-                                                        </Tooltip>
-                                                    ) : ""
-                                                }
-                                                {
-                                                    this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
-                                                        <Tooltip title={tituloLabelUsuarios} placement="bottom">
-                                                            <Link to={`/${t("link.usuarios")}`}>
+                                            {
+                                                !this.state.isPrimerIngreso ? (
+                                                    <div className="d-flex align-items-center justify-content-end flex-grow-1">
+                                                        <Tooltip title="Inicio" placement="bottom">
+                                                            <Link to="/">
                                                                 <IconButton style={{ color: "#ffffff" }}>
-                                                                    { iconUsers }
+                                                                    <Home />
                                                                 </IconButton>
                                                             </Link>
                                                         </Tooltip>
-                                                    ) : ""
-                                                }
-                                                {
-                                                    this.state.tipo === "EVALUADOR" ? (
-                                                        <Tooltip title="Calificaciones" placement="bottom">
-                                                            <Link to={`/${t("link.calificaciones")}`}>
+                                                        <Tooltip title="Configuración" placement="bottom">
+                                                            <Link to={`/${t("link.configuracion")}`}>
                                                                 <IconButton style={{ color: "#ffffff" }}>
-                                                                    <PlaylistAddCheck />
+                                                                    <SettingsApplications />
                                                                 </IconButton>
                                                             </Link>
                                                         </Tooltip>
-                                                    ) : ""
-                                                }
-                                                <Tooltip title="Cerrar sesión" placement="bottom">
-                                                    <Link to="/">
-                                                        <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
-                                                            <ExitToApp />
-                                                        </IconButton>
-                                                    </Link>
-                                                </Tooltip>
-                                            </div>
+                                                        {
+                                                            this.state.tipo === "DOCENTE" ? (
+                                                                <Tooltip title={t("procesos.titulo-alt")}>
+                                                                    <Link to={`/${t("link.procesos")}`}>
+                                                                        <IconButton style={{
+                                                                            color: "#ffffff"
+                                                                        }}>
+                                                                            <Assignment/>
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "GOBIERNO" ? (
+                                                                <Tooltip title={t("territorios.titulo")} placement="bottom">
+                                                                    <Link to={`/${t("link.territorios")}`}>
+                                                                        <IconButton style={{color: "#ffffff"}}>
+                                                                            <Layers/>
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
+                                                                <Tooltip title={tituloLabelUsuarios} placement="bottom">
+                                                                    <Link to={`/${t("link.usuarios")}`}>
+                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                            { iconUsers }
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "EVALUADOR" ? (
+                                                                <Tooltip title="Calificaciones" placement="bottom">
+                                                                    <Link to={`/${t("link.calificaciones")}`}>
+                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                            <PlaylistAddCheck />
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        <Tooltip title="Cerrar sesión" placement="bottom">
+                                                            <Link to="/">
+                                                                <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
+                                                                    <ExitToApp />
+                                                                </IconButton>
+                                                            </Link>
+                                                        </Tooltip>
+                                                    </div>
+                                                ) : ""
+                                            }
                                         </Toolbar>
                                     </AppBar>
                                 ) : (
