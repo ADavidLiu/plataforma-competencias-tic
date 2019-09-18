@@ -24,6 +24,23 @@ class AgregarUsuarios extends Component {
         this.intialState = {
             numNuevosUsuarios: 1,
             nuevosUsuarios: [],
+            nuevoAdmin: {
+                idNacional: "",
+                nombre: "",
+                telefono: "",
+                email: "",
+                direccion: ""
+            },
+            nuevoEvaluador: {
+                idNacional: "",
+                nombre: "",
+                pais: ""
+            },
+            nuevoGobierno: {
+                idNacional: "",
+                nombre: "",
+                pais: ""
+            },
             nuevaInstitucion: {
                 pais: "",
                 departamento: "",
@@ -63,6 +80,22 @@ class AgregarUsuarios extends Component {
 
     crearPlaceholderUsuario = () => {
         switch (this.props.userType) {
+            case "SUPERADMIN":
+                this.state.nuevosUsuarios.push({
+                    idNacional: "",
+                    nombre: "",
+                    telefono: "",
+                    email: "",
+                    direccion: ""
+                });
+                break;
+            case "ADMIN":
+                this.state.nuevosUsuarios.push({
+                    idNacional: "",
+                    nombre: "",
+                    pais: ""
+                });
+                break;
             case "GOBIERNO":
                 this.state.nuevosUsuarios.push({
                     nombre: "",
@@ -147,6 +180,15 @@ class AgregarUsuarios extends Component {
         });
 
         switch (tipoUsuarioCreado) {
+            case "ADMIN":
+
+                break;
+            case "GOBIERNO":
+
+                break;
+            case "EVALUADOR":
+
+                break;
             case "INSTITUCION":
                 this.setState({
                     nuevaInstitucion: {
@@ -244,6 +286,147 @@ class AgregarUsuarios extends Component {
         });
         
         switch (this.props.userType) {
+            case "SUPERADMIN":
+                for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
+                    itemsUsers.push(
+                        <Translation key={i}>
+                            {
+                                t => (
+                                    <Paper className="p-4 mb-3">
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={3} alignItems="flex-end">
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idNacional"
+                                                            value={this.state.nuevosUsuarios[i].idNacional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ADMIN", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombre"
+                                                            value={this.state.nuevosUsuarios[i].nombre}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ADMIN", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-telefono")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="telefono"
+                                                            value={this.state.nuevosUsuarios[i].telefono}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ADMIN", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("registro.email")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="email"
+                                                            value={this.state.nuevosUsuarios[i].email}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ADMIN", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-direccion")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="direccion"
+                                                            value={this.state.nuevosUsuarios[i].direccion}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "ADMIN", i); }}
+                                                        />
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                )
+                            }
+                        </Translation>
+                    );
+                }
+                break;
+            case "ADMIN":
+                for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
+                    itemsUsers.push(
+                        <Translation key={i}>
+                            {
+                                t => (
+                                    <Paper className="p-4 mb-3">
+                                        <Grid container>
+                                            <Grid item xs={12}>
+                                                <Grid container spacing={3} alignItems="flex-end">
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="idNacional"
+                                                            value={this.state.nuevosUsuarios[i].idNacional}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={6} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="nombre"
+                                                            value={this.state.nuevosUsuarios[i].nombre}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-pais")}</strong></Typography>
+                                                        <Select
+                                                            className="w-100"
+                                                            value={this.state.nuevosUsuarios[i].pais}
+                                                            onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
+                                                            input={<OutlinedInput required name="pais"/>}
+                                                        >
+                                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                                            <MenuItem value="PA-Panamá">Panamá</MenuItem>
+                                                            <MenuItem value="PE-Perú">Perú</MenuItem>
+                                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                                        </Select>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                )
+                            }
+                        </Translation>
+                    );
+                }
+                break;
+            case "EVALUADOR":
+
+                break;
             case "GOBIERNO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
                     itemsUsers.push(
