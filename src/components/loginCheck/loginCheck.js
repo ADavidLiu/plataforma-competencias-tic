@@ -53,7 +53,7 @@ class LoginCheck extends Component {
         this.state = {
             isLogeado: true,
             locale: "es",
-            tipo: "INSTITUCION",
+            tipo: "ESTABLECIMIENTO",
             id: "loremipsum"
         }
 
