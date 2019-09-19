@@ -17,6 +17,7 @@ const es = {
         "establecimientos": "Establecimientos Educativos",
         "establecimientos-corto": "Establecimientos",
         "gobiernos": "Gobiernos",
+        "evaluadores": "Evaluadores",
         "barrio": "Barrio",
         "localidad": "Localidad",
         "vereda": "Vereda",
@@ -110,7 +111,12 @@ const es = {
         "perfil.nunca": "nunca ha ingresado",
         "perfil.ver-detalles": "Ver detalles",
         "perfil.num-docentes": "Número de docentes:",
-        "perfil.num-sedes": "Número de sedes",
+        "perfil.num-sedes": "Número de establecimientos:",
+        "perfil.num-instituciones": "Número de instituciones:",
+        "perfil.num-encuestas": "Encuestas asignadas:",
+        "perfil.num-practicas": "Prácticas asignadas:",
+        "perfil.num-preentrevistas": "Pre-entrevistas asignadas:",
+        "perfil.num-entrevistas": "Entrevistas asignadas:",
         "procesoPaso.0": "Registro de datos",
         "procesoPaso.1": "Prueba de conocimientos",
         "procesoPaso.2": "Prácticas educativas",
@@ -433,7 +439,8 @@ const es = {
         "territorios.ayuda-borrar-1": "Todas las Instituciones, Establecimientos y Docentes que estén asociados a éste también serán desactivados.",
         "captcha.sin-resolver": "Verificación de reCAPTCHA",
         "captcha.sin-resolver-ayuda": 'Dé click sobre la casilla de verificación de reCAPTCHA presentada encima del botón "INGRESAR". Una vez verificada, proceda a dar click sobre el botón nuevamente para ingresar a la plataforma.',
-        "dashboardSuperadmin.viendo-datos": "Actualmente viendo datos de:",
+        "dashboardSuperadmin.datos": "Visualización de datos",
+        "dashboardSuperadmin.usuarios": "Visualización de usuarios",
     }
 }
 

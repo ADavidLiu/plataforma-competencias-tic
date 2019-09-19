@@ -173,3 +173,64 @@ export const institucionesCargadas = [
         numSedes: 4
     },
 ];
+
+export const evaluadoresCargados = [
+    {
+        perfilID: "678123098",
+        nombre: "Nulla exercitation ex occaecat",
+        pais: "PA-Panama",
+        asignaciones: {
+            encuestas: 0,
+            practicas: 2,
+            preentrevistas: 1,
+            entrevistas: 1
+        }
+    },
+    {
+        perfilID: "456321789",
+        nombre: "Adipisicing aliqua mollit",
+        pais: "CL-Chile",
+        asignaciones: {
+            encuestas: 1,
+            practicas: 1,
+            preentrevistas: 2,
+            entrevistas: 3
+        }
+    }
+];
+
+export const adminsCargados = [
+    {
+        perfilID: "123654321",
+        nombre: "Quis aliquip et duis aliquip",
+        telefono: "123312456",
+        email: "mail@mail.com",
+        direccion: "Calle 123 #45-67"
+    },
+    {
+        perfilID: "890123456",
+        nombre: "Nostrud duis mollit",
+        telefono: "321456789",
+        email: "mail@mail.com",
+        direccion: "Calle 89 #01-23"
+    }
+];
+
+export const gobiernosCargados = [
+    {
+        perfilID: "123098456",
+        nombre: "Esse nisi aute excepteur",
+        pais: "CO-Colombia",
+        numSedes: 50,
+        numDocentes: 234,
+        numInstituciones: 21
+    },
+    {
+        perfilID: "098123765",
+        nombre: "Commodo consectetur sit magna ea",
+        pais: "VE-Venezuela",
+        numSedes: 80,
+        numDocentes: 102,
+        numInstituciones: 19
+    }
+];

@@ -41,7 +41,7 @@ function Perfil(props) {
                                         <Button
                                             type="submit"
                                             variant="outlined"
-                                            color="default"
+                                            color="primary"
                                             size="medium"
                                         >{t("perfil.ver-detalles")}</Button>
                                     </Link>
@@ -101,7 +101,7 @@ function Perfil(props) {
                                         <Button
                                             type="submit"
                                             variant="outlined"
-                                            color="default"
+                                            color="primary"
                                             size="medium"
                                         >{t("perfil.ver-detalles")}</Button>
                                     </Link>
@@ -136,7 +136,7 @@ function Perfil(props) {
                                         <Button
                                             type="submit"
                                             variant="outlined"
-                                            color="default"
+                                            color="primary"
                                             size="medium"
                                         >{t("perfil.ver-detalles")}</Button>
                                     </Link>
@@ -151,6 +151,80 @@ function Perfil(props) {
             );
             break;
         case "GOBIERNOS":
+            perfilMostrado = (
+                <Translation>
+                    {
+                        t => (
+                            <Grid container alignItems="center">
+                                <Grid item xs={6}>
+                                    <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
+                                    <Typography variant="body2">{t("perfil.num-instituciones")} {perfil.numInstituciones}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-sedes")} {perfil.numSedes}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-docentes")} {perfil.numDocentes}</Typography>
+                                </Grid>
+                                <Grid item xs={6} className="text-right">
+                                    <Link to={{
+                                        pathname: "/dashboard-gobierno",
+                                        state: {
+                                            gobiernoID: userID
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            variant="outlined"
+                                            color="primary"
+                                            size="medium"
+                                        >{t("perfil.ver-detalles")}</Button>
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <hr/>
+                                </Grid>
+                            </Grid>
+                        )
+                    }
+                </Translation>
+            );
+            break;
+        case "EVALUADORES":
+            perfilMostrado = (
+                <Translation>
+                    {
+                        t => (
+                            <Grid container alignItems="center">
+                                <Grid item xs={6}>
+                                    <Typography variant="subtitle1"><strong>{perfil.nombre}</strong></Typography>
+                                    <Typography variant="body2">{t("perfil.num-encuestas")} {perfil.asignaciones.encuestas}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-practicas")} {perfil.asignaciones.practicas}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-preentrevistas")} {perfil.asignaciones.preentrevistas}</Typography>
+                                    <Typography variant="body2">{t("perfil.num-entrevistas")} {perfil.asignaciones.entrevistas}</Typography>
+                                </Grid>
+                                <Grid item xs={6} className="text-right">
+                                    <Link to={{
+                                        pathname: "/dashboad-evaluador",
+                                        state: {
+                                            evaluadorID: userID
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            variant="outlined"
+                                            color="primary"
+                                            size="medium"
+                                        >{t("perfil.ver-detalles")}</Button>
+                                    </Link>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <hr/>
+                                </Grid>
+                            </Grid>
+                        )
+                    }
+                </Translation>
+            );
+            break;
+        case "ADMINS":
+
             break;
         default:
             break;
