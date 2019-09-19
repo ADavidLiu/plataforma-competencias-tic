@@ -14,10 +14,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
-import cursos from "../../models/cursos";
 import { docentesCargados, institucionesCargadas, establecimientosCargados, evaluadoresCargados, adminsCargados, gobiernosCargados } from "../../models/perfiles";
 
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
