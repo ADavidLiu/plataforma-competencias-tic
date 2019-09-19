@@ -433,7 +433,7 @@ const es = {
         "territorios.ayuda-borrar-1": "Todas las Instituciones, Establecimientos y Docentes que estén asociados a éste también serán desactivados.",
         "captcha.sin-resolver": "Verificación de reCAPTCHA",
         "captcha.sin-resolver-ayuda": 'Dé click sobre la casilla de verificación de reCAPTCHA presentada encima del botón "INGRESAR". Una vez verificada, proceda a dar click sobre el botón nuevamente para ingresar a la plataforma.',
-        
+        "dashboardSuperadmin.viendo-datos": "Actualmente viendo datos de:",
     }
 }
 
