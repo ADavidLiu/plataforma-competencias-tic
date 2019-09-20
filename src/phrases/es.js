@@ -42,9 +42,12 @@ const es = {
         "pregunta": "Pregunta",
         "respuesta": "Respuesta",
         "respuestas": "Respuestas",
+        "ver-data": "Ver información relacionada",
+        "id-evento": "ID del evento",
         "filasPorPagina": "Filas por página",
         "buscar": "Buscar...",
         "escribir": "Escribir...",
+        "fecha-realizacion": "Fecha de realización",
         "editar-calificacion": "Editar calificación",
         "revisar": "Revisar",
         "volver-inicio": "Volver a inicio",
@@ -457,6 +460,7 @@ const es = {
         "auditoria.titulo": "Auditoría de usuarios",
         "auditoria.titulo-alt": "Auditoría",
         "auditoria.buscar": "Buscar por nombre de usuario",
+        "auditoria.label-ver": "Ver datos",
     }
 }
 

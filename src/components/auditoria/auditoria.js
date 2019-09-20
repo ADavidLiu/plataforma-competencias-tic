@@ -10,12 +10,24 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ListaUsuarios from "../listaUsuarios/listaUsuarios";
 
 class Auditoria extends Component {
     constructor() {
         super();
+
+        this.items = [
+            {
+                value: "John Doe",
+                label: "John Doe"
+            },
+            {
+                value: "Jane Doe",
+                label: "Jane Doe"
+            }
+        ];
 
         this.state = {
             usuarioSeleccionado: "",
@@ -24,31 +36,8 @@ class Auditoria extends Component {
                 categoria: "fechaRealizacion",
                 orden: "descendente"
             },
-            isSelected: false
-        }
-
-        this.items = [
-            {
-                value: "lorem",
-                label: "Lorem"
-            },
-            {
-                value: "ipsum",
-                label: "Ipsum"
-            },
-            {
-                value: "dolor",
-                label: "Dolor"
-            },
-            {
-                value: "sit",
-                label: "Sit"
-            },
-            {
-                value: "amet",
-                label: "Amet"
-            }
-        ]
+            didSelectUser: false
+        };
     }
 
     filterOptions = inputValue => {
@@ -62,9 +51,10 @@ class Auditoria extends Component {
         }, 500);
     }
 
-    handleBusquedaUsuario = newValue => {
+    handleSeleccionUsuario = selected => {
         this.setState({
-            usuarioSeleccionado: newValue
+            usuarioSeleccionado: selected.value,
+            didSelectUser: true
         });
     }
 
@@ -89,7 +79,7 @@ class Auditoria extends Component {
                                             cacheOptions
                                             loadOptions={this.loadOptions}
                                             defaultOptions
-                                            onInputChange={this.handleBusquedaUsuario}
+                                            onChange={this.handleSeleccionUsuario}
                                             loadingMessage={() => t("cargando")}
                                             noOptionsMessage={() => t("no-resultados")}
                                             placeholder={t("escribir")}
@@ -97,7 +87,9 @@ class Auditoria extends Component {
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <ListaUsuarios tipoUsuariosMotrados="TODOS" userType="TODOS" />
+                                    {
+                                        this.state.didSelectUser ? <ListaUsuarios tipoUsuariosMostrados="auditoria" userType="AUDITORIA"/> : ""
+                                    }
                                 </Grid>
                             </Grid>
                         </React.Fragment>

@@ -19,6 +19,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from '@material-ui/core/TablePagination';
 
+import Tooltip from "@material-ui/core/Tooltip";
+
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -34,6 +36,7 @@ import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
 import OpenInNew from "@material-ui/icons/OpenInNewOutlined";
 import Search from "@material-ui/icons/Search";
 import Warning from "@material-ui/icons/Warning";
+import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
 
 import { CircularProgress } from "@material-ui/core";
 
@@ -43,7 +46,7 @@ class ListaUsuarios extends Component {
         
         this.formularioPlaceholder = {};
         this.headCells = {
-            todos: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "accion", "usuario-incidido", "archivos-relacionados", "usuarios.acciones"],
+            auditoria: ["id-evento", "accion", "fecha-realizacion", "ver-data", "usuarios.acciones"],
             superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-ee-direccion", "usuarios.acciones"],
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
@@ -52,18 +55,21 @@ class ListaUsuarios extends Component {
             establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.acciones"],
         };
         switch (props.userType) {
-            case "TODOS":
+            case "AUDITORIA":
                 this.formularioPlaceholder = {
                     idNacional: "",
                     nombre: "",
                     accion: "",
-                    usuarioIncidido: {
-                        idNacional: "",
-                        nombre: ""
-                    },
-                    archivosRelacionados: {
-                        nombre: "",
-                        url: ""
+                    fechaRealizacion: "",
+                    data: {
+                        usuarioIncidido: {
+                            idNacional: "",
+                            nombre: ""
+                        },
+                        archivosRelacionados: {
+                            nombre: "",
+                            url: ""
+                        }
                     }
                 };
                 break;
@@ -120,6 +126,38 @@ class ListaUsuarios extends Component {
         }
 
         this.mockData = {
+            auditoria: [
+                {
+                    nombre: "John Doe",
+                    idNacional: "123234345",
+                    idEvento: "098123",
+                    accion: "Carga de práctica educativa",
+                    fechaRealizacion: "2019-08-14",
+                    data: {
+                        usuarioIncidido: {
+                            idNacional: "098987765",
+                            nombre: "Jane Doe"
+                        },
+                        archivosRelacionados: {
+                            nombre: "retroalimentado.pdf",
+                            url: "https://ww.google.com"
+                        }
+                    }
+                },
+                {
+                    nombre: "Jane Doe",
+                    idNacional: "456567678",
+                    idEvento: "123890",
+                    accion: "Respuesta a pregunta de pre-entrevista",
+                    fechaRealizacion: "2019-02-19",
+                    data: {
+                        pregunta: {
+                            id: "12",
+                            respondido: "Qui ut qui dolor deserunt deserunt occaecat nulla esse excepteur id aliquip."
+                        }
+                    }
+                }
+            ],
             admins: [
                 {
                     idNacional: "123654321",
@@ -358,6 +396,7 @@ class ListaUsuarios extends Component {
             isEditing: false,
             isDeleting: false,
             isFiltering: false,
+            isViewingRelatedData: false,
             activeID: "",
             activeCategory: "",
             usuarios: {...this.mockData},
@@ -477,6 +516,11 @@ class ListaUsuarios extends Component {
         const encontrado = this.state.usuarios[this.props.tipoUsuariosMostrados].find(usuario => usuario.idNacional === id);
         
         switch (this.props.userType) {
+            case "AUDITORIA":
+                this.setState({
+                    activeID: id
+                });
+                break;
             case "SUPERADMIN":
                 this.setState({
                     activeID: id,
@@ -823,6 +867,33 @@ class ListaUsuarios extends Component {
                             }
                         });
                         break;
+                    case "accion":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "accion",
+                                categoriaFormatted: "accion"
+                            }
+                        });
+                        break;
+                    case "fecha-realizacion":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "fecha-realizacion",
+                                categoriaFormatted: "fechaRealizacion"
+                            }
+                        });
+                        break;
+                    case "id-evento":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "id-evento",
+                                categoriaFormatted: "idEvento"
+                            }
+                        });
+                        break;
                     default:
                         break;
                 }
@@ -890,9 +961,16 @@ class ListaUsuarios extends Component {
             let matchedArrays = [];
 
             this.state.usuarios[this.props.tipoUsuariosMostrados].forEach(elem => {
-                Object.values(elem).forEach(val => {
-                    rawValuesToSearchFrom.push(val);
-                });
+                let values = Object.values(elem);
+                if (this.props.userType === "AUDITORIA") {
+                    Object.values(elem).forEach(val => {
+                        rawValuesToSearchFrom.push(val);
+                    });
+                } else {
+                    values.forEach(val => {
+                        rawValuesToSearchFrom.push(val);
+                    });
+                }
             });
 
             for (let i = 0; i < rawValuesToSearchFrom.length; i += this.headCells[this.props.userType.toLowerCase()].length - 1) {
@@ -905,6 +983,8 @@ class ListaUsuarios extends Component {
                     }
                 });
             });
+
+            console.log(arraysValuesToSearchFrom);
 
             matchedArrays.sort(sortBy("-usuarios.registro-idNacional"));
             matchedArrays = [...new Set(matchedArrays)];
@@ -924,11 +1004,119 @@ class ListaUsuarios extends Component {
         }
     }
 
+    verData = idEvento => {
+        console.log(idEvento);
+        /* Conectarse al backend para traer los datos relacionados a este evento */
+
+    }
+
 	render() {
         let tabla;
         let formularioEdicion;
 
         switch (this.props.userType) {
+            case "AUDITORIA":
+                tabla = (
+                    <Translation>
+                        {
+                            t => (
+                                <Paper>
+                                    <div className="scrolling-table-outer">
+                                        <div className="scrolling-table-wrapper">
+                                            <Table className="scrolling-table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        {
+                                                            this.headCells.auditoria.map((title, i) => i < this.headCells.auditoria.length - 1 ? <TableCell key={i}>{t(title)}</TableCell> : null)
+                                                        }
+                                                    </TableRow>
+                                                </TableHead>
+                                                {
+                                                    this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
+                                                        <TableBody>
+                                                            {
+                                                                this.state.isFiltering ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                        <TableRow>
+                                                                            <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                                <div className="d-flex align-items-center justify-content-center">
+                                                                                    <Warning className="mr-2" fontSize="small"/>
+                                                                                    {t("visorPerfiles.no-resultados")}
+                                                                                </div>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ) : (
+                                                                        <React.Fragment>
+                                                                            {
+                                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                    const values = Object.values(elemento);
+                                                                                    const keys = Object.keys(elemento);
+                                                                                    return (
+                                                                                        <TableRow key={i}>
+                                                                                            {
+                                                                                                values.map((val, j) => {
+                                                                                                    if (keys[j] === "pais") {
+                                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                    } else {
+                                                                                                        {/* console.log(keys[j]); */}
+                                                                                                        if (typeof val !== "object") {
+                                                                                                            if (keys[j] !== "idNacional" && keys[j] !== "nombre") {
+                                                                                                                return <TableCell key={j}>{val}</TableCell>;
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                })
+                                                                                            }
+                                                                                            <TableCell>
+                                                                                                <Tooltip title={t("auditoria.label-ver")} placement="right">
+                                                                                                    <OpenInBrowser color="primary" style={{cursor: "pointer"}} onClick={() => { this.verData(elemento.idEvento); }}/>
+                                                                                                </Tooltip>
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        </React.Fragment>
+                                                                    )
+                                                                )
+                                                            }
+                                                        </TableBody>
+                                                    ) : (
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    )
+                                                }
+                                            </Table>
+                                        </div>
+                                    </div>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={t("filasPorPagina")}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
+                                </Paper>
+                            )
+                        }
+                    </Translation>
+                );
+                break;
             case "SUPERADMIN":
                 tabla = (
                     <Translation>
