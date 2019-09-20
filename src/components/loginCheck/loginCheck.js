@@ -29,6 +29,7 @@ import Prueba from "../prueba/prueba";
 import Dashboard from "../dashboard/dashboard";
 import DashboardSuperadmin from "../dashboard/dashboardSuperadmin";
 import DashboardAdmin from "../dashboard/dashboardAdmin";
+import DashboardEvaluador from "../dashboard/dashboardEvaluador";
 import DashboardGobierno from "../dashboard/dashboardGobierno";
 import DashboardInstitucionEducativa from "../dashboard/dashboardInstitucionEducativa";
 import DashboardEstablecimientoEducativo from "../dashboard/dashboardEstablecimientoEducativo";
@@ -57,9 +58,9 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "ADMIN",
+            tipo: "EVALUADOR",
             id: "loremipsum",
-            roles: ["ADMIN"]
+            roles: ["EVALUADOR", "DOCENTE"]
         }
 
         /* Pruebas de integración con backend */
@@ -284,13 +285,14 @@ class LoginCheck extends Component {
                                                         <Route path={`/${t("link.dashboard-ie")}`} component={DashboardInstitucionEducativa} />
                                                         <Route path={`/${t("link.dashboard-ee")}`} component={DashboardEstablecimientoEducativo} />
                                                         <Route path={`/${t("link.dashboard-gobierno")}`} component={DashboardGobierno} />
+                                                        <Route path={`/${t("link.dashboard-evaluador")}`} component={DashboardEvaluador} />
                                                         <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.practica")}`} component={Practica} />
                                                         <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
                                                         {
-                                                            this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
+                                                            this.state.tipo !== "DOCENTE" ? (
                                                                 <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
@@ -306,13 +308,14 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "EVALUADOR" ? (
-                                                                <React.Fragment>
+                                                                <Switch>
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
-                                                                </React.Fragment>
+                                                                    <Route component={Pagina404} />
+                                                                </Switch>
                                                             ) : ""
                                                         }
                                                         {

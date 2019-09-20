@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { Bar, Pie } from "react-chartjs-2";
 
@@ -51,8 +52,20 @@ class DashboardEvaluador extends Component {
 
     componentDidMount = () => {
         /* Conectarse al backend para traer los datos de las prácticas, preentrevistas y entrevistas */
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                evaluadorID: this.props.location.state.evaluadorID
+            }
+        } else {
+            infoCargada = {
+                evaluadorID: ""
+            }
+        }
+
         this.setState({
-            evaluadorID: this.props.userID,
+            evaluadorID: infoCargada.evaluadorID,
             practicas: [
                 ...this.state.practicas,
                 {
@@ -119,6 +132,10 @@ class DashboardEvaluador extends Component {
     }
 
     render() {
+        /* if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        } */
+
         return (
             <Translation>
                 {

@@ -509,7 +509,7 @@ class DashboardSuperadmin extends Component {
                                                     )
                                                 }
                                             </Grid>
-                                            <Grid item xs={12} md={6}>
+                                            <Grid item xs={12}>
                                                 <Typography variant="h6" className="mb-1">{t("dashboardGobierno.docentes")}</Typography>
                                                 <hr className="mb-3" />
                                                 {
