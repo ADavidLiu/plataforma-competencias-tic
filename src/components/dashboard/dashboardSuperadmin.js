@@ -240,7 +240,7 @@ class DashboardSuperadmin extends Component {
                             {!this.state.isLoading ? (
                                 <React.Fragment>
                                     <Grid item xs={12}>
-                                    <Paper className="p-5">
+                                    <Paper className="p-3 p-md-5">
                                     <Grid container spacing={5}>
 
                                     <Grid item xs={12}>
@@ -459,7 +459,7 @@ class DashboardSuperadmin extends Component {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                    <Paper className="p-5">
+                                    <Paper className="p-3 p-md-5">
                                     <Grid container spacing={5}>
 
                                     <Grid item xs={12}>

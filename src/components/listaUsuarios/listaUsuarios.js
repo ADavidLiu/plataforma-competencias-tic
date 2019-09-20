@@ -43,6 +43,7 @@ class ListaUsuarios extends Component {
         
         this.formularioPlaceholder = {};
         this.headCells = {
+            todos: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "accion", "usuario-incidido", "archivos-relacionados", "usuarios.acciones"],
             superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-ee-direccion", "usuarios.acciones"],
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
@@ -51,6 +52,21 @@ class ListaUsuarios extends Component {
             establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.acciones"],
         };
         switch (props.userType) {
+            case "TODOS":
+                this.formularioPlaceholder = {
+                    idNacional: "",
+                    nombre: "",
+                    accion: "",
+                    usuarioIncidido: {
+                        idNacional: "",
+                        nombre: ""
+                    },
+                    archivosRelacionados: {
+                        nombre: "",
+                        url: ""
+                    }
+                };
+                break;
             case "SUPERADMIN":
                 this.formularioPlaceholder = {
                     idNacional: "",

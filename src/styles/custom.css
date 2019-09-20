@@ -110,6 +110,26 @@ main:before {
     left: auto;
 }
 
+.dropdown__control--is-focused {
+    border-color: #3f51b5 !important;
+    box-shadow: 0 0 0 1px #3f51b5 !important;
+}
+
+.dropdown__option--is-focused,
+.dropdown__option:hover {
+    background-color: rgba(63, 81, 181, 0.75) !important;
+    color: #ffffff !important;
+}
+
+.dropdown__option--is-selected:hover {
+    background-color: #3f51b5 !important;
+}
+
+.dropdown__option--is-selected {
+    background-color: #3f51b5 !important;
+    color: #ffffff !important;
+}
+
 @media screen and (min-width: 500px) {
     .text-ellipsis {
         width: 60%;

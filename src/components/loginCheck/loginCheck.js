@@ -22,6 +22,8 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 import Layers from "@material-ui/icons/Layers";
 import Assignment from "@material-ui/icons/Assignment";
+import Build from "@material-ui/icons/Build";
+import YoutubeSearchedFor from "@material-ui/icons/YoutubeSearchedFor";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -48,6 +50,8 @@ import EncuestaRevision from "../encuesta/encuestaRevision";
 import Calificaciones from "../calificaciones/calificaciones";
 import Territorios from "../territorios/territorios";
 import PrimerIngreso from "../primerIngreso/primerIngreso";
+import Auditoria from "../auditoria/auditoria";
+import Instrumento from "../instrumento/instrumento";
 
 class LoginCheck extends Component {
     constructor() {
@@ -58,9 +62,9 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "SUPERADMIN",
             id: "loremipsum",
-            roles: ["EVALUADOR", "DOCENTE"]
+            roles: ["SUPERADMIN", "EVALUADOR"]
         }
 
         /* Pruebas de integración con backend */
@@ -193,6 +197,32 @@ class LoginCheck extends Component {
                                                             </Link>
                                                         </Tooltip>
                                                         {
+                                                            this.state.tipo === "SUPERADMIN" ? (
+                                                                <Tooltip title={t("instrumento.titulo-alt")}>
+                                                                    <Link to={`/${t("link.instrumento")}`}>
+                                                                        <IconButton style={{
+                                                                            color: "#ffffff"
+                                                                        }}>
+                                                                            <Build fontSize="small"/>
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        {
+                                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
+                                                                <Tooltip title={t("auditoria.titulo-alt")}>
+                                                                    <Link to={`/${t("link.auditoria")}`}>
+                                                                        <IconButton style={{
+                                                                            color: "#ffffff"
+                                                                        }}>
+                                                                            <YoutubeSearchedFor/>
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : ""
+                                                        }
+                                                        {
                                                             this.state.tipo === "DOCENTE" ? (
                                                                 <Tooltip title={t("procesos.titulo-alt")}>
                                                                     <Link to={`/${t("link.procesos")}`}>
@@ -320,7 +350,12 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "SUPERADMIN" ? (
-                                                                <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
+                                                                <Switch>
+                                                                    <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
+                                                                    <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route component={Pagina404} />
+                                                                </Switch>
                                                             ) : ""
                                                         }
                                                         {
