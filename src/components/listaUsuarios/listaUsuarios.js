@@ -46,7 +46,7 @@ class ListaUsuarios extends Component {
         
         this.formularioPlaceholder = {};
         this.headCells = {
-            auditoria: ["id-evento", "accion", "fecha-realizacion", "ver-data", "usuarios.acciones"],
+            auditoria: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "id-evento", "accion", "fecha-realizacion", "ver-data", "usuarios.acciones"],
             superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-ee-direccion", "usuarios.acciones"],
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
@@ -128,8 +128,8 @@ class ListaUsuarios extends Component {
         this.mockData = {
             auditoria: [
                 {
-                    nombre: "John Doe",
                     idNacional: "123234345",
+                    nombre: "John Doe",
                     idEvento: "098123",
                     accion: "Carga de práctica educativa",
                     fechaRealizacion: "2019-08-14",
@@ -145,8 +145,8 @@ class ListaUsuarios extends Component {
                     }
                 },
                 {
-                    nombre: "Jane Doe",
                     idNacional: "456567678",
+                    nombre: "Jane Doe",
                     idEvento: "123890",
                     accion: "Respuesta a pregunta de pre-entrevista",
                     fechaRealizacion: "2019-02-19",
@@ -986,8 +986,6 @@ class ListaUsuarios extends Component {
                 });
             });
 
-            console.log(arraysValuesToSearchFrom);
-
             matchedArrays.sort(sortBy("-usuarios.registro-idNacional"));
             matchedArrays = [...new Set(matchedArrays)];
 
@@ -1133,11 +1131,8 @@ class ListaUsuarios extends Component {
                                                                                                     if (keys[j] === "pais") {
                                                                                                         return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                                     } else {
-                                                                                                        {/* console.log(keys[j]); */}
                                                                                                         if (typeof val !== "object") {
-                                                                                                            if (keys[j] !== "idNacional" && keys[j] !== "nombre") {
-                                                                                                                return <TableCell key={j}>{val}</TableCell>;
-                                                                                                            }
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
                                                                                                         }
                                                                                                     }
                                                                                                 })
