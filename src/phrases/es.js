@@ -4,6 +4,7 @@ const es = {
         "si": "Sí",
         "no": "No",
         "cargando": "Cargando...",
+        "cerrar": "Cerrar",
         "no-resultados": "No se encontraron resultados",
         "accion": "Acción realizada",
         "usuario-incidido": "Usuario incidido",
@@ -461,6 +462,15 @@ const es = {
         "auditoria.titulo-alt": "Auditoría",
         "auditoria.buscar": "Buscar por nombre de usuario",
         "auditoria.label-ver": "Ver datos",
+        "auditoria.label-datos": "Datos relacionados",
+        "auditoria.usuarioIncidido": "Usuario incidido",
+        "auditoria.archivosRelacionados": "Archivos relacionados",
+        "auditoria.pregunta": "Pregunta",
+        "auditoria.nombre": "Nombre",
+        "auditoria.idNacional": "ID Nacional",
+        "auditoria.url": "URL",
+        "auditoria.id": "ID",
+        "auditoria.respondido": "Respondido",
     }
 }
 

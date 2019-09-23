@@ -391,12 +391,14 @@ class ListaUsuarios extends Component {
             ]
         }
 
+        this.dataRelacionada = "";
+
 		this.state = {
             isLoading: true,
             isEditing: false,
             isDeleting: false,
             isFiltering: false,
-            isViewingRelatedData: false,
+            isViewingData: false,
             activeID: "",
             activeCategory: "",
             usuarios: {...this.mockData},
@@ -1004,10 +1006,77 @@ class ListaUsuarios extends Component {
         }
     }
 
-    verData = idEvento => {
-        console.log(idEvento);
-        /* Conectarse al backend para traer los datos relacionados a este evento */
+    toggleViewingData = () => {
+        this.setState({
+            isViewingData: !this.state.isViewingData
+        });
+    }
 
+    crearDataRelacionada = data => {
+        console.log(data);
+        this.dataRelacionada = (
+            <Translation>
+                {
+                    t => (
+                        <Paper>
+                        <div className="scrolling-table-outer">
+                            <div className="scrolling-table-wrapper">
+                                <Table className="scrolling-table">
+                                    <TableHead>
+                                        <TableRow>
+                                            {
+                                                Object.keys(data).map(key => <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>)
+                                            }
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        <TableRow>
+                                            {
+                                                Object.values(data).map((val, i) => {
+                                                    return <TableCell key={i}>
+                                                        <Table>
+                                                            <TableHead>
+                                                                <TableRow>
+                                                                    {
+                                                                        Object.keys(val).map(key => (
+                                                                            <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>
+                                                                        ))
+                                                                    }
+                                                                </TableRow>
+                                                            </TableHead>
+                                                            <TableBody>
+                                                                <TableRow>
+                                                                    {
+                                                                        Object.values(val).map((val, i) => (
+                                                                            <TableCell className="text-center" key={i}>{val}</TableCell>
+                                                                        ))
+                                                                    }
+                                                                </TableRow>
+                                                            </TableBody>
+                                                        </Table>
+                                                    </TableCell>
+                                                })
+                                            }
+                                        </TableRow>
+                                    </TableBody>
+                                </Table>
+                            </div>
+                        </div>
+                        </Paper>
+                    )
+                }
+            </Translation>
+        );
+    }
+
+    verData = idEvento => {
+        /* Conectarse al backend para traer los datos relacionados a este evento */
+        const encontrado = this.state.usuarios[this.props.tipoUsuariosMostrados.toLowerCase()].find(usuario => usuario.idEvento === idEvento);
+        this.crearDataRelacionada(encontrado.data);
+        this.setState({
+            activeID: idEvento,
+            isViewingData: true
+        });
     }
 
 	render() {
@@ -2109,6 +2178,16 @@ class ListaUsuarios extends Component {
                                 </DialogContent>
                                 <DialogActions>
                                     <Button color="primary" onClick={this.confirmUserDeletion}>{t("usuarios.btn-borrar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Dialog open={this.state.isViewingData} onClose={this.toggleViewingData} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+                                <DialogTitle id="form-dialog-title">{t("auditoria.label-datos")}</DialogTitle>
+                                <DialogContent>
+                                    { this.dataRelacionada }
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.toggleViewingData}>{t("cerrar")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>
