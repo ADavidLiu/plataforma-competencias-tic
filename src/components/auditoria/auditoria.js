@@ -88,7 +88,7 @@ class Auditoria extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     {
-                                        this.state.didSelectUser ? <ListaUsuarios tipoUsuariosMostrados="auditoria" userType="AUDITORIA"/> : ""
+                                        this.state.didSelectUser ? <ListaUsuarios tipoUsuariosMostrados="auditoria" userType="AUDITORIA" buscarNombre={this.state.usuarioSeleccionado}/> : ""
                                     }
                                 </Grid>
                             </Grid>

@@ -438,6 +438,10 @@ class ListaUsuarios extends Component {
             });
             clearTimeout(timeout);
         }, 500);
+
+        if (this.props.buscarNombre) {
+            this.buscarPorNombre(this.props.buscarNombre);
+        }
     }
 
     componentDidUpdate = prevProps => {
@@ -470,6 +474,15 @@ class ListaUsuarios extends Component {
                 clearTimeout(timeout);
             }, 500);
         }
+
+        /* Cambió de término de búsqueda en Auditoría.js */
+        if (this.props.buscarNombre !== prevProps.buscarNombre) {
+            this.buscarPorNombre(this.props.buscarNombre);
+        }
+    }
+
+    buscarPorNombre = nombreBuscado => {
+        this.handleSearch(null, nombreBuscado);
     }
 
     toggleDeleting = () => {
@@ -942,15 +955,17 @@ class ListaUsuarios extends Component {
         }, 1000);
     }
 
-    handleSearch = e => {
+    handleSearch = (e, buscarNombre) => {
         const copiaElementos = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
-        const searchTerm = e.target.value;
+        const searchTerm = e ? e.target.value : buscarNombre;
+
+        console.log(searchTerm);
 
         this.setState({
             searchTerm: searchTerm
         });
 
-        if (e.target.value === "" || e.target.value === null || e.target.value === undefined) {
+        if (searchTerm === "" || searchTerm === null || searchTerm === undefined) {
             this.setState({
                 elementosMostrados: {
                     ...this.state.elementosMostrados,
@@ -1011,7 +1026,6 @@ class ListaUsuarios extends Component {
     }
 
     crearDataRelacionada = data => {
-        console.log(data);
         this.dataRelacionada = (
             <Translation>
                 {
@@ -1070,6 +1084,7 @@ class ListaUsuarios extends Component {
     verData = idEvento => {
         /* Conectarse al backend para traer los datos relacionados a este evento */
         const encontrado = this.state.usuarios[this.props.tipoUsuariosMostrados.toLowerCase()].find(usuario => usuario.idEvento === idEvento);
+        
         this.crearDataRelacionada(encontrado.data);
         this.setState({
             activeID: idEvento,
@@ -1139,7 +1154,7 @@ class ListaUsuarios extends Component {
                                                                                             }
                                                                                             <TableCell>
                                                                                                 <Tooltip title={t("auditoria.label-ver")} placement="right">
-                                                                                                    <OpenInBrowser color="primary" style={{cursor: "pointer"}} onClick={() => { this.verData(elemento.idEvento); }}/>
+                                                                                                    <OpenInBrowser color="primary" style={{cursor: "pointer"}} onClick={() => { this.verData(elemento[2]); }}/>
                                                                                                 </Tooltip>
                                                                                             </TableCell>
                                                                                         </TableRow>
@@ -2103,22 +2118,26 @@ class ListaUsuarios extends Component {
                         <React.Fragment>
                             { this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
                                 <Grid container spacing={5}>
-                                    <Grid item xs={12} md={6} className="pb-0">
-                                        <TextField
-                                            placeholder={t("buscar")}
-                                            fullWidth
-                                            variant="outlined"
-                                            onChange={this.handleSearch}
-                                            value={this.state.searchTerm}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Search color="primary" />
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                        />
-                                    </Grid>
+                                    {
+                                        this.props.userType !== "AUDITORIA" ? (
+                                            <Grid item xs={12} md={6} className="pb-0">
+                                                <TextField
+                                                    placeholder={t("buscar")}
+                                                    fullWidth
+                                                    variant="outlined"
+                                                    onChange={this.handleSearch}
+                                                    value={this.state.searchTerm}
+                                                    InputProps={{
+                                                        endAdornment: (
+                                                            <InputAdornment position="start">
+                                                                <Search color="primary" />
+                                                            </InputAdornment>
+                                                        )
+                                                    }}
+                                                />
+                                            </Grid>
+                                        ) : null
+                                    }
                                     <Grid item xs={12} md={6} className="pb-0">
                                         <div className="d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
                                             <Select
