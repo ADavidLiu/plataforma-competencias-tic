@@ -98,6 +98,7 @@ const es = {
         "titulo.preentrevista-revision": "Revisión de Pre-entrevista",
         "titulo.entrevista-revision": "Revisión de Entrevista",
         "titulo.encuesta-revision": "Revisión de Encuesta",
+        "titulo.ayuda": "Ayuda",
         "incipiente": "Incipiente",
         "en-desarrollo": "En Desarrollo",
         "establecido": "Establecido",
@@ -475,6 +476,9 @@ const es = {
         "auditoria.url": "URL",
         "auditoria.id": "ID",
         "auditoria.respondido": "Respondido",
+        "ayuda.title": "Ayuda o PQRS's",
+        "ayuda.text": 'Por favor diríjase a la plataforma "Requerimientos", proveída por la Pontificia Universidad Javeriana Cali, haciendo click sobre el botón.',
+        "ayuda.btn-label": "Ir a Requerimientos",
     }
 }
 

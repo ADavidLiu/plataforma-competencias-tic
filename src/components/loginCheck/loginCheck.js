@@ -54,6 +54,7 @@ import Territorios from "../territorios/territorios";
 import PrimerIngreso from "../primerIngreso/primerIngreso";
 import Auditoria from "../auditoria/auditoria";
 import Instrumento from "../instrumento/instrumento";
+import Ayuda from "../ayuda/ayuda";
 
 class LoginCheck extends Component {
     constructor() {
@@ -304,8 +305,9 @@ class LoginCheck extends Component {
                                                 return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
                                             }
                                         }} />
-                                        <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                                        <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login {...routeProps} actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
                                         <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
+                                        <Route path={`/${t("link.ayuda")}`} component={Ayuda}/>
                                         {
                                             this.state.isLogeado ? (
                                                 this.state.isPrimerIngreso ? (
