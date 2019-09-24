@@ -11,7 +11,7 @@ export const docentesCargados = [
     {
         perfilID: "docente-2",
         nombre: "Nulla labore velit est id",
-        pasoActual: 0,
+        pasoActual: 1,
         imgSrc: "",
         ultimoIngreso: ""
     },
@@ -25,7 +25,7 @@ export const docentesCargados = [
     {
         perfilID: "docente-4",
         nombre: "Incididunt cupidatat irure",
-        pasoActual: 1,
+        pasoActual: 2,
         imgSrc: "",
         ultimoIngreso: moment().unix()
     },

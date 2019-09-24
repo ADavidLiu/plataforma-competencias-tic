@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
+import Fab from "@material-ui/core/Fab";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -24,6 +25,7 @@ import Layers from "@material-ui/icons/Layers";
 import Assignment from "@material-ui/icons/Assignment";
 import Build from "@material-ui/icons/Build";
 import YoutubeSearchedFor from "@material-ui/icons/YoutubeSearchedFor";
+import Help from "@material-ui/icons/Help";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -372,6 +374,11 @@ class LoginCheck extends Component {
                                     </Switch>
                                 </div>
                             </Container>
+                            <Link to={t("link.ayuda")}>
+                                <Fab color="primary" className="fab">
+                                    <Help />
+                                </Fab>
+                            </Link>
                         </Router>
                     )
                 }

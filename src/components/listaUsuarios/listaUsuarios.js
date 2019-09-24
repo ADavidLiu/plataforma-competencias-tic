@@ -52,7 +52,7 @@ class ListaUsuarios extends Component {
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             gobierno: ["usuarios.registro-idNacional", "usuarios.registro-nombre-ie", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.acciones"],
             institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
-            establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.acciones"],
+            establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.tiempo-restante", "usuarios.etapa-actual", "usuarios.acciones"],
         };
         switch (props.userType) {
             case "AUDITORIA":
@@ -118,7 +118,9 @@ class ListaUsuarios extends Component {
                 this.formularioPlaceholder = {
                     idNacional: "",
                     nombreCompleto: "",
-                    idEstablecimiento: ""
+                    idEstablecimiento: "",
+                    tiempoRestantePrueba: "",
+                    etapaActualProceso: ""
                 };
                 break;
             default:
@@ -346,47 +348,65 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "567890123",
                     nombreCompleto: "John Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 1200,
+                    etapaActualProceso: "procesoPaso.1"
                 },
                 {
                     idNacional: "123456980",
                     nombreCompleto: "Jane Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 0,
+                    etapaActualProceso: "procesoPaso.1"
                 },
                 {
                     idNacional: "098123456",
                     nombreCompleto: "John Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 2000,
+                    etapaActualProceso: "procesoPaso.2"
                 },
                 {
                     idNacional: "456789123",
                     nombreCompleto: "Jane Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 4000,
+                    etapaActualProceso: "procesoPaso.3"
                 },
                 {
                     idNacional: "098890123",
                     nombreCompleto: "John Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 5400,
+                    etapaActualProceso: "procesoPaso.1"
                 },
                 {
                     idNacional: "7651234890",
                     nombreCompleto: "Jane Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 1000,
+                    etapaActualProceso: "procesoPaso.1"
                 },
                 {
                     idNacional: "321123456",
                     nombreCompleto: "John Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 750,
+                    etapaActualProceso: "procesoPaso.2"
                 },
                 {
                     idNacional: "890098765",
                     nombreCompleto: "Jane Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 200,
+                    etapaActualProceso: "procesoPaso.3"
                 },
                 {
                     idNacional: "432123456",
                     nombreCompleto: "John Doe",
-                    idEstablecimiento: "0981237654"
+                    idEstablecimiento: "0981237654",
+                    tiempoRestantePrueba: 100,
+                    etapaActualProceso: "procesoPaso.4"
                 },
             ]
         }
@@ -621,7 +641,9 @@ class ListaUsuarios extends Component {
                     editingForm: {
                         idNacional: encontrado.idNacional,
                         nombreCompleto: encontrado.nombreCompleto,
-                        idEstablecimiento: encontrado.idEstablecimiento
+                        idEstablecimiento: encontrado.idEstablecimiento,
+                        tiempoRestantePrueba: encontrado.tiempoRestantePrueba,
+                        etapaActualProceso: encontrado.etapaActualProceso
                     }
                 });
                 break;
@@ -958,8 +980,6 @@ class ListaUsuarios extends Component {
     handleSearch = (e, buscarNombre) => {
         const copiaElementos = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
         const searchTerm = e ? e.target.value : buscarNombre;
-
-        console.log(searchTerm);
 
         this.setState({
             searchTerm: searchTerm
@@ -2005,10 +2025,24 @@ class ListaUsuarios extends Component {
                                                                         {
                                                                             this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
+                                                                                const keys = Object.keys(elemento);
                                                                                 return (
                                                                                     <TableRow key={i}>
                                                                                         {
-                                                                                            values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                                            values.map((val, j) => {
+                                                                                                switch (keys[j]) {
+                                                                                                    case "etapaActualProceso":
+                                                                                                        return <TableCell key={j}>{t(val)}</TableCell>;
+                                                                                                    case "tiempoRestantePrueba":
+                                                                                                        if (val === 0) {
+                                                                                                            return <TableCell key={j}>{t("finalizada")}</TableCell>;
+                                                                                                        } else {
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        }
+                                                                                                    default:
+                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                }
+                                                                                            })
                                                                                         }
                                                                                         <TableCell>
                                                                                         <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
@@ -2100,6 +2134,34 @@ class ListaUsuarios extends Component {
                                             value={this.state.editingForm.idEstablecimiento}
                                             onChange={this.handleEdicionChange}
                                         />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography variant="body1">{t("usuarios.tiempo-restante")}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="tiempoRestantePrueba"
+                                            value={this.state.editingForm.tiempoRestantePrueba}
+                                            onChange={this.handleEdicionChange}
+                                            type="number"
+                                            inputProps={{min: 0, step: 1}}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.etapa-actual")}</Typography>
+                                        <Select
+                                            value={this.state.editingForm.etapaActualProceso}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="etapaActualProceso"/>}
+                                            fullWidth
+                                        >
+                                            <MenuItem value={"procesoPaso.1"}>{t("procesoPaso.1")}</MenuItem>
+                                            <MenuItem value={"procesoPaso.2"}>{t("procesoPaso.2")}</MenuItem>
+                                            <MenuItem value={"procesoPaso.3"}>{t("procesoPaso.3")}</MenuItem>
+                                            <MenuItem value={"procesoPaso.4"}>{t("procesoPaso.4")}</MenuItem>
+                                        </Select>
                                     </Grid>
                                 </Grid>
                             )

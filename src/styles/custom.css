@@ -102,10 +102,11 @@ main:before {
     color: #FFFFFF;
 }
 
+.fab,
 .prueba-fab {
     position: fixed !important;
     bottom: 5rem;
-    right: 8px;
+    right: 16px;
     top: auto;
     left: auto;
 }
@@ -140,9 +141,11 @@ main:before {
     .configuracion-img {
         width: 50%;
     }
+    
+    .fab,
     .prueba-fab {
-        right: 1.5rem;
-        bottom: 1.5rem;
+        right: 3rem;
+        bottom: 3rem;
     }
 
     main:before {

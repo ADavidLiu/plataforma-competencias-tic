@@ -54,9 +54,6 @@ function Perfil(props) {
                                             className="my-4"
                                             style={{backgroundColor: "transparent"}}
                                         >
-                                            <Step key="Registro">
-                                                <StepLabel>{t("procesoPaso.0")}</StepLabel>
-                                            </Step>
                                             <Step key="Prueba de conocimiento">
                                                 <StepLabel>{t("procesoPaso.1")}</StepLabel>
                                             </Step>
