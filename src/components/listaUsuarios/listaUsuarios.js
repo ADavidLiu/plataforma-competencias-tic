@@ -742,6 +742,24 @@ class ListaUsuarios extends Component {
         switch (e.target.name) {
             case "categoria":
                 switch (e.target.value) {
+                    case "usuarios.tiempo-restante":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "usuarios.tiempo-restante",
+                                categoriaFormatted: "tiempoRestantePrueba"
+                            }
+                        });
+                        break;
+                    case "usuarios.etapa-actual":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "usuarios.etapa-actual",
+                                categoriaFormatted: "etapaActualProceso"
+                            }
+                        });
+                        break;
                     case "usuarios.registro-idNacional":
                         this.setState({
                             filtros: {
