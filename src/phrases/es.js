@@ -391,6 +391,7 @@ const es = {
         "usuarios.btn-cargar-seleccionados": "Cargar archivos seleccionados",
         "usuarios.cargar-ayuda": "Dé click en el <1>botón +</1> en la esquina superior derecha para seleccionar los archivos. Recuerde que sólo se aceptan los formatos <3>.xlsx</3> y <5>.xlsm</5>.",
         "usuarios.carga-encontrados": "Se encontraron <1>{{count}}</1> usuarios.",
+        "usuarios.tipo-registro": "Tipo de usuario a registrar",
         "procesos.titulo": "Procesos pasados",
         "procesos.titulo-alt": "Procesos",
         "procesos.total": "Total de procesos realizados:",

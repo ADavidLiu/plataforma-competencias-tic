@@ -23,6 +23,13 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 class AgregarUsuarios extends Component {
@@ -81,7 +88,8 @@ class AgregarUsuarios extends Component {
             paisCodigoInstitucion: "CO",
             paisesSeleccionados: [],
             departamentosEncontrados: [],
-            municipiosEncontrados: []
+            municipiosEncontrados: [],
+            tipoUsuariosCreados: ""
         }
 
         this.state = this.intialState;
@@ -92,6 +100,13 @@ class AgregarUsuarios extends Component {
     handleTabChange = (e, newValue) => {
         this.setState({
             divisionMostrada: newValue
+        });
+    }
+
+    handleTipoUsuariosCreadosChange = e => {
+        console.log(e.target.name, e.target.value);
+        this.setState({
+            tipoUsuariosCreados: e.target.value
         });
     }
 
@@ -608,6 +623,33 @@ class AgregarUsuarios extends Component {
                                                             <MenuItem value="AR-Argentina">Argentina</MenuItem>
                                                         </Select>
                                                     </Grid>
+                                                    {
+                                                        this.props.userType === "ADMIN" ? (
+                                                            <Grid item xs={12} md={4}>
+                                                                <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.tipo-registro")}</strong></Typography>
+                                                                <RadioGroup
+                                                                    className="d-flex align-items-center justify-content-around"
+                                                                    row
+                                                                    name="tipoUsuariosCreados"
+                                                                    value={this.state.tipoUsuariosCreados}
+                                                                    onChange={this.handleTipoUsuariosCreadosChange}
+                                                                >
+                                                                    <FormControlLabel
+                                                                        value="evaluadores"
+                                                                        control={<Radio color="primary" />}
+                                                                        label={t("evaluadores")}
+                                                                        labelPlacement="end"
+                                                                    />
+                                                                    <FormControlLabel
+                                                                        value="gobiernos"
+                                                                        control={<Radio color="primary" />}
+                                                                        label={t("gobiernos")}
+                                                                        labelPlacement="end"
+                                                                    />
+                                                                </RadioGroup>
+                                                            </Grid>
+                                                        ) : null
+                                                    }
                                                 </Grid>
                                             </Grid>
                                         </Grid>
