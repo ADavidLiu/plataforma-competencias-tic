@@ -373,6 +373,8 @@ const es = {
         "usuarios.label-usuarios-docentes": "Lista de Docentes",
         "usuarios.registro-nombre-docente": "Nombre completo",
         "usuarios.registro-idEstablecimiento": "ID Nacional de la sede a la que pertenece",
+        "usuarios.registro-idInstitucion": "ID Nacional de la institución a la que pertenece",
+        "usuarios.registro-nombreInstitucion": "Nombre de la institución a la que pertenece",
         "usuarios.acciones": "Acciones",
         "usuarios.editar": "Editar información",
         "usuarios.btn-guardar": "Guardar",

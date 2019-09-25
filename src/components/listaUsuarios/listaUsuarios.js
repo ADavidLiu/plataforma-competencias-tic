@@ -51,7 +51,7 @@ class ListaUsuarios extends Component {
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             gobierno: ["usuarios.registro-idNacional", "usuarios.registro-nombre-ie", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.acciones"],
-            institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
+            institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-idInstitucion", "usuarios.registro-nombreInstitucion", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
             establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.tiempo-restante", "usuarios.etapa-actual", "usuarios.acciones"],
         };
 
@@ -106,6 +106,8 @@ class ListaUsuarios extends Component {
                 this.formularioPlaceholder = {
                     idNacional: "",
                     nombre: "",
+                    idNacionalInstitucion: "",
+                    nombreInstitucion: "",
                     pais: "",
                     departamento: "",
                     direccion: "",
@@ -258,6 +260,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "1234567890",
                     nombre: "Colegio John Doe",
+                    idNacionalInstitucion: "123456",
+                    nombreInstitucion: "Institución John Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -272,6 +276,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "0987654321",
                     nombre: "Colegio Jane Doe",
+                    idNacionalInstitucion: "654321",
+                    nombreInstitucion: "Institución Jane Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -286,6 +292,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "1238904567",
                     nombre: "Colegio John Doe",
+                    idNacionalInstitucion: "123456",
+                    nombreInstitucion: "Institución John Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -300,6 +308,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "678123049",
                     nombre: "Colegio Jane Doe",
+                    idNacionalInstitucion: "654321",
+                    nombreInstitucion: "Institución Jane Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -314,6 +324,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "78125603",
                     nombre: "Colegio John Doe",
+                    idNacionalInstitucion: "123456",
+                    nombreInstitucion: "Institución John Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -328,6 +340,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "123456123",
                     nombre: "Colegio Jane Doe",
+                    idNacionalInstitucion: "654321",
+                    nombreInstitucion: "Institución Jane Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -342,6 +356,8 @@ class ListaUsuarios extends Component {
                 {
                     idNacional: "456123789",
                     nombre: "Colegio John Doe",
+                    idNacionalInstitucion: "123456",
+                    nombreInstitucion: "Institución John Doe",
                     pais: "CO-Colombia",
                     departamento: "Antioquia",
                     direccion: "Calle 12 #34-56",
@@ -648,7 +664,10 @@ class ListaUsuarios extends Component {
                 this.setState({
                     activeID: id,
                     editingForm: {
+                        idNacional: encontrado.idNacional,
                         nombre: encontrado.nombre,
+                        idNacionalInstitucion: encontrado.idNacionalInstitucion,
+                        nombreInstitucion: encontrado.nombreInstitucion,
                         pais: encontrado.pais,
                         departamento: encontrado.departamento,
                         direccion: encontrado.direccion,
@@ -658,8 +677,7 @@ class ListaUsuarios extends Component {
                         regimen: encontrado.regimen,
                         telefono: encontrado.telefono,
                         emailInstitucional: encontrado.emailInstitucional,
-                        sitioWeb: encontrado.sitioWeb,
-                        idNacional: encontrado.idNacional
+                        sitioWeb: encontrado.sitioWeb
                     },
                     departamentos: statesMenuItemsDptos
                 });
@@ -771,6 +789,24 @@ class ListaUsuarios extends Component {
         switch (e.target.name) {
             case "categoria":
                 switch (e.target.value) {
+                    case "usuarios.registro-nombreInstitucion":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "usuarios.registro-nombreInstitucion",
+                                categoriaFormatted: "nombreInstitucion"
+                            }
+                        });
+                        break;
+                    case "usuarios.registro-idInstitucion":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "usuarios.registro-idInstitucion",
+                                categoriaFormatted: "idNacionalInstitucion"
+                            }
+                        });
+                        break;
                     case "usuarios.tiempo-restante":
                         this.setState({
                             filtros: {
@@ -1948,7 +1984,7 @@ class ListaUsuarios extends Component {
                     <Translation>
                         {
                             t => (
-                                <Grid container spacing={4}>
+                                <Grid container spacing={4} alignItems="flex-end">
                                     <Grid item xs={12} md={3}>
                                         <Typography variant="body1">{t("usuarios.registro-ee-id")}</Typography>
                                         <TextField
@@ -1972,6 +2008,54 @@ class ListaUsuarios extends Component {
                                             value={this.state.editingForm.nombre}
                                             onChange={this.handleEdicionChange}
                                         />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-idInstitucion")}</Typography>
+                                        {/* Este valor debe actualizarse cuando se seleccione otra IE de la lista */}
+                                        <TextField
+                                            variant="outlined"
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            name="idNacionalInstitucion"
+                                            value={this.state.editingForm.idNacionalInstitucion}
+                                            onChange={this.handleEdicionChange}
+                                            disabled
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1">{t("usuarios.registro-nombreInstitucion")}</Typography>
+                                        <Select
+                                            className="w-100 mt-3"
+                                            value={this.state.editingForm.nombreInstitucion}
+                                            onChange={this.handleEdicionChange}
+                                            input={<OutlinedInput required name="nombreInstitucion"/>}
+                                        >
+                                            {/* Aquí se debe solicitar al backend la lista de Instituciones correspondientes */}
+                                            <MenuItem value="Institución John Doe">Institución John Doe</MenuItem>
+                                            <MenuItem value="Institución Jane Doe">Institución Jane Doe</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={3}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.registro-pais")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.pais}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="pais"/>}
+                                        >
+                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                            <MenuItem value="PA-Panama">Panamá</MenuItem>
+                                            <MenuItem value="PE-Peru">Perú</MenuItem>
+                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                        </Select>
                                     </Grid>
                                     <Grid item xs={12} md={3}>
                                         <Typography variant="body1">{t("usuarios.registro-ee-departamento")}</Typography>
@@ -2060,7 +2144,7 @@ class ListaUsuarios extends Component {
                                             onChange={this.handleEdicionChange}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} md={5}>
+                                    <Grid item xs={12} md={6}>
                                         <Typography variant="body1">{t("usuarios.registro-ee-email")}</Typography>
                                         <TextField
                                             variant="outlined"
@@ -2073,7 +2157,7 @@ class ListaUsuarios extends Component {
                                             onChange={this.handleEdicionChange}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} md={4}>
+                                    <Grid item xs={12} md={6}>
                                         <Typography variant="body1">{t("usuarios.registro-ee-web")}</Typography>
                                         <TextField
                                             variant="outlined"
