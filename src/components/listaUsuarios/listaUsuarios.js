@@ -47,13 +47,14 @@ class ListaUsuarios extends Component {
         this.formularioPlaceholder = {};
         this.headCells = {
             auditoria: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "id-evento", "accion", "fecha-realizacion", "ver-data", "usuarios.acciones"],
-            superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-ee-direccion", "usuarios.acciones"],
+            superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.registro-ee-direccion", "usuarios.acciones"],
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             evaluadores: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
             gobierno: ["usuarios.registro-idNacional", "usuarios.registro-nombre-ie", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.acciones"],
             institucion: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.registro-ee-departamento", "usuarios.registro-ee-direccion", "usuarios.registro-ee-tipo-ubicacion", "usuarios.registro-ee-nombre-ubicacion", "usuarios.registro-ee-zona", "usuarios.registro-ee-regimen", "usuarios.registro-ee-telefono", "usuarios.registro-ee-email", "usuarios.registro-ee-web", "usuarios.acciones"],
             establecimiento: ["usuarios.registro-idNacional", "usuarios.registro-nombre-docente", "usuarios.registro-idEstablecimiento", "usuarios.tiempo-restante", "usuarios.etapa-actual", "usuarios.acciones"],
         };
+
         switch (props.userType) {
             case "AUDITORIA":
                 this.formularioPlaceholder = {
@@ -79,6 +80,9 @@ class ListaUsuarios extends Component {
                     nombre: "",
                     telefono: "",
                     email: "",
+                    pais: "",
+                    departamento: "",
+                    municipio: "",
                     direccion: ""
                 };
                 break;
@@ -166,6 +170,9 @@ class ListaUsuarios extends Component {
                     nombre: "Quis aliquip et duis aliquip",
                     telefono: "123312456",
                     email: "mail@mail.com",
+                    pais: "CO-Colombia",
+                    departamento: "Santander",
+                    municipio: "Bucaramanga",
                     direccion: "Calle 123 #45-67"
                 },
                 {
@@ -173,6 +180,9 @@ class ListaUsuarios extends Component {
                     nombre: "Nostrud duis mollit",
                     telefono: "321456789",
                     email: "mail@mail.com",
+                    pais: "UY-Uruguay",
+                    departamento: "Montevideo",
+                    municipio: "Montevideo",
                     direccion: "Calle 89 #01-23"
                 }
             ],
@@ -557,6 +567,20 @@ class ListaUsuarios extends Component {
                 });
                 break;
             case "SUPERADMIN":
+                const codigoPaisAdmin = encontrado.pais.split("-")[0];
+
+                const statesAdmin = locationData.getStatesByShort(codigoPaisAdmin);
+                const citiesAdmin = locationData.getCities(codigoPaisAdmin, encontrado.departamento);
+                const statesMenuItemsAdmin = [];
+                const citiesMenuItemsAdmin = [];
+        
+                statesAdmin.forEach(state => {
+                    statesMenuItemsAdmin.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+                });
+                citiesAdmin.forEach(city => {
+                    citiesMenuItemsAdmin.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
+                });
+
                 this.setState({
                     activeID: id,
                     editingForm: {
@@ -564,8 +588,13 @@ class ListaUsuarios extends Component {
                         nombre: encontrado.nombre,
                         telefono: encontrado.telefono,
                         email: encontrado.email,
+                        pais: encontrado.pais,
+                        departamento: encontrado.departamento,
+                        municipio: encontrado.municipio,
                         direccion: encontrado.direccion
-                    }
+                    },
+                    departamentos: statesMenuItemsAdmin,
+                    municipios: citiesMenuItemsAdmin
                 });
                 break;
             case "ADMIN":
@@ -579,18 +608,18 @@ class ListaUsuarios extends Component {
                 });
                 break;
             case "GOBIERNO":
-                const codigoPais = encontrado.pais.split("-")[0];
+                const codigoPaisGobierno = encontrado.pais.split("-")[0];
 
-                const states = locationData.getStatesByShort(codigoPais);
-                const cities = locationData.getCities(codigoPais, encontrado.departamento);
-                const statesMenuItems = [];
-                const citiesMenuItems = [];
+                const statesGobierno = locationData.getStatesByShort(codigoPaisGobierno);
+                const citiesGobierno = locationData.getCities(codigoPaisGobierno, encontrado.departamento);
+                const statesMenuItemsGobierno = [];
+                const citiesMenuItemsGobierno = [];
         
-                states.forEach(state => {
-                    statesMenuItems.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
+                statesGobierno.forEach(state => {
+                    statesMenuItemsGobierno.push(<MenuItem key={state} value={state}>{state}</MenuItem>);
                 });
-                cities.forEach(city => {
-                    citiesMenuItems.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
+                citiesGobierno.forEach(city => {
+                    citiesMenuItemsGobierno.push(<MenuItem key={city} value={city}>{city}</MenuItem>);
                 });
         
                 this.setState({
@@ -602,8 +631,8 @@ class ListaUsuarios extends Component {
                         departamento: encontrado.departamento,
                         municipio: encontrado.municipio
                     },
-                    departamentos: statesMenuItems,
-                    municipios: citiesMenuItems
+                    departamentos: statesMenuItemsGobierno,
+                    municipios: citiesMenuItemsGobierno
                 });
                 break;
             case "INSTITUCION":
@@ -1283,7 +1312,11 @@ class ListaUsuarios extends Component {
                                                                                                     if (keys[j] === "pais") {
                                                                                                         return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                                     } else {
-                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        if (keys[j] === "4") {
+                                                                                                            return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                        } else {
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        }
                                                                                                     }
                                                                                                 })
                                                                                             }
@@ -1379,7 +1412,7 @@ class ListaUsuarios extends Component {
                                             onChange={this.handleEdicionChange}
                                         />
                                     </Grid>
-                                    <Grid item xs={12} md={4}>
+                                    <Grid item xs={12}>
                                         <Typography variant="body1">{t("registro.email")}</Typography>
                                         <TextField
                                             variant="outlined"
@@ -1392,6 +1425,49 @@ class ListaUsuarios extends Component {
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.registro-pais")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.pais}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="pais"/>}
+                                        >
+                                            <MenuItem value="CO-Colombia">Colombia</MenuItem>
+                                            <MenuItem value="VE-Venezuela">Venezuela</MenuItem>
+                                            <MenuItem value="PA-Panama">Panamá</MenuItem>
+                                            <MenuItem value="PE-Peru">Perú</MenuItem>
+                                            <MenuItem value="EC-Ecuador">Ecuador</MenuItem>
+                                            <MenuItem value="BO-Bolivia">Bolivia</MenuItem>
+                                            <MenuItem value="PY-Paraguay">Paraguay</MenuItem>
+                                            <MenuItem value="UY-Uruguay">Uruguay</MenuItem>
+                                            <MenuItem value="CL-Chile">Chile</MenuItem>
+                                            <MenuItem value="BR-Brasil">Brasil</MenuItem>
+                                            <MenuItem value="AR-Argentina">Argentina</MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.registro-departamento")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.departamento}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="departamento"/>}
+                                        >
+                                            { this.state.departamentos }
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <Typography variant="body1" className="mb-3">{t("usuarios.registro-municipio")}</Typography>
+                                        <Select
+                                            className="w-100"
+                                            value={this.state.editingForm.municipio}
+                                            onChange={this.handleChangeLocationDropdown}
+                                            input={<OutlinedInput required name="municipio"/>}
+                                        >
+                                            { this.state.municipios }
+                                        </Select>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <Typography variant="body1">{t("usuarios.registro-ee-direccion")}</Typography>
                                         <TextField
                                             variant="outlined"
@@ -1458,7 +1534,11 @@ class ListaUsuarios extends Component {
                                                                                                     if (keys[j] === "pais") {
                                                                                                         return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                                     } else {
-                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        if (keys[j] === "2") {
+                                                                                                            return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                        } else {
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        }
                                                                                                     }
                                                                                                 })
                                                                                             }
@@ -1619,7 +1699,11 @@ class ListaUsuarios extends Component {
                                                                                                 if (keys[j] === "pais") {
                                                                                                     return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                                 } else {
-                                                                                                    return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    if (keys[j] === "2") {
+                                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                    } else {
+                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    }
                                                                                                 }
                                                                                             })
                                                                                         }
@@ -1801,7 +1885,11 @@ class ListaUsuarios extends Component {
                                                                                                 if (keys[j] === "pais") {
                                                                                                     return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                                 } else {
-                                                                                                    return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    if (keys[j] === "2") {
+                                                                                                        return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
+                                                                                                    } else {
+                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                    }
                                                                                                 }
                                                                                             })
                                                                                         }

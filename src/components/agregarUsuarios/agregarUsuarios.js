@@ -181,13 +181,24 @@ class AgregarUsuarios extends Component {
 
         switch (tipoUsuarioCreado) {
             case "ADMIN":
-
+                this.setState({
+                    ...this.state.nuevoAdmin,
+                    [e.target.name]: e.target.value
+                });
                 break;
             case "GOBIERNO":
-
+                this.setState({
+                    ...this.state.nuevoGobierno,
+                    [e.target.name]: e.target.value
+                });
                 break;
             case "EVALUADOR":
-
+                this.setState({
+                    nuevoEvaluador: {
+                        ...this.state.nuevoEvaluador,
+                        [e.target.name]: e.target.value
+                    }
+                });
                 break;
             case "INSTITUCION":
                 this.setState({
