@@ -180,14 +180,27 @@ class AgregarUsuarios extends Component {
         });
     }
 
-    crearUsuarios = () => {
+    crearUsuarios = type => {
         console.log("Creados!");
+        let isSuccess = false;
         /* Enviar la información al backend */
 
-        /* Después de que se reciba la notificación 200, borrar todo */
-        this.setState({
-            ...this.intialState
-        });
+        if (type === "MASIVO") {
+            /* Si es de manera masiva */
+            console.log("Masivo");
+            isSuccess = true;
+        } else {
+            /* Si es de manera manual */
+            console.log("Manual");
+            isSuccess = true;
+        }
+
+        if (isSuccess) {
+            /* Después de que se reciba la notificación 200, borrar todo */
+            this.setState({
+                ...this.intialState
+            });
+        }
     }
 
     handleLocationDropdowns = (e, index) => {
@@ -973,7 +986,7 @@ class AgregarUsuarios extends Component {
                                             <Button color="primary" variant="outlined" size="large" onClick={this.agregarPosicion}><Add/></Button>
                                         </Grid>
                                         <Grid item xs={6} className="text-right mt-4">
-                                            <Button color="primary" variant="contained" size="large" onClick={this.crearUsuarios}>{t("usuarios.registro-btn-agregar")}</Button>
+                                            <Button color="primary" variant="contained" size="large" onClick={() => { this.crearUsuarios("MANUAL"); }}>{t("usuarios.registro-btn-agregar")}</Button>
                                         </Grid>
                                     </Grid>
                                 ) : (
@@ -1034,9 +1047,9 @@ class AgregarUsuarios extends Component {
                                                             color="primary"
                                                             fullWidth
                                                             className="mt-4"
+                                                            onClick={() => { this.crearUsuarios("MASIVO") }}
                                                         >
-                                                            {t("usuarios.btn-cargar-seleccionados")}
-                                                            <input type="file" required accept=".xlsm,.xlsx" onInput={this.leerArchivo} style={{ display: "none" }} />
+                                                            {t("usuarios.btn-cargar-seleccionados")}    
                                                         </Button>
                                                     </React.Fragment>
                                                 )
