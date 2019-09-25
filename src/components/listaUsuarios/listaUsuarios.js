@@ -2058,13 +2058,19 @@ class ListaUsuarios extends Component {
                                                                                                             return <TableCell key={j}>{val}</TableCell>;
                                                                                                         }
                                                                                                     default:
-                                                                                                        return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        if (keys[j] === "4") {
+                                                                                                            return <TableCell key={j}>{t(val)}</TableCell>;
+                                                                                                        } else if (keys[j] === "3" && val === 0) {
+                                                                                                            return <TableCell key={j}>{t("finalizada")}</TableCell>
+                                                                                                        } else {
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        }
                                                                                                 }
                                                                                             })
                                                                                         }
                                                                                         <TableCell>
-                                                                                        <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                        <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
                                                                                             <Link to={{
                                                                                                 pathname: "/dashboard-docente",
                                                                                                 state: {
