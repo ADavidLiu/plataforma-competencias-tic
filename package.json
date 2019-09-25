@@ -25,7 +25,8 @@
     "react-sticky": "^6.0.3",
     "reaptcha": "^1.6.0",
     "sort-by": "^1.2.0",
-    "sweet-scroll": "^4.0.0"
+    "sweet-scroll": "^4.0.0",
+    "xlsx": "^0.15.1"
   },
   "scripts": {
     "start": "react-scripts start",
