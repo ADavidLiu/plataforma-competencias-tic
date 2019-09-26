@@ -466,6 +466,17 @@ class DashboardSuperadmin extends Component {
                                         <Typography variant="h5" className="mb-4">{t("dashboardSuperadmin.usuarios")}</Typography>
                                         <Grid container spacing={5}>
                                             <Grid item xs={12} md={6}>
+                                                <Typography variant="h6" className="mb-1">{t("admins")}</Typography>
+                                                <hr className="mb-3" />
+                                                {
+                                                    this.state.didUsersLoad ? (
+                                                        <VisorPerfiles tipo="ADMINS" numPorPagina={6} perfiles={this.state.adminsSubdivision} />
+                                                    ) : (
+                                                        <CircularProgress color="primary" />
+                                                    )
+                                                }
+                                            </Grid>
+                                            <Grid item xs={12} md={6}>
                                                 <Typography variant="h6" className="mb-1">{t("evaluadores")}</Typography>
                                                 <hr className="mb-3" />
                                                 {
@@ -509,7 +520,7 @@ class DashboardSuperadmin extends Component {
                                                     )
                                                 }
                                             </Grid>
-                                            <Grid item xs={12}>
+                                            <Grid item xs={12} md={6}>
                                                 <Typography variant="h6" className="mb-1">{t("dashboardGobierno.docentes")}</Typography>
                                                 <hr className="mb-3" />
                                                 {

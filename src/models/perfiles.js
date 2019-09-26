@@ -205,6 +205,9 @@ export const adminsCargados = [
         nombre: "Quis aliquip et duis aliquip",
         telefono: "123312456",
         email: "mail@mail.com",
+        pais: "CO-Colombia",
+        departamento: "Santander",
+        municipio: "Bucaramanga",
         direccion: "Calle 123 #45-67"
     },
     {
@@ -212,6 +215,9 @@ export const adminsCargados = [
         nombre: "Nostrud duis mollit",
         telefono: "321456789",
         email: "mail@mail.com",
+        pais: "UY-Uruguay",
+        departamento: "Montevideo",
+        municipio: "Montevideo",
         direccion: "Calle 89 #01-23"
     }
 ];
