@@ -376,14 +376,21 @@ class AgregarUsuarios extends Component {
 
             /* Eliminar la primera fila vacía */
             finalObjects.splice(0, 1);
-
-            newBasesDeDatos.push({
+            const newBD = {
                 file: file,
                 binaryString: fileReader.result,
                 nombre: file.name,
-                data: finalObjects,
-                tipo: ""
-            });
+                data: finalObjects
+            }
+
+            if (this.props.userType === "ADMIN") {
+                newBD = {
+                    ...newBD,
+                    tipo: ""
+                }
+            }
+
+            newBasesDeDatos.push(newBD);
 
             this.setState({
                 isUploading: false,
@@ -1060,35 +1067,47 @@ class AgregarUsuarios extends Component {
                                                                             <Typography variant="body1"><em>{archivo.nombre}</em></Typography>
                                                                             <Delete style={{cursor:"pointer"}} onClick={() => { this.eliminarArchivo(i); }} />
                                                                         </div>
-                                                                        <Paper className="py-4 py-md-2 px-4 my-3">
+                                                                        <Paper className={this.props.userType === "ADMIN" ? "py-4 py-md-2 px-4 my-3" : "px-4 py-3 my-3"}>
                                                                             <div className="d-md-flex align-items-center justify-content-start">
                                                                                 <Typography variant="body2" className="mr-md-3 mb-3 mb-md-0">
-                                                                                    <Trans i18nKey="usuarios.carga-encontrados" count={archivo.data.length}>
-                                                                                        Se encontraron <strong>{{archivo}}</strong> registros. Seleccione el tipo de usuarios cargados:
-                                                                                    </Trans>
+                                                                                    {
+                                                                                         this.props.userType === "ADMIN" ? (
+                                                                                            <Trans i18nKey="usuarios.carga-encontrados-opciones" count={archivo.data.length}>
+                                                                                                Se encontraron <strong>{{archivo}}</strong> registros. Seleccione el tipo de usuarios cargados:
+                                                                                            </Trans>
+                                                                                         ) : (
+                                                                                            <Trans i18nKey="usuarios.carga-encontrados" count={archivo.data.length}>
+                                                                                                Se encontraron <strong>{{archivo}}</strong> usuarios.
+                                                                                            </Trans>
+                                                                                         )
+                                                                                    }
                                                                                 </Typography>
-                                                                                <RadioGroup
-                                                                                    className="d-flex align-items-center justify-content-start"
-                                                                                    row
-                                                                                    name="tipo"
-                                                                                    value={this.state.basesDeDatos[i].tipo}
-                                                                                    onChange={e => { this.actualizarTipoBD(e, i); }}
-                                                                                >
-                                                                                    <FormControlLabel
-                                                                                        className="m-0"
-                                                                                        value="EVALUADOR"
-                                                                                        control={<Radio color="primary" />}
-                                                                                        label={<Typography variant="body2">{t("evaluadores")}</Typography>}
-                                                                                        labelPlacement="end"
-                                                                                    />
-                                                                                    <FormControlLabel
-                                                                                        className="my-0 mx-3"
-                                                                                        value="GOBIERNO"
-                                                                                        control={<Radio color="primary" />}
-                                                                                        label={<Typography variant="body2">{t("gobiernos")}</Typography>}
-                                                                                        labelPlacement="end"
-                                                                                    />
-                                                                                </RadioGroup>
+                                                                                {
+                                                                                    this.props.userType === "ADMIN" ? (
+                                                                                        <RadioGroup
+                                                                                            className="d-flex align-items-center justify-content-start"
+                                                                                            row
+                                                                                            name="tipo"
+                                                                                            value={this.state.basesDeDatos[i].tipo}
+                                                                                            onChange={e => { this.actualizarTipoBD(e, i); }}
+                                                                                        >
+                                                                                            <FormControlLabel
+                                                                                                className="m-0"
+                                                                                                value="EVALUADOR"
+                                                                                                control={<Radio color="primary" />}
+                                                                                                label={<Typography variant="body2">{t("evaluadores")}</Typography>}
+                                                                                                labelPlacement="end"
+                                                                                            />
+                                                                                            <FormControlLabel
+                                                                                                className="my-0 mx-3"
+                                                                                                value="GOBIERNO"
+                                                                                                control={<Radio color="primary" />}
+                                                                                                label={<Typography variant="body2">{t("gobiernos")}</Typography>}
+                                                                                                labelPlacement="end"
+                                                                                            />
+                                                                                        </RadioGroup>
+                                                                                    ) : null
+                                                                                }
                                                                             </div>
                                                                         </Paper>
                                                                         <hr/>
