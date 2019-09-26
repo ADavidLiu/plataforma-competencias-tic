@@ -88,8 +88,7 @@ class AgregarUsuarios extends Component {
             paisCodigoInstitucion: "CO",
             paisesSeleccionados: [],
             departamentosEncontrados: [],
-            municipiosEncontrados: [],
-            tipoUsuariosCreados: ""
+            municipiosEncontrados: []
         }
 
         this.state = this.intialState;
@@ -100,13 +99,6 @@ class AgregarUsuarios extends Component {
     handleTabChange = (e, newValue) => {
         this.setState({
             divisionMostrada: newValue
-        });
-    }
-
-    handleTipoUsuariosCreadosChange = e => {
-        console.log(e.target.name, e.target.value);
-        this.setState({
-            tipoUsuariosCreados: e.target.value
         });
     }
 
@@ -128,7 +120,8 @@ class AgregarUsuarios extends Component {
                 this.state.nuevosUsuarios.push({
                     idNacional: "",
                     nombre: "",
-                    pais: ""
+                    pais: "",
+                    tipo: ""
                 });
                 break;
             case "GOBIERNO":
@@ -285,22 +278,6 @@ class AgregarUsuarios extends Component {
 
                 this.handleLocationDropdowns(e, index);
                 break;
-            case "GOBIERNO":
-                this.setState({
-                    nuevoGobierno: {
-                        ...this.state.nuevoGobierno,
-                        [e.target.name]: e.target.value
-                    }
-                });
-                break;
-            case "EVALUADOR":
-                this.setState({
-                    nuevoEvaluador: {
-                        ...this.state.nuevoEvaluador,
-                        [e.target.name]: e.target.value
-                    }
-                });
-                break;
             case "INSTITUCION":
                 this.setState({
                     nuevaInstitucion: {
@@ -404,7 +381,8 @@ class AgregarUsuarios extends Component {
                 file: file,
                 binaryString: fileReader.result,
                 nombre: file.name,
-                data: finalObjects
+                data: finalObjects,
+                tipo: ""
             });
 
             this.setState({
@@ -422,6 +400,15 @@ class AgregarUsuarios extends Component {
         const newBasesDeDatos = [...this.state.basesDeDatos];
         newBasesDeDatos.splice(index, 1);
         
+        this.setState({
+            basesDeDatos: newBasesDeDatos
+        });
+    }
+
+    actualizarTipoBD = (e, index) => {
+        const newBasesDeDatos = [...this.state.basesDeDatos];
+        newBasesDeDatos[index].tipo = e.target.value;
+
         this.setState({
             basesDeDatos: newBasesDeDatos
         });
@@ -630,18 +617,18 @@ class AgregarUsuarios extends Component {
                                                                 <RadioGroup
                                                                     className="d-flex align-items-center justify-content-around"
                                                                     row
-                                                                    name="tipoUsuariosCreados"
-                                                                    value={this.state.tipoUsuariosCreados}
-                                                                    onChange={this.handleTipoUsuariosCreadosChange}
+                                                                    name="tipo"
+                                                                    value={this.state.nuevosUsuarios[i].tipo}
+                                                                    onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
                                                                 >
                                                                     <FormControlLabel
-                                                                        value="evaluadores"
+                                                                        value="EVALUADOR"
                                                                         control={<Radio color="primary" />}
                                                                         label={t("evaluadores")}
                                                                         labelPlacement="end"
                                                                     />
                                                                     <FormControlLabel
-                                                                        value="gobiernos"
+                                                                        value="GOBIERNO"
                                                                         control={<Radio color="primary" />}
                                                                         label={t("gobiernos")}
                                                                         labelPlacement="end"
@@ -1070,14 +1057,40 @@ class AgregarUsuarios extends Component {
                                                                 return (
                                                                     <React.Fragment key={i}>
                                                                         <div className="d-flex align-items-center justify-content-between mb-1">
-                                                                            <Typography variant="body2"><em>{archivo.nombre}</em></Typography>
+                                                                            <Typography variant="body1"><em>{archivo.nombre}</em></Typography>
                                                                             <Delete style={{cursor:"pointer"}} onClick={() => { this.eliminarArchivo(i); }} />
                                                                         </div>
-                                                                        <Typography variant="body2" className="mb-3">
-                                                                            <Trans i18nKey="usuarios.carga-encontrados" count={archivo.data.length}>
-                                                                                Se encontraron <strong>{{archivo}}</strong> usuarios.
-                                                                            </Trans>
-                                                                        </Typography>
+                                                                        <Paper className="py-4 py-md-2 px-4 my-3">
+                                                                            <div className="d-md-flex align-items-center justify-content-start">
+                                                                                <Typography variant="body2" className="mr-md-3 mb-3 mb-md-0">
+                                                                                    <Trans i18nKey="usuarios.carga-encontrados" count={archivo.data.length}>
+                                                                                        Se encontraron <strong>{{archivo}}</strong> registros. Seleccione el tipo de usuarios cargados:
+                                                                                    </Trans>
+                                                                                </Typography>
+                                                                                <RadioGroup
+                                                                                    className="d-flex align-items-center justify-content-start"
+                                                                                    row
+                                                                                    name="tipo"
+                                                                                    value={this.state.basesDeDatos[i].tipo}
+                                                                                    onChange={e => { this.actualizarTipoBD(e, i); }}
+                                                                                >
+                                                                                    <FormControlLabel
+                                                                                        className="m-0"
+                                                                                        value="EVALUADOR"
+                                                                                        control={<Radio color="primary" />}
+                                                                                        label={<Typography variant="body2">{t("evaluadores")}</Typography>}
+                                                                                        labelPlacement="end"
+                                                                                    />
+                                                                                    <FormControlLabel
+                                                                                        className="my-0 mx-3"
+                                                                                        value="GOBIERNO"
+                                                                                        control={<Radio color="primary" />}
+                                                                                        label={<Typography variant="body2">{t("gobiernos")}</Typography>}
+                                                                                        labelPlacement="end"
+                                                                                    />
+                                                                                </RadioGroup>
+                                                                            </div>
+                                                                        </Paper>
                                                                         <hr/>
                                                                     </React.Fragment>
                                                                 );
@@ -1089,6 +1102,7 @@ class AgregarUsuarios extends Component {
                                                             color="primary"
                                                             fullWidth
                                                             className="mt-4"
+                                                            size="large"
                                                             onClick={() => { this.crearUsuarios("MASIVO") }}
                                                         >
                                                             {t("usuarios.btn-cargar-seleccionados")}    
