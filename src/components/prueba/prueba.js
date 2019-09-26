@@ -288,7 +288,7 @@ class Prueba extends Component {
     }
 
     terminarPrueba = () => {
-        this.scroller.to("#header-top");
+        this.scroller.to("#top");
         this.setState({
             shouldRedirect: true
         });
@@ -319,7 +319,7 @@ class Prueba extends Component {
             progreso: nuevoProgreso
         });
 
-        this.scroller.to("#header-top");
+        this.scroller.to("#top");
 
         const timeout = setTimeout(() => {
             const seccionRespuestasSeleccionadas = [...this.state.respuestas[this.state.seccionActual]];
@@ -349,7 +349,7 @@ class Prueba extends Component {
     pausarPrueba = () => {
         /* Conectarse al backend para guardar el estado de la prueba */
         console.log("Prueba guardada!");
-        this.scroller.to("#header-top");
+        this.scroller.to("#top");
         this.setState({
             shouldRedirect: true
         });
@@ -466,7 +466,7 @@ class Prueba extends Component {
                             {
                                 this.state.isPruebaIniciada ? (
                                     <Tooltip title={t("prueba.pausar")} placement="left">
-                                        <Fab size="medium" color="primary" onClick={this.pausarPrueba} className="prueba-fab">
+                                        <Fab color="primary" onClick={this.pausarPrueba} className="prueba-fab fab">
                                             <Save fontSize="small"/>
                                         </Fab>
                                     </Tooltip>

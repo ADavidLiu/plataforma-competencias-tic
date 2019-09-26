@@ -174,11 +174,11 @@ class LoginCheck extends Component {
             <Translation>
                 {
                     t => (
-                        <Router>
+                        <React.Fragment>
                             <CssBaseline />
                             {
                                 this.state.isLogeado ? (
-                                    <AppBar position="fixed" color="primary" id="header-top">
+                                    <AppBar position="fixed" color="primary">
                                         <Toolbar>
                                             <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
                                             <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
@@ -284,14 +284,14 @@ class LoginCheck extends Component {
                                         </Toolbar>
                                     </AppBar>
                                 ) : (
-                                    <AppBar position="static" color="primary" id="header-top">
+                                    <AppBar position="static" color="primary">
                                         <Toolbar>
                                             <Typography variant="h6" color="inherit">{t("loginCheck.mensaje-navbar")}</Typography>
                                         </Toolbar>
                                     </AppBar>
                                 )
                             }
-                            <Container component="main" className="pt-5">
+                            <Container component="main" className="pt-5" id="top">
                                 <div className="py-5">
                                     <Switch>
                                         <Route path="/" exact render={(...routeProps) => {
@@ -382,11 +382,11 @@ class LoginCheck extends Component {
                                 </div>
                             </Container>
                             <Link to={t("link.ayuda")}>
-                                <Fab color="primary" className="fab">
-                                    <Help />
+                                <Fab color="primary" className={window.location.pathname === "/prueba" ? "fab fab--alt" : "fab"}>
+                                    <Help/>
                                 </Fab>
                             </Link>
-                        </Router>
+                        </React.Fragment>
                     )
                 }
             </Translation>

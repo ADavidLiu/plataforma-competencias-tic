@@ -26,7 +26,7 @@ class DashboardDocente extends Component {
 
         this.state = {
             datosID: "",
-            pasoActual: 4,
+            pasoActual: 3,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
             estadisticas: {
@@ -376,9 +376,6 @@ class DashboardDocente extends Component {
                                     overflow: "hidden"
                                 }}>
                                     <Stepper activeStep={this.state.pasoActual} alternativeLabel>
-                                        <Step key="Registro">
-                                            <StepLabel>{this.pasosNames[0]}</StepLabel>
-                                        </Step>
                                         <Step key="Prueba de conocimiento">
                                             <StepLabel>{this.pasosNames[1]}</StepLabel>
                                         </Step>
