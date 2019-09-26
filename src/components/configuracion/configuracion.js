@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import Chip from '@material-ui/core/Chip';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -24,6 +25,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Edit from '@material-ui/icons/Edit';
+import AddCircle from "@material-ui/icons/AddCircle";
 
 class Configuracion extends Component {
     constructor(props) {
@@ -47,6 +49,11 @@ class Configuracion extends Component {
                     label: "English"
                 }
             ],
+            parametrosPlataforma: {
+                nuevoFormato: "",
+                formatosActuales: [".pdf", ".jpg", ".png", ".xlsx", ".xlsm", ".doc", ".docx", ".mp4", ".mp3"],
+                tamanioArchivosBytes: 5000
+            },
             imgPerfil: {
                 file: "",
                 src: "https://via.placeholder.com/500",
@@ -270,6 +277,40 @@ class Configuracion extends Component {
                 ...this.state.docente,
                 [e.target.name]: newElements,
                 isOtrasAreas: isOtrasSelected
+            }
+        });
+    }
+
+    handleChangeParametrosPlataforma = e => {
+        this.setState({
+            parametrosPlataforma: {
+                ...this.state.parametrosPlataforma,
+                [e.target.name]: e.target.value
+            }
+        });
+    }
+
+    agregarFormato = () => {
+        const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
+        nuevosFormatos.push(this.state.parametrosPlataforma.nuevoFormato);
+
+        this.setState({
+            parametrosPlataforma: {
+                ...this.state.parametrosPlataforma,
+                formatosActuales: nuevosFormatos,
+                nuevoFormato: ""
+            }
+        });
+    }
+
+    borrarFormato = index => {
+        const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
+        nuevosFormatos.splice(index, 1);
+
+        this.setState({
+            parametrosPlataforma: {
+                ...this.state.parametrosPlataforma,
+                formatosActuales: nuevosFormatos
             }
         });
     }
@@ -804,6 +845,81 @@ class Configuracion extends Component {
                                         </Grid>
                                     </React.Fragment>
                                 ) : ""
+                            }
+                            {
+                                this.props.userType === "SUPERADMIN" ? (
+                                    <React.Fragment>
+                                        <Grid item xs={12}>
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <Typography variant="h6" className="mr-4">
+                                                    {t("configuracion.parametros-plataforma")}
+                                                </Typography>
+                                            </div>
+                                            <hr/>
+                                        </Grid>
+                                        <Grid item xs={12} className="mb-5">
+                                            <Grid container spacing={5} alignItems="flex-start">
+                                                <Grid item xs={6}>
+                                                    <Typography variant="subtitle2" className="mr-4 mt-1 mt-md-3">
+                                                        {t("configuracion.formatos")}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControl className="w-100">
+                                                        <OutlinedInput
+                                                            className="mb-3"
+                                                            name="nuevoFormato"
+                                                            required
+                                                            fullWidth
+                                                            value={this.state.parametrosPlataforma.nuevoFormato}
+                                                            onInput={this.handleChangeParametrosPlataforma}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        onClick={this.agregarFormato}
+                                                                    >
+                                                                        <AddCircle color="primary"/>
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                        />
+                                                    </FormControl>
+                                                    <Typography className="mb-2" variant="body2"><strong>{t("configuracion.formatos-actuales")}</strong></Typography>
+                                                    {
+                                                        this.state.parametrosPlataforma.formatosActuales.map((formato, i) => {
+                                                            return <Chip
+                                                                key={i}
+                                                                label={formato}
+                                                                onDelete={() => {this.borrarFormato(i)}}
+                                                                className="m-1"
+                                                            />
+                                                        })
+                                                    }
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={5} alignItems="center">
+                                                <Grid item xs={6}>
+                                                    <Typography variant="subtitle2" className="mr-4 mt-1 mt-md-3">
+                                                        {t("configuracion.tamanio-archivos")}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            type="number"
+                                                            variant="outlined"
+                                                            required
+                                                            fullWidth
+                                                            name="tamanioArchivosBytes"
+                                                            value={this.state.parametrosPlataforma.tamanioArchivosBytes}
+                                                            onInput={this.handleChangeParametrosPlataforma}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </React.Fragment>
+                                ) : null
                             }
                             <Grid item xs={12} className="mb-5">
                                 <hr />
