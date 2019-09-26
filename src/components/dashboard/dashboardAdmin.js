@@ -168,7 +168,6 @@ class DashboardAdmin extends Component {
                 }
             ],
             didUsersLoad: true,
-            didUsersLoad: true,
             docentesSubdivision: [...docentesCargados],
             institucionesSubdivision: [...institucionesCargadas],
             establecimientosSubdivision: [...establecimientosCargados],

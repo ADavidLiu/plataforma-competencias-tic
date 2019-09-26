@@ -22,7 +22,7 @@ const Ayuda = () => {
                                 <Typography variant="h4" className="mb-4">{t("ayuda.title")}</Typography>
                                 <Typography className="mb-5" variant="body1">{t("ayuda.text")}</Typography>
                                 <div className="d-md-flex align-items-center justify-content-center">
-                                    <a href="https://portalrequerimientos.javerianacali.edu.co/PortalRequerimientos/login.xhtml" target="_blank">
+                                    <a rel="noopener noreferrer" href="https://portalrequerimientos.javerianacali.edu.co/PortalRequerimientos/login.xhtml" target="_blank">
                                         <Button color="primary" variant="contained" size="large">{t("ayuda.btn-label")}</Button>
                                     </a>
                                     <Typography className="my-3 my-md-0 mx-md-3" variant="body1">{t("o")}</Typography>

@@ -25,10 +25,7 @@ import Tab from '@material-ui/core/Tab';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -376,7 +373,7 @@ class AgregarUsuarios extends Component {
 
             /* Eliminar la primera fila vacía */
             finalObjects.splice(0, 1);
-            const newBD = {
+            let newBD = {
                 file: file,
                 binaryString: fileReader.result,
                 nombre: file.name,

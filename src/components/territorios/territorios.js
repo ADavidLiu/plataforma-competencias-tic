@@ -701,6 +701,8 @@ class Territorios extends Component{
                     </Translation>
                 );
                 break;
+            default:
+                break;
         }
 
         return (

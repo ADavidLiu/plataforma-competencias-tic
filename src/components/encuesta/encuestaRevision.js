@@ -99,7 +99,7 @@ class EncuestaRevision extends Component {
             numPreguntas: preguntasCargadas.length
         });
 
-        preguntasCargadas.map(pregunta => {
+        preguntasCargadas.forEach(pregunta => {
             this.prepararPreguntas(pregunta, []);
         });
     }

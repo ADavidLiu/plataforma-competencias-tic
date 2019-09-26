@@ -102,7 +102,7 @@ class PreentrevistaRevision extends Component {
             preguntas: preguntasCargadas
         });
 
-        preguntasCargadas.map(pregunta => {
+        preguntasCargadas.forEach(pregunta => {
             this.prepararPreguntas(pregunta, []);
         });
     }

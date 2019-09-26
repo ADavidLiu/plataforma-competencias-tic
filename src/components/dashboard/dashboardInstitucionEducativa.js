@@ -24,8 +24,8 @@ class DashboardInstitucionEducativa extends Component {
             institucionID: "",
             cursosSugeridos: [],
             didRutaLoad: false,
-            didDocentesLoad: false,
-            didEstablecimientosLoad: false,
+            didDocentesLoad: true,
+            didEstablecimientosLoad: true,
             isLoading: false,
             numEE: 35,
             numDocentes: 1789,
@@ -63,8 +63,6 @@ class DashboardInstitucionEducativa extends Component {
             ],
             docentes: [...docentesCargados],
             establecimientos: [...establecimientosCargados],
-            didDocentesLoad: true,
-            didEstablecimientosLoad: true
         }
     }
 

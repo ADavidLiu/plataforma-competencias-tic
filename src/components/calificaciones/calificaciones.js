@@ -120,6 +120,8 @@ class Calificaciones extends Component {
             case 2:
                 newCategory = "entrevistas";
                 break;
+            default:
+                break;
         }
 
         this.setState({

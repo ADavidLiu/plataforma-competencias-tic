@@ -298,7 +298,6 @@ class DashboardEvaluador extends Component {
                                                                 label: (tooltipItem, data) => {
                                                                     const dataset = data.datasets[tooltipItem.datasetIndex];
                                                                     const label = data.labels[tooltipItem.index];
-                                                                    const absoluteValue = dataset.data[tooltipItem.index];
                                                                     const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
                                                                         return previousValue + currentValue;
                                                                     });

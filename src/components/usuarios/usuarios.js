@@ -5,9 +5,7 @@ import  { Translation } from "react-i18next";
 
 import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
 
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
 import Tabs from '@material-ui/core/Tabs';
@@ -100,24 +98,6 @@ class Usuarios extends Component {
         this.setState({
             divisionMostrada: newValue
         });
-    }
-
-    componentDidMount() {
-        this.cargarDatos(this.state.datosID);
-    }
-
-    cargarDatos = datosID => {
-        let infoCargada = {};
-
-        if (this.props.location && this.props.location.state !== undefined) {
-            infoCargada = {
-                tipoUsuario: this.props.location.state.tipoUsuario
-            }
-        } else {
-            infoCargada = {
-                tipoUsuario: ""
-            }
-        }
     }
 
     render() {

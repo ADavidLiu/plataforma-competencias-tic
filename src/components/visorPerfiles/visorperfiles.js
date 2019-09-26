@@ -33,7 +33,6 @@ class VisorPerfiles extends Component {
     }
 
     handleSearch = e => {
-        const copiaElementosMostrados = [...this.state.perfiles];
         const searchTerm = e.target.value;
 
         this.setState({
