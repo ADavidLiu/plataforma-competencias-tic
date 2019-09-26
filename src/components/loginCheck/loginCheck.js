@@ -367,6 +367,11 @@ class LoginCheck extends Component {
                                                                 <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
                                                             ) : ""
                                                         }
+                                                        {
+                                                            this.state.tipo === "ADMIN" ? (
+                                                                <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                            ) : ""
+                                                        }
                                                         <Route component={Pagina404} />
                                                     </Switch>
                                                 )
