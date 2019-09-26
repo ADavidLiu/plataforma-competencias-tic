@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -29,6 +30,7 @@ class DashboardGobierno extends Component {
 
         /* Sólo hay 3 divisiones. 0 es el nivel más alto, y 2 es el más bajo. */
         this.state = {
+            gobiernoID: "",
             divisiones: [],
             divisionMostrada: 0,
             subdivisionesDisponibles: [],
@@ -49,8 +51,25 @@ class DashboardGobierno extends Component {
     }
 
     componentDidMount = () => {
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                gobiernoID: this.props.location.state.gobiernoID
+            }
+        } else {
+            infoCargada = {
+                gobiernoID: ""
+            }
+        }
+
+        this.setState({
+            institucionID: infoCargada.institucionID,
+        });
+
         /* Conectarse al backend para traer la información general de las divisiones */
         this.setState({
+            gobiernoID: infoCargada.gobiernoID,
             divisiones: [
                 {
                     nombre: "Nacional",
@@ -415,6 +434,10 @@ class DashboardGobierno extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <Translation>
                 {

@@ -65,7 +65,7 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "SUPERADMIN",
+            tipo: "DOCENTE",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"]
         }
@@ -147,6 +147,11 @@ class LoginCheck extends Component {
         let tituloLabelUsuarios = "";
         let iconUsers;
         switch (this.state.tipo) {
+            case "SUPERADMIN":
+            case "ADMIN":
+                tituloLabelUsuarios = <Translation>{ t => t("usuarios") }</Translation>;
+                iconUsers = <HowToReg />;
+                break;
             case "GOBIERNO":
                 tituloLabelUsuarios = <Translation>{ t => t("instituciones-corto") }</Translation>;
                 iconUsers = <AccountBalance />;
@@ -158,11 +163,6 @@ class LoginCheck extends Component {
             case "ESTABLECIMIENTO":
                 tituloLabelUsuarios = <Translation>{ t => t("docentes") }</Translation>;
                 iconUsers = <School />;
-                break;
-            case "SUPERADMIN":
-            case "ADMIN":
-                tituloLabelUsuarios = <Translation>{ t => t("usuarios") }</Translation>;
-                iconUsers = <HowToReg />;
                 break;
             case "EVALUADOR":
             case "DOCENTE":
@@ -356,6 +356,7 @@ class LoginCheck extends Component {
                                                             this.state.tipo === "SUPERADMIN" ? (
                                                                 <Switch>
                                                                     <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
+                                                                    <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
                                                                     <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route component={Pagina404} />
@@ -363,13 +364,12 @@ class LoginCheck extends Component {
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
-                                                                <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
-                                                            ) : ""
-                                                        }
-                                                        {
                                                             this.state.tipo === "ADMIN" ? (
-                                                                <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                <Switch>
+                                                                    <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
+                                                                    <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route component={Pagina404} />
+                                                                </Switch>
                                                             ) : ""
                                                         }
                                                         <Route component={Pagina404} />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut, Radar } from "react-chartjs-2";
@@ -20,6 +21,7 @@ class DashboardInstitucionEducativa extends Component {
         super(props);
 
         this.state = {
+            institucionID: "",
             cursosSugeridos: [],
             didRutaLoad: false,
             didDocentesLoad: false,
@@ -67,6 +69,22 @@ class DashboardInstitucionEducativa extends Component {
     }
 
     componentDidMount = () => {
+        let infoCargada = {};
+
+        if (this.props.location && this.props.location.state !== undefined) {
+            infoCargada = {
+                institucionID: this.props.location.state.institucionID
+            }
+        } else {
+            infoCargada = {
+                institucionID: ""
+            }
+        }
+
+        this.setState({
+            institucionID: infoCargada.institucionID,
+        });
+
         this.cargarRuta();
     }
 
@@ -83,6 +101,10 @@ class DashboardInstitucionEducativa extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <Translation>
                 {

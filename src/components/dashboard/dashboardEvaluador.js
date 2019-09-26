@@ -5,8 +5,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { Translation } from "react-i18next";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import { Bar, Pie } from "react-chartjs-2";
 
@@ -132,9 +131,9 @@ class DashboardEvaluador extends Component {
     }
 
     render() {
-        /* if (this.props.location && this.props.location.state === undefined) {
+        if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
-        } */
+        }
 
         return (
             <Translation>

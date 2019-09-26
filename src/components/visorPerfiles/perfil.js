@@ -198,7 +198,7 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboad-evaluador",
+                                        pathname: "/dashboard-evaluador",
                                         state: {
                                             evaluadorID: userID
                                         }
@@ -232,7 +232,7 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboad-admin",
+                                        pathname: "/dashboard-admin",
                                         state: {
                                             adminID: userID
                                         }
