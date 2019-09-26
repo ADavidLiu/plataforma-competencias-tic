@@ -122,7 +122,7 @@ class DashboardEvaluador extends Component {
                 {
                     userID: "docente-1",
                     nombre: "John Doe",
-                    establecimientoEducativo: "Lorem Ipsum Dolor Sit Amet",
+                    establecimientoEducativo: "Colegio Jane Doe",
                     imgSrc: "",
                     fechaAsignacion: "01-09-2019"
                 }
@@ -253,7 +253,7 @@ class DashboardEvaluador extends Component {
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
                                                             <Typography color="textPrimary" variant="body1" className="my-1"><strong>{encuesta.establecimientoEducativo}</strong></Typography>
-                                                            <Typography color="textPrimary" variant="body2"><strong>{encuesta.nombre}</strong></Typography>
+                                                            <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.respondido-por")} <strong>{encuesta.nombre}</strong></Typography>
                                                             <Typography color="textPrimary" variant="body2">{t("dashboardEvaluador.asignado-revision")} {encuesta.fechaAsignacion}</Typography>
                                                         </Paper>
                                                     </Link>

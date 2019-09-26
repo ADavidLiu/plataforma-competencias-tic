@@ -4,12 +4,18 @@ import { Translation } from "react-i18next";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Paper from '@material-ui/core/Paper';
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+
+import FormControl from "@material-ui/core/FormControl";
+import MenuItem from "@material-ui/core/MenuItem";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import Select from "@material-ui/core/Select";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut } from "react-chartjs-2";
 
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
@@ -35,7 +41,24 @@ class DashboardExtablecimientoEducativo extends Component {
             didRutaLoad: false,
             cursosSugeridos: [],
             indiceApropiacion: 0,
-            cuentaNoIngreso: 0
+            cuentaNoIngreso: 0,
+            encuestasNoRespondidas: [
+                {
+                    factor: 1,
+                    nombre: "Plan Institucional para la Integración de Tecnología",
+                    asignado: "no-asignado"
+                },
+                {
+                    factor: 2,
+                    nombre: "Infraestructura Tecnológica",
+                    asignado: "no-asignado"
+                },
+                {
+                    factor: 4,
+                    nombre: "Procesos de Seguimiento al Plan Institucional",
+                    asignado: "no-asignado"
+                }
+            ]
         }
     }
 
@@ -89,6 +112,18 @@ class DashboardExtablecimientoEducativo extends Component {
 		});
     }
 
+    handleEncuestaAsignacion = (e, index) => {
+        const newEncuestas = [...this.state.encuestasNoRespondidas];
+        newEncuestas[index].asignado = e.target.value;
+
+        /* Actualizar la asignación en el Backend */
+        
+        /* Actualización visual */
+        this.setState({
+            encuestasNoRespondidas: newEncuestas
+        });
+    }
+
     render() {
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
@@ -99,6 +134,52 @@ class DashboardExtablecimientoEducativo extends Component {
                 {
                     t => (
                         <Grid container spacing={5}>
+                            {
+                                this.state.encuestasNoRespondidas.length > 0 ? (
+                                    <React.Fragment>
+                                        <Grid item xs={12}>
+                                            <Typography variant="h5">{t("dashboardEE.label-encuestas")}</Typography>
+                                            <hr/>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            {
+                                                this.state.encuestasNoRespondidas.map((encuesta, i) => (
+                                                    <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
+                                                        <div className="mb-4 mb-md-0">
+                                                            <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
+                                                            <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
+                                                        </div>
+                                                        <div className="d-flex align-items-center justify-content-start justify-content-md-end">
+                                                            <Link to={{
+                                                                pathname: "/encuesta",
+                                                                state: {
+                                                                    factor: encuesta.factor
+                                                                }
+                                                            }}>
+                                                                <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
+                                                            </Link>
+                                                            <Typography variant="body1" className="mx-3">{t("o")}</Typography>
+                                                            <FormControl variant="outlined">
+                                                                <Select
+                                                                    value={this.state.encuestasNoRespondidas[i].asignado}
+                                                                    onChange={e => { this.handleEncuestaAsignacion(e, i); }}
+                                                                    input={<OutlinedInput required 
+                                                                    name="asignado"/>}
+                                                                >
+                                                                    <MenuItem value="no-asignado">{t("dashboardEE.encuesta-no-asignada")}</MenuItem>
+                                                                    {/* Traer los verdaderos Docentes directivos desde el backend */}
+                                                                    <MenuItem value="123456">John Doe</MenuItem>
+                                                                    <MenuItem value="789012">Jane Doe</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </div>
+                                                    </Paper>
+                                                ))
+                                            }
+                                        </Grid>
+                                    </React.Fragment>
+                                ) : null
+                            }
                             <Grid item xs={12}>
                                 <Typography variant="h5">
                                     {t("dashboardEE.label-docentes")}

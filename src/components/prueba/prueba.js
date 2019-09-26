@@ -368,7 +368,7 @@ class Prueba extends Component {
                             <Helmet>
                                 <title>{`${t("procesoPaso.1")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <Grid container justify="center" id="cuestionario-top">
+                            <Grid container justify="center" className="pb-5">
                                 <Grid item xs={12} sm={10} md={8}>
                                     <form>
                                         {!this.state.isPruebaIniciada ? (

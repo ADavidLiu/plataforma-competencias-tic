@@ -1,10 +1,6 @@
 const pasos = {
     basico: [
         {
-            nombre: "Registro de datos",
-            index: 0
-        },
-        {
             nombre: "Prueba de conocimiento",
             index: 1
         },
@@ -22,10 +18,6 @@ const pasos = {
         }
     ],
     avanzado: [
-        {
-            nombre: "Registro de datos",
-            index: 0
-        },
         {
             nombre: "Prueba de conocimiento",
             index: 1

@@ -148,7 +148,13 @@ class DashboardDocente extends Component {
                 ]
             },
             didRutaLoad: false,
-            cursosSugeridos: []
+            cursosSugeridos: [],
+            encuestasAsignadas: [
+                {
+                    factor: 1,
+                    nombre: "Plan Institucional para la Integración de Tecnología"
+                }   
+            ]
         }
         
         this.pasosRoutes = ["registro", "prueba", "practicas", "preentrevista", "entrevista"];
@@ -370,6 +376,32 @@ class DashboardDocente extends Component {
                 {
                     t => (
                         <Grid container spacing={4} justify="center">
+                            {
+                                this.state.encuestasAsignadas.length > 0 ? (
+                                    <Grid item xs={12}>
+                                        <Typography variant="h5">{t("dashboardDocente.encuestas-asignadas")}</Typography>
+                                        <hr/>
+                                        {
+                                            this.state.encuestasAsignadas.map((encuesta, i) => (
+                                                <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
+                                                    <div className="mb-4 mb-md-0">
+                                                        <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
+                                                        <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
+                                                    </div>
+                                                    <Link to={{
+                                                        pathname: "/encuesta",
+                                                        state: {
+                                                            factor: encuesta.factor
+                                                        }
+                                                    }}>
+                                                        <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
+                                                    </Link>
+                                                </Paper>
+                                            ))
+                                        }
+                                    </Grid>
+                                ) : null
+                            }
                             <Grid item xs={12}>
                                 <Typography variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
                                 <Paper className="my-4" style={{

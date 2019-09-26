@@ -55,6 +55,7 @@ import PrimerIngreso from "../primerIngreso/primerIngreso";
 import Auditoria from "../auditoria/auditoria";
 import Instrumento from "../instrumento/instrumento";
 import Ayuda from "../ayuda/ayuda";
+import Encuesta from "../encuesta/encuesta";
 
 class LoginCheck extends Component {
     constructor() {
@@ -320,6 +321,7 @@ class LoginCheck extends Component {
                                                         <Route path={`/${t("link.dashboard-ee")}`} component={DashboardEstablecimientoEducativo} />
                                                         <Route path={`/${t("link.dashboard-gobierno")}`} component={DashboardGobierno} />
                                                         <Route path={`/${t("link.dashboard-evaluador")}`} component={DashboardEvaluador} />
+                                                        <Route path={`/${t("link.encuesta")}`} render={(...routeProps) => <Encuesta {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.practica")}`} component={Practica} />
                                                         <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
@@ -382,9 +384,11 @@ class LoginCheck extends Component {
                                 </div>
                             </Container>
                             <Link to={t("link.ayuda")}>
-                                <Fab color="primary" className={window.location.pathname === "/prueba" ? "fab fab--alt" : "fab"}>
-                                    <Help/>
-                                </Fab>
+                                <Tooltip title={t("titulo.ayuda")} placement="left">
+                                    <Fab color="primary" className={window.location.pathname === "/prueba" ? "fab fab--alt" : "fab"}>
+                                        <Help/>
+                                    </Fab>
+                                </Tooltip>
                             </Link>
                         </React.Fragment>
                     )
