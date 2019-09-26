@@ -291,16 +291,39 @@ class Configuracion extends Component {
     }
 
     agregarFormato = () => {
-        const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
-        nuevosFormatos.push(this.state.parametrosPlataforma.nuevoFormato);
-
-        this.setState({
-            parametrosPlataforma: {
-                ...this.state.parametrosPlataforma,
-                formatosActuales: nuevosFormatos,
-                nuevoFormato: ""
+        let nuevoFormato = this.state.parametrosPlataforma.nuevoFormato;
+        if (nuevoFormato !== "" && nuevoFormato !== null && nuevoFormato !== undefined) {  
+            if (nuevoFormato.charAt(0) !== ".") {
+                nuevoFormato = "." + nuevoFormato;
             }
-        });
+
+            let isNew = true;
+            this.state.parametrosPlataforma.formatosActuales.forEach(formato => {
+                if (formato === nuevoFormato) {
+                    isNew = false;
+                }
+            });
+
+            if (isNew) {
+                const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
+                nuevosFormatos.push(nuevoFormato);
+        
+                this.setState({
+                    parametrosPlataforma: {
+                        ...this.state.parametrosPlataforma,
+                        formatosActuales: nuevosFormatos,
+                        nuevoFormato: ""
+                    }
+                });
+            } else {
+                this.setState({
+                    parametrosPlataforma: {
+                        ...this.state.parametrosPlataforma,
+                        nuevoFormato: ""
+                    }
+                });
+            }
+        }
     }
 
     borrarFormato = index => {
