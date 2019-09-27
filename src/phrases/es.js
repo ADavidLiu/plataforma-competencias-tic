@@ -103,6 +103,7 @@ const es = {
         "titulo.entrevista-revision": "Revisión de Entrevista",
         "titulo.encuesta-revision": "Revisión de Encuesta",
         "titulo.ayuda": "Ayuda",
+        "titulo.encuesta": "Encuesta",
         "incipiente": "Incipiente",
         "en-desarrollo": "En Desarrollo",
         "establecido": "Establecido",
@@ -503,6 +504,15 @@ const es = {
         "ayuda.title": "Ayuda y PQRS's",
         "ayuda.text": 'Por favor diríjase a la plataforma "Requerimientos", proveída por la Pontificia Universidad Javeriana Cali, haciendo click sobre el botón.',
         "ayuda.btn-label": "Ir a Requerimientos",
+        "encuestas.titulo": "Encuesta de autoevaluación",
+        "encuestas.ayuda": "Por favor responda todas las preguntas que a continuación encontrará. Éstas buscan indagar sobre el estado actual de su establecimiento educativo frente a la apropiación de las TIC. En este sentido, por favor incluya un archivo de evidencias pertinentes para cada una.",
+        "encuestas.no-iniciado": "No iniciado",
+        "encuestas.estado-inicial": "En estado inicial",
+        "encuestas.desarrollo": "En desarrollo",
+        "encuestas.establecido": "Establecido",
+        "encuestas.adjuntar": "Adjuntar evidencia",
+        "encuestas.subido": "Archivo cargado",
+        "encuestas.asignar": "Asignar estado",
     }
 }
 

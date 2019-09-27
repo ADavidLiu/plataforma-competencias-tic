@@ -152,8 +152,8 @@ class DashboardDocente extends Component {
             encuestasAsignadas: [
                 {
                     factor: 1,
-                    nombre: "Plan Institucional para la Integración de Tecnología"
-                }   
+                    nombre: "Incorporación de las TIC dentro de la misión, proyecto educativo institucional y plan estratégico de desarrollo de la institución educativa"
+                }
             ]
         }
         
@@ -384,7 +384,7 @@ class DashboardDocente extends Component {
                                         {
                                             this.state.encuestasAsignadas.map((encuesta, i) => (
                                                 <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
-                                                    <div className="mb-4 mb-md-0">
+                                                    <div className="mb-4 mb-md-0 pr-md-4">
                                                         <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
                                                         <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
                                                     </div>

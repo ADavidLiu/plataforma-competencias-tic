@@ -180,20 +180,21 @@ class LoginCheck extends Component {
                             {
                                 this.state.isLogeado ? (
                                     <AppBar position="fixed" color="primary">
-                                        <Toolbar>
-                                            <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3" />
-                                            <Typography variant="h6" color="inherit" className="text-ellipsis mr-2">{this.datosPerfil.nombre}</Typography>
+                                        <Toolbar className="px-md-0">
+                                            <Avatar alt="Imagen de perfil" src={this.datosPerfil.imgSrc !== "" ? this.datosPerfil.imgSrc : "https://via.placeholder.com/200"} className="mr-3 mr-md-0 profile-avatar"/>
+                                            <Typography variant="h6" color="inherit" className="text-ellipsis mr-2 mr-md-0 text-md-center d-md-none">{this.datosPerfil.nombre}</Typography>
                                             {
                                                 !this.state.isPrimerIngreso ? (
-                                                    <div className="d-flex align-items-center justify-content-end flex-grow-1">
-                                                        <Tooltip title="Inicio" placement="bottom">
+                                                    <React.Fragment>
+                                                    <div className="d-flex align-items-center justify-content-end flex-grow-1 flex-md-column justify-content-md-center navbar-icons">
+                                                        <Tooltip title="Inicio" placement="right">
                                                             <Link to="/">
                                                                 <IconButton style={{ color: "#ffffff" }}>
                                                                     <Home />
                                                                 </IconButton>
                                                             </Link>
                                                         </Tooltip>
-                                                        <Tooltip title="Configuración" placement="bottom">
+                                                        <Tooltip title="Configuración" placement="right">
                                                             <Link to={`/${t("link.configuracion")}`}>
                                                                 <IconButton style={{ color: "#ffffff" }}>
                                                                     <SettingsApplications />
@@ -202,7 +203,7 @@ class LoginCheck extends Component {
                                                         </Tooltip>
                                                         {
                                                             this.state.tipo === "SUPERADMIN" ? (
-                                                                <Tooltip title={t("instrumento.titulo-alt")}>
+                                                                <Tooltip title={t("instrumento.titulo-alt")} placement="right">
                                                                     <Link to={`/${t("link.instrumento")}`}>
                                                                         <IconButton style={{
                                                                             color: "#ffffff"
@@ -215,7 +216,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
-                                                                <Tooltip title={t("auditoria.titulo-alt")}>
+                                                                <Tooltip title={t("auditoria.titulo-alt")} placement="right">
                                                                     <Link to={`/${t("link.auditoria")}`}>
                                                                         <IconButton style={{
                                                                             color: "#ffffff"
@@ -228,7 +229,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "DOCENTE" ? (
-                                                                <Tooltip title={t("procesos.titulo-alt")}>
+                                                                <Tooltip title={t("procesos.titulo-alt")} placement="right">
                                                                     <Link to={`/${t("link.procesos")}`}>
                                                                         <IconButton style={{
                                                                             color: "#ffffff"
@@ -241,7 +242,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "GOBIERNO" ? (
-                                                                <Tooltip title={t("territorios.titulo")} placement="bottom">
+                                                                <Tooltip title={t("territorios.titulo")} placement="right">
                                                                     <Link to={`/${t("link.territorios")}`}>
                                                                         <IconButton style={{color: "#ffffff"}}>
                                                                             <Layers/>
@@ -252,7 +253,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
-                                                                <Tooltip title={tituloLabelUsuarios} placement="bottom">
+                                                                <Tooltip title={tituloLabelUsuarios} placement="right">
                                                                     <Link to={`/${t("link.usuarios")}`}>
                                                                         <IconButton style={{ color: "#ffffff" }}>
                                                                             { iconUsers }
@@ -263,7 +264,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "EVALUADOR" ? (
-                                                                <Tooltip title="Calificaciones" placement="bottom">
+                                                                <Tooltip title="Calificaciones" placement="right">
                                                                     <Link to={`/${t("link.calificaciones")}`}>
                                                                         <IconButton style={{ color: "#ffffff" }}>
                                                                             <PlaylistAddCheck />
@@ -272,14 +273,15 @@ class LoginCheck extends Component {
                                                                 </Tooltip>
                                                             ) : ""
                                                         }
-                                                        <Tooltip title="Cerrar sesión" placement="bottom">
-                                                            <Link to="/">
-                                                                <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
-                                                                    <ExitToApp />
-                                                                </IconButton>
-                                                            </Link>
-                                                        </Tooltip>
                                                     </div>
+                                                    <Tooltip title="Cerrar sesión" placement="right">
+                                                        <Link to="/">
+                                                            <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
+                                                                <ExitToApp />
+                                                            </IconButton>
+                                                        </Link>
+                                                    </Tooltip>
+                                                    </React.Fragment>
                                                 ) : ""
                                             }
                                         </Toolbar>
@@ -293,7 +295,7 @@ class LoginCheck extends Component {
                                 )
                             }
                             <Container component="main" className="pt-5" id="top">
-                                <div className="py-5">
+                                <div className="py-5 pb-md-5 pt-md-0">
                                     <Switch>
                                         <Route path="/" exact render={(...routeProps) => {
                                             if (this.state.isLogeado) {
