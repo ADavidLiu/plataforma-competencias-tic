@@ -389,7 +389,7 @@ class DashboardDocente extends Component {
                                                         <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
                                                     </div>
                                                     <Link to={{
-                                                        pathname: "/encuesta",
+                                                        pathname: `/${t("link.encuesta")}`,
                                                         state: {
                                                             factor: encuesta.factor
                                                         }
@@ -568,7 +568,7 @@ class DashboardDocente extends Component {
                             <Grid item xs={12} sm={4} lg={3}>
                                 <Typography variant="h5" className="mb-1">{t("dashboardDocente.acciones")}</Typography>
                                 <Link to={{
-                                    pathname: "/registro",
+                                    pathname: `/${t("link.registro")}`,
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }
@@ -583,7 +583,7 @@ class DashboardDocente extends Component {
                                     >{t("dashboardDocente.btn-registro")}</Button>
                                 </Link>
                                 <Link to={{
-                                    pathname: "/prueba",
+                                    pathname: `/${t("link.prueba")}`,
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }
@@ -598,7 +598,7 @@ class DashboardDocente extends Component {
                                     >{t("dashboardDocente.btn-prueba")}</Button>
                                 </Link>
                                 <Link to={{
-                                    pathname: "/practica",
+                                    pathname: `/${t("link.practica")}`,
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }
@@ -613,7 +613,7 @@ class DashboardDocente extends Component {
                                     >{t("dashboardDocente.btn-practica")}</Button>
                                 </Link>
                                 <Link to={{
-                                    pathname: "/preentrevista",
+                                    pathname: `/${t("link.preentrevista")}`,
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }
@@ -628,7 +628,7 @@ class DashboardDocente extends Component {
                                     >{t("dashboardDocente.btn-preentrevista")}</Button>
                                 </Link>
                                 <Link to={{
-                                    pathname: "/entrevista",
+                                    pathname: `/${t("link.entrevista")}`,
                                     state: {
                                         tipoUsuario: "DOCENTE"
                                     }

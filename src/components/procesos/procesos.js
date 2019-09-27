@@ -335,7 +335,7 @@ class Procesos extends Component {
                                                         <Grid container spacing={3}>
                                                             <Grid item xs={12}>
                                                                 <Link to={{
-                                                                    pathname: "/practicas",
+                                                                    pathname: `/${t("link.practica")}`,
                                                                     state: {
                                                                         tipoUsuario: "DOCENTE"
                                                                     }
@@ -357,7 +357,7 @@ class Procesos extends Component {
                                                         <Grid container spacing={3}>
                                                             <Grid item xs={12}>
                                                                 <Link to={{
-                                                                    pathname: "/preentrevista",
+                                                                    pathname: `/${t("link.preentrevista")}`,
                                                                     state: {
                                                                         tipoUsuario: "DOCENTE"
                                                                     }
@@ -383,7 +383,7 @@ class Procesos extends Component {
                                                         <Grid container spacing={3}>
                                                             <Grid item xs={12}>
                                                                 <Link to={{
-                                                                    pathname: "/entrevista",
+                                                                    pathname: `/${t("link.entrevista")}`,
                                                                     state: {
                                                                         tipoUsuario: "DOCENTE"
                                                                     }
