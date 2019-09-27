@@ -427,6 +427,7 @@ const es = {
         "calificaciones.fecha-asignacion": "Fecha de asignación",
         "calificaciones.fecha-calificacion": "Fecha de calificación",
         "calificaciones.titulo-actividad": "Mi actividad",
+        "revision.feedback": "Describa el porqué de su desición",
         "revision.preentrevista-titulo": "Revisión de Pre-entrevista",
         "revision.nombre-evaluado": "Nombre del(a) docente evaluado(a):",
         "revision.preentrevista-ayuda-1": "Señor(a) evaluador(a), a continuación se relacionan las respuestas registradas por el(la) docente.",

@@ -14,6 +14,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
 
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
@@ -118,10 +119,20 @@ class EncuestaRevision extends Component {
         }
     }
 
+    asignarFeedback = (e, index) => {
+        const nuevasCalificaciones = [...this.state.calificaciones];
+
+        nuevasCalificaciones[index] = {
+            ...nuevasCalificaciones[index],
+            feedback: e.target.value
+        }
+    }
+
     handleChange = (e, index, factor, criterio) => {
         const nuevasCalificaciones = [...this.state.calificaciones];
 
         nuevasCalificaciones[index] = {
+            ...nuevasCalificaciones[index],
             factor: factor,
             criterio: criterio,
             calificacion: e.target.value
@@ -209,7 +220,7 @@ class EncuestaRevision extends Component {
                                         </Grid>
                                     </Grid>
                                     <Grid container spacing={3} className="mb-4">
-                                        <Grid item xs={12} sm={8} md={9} className="mb-5">
+                                        <Grid item xs={12} sm={8} className="mb-5">
                                             <Typography variant="body1" className="mb-3">{t("revision.encuesta-ayuda")}: <strong>{this.state.respondidoPor}</strong></Typography>
                                         </Grid>
                                         <Grid item xs={12} sm={4} md={3}>
@@ -225,10 +236,10 @@ class EncuestaRevision extends Component {
                                             return (
                                                 <Paper key={i} className="p-4 mb-4">
                                                     <Grid container spacing={5}>
-                                                        <Grid item xs={12} sm={8} md={9}>
+                                                        <Grid item xs={12} sm={8}>
                                                             {this.state.preguntasPreparadas[i]}
                                                         </Grid>
-                                                        <Grid item xs={12} sm={4} md={3} className="d-md-flex flex-column">
+                                                        <Grid item xs={12} sm={4} className="d-md-flex flex-column">
                                                             <div className="order-md-2 mt-md-4">
                                                                 {
                                                                     pregunta.evidencia ? (
@@ -260,6 +271,24 @@ class EncuestaRevision extends Component {
                                                                     </Select>
                                                                 </FormControl>
                                                             </div>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <hr className="mt-0"/>
+                                                            <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
+                                                            <FormControl variant="outlined" className="w-100">
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    multiline
+                                                                    fullWidth
+                                                                    name="feedback"
+                                                                    value={
+                                                                        this.state.calificaciones[i] ? (
+                                                                            this.state.calificaciones[i].feedback
+                                                                        ) : ""
+                                                                    }
+                                                                    onInput={e => { this.asignarFeedback(e, i); }}
+                                                                />
+                                                            </FormControl>
                                                         </Grid>
                                                     </Grid>
                                                 </Paper>
