@@ -463,6 +463,8 @@ const es = {
         "revision.entrevista-evidencia": "Evidencia requerida",
         "revision.entrevista-calificacion": "Calificación final",
         "revision.encuesta-titulo": "Revisión de Encuesta",
+        "revision.encuesta-evaluado": "Nombre del establecimiento educativo evaluado:",
+        "revision.encuesta-ayuda": "Señor(a) evaluador(a), a continuación se relacionan las respuestas registradas por el representante del establecimiento educativo",
         "territorios.titulo": "Territorios",
         "territorios.asignar": "Asignar a territorio",
         "territorio.btn-crear": "Crear",

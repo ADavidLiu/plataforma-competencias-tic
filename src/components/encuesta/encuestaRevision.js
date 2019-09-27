@@ -28,9 +28,10 @@ class EncuestaRevision extends Component {
         super();
 
         this.state = {
-            docenteID: "",
-            docenteNombre: "",
-            docenteImg: "",
+            respondidoPor: "Jane Doe",
+            establecimientoID: "",
+            establecimientoNombre: "",
+            establecimientoImg: "",
             preguntas: [],
             preguntasPreparadas: [],
             calificaciones: [],
@@ -41,7 +42,7 @@ class EncuestaRevision extends Component {
     }
 
     cargarDatos = () => {
-        /* Conectarse al backend para traer las preguntas de este docenteID */
+        /* Conectarse al backend para traer las preguntas de este establecimientoID */
         const preguntasCargadas = [
             {
                 factor: 4,
@@ -75,26 +76,26 @@ class EncuestaRevision extends Component {
 
         if (this.props[0].location.state === undefined) {
             infoCargada = {
-                docenteID: "",
-                docenteNombre: "",
-                docenteImg: ""
+                establecimientoID: "",
+                establecimientoNombre: "",
+                establecimientoImg: ""
             }
         } else {
             infoCargada = {
-                docenteID: this.props[0].location.state.docenteID,
-                docenteNombre: this.props[0].location.state.docenteNombre,
-                docenteImg: this.props[0].location.state.userImg
+                establecimientoID: this.props[0].location.state.establecimientoID,
+                establecimientoNombre: this.props[0].location.state.establecimientoNombre,
+                establecimientoImg: this.props[0].location.state.userImg
             }
         }
 
-        if (infoCargada.docenteImg === "") {
-            infoCargada.docenteImg = "https://via.placeholder.com/500";
+        if (infoCargada.establecimientoImg === "") {
+            infoCargada.establecimientoImg = "https://via.placeholder.com/500";
         }
 
         this.setState({
-            docenteID: infoCargada.docenteID,
-            docenteNombre: infoCargada.docenteNombre,
-            docenteImg: infoCargada.docenteImg,
+            establecimientoID: infoCargada.establecimientoID,
+            establecimientoNombre: infoCargada.establecimientoNombre,
+            establecimientoImg: infoCargada.establecimientoImg,
             preguntas: preguntasCargadas,
             numPreguntas: preguntasCargadas.length
         });
@@ -198,10 +199,10 @@ class EncuestaRevision extends Component {
                                     <Grid container>
                                         <Grid item xs={12}>
                                             <div className="d-flex align-items-center justify-content-start">
-                                                <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
+                                                <Avatar alt={t("imagen-perfil")} src={this.state.establecimientoImg} className="mr-3" style={{height: "60px", width: "60px"}} />
                                                 <div>
                                                     <Typography variant="h5" className="mb-2">{t("revision.encuesta-titulo")}</Typography>
-                                                    <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
+                                                    <Typography variant="body1">{t("revision.encuesta-evaluado")} <strong>{this.state.establecimientoNombre}</strong></Typography>
                                                 </div>
                                             </div>
                                             <hr className="mb-4" />
@@ -209,7 +210,7 @@ class EncuestaRevision extends Component {
                                     </Grid>
                                     <Grid container spacing={3} className="mb-4">
                                         <Grid item xs={12} sm={8} md={9} className="mb-5">
-                                            <Typography variant="body1" className="mb-3">{t("revision.preentrevista-ayuda-1")}</Typography>
+                                            <Typography variant="body1" className="mb-3">{t("revision.encuesta-ayuda")}: <strong>{this.state.respondidoPor}</strong></Typography>
                                         </Grid>
                                         <Grid item xs={12} sm={4} md={3}>
                                             <Typography variant="body1" className="mb-2"><strong>{t("revision.calificacion-ayuda")}</strong></Typography>
