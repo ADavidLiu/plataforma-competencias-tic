@@ -46,7 +46,8 @@ class Calificaciones extends Component {
             headCells: {
                 practicas: ["ID", "nombre", "calificacion", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"],
                 preentrevistas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"],
-                entrevistas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"]
+                entrevistas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"],
+                encuestas: ["ID", "nombre", "calificaciones.fecha-asignacion", "calificaciones.fecha-calificacion", "configuracion.label-version", "revisar"]
             },
             filtros: {
                 categoria: "calificaciones.fecha-calificacion",
@@ -96,6 +97,15 @@ class Calificaciones extends Component {
                     version: "1.0.1"
                 }
             ],
+            encuestas: [
+                {
+                    id: "1",
+                    nombre: "Jane Doe",
+                    fechaAsignacion: "2019-03-14",
+                    fechaCalificacion: "2019-04-14",
+                    version: "1.0.1"
+                }
+            ],
             elementosMostrados: []
         }
     }
@@ -119,6 +129,9 @@ class Calificaciones extends Component {
                 break;
             case 2:
                 newCategory = "entrevistas";
+                break;
+            case 3:
+                newCategory = "encuestas";
                 break;
             default:
                 break;
@@ -299,6 +312,7 @@ class Calificaciones extends Component {
                 elementosMostrados: matchedArrays,
                 filtros: {
                     categoria: "calificaciones.fecha-calificacion",
+                    categoriaFormatted: "fechaCalificacion",
                     orden: "descendente"
                 }
             });
@@ -341,6 +355,7 @@ class Calificaciones extends Component {
                                         <Tab label={t("procesoPaso.2")}/>
                                         <Tab label={t("procesoPaso.3-plural")}/>
                                         <Tab label={t("procesoPaso.4-plural")}/>
+                                        <Tab label={t("procesoPaso.5")}/>
                                     </Tabs>
                                 </Paper>
                             </Grid>
@@ -435,7 +450,7 @@ class Calificaciones extends Component {
                                                                                             }
                                                                                             <TableCell>
                                                                                                 <Link to={{
-                                                                                                    pathname: `/${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`,
+                                                                                                    pathname: `/${t(`link.${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`)}`,
                                                                                                     state: {
                                                                                                         tipoUsuario: "EVALUADOR"
                                                                                                     }
