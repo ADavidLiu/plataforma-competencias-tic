@@ -106,7 +106,7 @@ class Login extends Component {
                             <Helmet>
                                 <title>{t("titulo.no-login")}</title>
                             </Helmet>
-                            <div className="mb-2 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+                            <div className="mb-2 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                                 <Typography
                                     component="h1"
                                     variant="h5"
