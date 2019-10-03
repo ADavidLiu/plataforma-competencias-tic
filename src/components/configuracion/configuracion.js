@@ -147,7 +147,8 @@ class Configuracion extends Component {
                 ],
                 isOtrasAreas: false,
                 otrasAreasCuales: ""
-            }
+            },
+            tipoEncuestas: "institucion"
         }
     }
 
@@ -166,6 +167,9 @@ class Configuracion extends Component {
                 break;
             case "idiomaSeleccionado":
                 getI18n().changeLanguage(e.target.value);
+                break;
+            case "tipoEncuestas":
+
                 break;
             default:
                 break;
@@ -937,6 +941,42 @@ class Configuracion extends Component {
                                                             value={this.state.parametrosPlataforma.tamanioArchivosBytes}
                                                             onInput={this.handleChangeParametrosPlataforma}
                                                         />
+                                                    </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </React.Fragment>
+                                ) : null
+                            }
+                            {
+                                this.props.userType === "INSTITUCION" ? (
+                                    <React.Fragment>
+                                        <Grid item xs={12}>
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <Typography variant="h6" className="mr-4">
+                                                    {t("configuracion.parametros-plataforma")}
+                                                </Typography>
+                                            </div>
+                                            <hr/>
+                                        </Grid>
+                                        <Grid item xs={12} className="mb-5">
+                                            <Grid container spacing={5} alignItems="flex-start">
+                                                <Grid item xs={6}>
+                                                    <Typography variant="subtitle2" className="mr-4 mt-1 mt-md-3">
+                                                        {t("configuracion.encuestas")}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <Select
+                                                            value={this.state.tipoEncuestas}
+                                                            onChange={this.handleChange}
+                                                            input={<OutlinedInput required 
+                                                            name="tipoEncuestas"/>}
+                                                        >
+                                                            <MenuItem value="institucion">{t("configuracion.encuestas-institucion")}</MenuItem>
+                                                            <MenuItem value="sedes">{t("configuracion.encuestas-sedes")}</MenuItem>
+                                                        </Select>
                                                     </FormControl>
                                                 </Grid>
                                             </Grid>
