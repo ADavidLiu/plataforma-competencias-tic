@@ -43,7 +43,7 @@ class EncuestaRevision extends Component {
     }
 
     cargarDatos = () => {
-        /* Conectarse al backend para traer las preguntas de este establecimientoID */
+        /* Conectarse al backend para traer las preguntas de este establecimientoID, en el idioma correcto */
         const preguntasCargadas = [
             {
                 factor: 4,
@@ -104,6 +104,18 @@ class EncuestaRevision extends Component {
         preguntasCargadas.forEach(pregunta => {
             this.prepararPreguntas(pregunta, []);
         });
+        const placeholders = [];
+        for (let i = 0; i < this.state.preguntasPreparadas.length; i++) {
+            placeholders.push({
+                factor: "",
+                criterio: "",
+                calificacion: "",
+                feedback: ""
+            });
+        }
+        this.setState({
+            calificaciones: placeholders
+        });
     }
 
     componentDidMount = () => {
@@ -126,6 +138,10 @@ class EncuestaRevision extends Component {
             ...nuevasCalificaciones[index],
             feedback: e.target.value
         }
+
+        this.setState({
+            calificaciones: nuevasCalificaciones
+        });
     }
 
     handleChange = (e, index, factor, criterio) => {
@@ -203,8 +219,6 @@ class EncuestaRevision extends Component {
         if (this.props[0].location.state === undefined) {
             return <Redirect to="/" />
         }
-
-        console.log(this.state.calificaciones);
 
         return (
             <Translation>
