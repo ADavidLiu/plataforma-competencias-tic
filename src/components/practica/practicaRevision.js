@@ -27,6 +27,9 @@ import Button from "@material-ui/core/Button";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import { Paper } from "@material-ui/core";
 
+import NavigationPrompt from "react-router-navigation-prompt";
+import ConfirmacionSalir from "../modales/confirmacionSalir";
+
 class PracticaRevision extends Component {
     constructor() {
         super();
@@ -165,6 +168,13 @@ class PracticaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.practica-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
+                            <NavigationPrompt when={!this.state.isEnviado}>
+                                {
+                                    ({ onConfirm, onCancel }) => (
+                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                    )
+                                }
+                            </NavigationPrompt>
                             <Grid container justify="center" spacing={5}>
                                 <Grid item xs={12}>
                                     <Grid container>

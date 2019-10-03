@@ -17,7 +17,6 @@ import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import NavigationPrompt from "react-router-navigation-prompt";
 
 import Avatar from '@material-ui/core/Avatar';
 import Grid from "@material-ui/core/Grid";
@@ -25,6 +24,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
+import NavigationPrompt from "react-router-navigation-prompt";
 import ConfirmacionSalir from "../modales/confirmacionSalir";
 
 class EncuestaRevision extends Component {
@@ -239,7 +239,7 @@ class EncuestaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.encuesta-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={true}>
+                            <NavigationPrompt when={!this.state.isEnviado}>
                                 {
                                     ({ onConfirm, onCancel }) => (
                                         <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
