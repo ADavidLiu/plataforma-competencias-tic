@@ -36,4 +36,4 @@ export const factor4 = [
     "Cambio en las prácticas pedagógicas a partir de la incorporación de las TIC"
 ];
 
-export default [factor1, factor2, factor4];
+export default [factor1, factor2, null, factor4];
