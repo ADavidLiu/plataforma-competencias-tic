@@ -44,16 +44,19 @@ class DashboardExtablecimientoEducativo extends Component {
             cuentaNoIngreso: 0,
             encuestasNoRespondidas: [
                 {
+                    id: "123asd",
                     factor: 1,
                     nombre: "Incorporación de las TIC dentro de la misión, proyecto educativo institucional y plan estratégico de desarrollo de la institución educativa",
                     asignado: "no-asignado"
                 },
                 {
+                    id: "456qwe",
                     factor: 2,
                     nombre: "Recursos humanos y tecnológicos con que cuenta la institución para integrar las TIC en los procesos de enseñanza y aprendizaje",
                     asignado: "no-asignado"
                 },
                 {
+                    id: "789zxc",
                     factor: 4,
                     nombre: "Monitoreo y evaluación sobre el papel de las TIC en los procesos de enseñanza y aprendizaje",
                     asignado: "no-asignado"
@@ -124,6 +127,20 @@ class DashboardExtablecimientoEducativo extends Component {
         });
     }
 
+    asignarDelegado = index => {
+        const encuestaSeleccionada = this.state.encuestasNoRespondidas[index];
+        console.log(encuestaSeleccionada.id, encuestaSeleccionada.factor, encuestaSeleccionada.nombre, encuestaSeleccionada.asignado);
+        /* Enviar al backend */
+        console.log("Asignado!");
+
+        /* Eliminar visualmente una vez llegue la confirmación 200 */
+        const newEncuestas = [...this.state.encuestasNoRespondidas];
+        newEncuestas.splice(index, 1);
+        this.setState({
+            encuestasNoRespondidas: newEncuestas
+        });
+    }
+
     render() {
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
@@ -172,6 +189,7 @@ class DashboardExtablecimientoEducativo extends Component {
                                                                     <MenuItem value="789012">Jane Doe</MenuItem>
                                                                 </Select>
                                                             </FormControl>
+                                                            <Button variant="outlined" size="large" className="ml-3" color="primary" hidden={this.state.encuestasNoRespondidas[i].asignado === "no-asignado" ? true : false} onClick={() => this.asignarDelegado(i)}>{t("encuestas.asignar-delegado")}</Button>
                                                         </div>
                                                     </Paper>
                                                 ))

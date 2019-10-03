@@ -527,6 +527,7 @@ const es = {
         "encuestas.asignar": "Asignar estado",
         "encuestas.enviada": "Encuesta enviada",
         "encuestas.enviada-ayuda": "La información de su encuesta ha sido cargada exitosamente.",
+        "encuestas.asignar-delegado": "Asignar"
     }
 }
 
