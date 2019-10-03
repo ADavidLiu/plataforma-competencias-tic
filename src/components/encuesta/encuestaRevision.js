@@ -170,6 +170,15 @@ class EncuestaRevision extends Component {
                             <Typography variant="body1"><strong>{t("pregunta")}: </strong>{pregunta.label}</Typography>
                             <hr/>
                             <Typography variant="body1"><strong>{t("respuesta")}: </strong>{pregunta.respuesta}</Typography>
+                            {
+                                pregunta.evidencia ? (
+                                    <div className="mt-3">
+                                        <a href={pregunta.evidencia}>
+                                            <Button color="primary" variant="contained">{t("revision.descargar-evidencia")}</Button>
+                                        </a>
+                                    </div>
+                                ) : null
+                            }
                         </React.Fragment>
                     )
                 }
@@ -236,59 +245,54 @@ class EncuestaRevision extends Component {
                                             return (
                                                 <Paper key={i} className="p-4 mb-4">
                                                     <Grid container spacing={5}>
-                                                        <Grid item xs={12} sm={8}>
+                                                        <Grid item xs={12}>
                                                             {this.state.preguntasPreparadas[i]}
                                                         </Grid>
-                                                        <Grid item xs={12} sm={4} className="d-md-flex flex-column">
-                                                            <div className="order-md-2 mt-md-4">
-                                                                {
-                                                                    pregunta.evidencia ? (
-                                                                        <a href={pregunta.evidencia}>
-                                                                            <Button color="primary" variant="contained"
-                                                                            fullWidth>{t("revision.descargar-evidencia")}</Button>
-                                                                        </a>
-                                                                    ) : ""
-                                                                }
-                                                            </div>
-                                                            <div className="order-md-1">
-                                                                <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
-                                                                <FormControl variant="outlined" className="w-100">
-                                                                    <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
-                                                                    <Select
-                                                                        required
-                                                                        value={
-                                                                            this.state.calificaciones[i] ? (
-                                                                                this.state.calificaciones[i].calificacion
-                                                                            ) : ""
-                                                                        }
-                                                                        onChange={e => { this.handleChange(e, i, pregunta.factor, pregunta.criterio); }}
-                                                                        input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                                    >
-                                                                        <MenuItem value={1}>1</MenuItem>
-                                                                        <MenuItem value={2}>2</MenuItem>
-                                                                        <MenuItem value={3}>3</MenuItem>
-                                                                        <MenuItem value={4}>4</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
-                                                            </div>
-                                                        </Grid>
                                                         <Grid item xs={12}>
-                                                            <hr className="mt-0"/>
-                                                            <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
-                                                            <FormControl variant="outlined" className="w-100">
-                                                                <TextField
-                                                                    variant="outlined"
-                                                                    multiline
-                                                                    fullWidth
-                                                                    name="feedback"
-                                                                    value={
-                                                                        this.state.calificaciones[i] ? (
-                                                                            this.state.calificaciones[i].feedback
-                                                                        ) : ""
-                                                                    }
-                                                                    onInput={e => { this.asignarFeedback(e, i); }}
-                                                                />
-                                                            </FormControl>
+                                                            <Grid container spacing={3}>
+                                                                <Grid item xs={12}>
+                                                                    <hr className="my-0"/>
+                                                                </Grid>
+                                                                <Grid item xs={12} md={4}>
+                                                                    <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
+                                                                    <FormControl variant="outlined" className="w-100">
+                                                                        <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
+                                                                        <Select
+                                                                            required
+                                                                            value={
+                                                                                this.state.calificaciones[i] ? (
+                                                                                    this.state.calificaciones[i].calificacion
+                                                                                ) : ""
+                                                                            }
+                                                                            onChange={e => { this.handleChange(e, i, pregunta.factor, pregunta.criterio); }}
+                                                                            input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                                        >
+                                                                            <MenuItem value={1}>1</MenuItem>
+                                                                            <MenuItem value={2}>2</MenuItem>
+                                                                            <MenuItem value={3}>3</MenuItem>
+                                                                            <MenuItem value={4}>4</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                </Grid>
+                                                                <Grid item xs={12} md={8}>
+                                                                    <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
+                                                                    <FormControl variant="outlined" className="w-100">
+                                                                        <TextField
+                                                                            variant="outlined"
+                                                                            multiline
+                                                                            fullWidth
+                                                                            rows="5"
+                                                                            name="feedback"
+                                                                            value={
+                                                                                this.state.calificaciones[i] ? (
+                                                                                    this.state.calificaciones[i].feedback
+                                                                                ) : ""
+                                                                            }
+                                                                            onInput={e => { this.asignarFeedback(e, i); }}
+                                                                        />
+                                                                    </FormControl>
+                                                                </Grid>
+                                                            </Grid>
                                                         </Grid>
                                                     </Grid>
                                                 </Paper>

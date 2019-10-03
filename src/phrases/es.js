@@ -445,7 +445,7 @@ const es = {
         "revision.calificacion-inicial": "En estado inicial",
         "revision.calificacion-desarrollo": "En desarrollo",
         "revision.calificacion-establecido": "Establecido",
-        "revision.descargar-evidencia": "Descargar evidencia",
+        "revision.descargar-evidencia": "Descargar evidencia adjunta",
         "revision.seleccione-valor": "Seleccione un valor *",
         "revision.enviada": "Revisión enviada",
         "revision.enviada-ayuda": "La calificación ha sido asignada exitosamente.",
