@@ -66,7 +66,7 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "SUPERADMIN",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"]
         }
@@ -325,7 +325,7 @@ class LoginCheck extends Component {
                                                         <Route path={`/${t("link.dashboard-evaluador")}`} component={DashboardEvaluador} />
                                                         <Route path={`/${t("link.encuesta")}`} render={(...routeProps) => <Encuesta {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.practica")}`} component={Practica} />
+                                                        <Route path={`/${t("link.practica")}`} render={(...routeProps) => <Practica {...routeProps} userProfile={this.datosPerfil}/>} />
                                                         <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>

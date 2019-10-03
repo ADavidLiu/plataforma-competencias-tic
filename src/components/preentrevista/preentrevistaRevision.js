@@ -23,6 +23,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 
+import NavigationPrompt from "react-router-navigation-prompt";
+import ConfirmacionSalir from "../modales/confirmacionSalir";
+
 class PreentrevistaRevision extends Component {
     constructor() {
         super();
@@ -191,6 +194,13 @@ class PreentrevistaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.preentrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
+                            <NavigationPrompt when={!this.state.isEnviado}>
+                                {
+                                    ({ onConfirm, onCancel }) => (
+                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                    )
+                                }
+                            </NavigationPrompt>
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>

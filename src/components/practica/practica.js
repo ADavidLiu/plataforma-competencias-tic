@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
+import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -26,6 +27,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+
+import NavigationPrompt from "react-router-navigation-prompt";
+import ConfirmacionSalir from "../modales/confirmacionSalir";
 
 class Practica extends Component {
     constructor() {
@@ -81,7 +85,8 @@ class Practica extends Component {
                     },
                     descripcion: ""
                 }
-            }
+            },
+            isEnviado: false
         };
 
         this.state = this.initialState;
@@ -409,7 +414,9 @@ class Practica extends Component {
         e.preventDefault();
         if (this.state.asegurarCorrecto) {
             /* Todo OK. Enviar al backend y mostrar confirmación */
-
+            this.setState({
+                isEnviado: true
+            });
         }
     }
 
@@ -430,7 +437,6 @@ class Practica extends Component {
                             <TextField
                                 variant="outlined"
                                 margin="normal"
-                                required
                                 fullWidth
                                 label={t("practicas.elemento")}
                                 name="materiales"
@@ -451,7 +457,6 @@ class Practica extends Component {
                             <TextField
                                 variant="outlined"
                                 margin="normal"
-                                required
                                 fullWidth
                                 label={t("practicas.elemento")}
                                 name="escenarios"
@@ -472,7 +477,6 @@ class Practica extends Component {
                             <TextField
                                 variant="outlined"
                                 margin="normal"
-                                required
                                 fullWidth
                                 label={t("practicas.elemento")}
                                 name="procedimientos"
@@ -529,6 +533,16 @@ class Practica extends Component {
                 {
                     t => (
                         <React.Fragment>
+                            <Helmet>
+                                <title>{`${t("procesoPaso.2")} | ${this.props.userProfile.nombre}`}</title>
+                            </Helmet>
+                            <NavigationPrompt when={!this.state.isEnviado}>
+                                {
+                                    ({ onConfirm, onCancel }) => (
+                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                    )
+                                }
+                            </NavigationPrompt>
                             <Grid container justify="center">
                                 <Grid item xs={12} sm={8} md={6}>
                                     <form onSubmit={this.handleSubmit}>
@@ -572,7 +586,6 @@ class Practica extends Component {
                                                 <TextField
                                                     variant="outlined"
                                                     margin="normal"
-                                                    required
                                                     fullWidth
                                                     id="palabraClaveInput"
                                                     label={t("practicas.tags")}
@@ -1058,6 +1071,17 @@ class Practica extends Component {
                                         <Button type="submit" color="primary" variant="contained">{t("practicas.actividad-btn-agregar")}</Button>
                                     </DialogActions>
                                 </form>
+                            </Dialog>
+                            <Dialog open={this.state.isEnviado}>
+                                <DialogTitle>{t("practicas.enviada")}</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>{t("practicas.enviada-ayuda")}</DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Link to="/" style={{textDecoration: "none"}}>
+                                        <Button color="primary">{t("volver-inicio")}</Button>
+                                    </Link>
+                                </DialogActions>
                             </Dialog>
                         </React.Fragment>
                     )

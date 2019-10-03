@@ -35,6 +35,9 @@ import Save from "@material-ui/icons/Save";
 import preguntasPrueba from "../../models/preguntasPrueba";
 import shuffleArray from "../../utils/shuffleArray";
 
+import NavigationPrompt from "react-router-navigation-prompt";
+import ConfirmacionSalir from "../modales/confirmacionSalir";
+
 class Prueba extends Component {
     constructor() {
         super();
@@ -368,6 +371,13 @@ class Prueba extends Component {
                             <Helmet>
                                 <title>{`${t("procesoPaso.1")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
+                            <NavigationPrompt when={!this.state.isPruebaTerminada}>
+                                {
+                                    ({ onConfirm, onCancel }) => (
+                                        <ConfirmacionSalir guardar onConfirm={onConfirm} onCancel={onCancel}/>
+                                    )
+                                }
+                            </NavigationPrompt>
                             <Grid container justify="center" className="pb-5">
                                 <Grid item xs={12} sm={10} md={8}>
                                     <form>

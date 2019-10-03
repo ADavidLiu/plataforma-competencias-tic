@@ -210,8 +210,12 @@ const es = {
         "practicas.actividad-label-adjunte-produccion": "Adjunte la producción de un estudiante retroalimentada, si la tiene.",
         "practicas.actividad-ayuda-adjunte-produccion": "Recuerde borrar cualquier referencia a la identidad del estudiante.",
         "practicas.actividad-btn-agregar": "Agregar actividad",
+        "practicas.enviada": "Práctica educativa enviada",
+        "practicas.enviada-ayuda": "La información de su práctica educativa ha sido cargada exitosamente.",
         "preentrevista.titulo": "Pre-entrevista",
         "preentrevista.ayuda": "Por favor responda todas las preguntas que a continuación encontrará. Éstas buscan ahondar en su apropiación de compentencias TIC clave de su proceso docente.",
+        "preentrevista.enviada": "Pre-entrevista enviada",
+        "preentrevista.enviada-ayuda": "La información de su pre-entrevista ha sido cargada exitosamente.",
         "404.subtitulo": "404",
         "404.titulo": "Página no encontrada",
         "404.btn": "Regresar a inicio",
@@ -521,6 +525,8 @@ const es = {
         "encuestas.adjuntar": "Adjuntar evidencia",
         "encuestas.subido": "Archivo cargado",
         "encuestas.asignar": "Asignar estado",
+        "encuestas.enviada": "Encuesta enviada",
+        "encuestas.enviada-ayuda": "La información de su encuesta ha sido cargada exitosamente.",
     }
 }
 

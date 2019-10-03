@@ -3,13 +3,19 @@ import React, { Component } from "react";
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import preguntas from "../../models/preentrevista-new";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -18,7 +24,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { Paper } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+
+import NavigationPrompt from "react-router-navigation-prompt";
+import ConfirmacionSalir from "../modales/confirmacionSalir";
 
 class Preentrevista extends Component {
     constructor() {
@@ -29,8 +38,12 @@ class Preentrevista extends Component {
             respuestas: [],
             preguntas: preguntas,
             preguntasVisibles: [],
-            visibilityClasses: []
+            visibilityClasses: [],
+            isCompletado: false,
+            isEnviado: false
         }
+
+        this.preguntasRoot = preguntas.filter(pregunta => pregunta.typeOfLevel === "ROOT");
 
         this.parentLabel = "";
         this.subniveles = [];
@@ -58,6 +71,19 @@ class Preentrevista extends Component {
         });
         
         this.crearCuestionario();
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.respuestas !== this.state.respuestas) {
+            const respondidas = this.state.respuestas.filter(respuesta => respuesta !== null && respuesta !== undefined);
+            let newState = false;
+            if (respondidas.length === this.preguntasRoot.length) {
+                newState = true;
+            }
+            this.setState({
+                isCompletado: newState
+            });
+        }
     }
 
     handlePreguntaChange = (e, preguntaID, groupID, subgroupID, typeOfLevel, triggerID, index) => {
@@ -451,6 +477,10 @@ class Preentrevista extends Component {
     handleSubmit = e => {
         e.preventDefault();
         console.log("Enviar al backend");
+
+        this.setState({
+            isEnviado: true
+        });
     }
 
     render() {
@@ -462,27 +492,47 @@ class Preentrevista extends Component {
             <Translation>
                 {
                     t => (
-                        <Grid container justify="center">
-                            <Helmet>
-                                <title>{`${t("procesoPaso.3")} | ${this.props.userProfile.nombre}`}</title>
-                            </Helmet>
-                            <Grid item xs={12} sm={8} md={6}>
-                                <form onSubmit={this.handleSubmit}>
-                                    <div className="mb-5">
-                                        <Typography variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
-                                        <Typography variant="body1" className="mb-3">{t("preentrevista.ayuda")}</Typography>
-                                    </div>
+                        <React.Fragment>
+                            <Grid container justify="center">
+                                <Helmet>
+                                    <title>{`${t("procesoPaso.3")} | ${this.props.userProfile.nombre}`}</title>
+                                </Helmet>
+                                <NavigationPrompt when={!this.state.isEnviado}>
                                     {
-                                        this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
-                                            <div className="preentrevista-preguntas">
-                                                {this.state.preguntasVisibles}
-                                                <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large">{t("enviar")}</Button>
-                                            </div>
+                                        ({ onConfirm, onCancel }) => (
+                                            <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
                                         )
                                     }
-                                </form>
+                                </NavigationPrompt>
+                                <Grid item xs={12} sm={8} md={6}>
+                                    <form onSubmit={this.handleSubmit}>
+                                        <div className="mb-5">
+                                            <Typography variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
+                                            <Typography variant="body1" className="mb-3">{t("preentrevista.ayuda")}</Typography>
+                                        </div>
+                                        {
+                                            this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
+                                                <div className="preentrevista-preguntas">
+                                                    {this.state.preguntasVisibles}
+                                                    <Button type="submit" fullWidth className="mt-3" color="primary" variant="contained" size="large" disabled={!this.state.isCompletado}>{t("enviar")}</Button>
+                                                </div>
+                                            )
+                                        }
+                                    </form>
+                                </Grid>
                             </Grid>
-                        </Grid>
+                            <Dialog open={this.state.isEnviado}>
+                                <DialogTitle>{t("preentrevista.enviada")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>{t("preentrevista.enviada-ayuda")}</DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Link to="/" style={{textDecoration: "none"}}>
+                                        <Button color="primary">{t("volver-inicio")}</Button>
+                                    </Link>
+                                </DialogActions>
+                            </Dialog>
+                        </React.Fragment>
                     )
                 }
             </Translation>
