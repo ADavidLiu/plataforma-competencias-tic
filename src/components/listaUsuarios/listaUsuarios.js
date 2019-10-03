@@ -721,6 +721,10 @@ class ListaUsuarios extends Component {
     }
 
     handleEdicionChange = e => {
+        if (e.target.name === "tiempoRestantePrueba" && e.target.value === "0") {
+            e.target.value = "Finalizada";
+        }
+
         this.setState({
             editingForm: {
                 ...this.state.editingForm,
@@ -2341,7 +2345,6 @@ class ListaUsuarios extends Component {
                                             name="tiempoRestantePrueba"
                                             value={this.state.editingForm.tiempoRestantePrueba}
                                             onChange={this.handleEdicionChange}
-                                            type="number"
                                             inputProps={{min: 0, step: 1}}
                                         />
                                     </Grid>
