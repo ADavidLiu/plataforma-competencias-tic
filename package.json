@@ -20,6 +20,7 @@
     "react-helmet": "^5.2.1",
     "react-i18next": "^10.12.3",
     "react-router-dom": "^5.0.1",
+    "react-router-navigation-prompt": "^1.8.8",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.5",
     "react-sticky": "^6.0.3",

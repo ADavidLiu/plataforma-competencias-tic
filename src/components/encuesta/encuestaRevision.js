@@ -17,12 +17,15 @@ import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import NavigationPrompt from "react-router-navigation-prompt";
 
 import Avatar from '@material-ui/core/Avatar';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+
+import ConfirmacionSalir from "../modales/confirmacionSalir";
 
 class EncuestaRevision extends Component {
     constructor() {
@@ -39,6 +42,20 @@ class EncuestaRevision extends Component {
             isEnviado: false,
             isCompletado: false,
             numPreguntas: 0
+        }
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.calificaciones !== this.state.calificaciones) {
+            let newState = true;
+            this.state.calificaciones.forEach(calificacion => {
+                if (calificacion.calificacion === "" || calificacion.calificacion === 0 || calificacion.feedback === "") {
+                    newState = false;
+                }
+            });
+            this.setState({
+                isCompletado: newState
+            });
         }
     }
 
@@ -157,12 +174,6 @@ class EncuestaRevision extends Component {
         this.setState({
             calificaciones: nuevasCalificaciones
         });
-
-        if (nuevasCalificaciones.length === this.state.numPreguntas) {
-            this.setState({
-                isCompletado: true
-            });
-        }
     }
 
     prepararPreguntas = (pregunta, arrayBase) => {
@@ -228,6 +239,13 @@ class EncuestaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.encuesta-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
+                            <NavigationPrompt when={true}>
+                                {
+                                    ({ onConfirm, onCancel }) => (
+                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                    )
+                                }
+                            </NavigationPrompt>
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>
