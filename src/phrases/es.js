@@ -121,6 +121,7 @@ const es = {
         "dashboardGobierno.division": "Actualmente viendo datos de:",
         "dashboardGobierno.general": "Información general",
         "dashboardGobierno.indice": "Índice de apropiación TIC",
+        "dashboardGobierno.instituciones": "Instituciones educativas",
         "dashboardGobierno.establecimientos": "Establecimientos educativos",
         "dashboardGobierno.docentes": "Docentes",
         "dashboardGobierno.descriptores": "Estado de descriptores",

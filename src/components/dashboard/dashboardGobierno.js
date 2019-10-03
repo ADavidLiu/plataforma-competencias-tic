@@ -19,7 +19,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 import cursos from "../../models/cursos";
-import { docentesCargados, institucionesCargadas } from "../../models/perfiles";
+import { docentesCargados, establecimientosCargados, institucionesCargadas } from "../../models/perfiles";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";
@@ -42,6 +42,7 @@ class DashboardGobierno extends Component {
             didEstablecimientosLoad: false,
             docentesSubdivision: [],
             institucionesSubdivision: [],
+            establecimientosSubdivision: [],
             isLoading: true
         }
 
@@ -350,6 +351,7 @@ class DashboardGobierno extends Component {
             didDocentesLoad: true,
             docentesSubdivision: [...docentesCargados],
             didEstablecimientosLoad: true,
+            establecimientosSubdivision: [...establecimientosCargados],
             institucionesSubdivision: [...institucionesCargadas]
         });
 
@@ -681,7 +683,7 @@ class DashboardGobierno extends Component {
                                         <Typography variant="h5" className="mb-4">{t("dashboardGobierno.detallada")}</Typography>
                                         <Grid container spacing={5}>
                                             <Grid item xs={12} md={6}>
-                                                <Typography variant="h6" className="mb-1">{t("dashboardGobierno.establecimientos")}</Typography>
+                                                <Typography variant="h6" className="mb-1">{t("dashboardGobierno.instituciones")}</Typography>
                                                 <hr className="mb-3" />
                                                 {
                                                     this.state.didEstablecimientosLoad ? (
@@ -692,6 +694,17 @@ class DashboardGobierno extends Component {
                                                 }
                                             </Grid>
                                             <Grid item xs={12} md={6}>
+                                                <Typography variant="h6" className="mb-1">{t("dashboardGobierno.establecimientos")}</Typography>
+                                                <hr className="mb-3" />
+                                                {
+                                                    this.state.didEstablecimientosLoad ? (
+                                                        <VisorPerfiles tipo="ESTABLECIMIENTOS" numPorPagina={6} perfiles={this.state.establecimientosSubdivision} />
+                                                    ) : (
+                                                        <CircularProgress color="primary" />
+                                                    )
+                                                }
+                                            </Grid>
+                                            <Grid item xs={12}>
                                                 <Typography variant="h6" className="mb-1">{t("dashboardGobierno.docentes")}</Typography>
                                                 <hr className="mb-3" />
                                                 {
