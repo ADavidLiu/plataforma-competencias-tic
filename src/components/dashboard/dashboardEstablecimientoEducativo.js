@@ -161,12 +161,12 @@ class DashboardExtablecimientoEducativo extends Component {
                                         <Grid item xs={12}>
                                             {
                                                 this.state.encuestasNoRespondidas.map((encuesta, i) => (
-                                                    <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
-                                                        <div className="mb-4 mb-md-0 pr-md-4">
+                                                    <Paper className="p-4 mb-4 d-lg-flex align-items-center justify-content-between" key={i}>
+                                                        <div className="mb-4 mb-md-3 mb-lg-0 pr-lg-4">
                                                             <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
                                                             <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
                                                         </div>
-                                                        <div className="d-flex align-items-center justify-content-start justify-content-md-end">
+                                                        <div className="d-flex align-items-center justify-content-start justify-content-lg-end">
                                                             <Link to={{
                                                                 pathname: "/encuesta",
                                                                 state: {
