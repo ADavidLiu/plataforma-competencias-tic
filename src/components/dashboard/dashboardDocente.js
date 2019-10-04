@@ -404,7 +404,7 @@ class DashboardDocente extends Component {
                                                             state: {
                                                                 factor: encuesta.factor
                                                             }
-                                                        }}>
+                                                        }} style={{"textDecoration": "none"}}>
                                                             <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
                                                         </Link>
                                                     </Paper>

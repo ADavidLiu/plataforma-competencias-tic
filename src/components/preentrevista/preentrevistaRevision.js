@@ -37,6 +37,7 @@ class PreentrevistaRevision extends Component {
             preguntas: [],
             preguntasPreparadas: [],
             calificaciones: [],
+            isGraded: false,
             isEnviado: false
         }
     }
@@ -125,14 +126,20 @@ class PreentrevistaRevision extends Component {
 
     handleChange = (e, index, descriptores) => {
         const nuevasCalificaciones = [...this.state.calificaciones];
+        let newState = false;
 
         nuevasCalificaciones[index] = {
             descriptores: descriptores,
             calificacion: e.target.value
         }
 
+        if (nuevasCalificaciones.length === this.state.preguntas.length) {
+            newState = true;
+        }
+
         this.setState({
-            calificaciones: nuevasCalificaciones
+            calificaciones: nuevasCalificaciones,
+            isGraded: newState
         });
     }
 
@@ -274,7 +281,7 @@ class PreentrevistaRevision extends Component {
                                             );
                                         })
                                     }
-                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar}>{t("enviar")}</Button>
+                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isGraded}>{t("enviar")}</Button>
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>

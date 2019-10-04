@@ -40,6 +40,7 @@ class PracticaRevision extends Component {
             docenteImg: "",
             info: {},
             calificacion: "",
+            isGraded: false,
             isEnviado: false
         }
     }
@@ -132,6 +133,14 @@ class PracticaRevision extends Component {
             docenteImg: newData.docenteImg,
             info: infoCargada
         });
+    }
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.calificacion !== this.state.calificacion) {
+            this.setState({
+                isGraded: true
+            });
+        }
     }
 
     componentDidMount = () => {
@@ -345,7 +354,7 @@ class PracticaRevision extends Component {
                                                     <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
                                                     <Typography variant="body1" className="mb-2"><strong>2: {t("revision.calificacion-parcial-titulo")}</strong> - {t("revision.calificacion-parcial-ayuda")}.</Typography>
                                                     <Typography variant="body1"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
-                                                    <Button fullWidth type="submit" variant="contained" size="large" color="primary" className="mt-4">{t("enviar")}</Button>
+                                                    <Button fullWidth type="submit" variant="contained" size="large" color="primary" className="mt-4" disabled={!this.state.isGraded}>{t("enviar")}</Button>
                                                 </form>
                                             </Grid>
                                         </Grid>
