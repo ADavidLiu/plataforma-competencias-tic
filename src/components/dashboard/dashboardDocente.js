@@ -435,15 +435,15 @@ class DashboardDocente extends Component {
                                     </Paper>
                                     {
                                         this.state.pasoActual < 5 ? (
-                                            <div className="d-flex align-items-center justify-content-between">
-                                                <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion}>{t("dashboardDocente.cancelar-proceso-actual")}</Button>
+                                            <div className="d-md-flex align-items-center justify-content-between">
+                                                <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion} className="w-100 w-md-auto">{t("dashboardDocente.cancelar-proceso-actual")}</Button>
                                                 <Link to={{
                                                     pathname: `${t(`link.${this.pasosRoutes[this.state.pasoActual + 1]}`)}`,
                                                     state: {
                                                         tipoUsuario: "DOCENTE"
                                                     }
                                                 }} style={{textDecoration: "none"}}>
-                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual + 1]}</strong></Button>
+                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso} className="mt-3 mt-md-0 w-100 w-md-auto">{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual + 1]}</strong></Button>
                                                 </Link>
                                             </div>
                                         )
@@ -676,9 +676,9 @@ class DashboardDocente extends Component {
                                         {t("dashboardDocente.cancelar-proceso-actual-ayuda-2")}
                                     </DialogContentText>
                                 </DialogContent>
-                                <DialogActions className="p-3 pt-0">
-                                    <Button color="primary" variant="outlined" onClick={this.cancelarProcesoActual}>{t("dashboardDocente.cancelar-confirmacion")}</Button>
-                                    <Button color="primary" variant="contained" onClick={this.confirmarCancelacion} className="ml-3">{t("dashboardDocente.cancelar-no")}</Button>
+                                <DialogActions className="p-3 pt-0 d-block d-md-flex">
+                                    <Button color="primary" variant="outlined" onClick={this.cancelarProcesoActual} className="w-100 w-md-auto">{t("dashboardDocente.cancelar-confirmacion")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.confirmarCancelacion} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("dashboardDocente.cancelar-no")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>

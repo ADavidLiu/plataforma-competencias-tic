@@ -544,7 +544,7 @@ class Practica extends Component {
                                 }
                             </NavigationPrompt>
                             <Grid container justify="center">
-                                <Grid item xs={12} sm={8} md={6}>
+                                <Grid item xs={12} md={8}>
                                     <form onSubmit={this.handleSubmit}>
                                         <Typography variant="h5" className="mb-5 text-center">{t("practicas.titulo")}</Typography>
                                         <Typography variant="h6" className="mb-2">{t("practicas.label-informacion-general")}</Typography>

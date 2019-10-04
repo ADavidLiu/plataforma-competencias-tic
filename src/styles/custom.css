@@ -151,6 +151,10 @@ main:before {
 }
 
 @media screen and (min-width: 768px) {
+    .w-md-auto {
+        width: auto !important;
+    }
+
     .configuracion-img {
         width: 50%;
     }

@@ -504,7 +504,7 @@ class Preentrevista extends Component {
                                         )
                                     }
                                 </NavigationPrompt>
-                                <Grid item xs={12} sm={8} md={6}>
+                                <Grid item xs={12} md={8}>
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="mb-5">
                                             <Typography variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
