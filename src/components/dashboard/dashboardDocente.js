@@ -32,7 +32,7 @@ class DashboardDocente extends Component {
 
         this.state = {
             datosID: "",
-            pasoActual: 3,
+            pasoActual: 2,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
             estadisticas: {
@@ -164,7 +164,7 @@ class DashboardDocente extends Component {
             shouldAlertProcessCancellation: false
         }
         
-        this.pasosRoutes = ["registro", "prueba", "practicas", "preentrevista", "entrevista"];
+        this.pasosRoutes = ["registro", "prueba", "practica", "preentrevista", "entrevista"];
         this.pasosNames = ["Registro de datos", "Prueba de conocimiento", "Práctica educativa", "Pre-entrevista", "Entrevista"];
     }
 
@@ -438,12 +438,12 @@ class DashboardDocente extends Component {
                                             <div className="d-flex align-items-center justify-content-between">
                                                 <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion}>{t("dashboardDocente.cancelar-proceso-actual")}</Button>
                                                 <Link to={{
-                                                    pathname: `/${t("link.preentrevista")}`,
+                                                    pathname: `${t(`link.${this.pasosRoutes[this.state.pasoActual + 1]}`)}`,
                                                     state: {
                                                         tipoUsuario: "DOCENTE"
                                                     }
                                                 }} style={{textDecoration: "none"}}>
-                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
+                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual + 1]}</strong></Button>
                                                 </Link>
                                             </div>
                                         )
