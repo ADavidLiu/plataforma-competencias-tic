@@ -508,8 +508,6 @@ const es = {
         "captcha.sin-resolver-ayuda": 'Dé click sobre la casilla de verificación de reCAPTCHA presentada encima del botón "INGRESAR". Una vez verificada, proceda a dar click sobre el botón nuevamente para ingresar a la plataforma.',
         "dashboardSuperadmin.datos": "Visualización de datos",
         "dashboardSuperadmin.usuarios": "Visualización de usuarios",
-        "instrumento.titulo": "Instrumento del marco de referencia",
-        "instrumento.titulo-alt": "Instrumento",
         "auditoria.titulo": "Auditoría de usuarios",
         "auditoria.titulo-alt": "Auditoría",
         "auditoria.buscar": "Buscar por nombre de usuario",
@@ -537,7 +535,19 @@ const es = {
         "encuestas.asignar": "Asignar estado",
         "encuestas.enviada": "Encuesta enviada",
         "encuestas.enviada-ayuda": "La información de su encuesta ha sido cargada exitosamente.",
-        "encuestas.asignar-delegado": "Asignar"
+        "encuestas.asignar-delegado": "Asignar",
+        "instrumento.titulo": "Instrumento del marco de referencia",
+        "instrumento.titulo-alt": "Instrumento",
+        "instrumento.tab-descriptores": "Descriptores",
+        "instrumento.tab-encuestas": "Encuestas de autoevaluación",
+        "instrumento.tab-prueba": "Prueba de conocimientos",
+        "instrumento.tab-preentrevista": "Pre-entrevista",
+        "instrumento.btn-actualizar": "Actualizar versión vigente",
+        "instrumento.btn-crear": "Crear nueva versión con estos cambios",
+        "instrumento.crear-si": "Sí, crear nueva versión",
+        "instrumento.crear-no": "No, regresar",
+        "instrumento.descriptores-codigo": "Código",
+        "instrumento.descriptores-contenido": "Contenido",
     }
 }
 
