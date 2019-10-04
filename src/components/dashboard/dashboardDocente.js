@@ -377,15 +377,6 @@ class DashboardDocente extends Component {
     }
 
     render() {
-        if (this.state.irSiguientePaso) {
-            return <Redirect to={{
-                pathname: `/${this.pasosRoutes[this.state.pasoActual]}`,
-                state: {
-                    tipoUsuario: "DOCENTE"
-                }
-            }} />;
-        }
-
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
         }
@@ -446,7 +437,14 @@ class DashboardDocente extends Component {
                                         this.state.pasoActual < 5 ? (
                                             <div className="d-flex align-items-center justify-content-between">
                                                 <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion}>{t("dashboardDocente.cancelar-proceso-actual")}</Button>
-                                                <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
+                                                <Link to={{
+                                                    pathname: `/${t("link.preentrevista")}`,
+                                                    state: {
+                                                        tipoUsuario: "DOCENTE"
+                                                    }
+                                                }} style={{textDecoration: "none"}}>
+                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
+                                                </Link>
                                             </div>
                                         )
                                         : <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.mensaje-terminado")}</strong></Typography>
@@ -669,10 +667,13 @@ class DashboardDocente extends Component {
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.shouldAlertProcessCancellation} onClose={this.confirmarCancelacion}>
-                                <DialogTitle>{t("dashboardDocente.cancelar-proceso-actual")}</DialogTitle>
+                                <DialogTitle>{t("dashboardDocente.cancelar-proceso-actual-titulo")}</DialogTitle>
                                 <DialogContent>
-                                    <DialogContentText>
+                                    <DialogContentText className="mb-3">
                                         {t("dashboardDocente.cancelar-proceso-actual-ayuda")}
+                                    </DialogContentText>
+                                    <DialogContentText>
+                                        {t("dashboardDocente.cancelar-proceso-actual-ayuda-2")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions className="p-3 pt-0">
