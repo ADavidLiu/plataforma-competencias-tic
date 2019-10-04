@@ -221,10 +221,10 @@ class DashboardEvaluador extends Component {
                                                             <hr/>
                                                             <Typography variant="subtitle2" className="mb-2">{t("dashboardEvaluador.datos-contacto")}</Typography>
                                                             <Typography variant="body2" className="mb-2">
-                                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
+                                                                <span style={{color: "#009A9C", textDecoration: "none"}}><Phone fontSize="inherit" className="mr-2" />{entrevista.contacto.tel}</span>
                                                             </Typography>
                                                             <Typography variant="body2">
-                                                                <span style={{color: "#3f51b5", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
+                                                                <span style={{color: "#009A9C", textDecoration: "none"}}><Email fontSize="inherit" className="mr-2" />{entrevista.contacto.email}</span>
                                                             </Typography>
                                                         </Paper>
                                                     </Link>
@@ -285,7 +285,7 @@ class DashboardEvaluador extends Component {
                                                         return {
                                                             datasets: [
                                                                 {
-                                                                    data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5", "#37479e"],
+                                                                    data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#009A9C", "#37479e"],
                                                                     borderColor: "#FFFFFF"
                                                                 }
                                                             ],
@@ -321,7 +321,7 @@ class DashboardEvaluador extends Component {
                                                                 data: [this.state.estadisticas.revisiones.completadas],
                                                                 borderWidth: 0,
                                                                 backgroundColor: [
-                                                                    "#3f51b5"
+                                                                    "#009A9C"
                                                                 ]
                                                             },
                                                             {

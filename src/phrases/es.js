@@ -517,7 +517,7 @@ const es = {
         "auditoria.url": "URL",
         "auditoria.id": "ID",
         "auditoria.respondido": "Respondido",
-        "ayuda.title": "Ayuda y PQRS's",
+        "ayuda.title": "Ayuda y PQRS",
         "ayuda.text": 'Por favor diríjase a la plataforma "Requerimientos", proveída por la Pontificia Universidad Javeriana Cali, haciendo click sobre el botón.',
         "ayuda.btn-label": "Ir a Requerimientos",
         "encuestas.titulo": "Encuesta de autoevaluación",

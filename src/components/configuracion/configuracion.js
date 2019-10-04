@@ -1007,7 +1007,7 @@ class Configuracion extends Component {
                                             </Grid>
                                             <Grid item xs={12} md={6} className="d-flex flex-column justify-content-end">
                                                 <FormControlLabel
-                                                    control={<Checkbox style={{color: "#f50057"}} onChange={this.handleEliminarCheck} color="primary" 
+                                                    control={<Checkbox style={{color: "#e53935"}} onChange={this.handleEliminarCheck} color="primary" 
                                                     checked={this.state.isEliminarChecked} name="isEliminarChecked" />}
                                                     label={<Typography variant="subtitle2" color="secondary">{t("configuracion.label-radio")}</Typography>}
                                                 />

@@ -253,7 +253,7 @@ class DashboardExtablecimientoEducativo extends Component {
                                                         label: paso.nombre,
                                                         data: [numPerfilesPasos[paso.index]],
                                                         borderWidth: 0,
-                                                        backgroundColor: ["#3f51b5"]
+                                                        backgroundColor: ["#009A9C"]
                                                     });
                                                 });
 
@@ -286,7 +286,7 @@ class DashboardExtablecimientoEducativo extends Component {
 
                                                 const doughnutDatasets = [{
                                                     data: [],
-                                                    backgroundColor: ["#5f77ff", "#546bf0", "#4b60d6", "#4357c5", "#4154c0", "#3f51b5"]
+                                                    backgroundColor: ["#5f77ff", "#546bf0", "#4b60d6", "#4357c5", "#4154c0", "#009A9C"]
                                                 }];
                                                 pasos.avanzado.forEach(paso => {
                                                     doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);

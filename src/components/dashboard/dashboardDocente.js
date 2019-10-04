@@ -449,7 +449,7 @@ class DashboardDocente extends Component {
                                                                         data: [this.state.estadisticas.pruebaConocimiento.correctas],
                                                                         borderWidth: 0,
                                                                         backgroundColor: [
-                                                                            "#3f51b5"
+                                                                            "#009A9C"
                                                                         ]
                                                                     },
                                                                     {
@@ -457,7 +457,7 @@ class DashboardDocente extends Component {
                                                                         data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
                                                                         borderWidth: 0,
                                                                         backgroundColor: [
-                                                                            "#f44336"
+                                                                            "#e53935"
                                                                         ]
                                                                     }
                                                                 ]
@@ -487,9 +487,9 @@ class DashboardDocente extends Component {
                                                                     datasets: [{
                                                                         label: "Porcentaje de afinidad a dimensiones",
                                                                         data: dimensionesDatasets,
-                                                                        backgroundColor: "rgba(63,81,181, .5)",
-                                                                        pointBackgroundColor: "#3f51b5",
-                                                                        borderColor: "#3f51b5"
+                                                                        backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                        pointBackgroundColor: "#009A9C",
+                                                                        borderColor: "#009A9C"
                                                                     }]
                                                                 }
                                                             }} options={{
@@ -523,9 +523,9 @@ class DashboardDocente extends Component {
                                                                     datasets: [{
                                                                         label: "Porcentaje de afinidad a perfiles",
                                                                         data: perfilesDatasets,
-                                                                        backgroundColor: "rgba(63,81,181, .5)",
-                                                                        pointBackgroundColor: "#3f51b5",
-                                                                        borderColor: "#3f51b5"
+                                                                        backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                        pointBackgroundColor: "#009A9C",
+                                                                        borderColor: "#009A9C"
                                                                     }]
                                                                 }
                                                             }} options={{

@@ -326,19 +326,19 @@ class DashboardAdmin extends Component {
                                                             label: `${t("incipiente")}`,
                                                             data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length],
                                                             borderWidth: 0,
-                                                            backgroundColor: ["#3f51b5"]
+                                                            backgroundColor: ["#009A9C"]
                                                         },
                                                         {
                                                             label: `${t("en-desarrollo")}`,
                                                             data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length],
                                                             borderWidth: 0,
-                                                            backgroundColor: ["#3f51b5"]
+                                                            backgroundColor: ["#009A9C"]
                                                         },
                                                         {
                                                             label: `${t("establecido")}`,
                                                             data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
                                                             borderWidth: 0,
-                                                            backgroundColor: ["#3f51b5"]
+                                                            backgroundColor: ["#009A9C"]
                                                         }
                                                     ]
                                                 }}
@@ -363,7 +363,7 @@ class DashboardAdmin extends Component {
                                                         datasets: [
                                                             {
                                                                 data: [this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[0].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[1].items.length, this.currentData[this.state.subdivisionSeleccionadaIndex].descriptores[2].items.length],
-                                                                backgroundColor: ["#5f77ff", "#4b60d6", "#3f51b5"]
+                                                                backgroundColor: ["#5f77ff", "#4b60d6", "#009A9C"]
                                                             }
                                                         ]
                                                     }
@@ -428,8 +428,8 @@ class DashboardAdmin extends Component {
                                                     label: `${t("estado-actual")}`,
                                                     data: [this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[0].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[1].porcentaje, this.currentData[this.state.subdivisionSeleccionadaIndex].niveles[2].porcentaje],
                                                     backgroundColor: "rgba(63,81,181, .5)",
-                                                    pointBackgroundColor: "#3f51b5",
-                                                    borderColor: "#3f51b5"
+                                                    pointBackgroundColor: "#009A9C",
+                                                    borderColor: "#009A9C"
                                                 }]
                                             }}
                                                 options={{

@@ -277,7 +277,7 @@ class Procesos extends Component {
                                         <ExpansionPanel>
                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                                                 <div className="d-flex align-items-center">
-                                                    <Avatar className="mr-3" style={{backgroundColor: "#3f51b5"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
+                                                    <Avatar className="mr-3" style={{backgroundColor: "#009A9C"}}><Typography><strong>{proceso.vez}</strong></Typography></Avatar>
                                                     <div className="d-md-flex align-items-center">
                                                         <Typography className="d-flex align-items-center justify-content-start"><Today className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-inicio")}</strong>&nbsp;{proceso.fechaInicio}</Typography>
                                                         <Typography className="ml-md-3 d-flex align-items-center justify-content-start"><Event className="mr-2" fontSize="small" /><strong>{t("procesos.fecha-final")}</strong>&nbsp;{proceso.fechaFinal}</Typography>
