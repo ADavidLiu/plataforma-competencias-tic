@@ -18,6 +18,12 @@ import Paper from "@material-ui/core/Paper";
 import { Bar, Radar } from "react-chartjs-2";
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import moment from "moment";
 
 class DashboardDocente extends Component {
@@ -154,7 +160,8 @@ class DashboardDocente extends Component {
                     factor: 1,
                     nombre: "Incorporación de las TIC dentro de la misión, proyecto educativo institucional y plan estratégico de desarrollo de la institución educativa"
                 }
-            ]
+            ],
+            shouldAlertProcessCancellation: false
         }
         
         this.pasosRoutes = ["registro", "prueba", "practicas", "preentrevista", "entrevista"];
@@ -357,6 +364,18 @@ class DashboardDocente extends Component {
         });
     }
 
+    confirmarCancelacion = () => {
+        this.setState({
+            shouldAlertProcessCancellation: !this.state.shouldAlertProcessCancellation
+        });
+    }
+
+    cancelarProcesoActual = () => {
+        /* Conectarse al backend para cancelar el proceso actual */
+        console.log("Cancelado!");
+        this.confirmarCancelacion();
+    }
+
     render() {
         if (this.state.irSiguientePaso) {
             return <Redirect to={{
@@ -375,275 +394,293 @@ class DashboardDocente extends Component {
             <Translation>
                 {
                     t => (
-                        <Grid container spacing={4} justify="center">
-                            {
-                                this.state.encuestasAsignadas.length > 0 ? (
-                                    <Grid item xs={12}>
-                                        <Typography variant="h5">{t("dashboardDocente.encuestas-asignadas")}</Typography>
-                                        <hr/>
-                                        {
-                                            this.state.encuestasAsignadas.map((encuesta, i) => (
-                                                <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
-                                                    <div className="mb-4 mb-md-0 pr-md-4">
-                                                        <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
-                                                        <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
-                                                    </div>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.encuesta")}`,
-                                                        state: {
-                                                            factor: encuesta.factor
-                                                        }
-                                                    }}>
-                                                        <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
-                                                    </Link>
-                                                </Paper>
-                                            ))
-                                        }
-                                    </Grid>
-                                ) : null
-                            }
-                            <Grid item xs={12}>
-                                <Typography variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
-                                <Paper className="my-4" style={{
-                                    overflow: "hidden"
-                                }}>
-                                    <Stepper activeStep={this.state.pasoActual} alternativeLabel>
-                                        <Step key="Prueba de conocimiento">
-                                            <StepLabel>{this.pasosNames[1]}</StepLabel>
-                                        </Step>
-                                        <Step key="Práctica educativa">
-                                            <StepLabel>{this.pasosNames[2]}</StepLabel>
-                                        </Step>
-                                        <Step key="Preentrevista">
-                                            <StepLabel>{this.pasosNames[3]}</StepLabel>
-                                        </Step>
-                                        <Step key="Entrevista">
-                                            <StepLabel>{this.pasosNames[4]}</StepLabel>
-                                        </Step>
-                                    </Stepper>
-                                </Paper>
+                        <React.Fragment>
+                            <Grid container spacing={4} justify="center">
                                 {
-                                    this.state.pasoActual < 5 ? 
-                                        <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
-                                    : <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.mensaje-terminado")}</strong></Typography>
-                                }
-                            </Grid>
-                            <Grid item xs={12}>
-                                <hr className="my-3"/>
-                            </Grid>
-                            <Grid item xs={12} sm={8} lg={9}>
-                                <Typography variant="h5" className="mb-4">{t("dashboardDocente.diagnostico")}</Typography>
-                                {
-                                    this.state.pasoActual > 1 ? (
-                                        <Grid container>
+                                    this.state.encuestasAsignadas.length > 0 ? (
+                                        <Grid item xs={12}>
+                                            <Typography variant="h5">{t("dashboardDocente.encuestas-asignadas")}</Typography>
+                                            <hr/>
                                             {
-                                                this.state.didEstadisticasLoad ? (
-                                                    <Grid container spacing={2}>
-                                                        <Grid item xs={12}>
-                                                            <Typography variant="h6" className="mb-4">{t("dashboardDocente.resultados-pruebas")}</Typography>
-                                                            <Bar height={80} data={{
-                                                                labels: ["Prueba de conocimiento"],
-                                                                datasets: [
-                                                                    {
-                                                                        label: "Correctas",
-                                                                        data: [this.state.estadisticas.pruebaConocimiento.correctas],
-                                                                        borderWidth: 0,
-                                                                        backgroundColor: [
-                                                                            "#009A9C"
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        label: "Incorrectas",
-                                                                        data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
-                                                                        borderWidth: 0,
-                                                                        backgroundColor: [
-                                                                            "#e53935"
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            }} options={{
-                                                                scales: {
-                                                                    yAxes: [{
-                                                                        ticks: {
-                                                                            beginAtZero: true,
-                                                                            stepSize: 5
-                                                                        }
-                                                                    }]
-                                                                }
-                                                            }} />
-                                                        </Grid>
-                                                        <Grid item xs={12} md={6}>
-                                                            <Radar height={200} data={() => {
-                                                                const dimensionesLabels = [];
-                                                                const dimensionesDatasets = [];
-
-                                                                this.state.estadisticas.dimensiones.forEach(dimension => {
-                                                                    dimensionesLabels.push(dimension.nombre);
-                                                                    dimensionesDatasets.push(dimension.porcentajeAfinidad);
-                                                                });
-
-                                                                return {
-                                                                    labels: dimensionesLabels,
-                                                                    datasets: [{
-                                                                        label: "Porcentaje de afinidad a dimensiones",
-                                                                        data: dimensionesDatasets,
-                                                                        backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                        pointBackgroundColor: "#009A9C",
-                                                                        borderColor: "#009A9C"
-                                                                    }]
-                                                                }
-                                                            }} options={{
-                                                                scale: {
-                                                                    ticks: {
-                                                                        stepSize: 20
-                                                                    }
-                                                                },
-                                                                tooltips: {
-                                                                    enabled: true,
-                                                                    callbacks: {
-                                                                        label: (tooltipItem, data) => {
-                                                                            return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }} />
-                                                        </Grid>
-                                                        <Grid item xs={12} md={6}>
-                                                            <Radar height={200} data={() => {
-                                                                const perfilesLabels = [];
-                                                                const perfilesDatasets = [];
-
-                                                                this.state.estadisticas.perfiles.forEach(perfil => {
-                                                                    perfilesLabels.push(perfil.nombre);
-                                                                    perfilesDatasets.push(perfil.porcentajeAfinidad);
-                                                                });
-
-                                                                return {
-                                                                    labels: perfilesLabels,
-                                                                    datasets: [{
-                                                                        label: "Porcentaje de afinidad a perfiles",
-                                                                        data: perfilesDatasets,
-                                                                        backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                        pointBackgroundColor: "#009A9C",
-                                                                        borderColor: "#009A9C"
-                                                                    }]
-                                                                }
-                                                            }} options={{
-                                                                scale: {
-                                                                    ticks: {
-                                                                        stepSize: 20
-                                                                    }
-                                                                },
-                                                                tooltips: {
-                                                                    enabled: true,
-                                                                    callbacks: {
-                                                                        label: (tooltipItem, data) => {
-                                                                            return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }} />
-                                                        </Grid>
-                                                    </Grid>
-                                                ) : (
-                                                    <CircularProgress color="primary" className="mx-auto" />
-                                                )
-                                            }
-                                            {
-                                                this.state.didRutaLoad ? (
-                                                    <Grid item xs={12} className="mt-5">
-                                                        <Typography variant="h6" className="mb-4">{t("dashboardDocente.ruta")}</Typography>
-                                                        <RutaAprendizaje cursos={this.state.cursosSugeridos} />
-                                                    </Grid>
-                                                ) : (
-                                                    <CircularProgress color="primary" className="mx-auto" />
-                                                )
+                                                this.state.encuestasAsignadas.map((encuesta, i) => (
+                                                    <Paper className="p-4 mb-4 d-md-flex align-items-center justify-content-between" key={i}>
+                                                        <div className="mb-4 mb-md-0 pr-md-4">
+                                                            <Typography variant="subtitle2">{t("dashboardEE.factor")} {encuesta.factor}</Typography>
+                                                            <Typography variant="body1"><strong>{encuesta.nombre}</strong></Typography>
+                                                        </div>
+                                                        <Link to={{
+                                                            pathname: `/${t("link.encuesta")}`,
+                                                            state: {
+                                                                factor: encuesta.factor
+                                                            }
+                                                        }}>
+                                                            <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
+                                                        </Link>
+                                                    </Paper>
+                                                ))
                                             }
                                         </Grid>
-                                    ) : (
-                                        <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
-                                    )
+                                    ) : null
                                 }
+                                <Grid item xs={12}>
+                                    <Typography variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
+                                    <Paper className="my-4" style={{
+                                        overflow: "hidden"
+                                    }}>
+                                        <Stepper activeStep={this.state.pasoActual} alternativeLabel>
+                                            <Step key="Prueba de conocimiento">
+                                                <StepLabel>{this.pasosNames[1]}</StepLabel>
+                                            </Step>
+                                            <Step key="Práctica educativa">
+                                                <StepLabel>{this.pasosNames[2]}</StepLabel>
+                                            </Step>
+                                            <Step key="Preentrevista">
+                                                <StepLabel>{this.pasosNames[3]}</StepLabel>
+                                            </Step>
+                                            <Step key="Entrevista">
+                                                <StepLabel>{this.pasosNames[4]}</StepLabel>
+                                            </Step>
+                                        </Stepper>
+                                    </Paper>
+                                    {
+                                        this.state.pasoActual < 5 ? (
+                                            <div className="d-flex align-items-center justify-content-between">
+                                                <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion}>{t("dashboardDocente.cancelar-proceso-actual")}</Button>
+                                                <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso}>{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual]}</strong></Button>
+                                            </div>
+                                        )
+                                        : <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.mensaje-terminado")}</strong></Typography>
+                                    }
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <hr className="my-3"/>
+                                </Grid>
+                                <Grid item xs={12} sm={8} lg={9}>
+                                    <Typography variant="h5" className="mb-4">{t("dashboardDocente.diagnostico")}</Typography>
+                                    {
+                                        this.state.pasoActual > 1 ? (
+                                            <Grid container>
+                                                {
+                                                    this.state.didEstadisticasLoad ? (
+                                                        <Grid container spacing={2}>
+                                                            <Grid item xs={12}>
+                                                                <Typography variant="h6" className="mb-4">{t("dashboardDocente.resultados-pruebas")}</Typography>
+                                                                <Bar height={80} data={{
+                                                                    labels: ["Prueba de conocimiento"],
+                                                                    datasets: [
+                                                                        {
+                                                                            label: "Correctas",
+                                                                            data: [this.state.estadisticas.pruebaConocimiento.correctas],
+                                                                            borderWidth: 0,
+                                                                            backgroundColor: [
+                                                                                "#009A9C"
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            label: "Incorrectas",
+                                                                            data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
+                                                                            borderWidth: 0,
+                                                                            backgroundColor: [
+                                                                                "#e53935"
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                }} options={{
+                                                                    scales: {
+                                                                        yAxes: [{
+                                                                            ticks: {
+                                                                                beginAtZero: true,
+                                                                                stepSize: 5
+                                                                            }
+                                                                        }]
+                                                                    }
+                                                                }} />
+                                                            </Grid>
+                                                            <Grid item xs={12} md={6}>
+                                                                <Radar height={200} data={() => {
+                                                                    const dimensionesLabels = [];
+                                                                    const dimensionesDatasets = [];
+
+                                                                    this.state.estadisticas.dimensiones.forEach(dimension => {
+                                                                        dimensionesLabels.push(dimension.nombre);
+                                                                        dimensionesDatasets.push(dimension.porcentajeAfinidad);
+                                                                    });
+
+                                                                    return {
+                                                                        labels: dimensionesLabels,
+                                                                        datasets: [{
+                                                                            label: "Porcentaje de afinidad a dimensiones",
+                                                                            data: dimensionesDatasets,
+                                                                            backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                            pointBackgroundColor: "#009A9C",
+                                                                            borderColor: "#009A9C"
+                                                                        }]
+                                                                    }
+                                                                }} options={{
+                                                                    scale: {
+                                                                        ticks: {
+                                                                            stepSize: 20
+                                                                        }
+                                                                    },
+                                                                    tooltips: {
+                                                                        enabled: true,
+                                                                        callbacks: {
+                                                                            label: (tooltipItem, data) => {
+                                                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }} />
+                                                            </Grid>
+                                                            <Grid item xs={12} md={6}>
+                                                                <Radar height={200} data={() => {
+                                                                    const perfilesLabels = [];
+                                                                    const perfilesDatasets = [];
+
+                                                                    this.state.estadisticas.perfiles.forEach(perfil => {
+                                                                        perfilesLabels.push(perfil.nombre);
+                                                                        perfilesDatasets.push(perfil.porcentajeAfinidad);
+                                                                    });
+
+                                                                    return {
+                                                                        labels: perfilesLabels,
+                                                                        datasets: [{
+                                                                            label: "Porcentaje de afinidad a perfiles",
+                                                                            data: perfilesDatasets,
+                                                                            backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                            pointBackgroundColor: "#009A9C",
+                                                                            borderColor: "#009A9C"
+                                                                        }]
+                                                                    }
+                                                                }} options={{
+                                                                    scale: {
+                                                                        ticks: {
+                                                                            stepSize: 20
+                                                                        }
+                                                                    },
+                                                                    tooltips: {
+                                                                        enabled: true,
+                                                                        callbacks: {
+                                                                            label: (tooltipItem, data) => {
+                                                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }} />
+                                                            </Grid>
+                                                        </Grid>
+                                                    ) : (
+                                                        <CircularProgress color="primary" className="mx-auto" />
+                                                    )
+                                                }
+                                                {
+                                                    this.state.didRutaLoad ? (
+                                                        <Grid item xs={12} className="mt-5">
+                                                            <Typography variant="h6" className="mb-4">{t("dashboardDocente.ruta")}</Typography>
+                                                            <RutaAprendizaje cursos={this.state.cursosSugeridos} />
+                                                        </Grid>
+                                                    ) : (
+                                                        <CircularProgress color="primary" className="mx-auto" />
+                                                    )
+                                                }
+                                            </Grid>
+                                        ) : (
+                                            <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
+                                        )
+                                    }
+                                </Grid>
+                                <Grid item xs={12} sm={4} lg={3}>
+                                    <Typography variant="h5" className="mb-1">{t("dashboardDocente.acciones")}</Typography>
+                                    <Link to={{
+                                        pathname: `/${t("link.registro")}`,
+                                        state: {
+                                            tipoUsuario: "DOCENTE"
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-3"
+                                            size="medium"
+                                        >{t("dashboardDocente.btn-registro")}</Button>
+                                    </Link>
+                                    <Link to={{
+                                        pathname: `/${t("link.prueba")}`,
+                                        state: {
+                                            tipoUsuario: "DOCENTE"
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-3"
+                                            size="medium"
+                                        >{t("dashboardDocente.btn-prueba")}</Button>
+                                    </Link>
+                                    <Link to={{
+                                        pathname: `/${t("link.practica")}`,
+                                        state: {
+                                            tipoUsuario: "DOCENTE"
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-3"
+                                            size="medium"
+                                        >{t("dashboardDocente.btn-practica")}</Button>
+                                    </Link>
+                                    <Link to={{
+                                        pathname: `/${t("link.preentrevista")}`,
+                                        state: {
+                                            tipoUsuario: "DOCENTE"
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-3"
+                                            size="medium"
+                                        >{t("dashboardDocente.btn-preentrevista")}</Button>
+                                    </Link>
+                                    <Link to={{
+                                        pathname: `/${t("link.entrevista")}`,
+                                        state: {
+                                            tipoUsuario: "DOCENTE"
+                                        }
+                                    }} style={{textDecoration: "none"}}>
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            color="primary"
+                                            className="mt-3"
+                                            size="medium"
+                                        >{t("dashboardDocente.btn-entrevista")}</Button>
+                                    </Link>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={4} lg={3}>
-                                <Typography variant="h5" className="mb-1">{t("dashboardDocente.acciones")}</Typography>
-                                <Link to={{
-                                    pathname: `/${t("link.registro")}`,
-                                    state: {
-                                        tipoUsuario: "DOCENTE"
-                                    }
-                                }} style={{textDecoration: "none"}}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                    >{t("dashboardDocente.btn-registro")}</Button>
-                                </Link>
-                                <Link to={{
-                                    pathname: `/${t("link.prueba")}`,
-                                    state: {
-                                        tipoUsuario: "DOCENTE"
-                                    }
-                                }} style={{textDecoration: "none"}}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                    >{t("dashboardDocente.btn-prueba")}</Button>
-                                </Link>
-                                <Link to={{
-                                    pathname: `/${t("link.practica")}`,
-                                    state: {
-                                        tipoUsuario: "DOCENTE"
-                                    }
-                                }} style={{textDecoration: "none"}}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                    >{t("dashboardDocente.btn-practica")}</Button>
-                                </Link>
-                                <Link to={{
-                                    pathname: `/${t("link.preentrevista")}`,
-                                    state: {
-                                        tipoUsuario: "DOCENTE"
-                                    }
-                                }} style={{textDecoration: "none"}}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                    >{t("dashboardDocente.btn-preentrevista")}</Button>
-                                </Link>
-                                <Link to={{
-                                    pathname: `/${t("link.entrevista")}`,
-                                    state: {
-                                        tipoUsuario: "DOCENTE"
-                                    }
-                                }} style={{textDecoration: "none"}}>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="outlined"
-                                        color="primary"
-                                        className="mt-3"
-                                        size="medium"
-                                    >{t("dashboardDocente.btn-entrevista")}</Button>
-                                </Link>
-                            </Grid>
-                        </Grid>
+                            <Dialog open={this.state.shouldAlertProcessCancellation} onClose={this.confirmarCancelacion}>
+                                <DialogTitle>{t("dashboardDocente.cancelar-proceso-actual")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {t("dashboardDocente.cancelar-proceso-actual-ayuda")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions className="p-3 pt-0">
+                                    <Button color="primary" variant="outlined" onClick={this.cancelarProcesoActual}>{t("dashboardDocente.cancelar-confirmacion")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.confirmarCancelacion} className="ml-3">{t("dashboardDocente.cancelar-no")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                        </React.Fragment>
                     )
                 }
             </Translation>
