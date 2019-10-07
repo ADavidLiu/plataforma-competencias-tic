@@ -543,11 +543,13 @@ const es = {
         "instrumento.tab-prueba": "Prueba de conocimientos",
         "instrumento.tab-preentrevista": "Pre-entrevista",
         "instrumento.btn-actualizar": "Actualizar versión vigente",
-        "instrumento.btn-crear": "Crear nueva versión con estos cambios",
+        "instrumento.btn-crear": "Crear nueva versión con los cambios",
         "instrumento.crear-si": "Sí, crear nueva versión",
         "instrumento.crear-no": "No, regresar",
         "instrumento.descriptores-codigo": "Código",
         "instrumento.descriptores-contenido": "Contenido",
+        "instrumento.encuestas-factor": "Factor",
+        "instrumento.encuestas-pregunta": "Pregunta",
     }
 }
 

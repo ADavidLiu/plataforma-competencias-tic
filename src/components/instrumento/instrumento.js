@@ -28,47 +28,58 @@ class Instrumento extends Component {
     constructor() {
         super();
 
+        encuestas.splice(2, 1);
+
+        this.dataOriginal = {
+            descriptores: descriptores,
+            encuestas: encuestas,
+            prueba: "",
+            preentrevista: ""
+        }
+
         this.state = {
-            descriptores: {
-                originales: descriptores,
-                actuales: descriptores
-            },
-            encuestas: {
-                originales: encuestas,
-                actuales: encuestas
-            },
-            prueba: {
-                originales: "",
-                actuales: ""
-            },
-            preentrevista: {
-                originales: "",
-                actuales: ""
-            },
+            dataActual: this.dataOriginal,
             shouldConfirmCreateVersion: false,
-            divisionMostrada: 0,
-            isLaoding: true
+            divisionMostrada: 1,
+            isLoading: true,
+            didDataChange: false
         }
     }
 
     componentDidMount = () => {
         const timeout = setTimeout(() => {
             this.setState({
-                isLaoding: false
+                isLoading: false
             });
             clearTimeout(timeout);
         }, 2000);
     }
 
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevState.dataActual !== this.state.dataActual) {
+            if (JSON.stringify(this.state.dataActual) === JSON.stringify(this.dataOriginal)) {
+                console.log("Igual, ocultar");
+                this.setState({
+                    didDataChange: false
+                });
+            } else {
+                console.log("Diferente, mostrar");
+                this.setState({
+                    didDataChange: true
+                });
+            }
+        }
+    }
+
     handleTabChange = (e, newValue) => {
         this.setState({
             divisionMostrada: newValue,
-            isLaoding: true
+            isLoading: true
         });
 
         const timeout = setTimeout(() => {
             this.setState({
-                isLaoding: false
+                isLoading: false
             });
             clearTimeout(timeout);
         }, 2000);
@@ -86,17 +97,38 @@ class Instrumento extends Component {
     }
 
     handleChange = (e, categoria, index) => {
-        const elementosActualizados = [...this.state[categoria].actuales];
-        elementosActualizados[index] = {
-            ...elementosActualizados[index],
-            [e.target.name]: e.target.value
+        switch (categoria) {
+            case "descriptores":
+                if (e.target.name === "codigo") {
+                    e.target.value = e.target.value.toUpperCase();
+                }
+        
+                const elementosActualizados = [...this.state.dataActual[categoria]];
+                elementosActualizados[index] = {
+                    ...elementosActualizados[index],
+                    [e.target.name]: e.target.value
+                }
+        
+                this.setState({
+                    dataActual: {
+                        ...this.state.dataActual,
+                        [categoria]: elementosActualizados
+                    }
+                });
+                break;
+            case "encuestas":
+                const newEncuestas = [...this.state.dataActual.encuestas];
+                newEncuestas[index.i][index.j] = e.target.value;
+                this.setState({
+                    dataActual: {
+                        ...this.state.dataActual,
+                        encuestas: newEncuestas
+                    }
+                });
+                break;
+            default:
+                break;
         }
-        this.setState({
-            [categoria]: {
-                originales: this.state[categoria].originales,
-                actuales: elementosActualizados
-            }
-        });
     }
 
     render() {
@@ -110,8 +142,8 @@ class Instrumento extends Component {
                                 <Grid item xs={12}>
                                     <Grid container spacing={3}>
                                         {
-                                            this.state.descriptores.actuales.map((descriptor, i) => (
-                                                <Grid key={descriptor.codigo} item xs={12} sm={6} md={4} lg={3}>
+                                            this.state.dataActual.descriptores.map((descriptor, i) => (
+                                                <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
                                                     <Paper className="p-4">
                                                         <TextField
                                                             variant="outlined"
@@ -119,7 +151,7 @@ class Instrumento extends Component {
                                                             fullWidth
                                                             label={t("instrumento.descriptores-codigo")}
                                                             name="codigo"
-                                                            value={this.state.descriptores.actuales[i].codigo}
+                                                            value={this.state.dataActual.descriptores[i].codigo}
                                                             onChange={e => { this.handleChange(e, "descriptores", i) }}
                                                         />
                                                         <TextField
@@ -130,7 +162,7 @@ class Instrumento extends Component {
                                                             rows={5}
                                                             label={t("instrumento.descriptores-contenido")}
                                                             name="contenido"
-                                                            value={this.state.descriptores.actuales[i].contenido}
+                                                            value={this.state.dataActual.descriptores[i].contenido}
                                                             onChange={e => { this.handleChange(e, "descriptores", i) }}
                                                         />
                                                     </Paper>
@@ -152,9 +184,26 @@ class Instrumento extends Component {
                                 <Grid item xs={12}>
                                     <Grid container spacing={3}>
                                         {
-                                            this.state.encuestas.actuales.map((factor, i) => (
+                                            this.state.dataActual.encuestas.map((factor, i) => (
                                                 <Grid item xs={12} key={i}>
-
+                                                    <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} ${i + 1}`}</Typography>
+                                                    {
+                                                        factor.map((pregunta, j) => (
+                                                            <Paper className="p-4 mb-4" key={j}>
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                    fullWidth
+                                                                    multiline
+                                                                    rows={2}
+                                                                    label={t("instrumento.encuestas-pregunta")}
+                                                                    name="pregunta"
+                                                                    value={this.state.dataActual.encuestas[i][j]}
+                                                                    onChange={e => { this.handleChange(e, "encuestas", {i: i, j: j}) }}
+                                                                />
+                                                            </Paper>
+                                                        ))
+                                                    }
                                                 </Grid>
                                             ))
                                         }
@@ -203,10 +252,10 @@ class Instrumento extends Component {
                                     </Paper>
                                 </Grid>
                                 {
-                                    this.state.isLaoding ? <CircularProgress color="primary" className="d-block mx-auto my-5"/> : (
+                                    this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto my-5"/> : (
                                         <React.Fragment>
                                             { tabMostrado }
-                                            <Grid item xs={12}>
+                                            <Grid item xs={12} hidden={!this.state.didDataChange}>
                                                 <div className="d-md-flex align-items-center justify-content-end">
                                                     <Button variant="outlined" size="large" color="primary" className="w-100 w-md-auto">{t("instrumento.btn-crear")}</Button>
                                                     <Button className="mt-3 mt-md-0 ml-md-3 w-100 w-md-auto" variant="contained" size="large" color="primary">{t("instrumento.btn-actualizar")}</Button>
