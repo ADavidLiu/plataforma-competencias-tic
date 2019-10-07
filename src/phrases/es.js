@@ -536,7 +536,7 @@ const es = {
         "encuestas.enviada": "Encuesta enviada",
         "encuestas.enviada-ayuda": "La información de su encuesta ha sido cargada exitosamente.",
         "encuestas.asignar-delegado": "Asignar",
-        "instrumento.titulo": "Instrumento del marco de referencia",
+        "instrumento.titulo": "Consulta y actualización del instrumento",
         "instrumento.titulo-alt": "Instrumento",
         "instrumento.tab-descriptores": "Descriptores",
         "instrumento.tab-encuestas": "Encuestas de autoevaluación",
@@ -550,6 +550,10 @@ const es = {
         "instrumento.descriptores-contenido": "Contenido",
         "instrumento.encuestas-factor": "Factor",
         "instrumento.encuestas-pregunta": "Pregunta",
+        "instrumento.eliminar": "¿Está seguro de que desea eliminar este elemento del instrumento?",
+        "instrumento.eliminar-ayuda": "Esto ocasionará la creación de una nueva versión sin él, mas no afectará a usuarios que ya lo usen.",
+        "instrumento.eliminar-si": "Sí, eliminar elemento",
+        "instrumento.eliminar-no": "No, regresar",
     }
 }
 

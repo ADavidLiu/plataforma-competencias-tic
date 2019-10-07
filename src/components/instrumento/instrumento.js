@@ -23,6 +23,13 @@ import TextField from "@material-ui/core/TextField";
 
 import descriptores from "../../models/descriptores";
 import encuestas from "../../models/encuestas";
+import preguntasPrueba from "../../models/preguntasPrueba";
+import preguntasPreentrevista from "../../models/preentrevista-new";
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
+import Edit from '@material-ui/icons/Edit';
+import AddCircle from "@material-ui/icons/AddCircle";
 
 import { equals } from "equally";
 
@@ -30,8 +37,8 @@ encuestas.splice(2, 1);
 const dataBackup = {
     descriptores: JSON.parse(JSON.stringify(descriptores)),
     encuestas: JSON.parse(JSON.stringify(encuestas)),
-    prueba: "",
-    preentrevista: ""
+    prueba: JSON.parse(JSON.stringify(preguntasPrueba)),
+    preentrevista: JSON.parse(JSON.stringify(preguntasPreentrevista))
 }
 
 class Instrumento extends Component {
@@ -41,16 +48,21 @@ class Instrumento extends Component {
         this.dataOriginal = {
             descriptores: JSON.parse(JSON.stringify(descriptores)),
             encuestas: JSON.parse(JSON.stringify(encuestas)),
-            prueba: "",
-            preentrevista: ""
+            prueba: JSON.parse(JSON.stringify(preguntasPrueba)),
+            preentrevista: JSON.parse(JSON.stringify(preguntasPreentrevista))
         };
 
         this.state = {
             dataActual: JSON.parse(JSON.stringify(this.dataOriginal)),
             shouldConfirmCreateVersion: false,
-            divisionMostrada: 1,
+            shouldConfirmDelete: false,
+            divisionMostrada: 0,
             isLoading: true,
-            didDataChange: false
+            didDataChange: false,
+            active: {
+                category: "",
+                index: 0
+            }
         }
     }
 
@@ -104,11 +116,41 @@ class Instrumento extends Component {
         console.log("Creada!");
     }
 
+    confirmarDelete = () => {
+        this.setState({
+            shouldConfirmDelete: !this.state.shouldConfirmDelete
+        });
+    }
+
+    deleteElement = (categoria, index) => {
+        /* Conectarse al backend */
+        this.confirmarDelete();
+        /* Luego de recibir la confirmación 200, eliminar visualmente */
+        const newElements = this.state.dataActual[categoria];
+        
+        switch(categoria) {
+            case "descriptores":
+            case "prueba":
+                newElements.splice(index, 1);
+                break;
+            case "encuestas":
+                newElements[index.i].splice(index.j, 1);
+                break;
+            default:
+                break;
+        }
+
+        this.setState({
+            dataActual: newElements
+        });
+    }
+
     handleChange = (e, categoria, index) => {
         const elementosActualizados = JSON.parse(JSON.stringify(this.state.dataActual[categoria]));
 
         switch (categoria) {
             case "descriptores":
+            case "prueba":
                 if (e.target.name === "codigo") {
                     e.target.value = e.target.value.toUpperCase();
                 }
@@ -119,9 +161,6 @@ class Instrumento extends Component {
                 break;
             case "encuestas":
                 elementosActualizados[index.i][index.j] = e.target.value;
-                break;
-            case "prueba":
-
                 break;
             case "preentrevista":
 
@@ -150,28 +189,33 @@ class Instrumento extends Component {
                                     <Grid container spacing={3}>
                                         {
                                             this.state.dataActual.descriptores.map((descriptor, i) => (
-                                                <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
+                                                <Grid key={i} item xs={12}>
                                                     <Paper className="p-4">
-                                                        <TextField
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                            fullWidth
-                                                            label={t("instrumento.descriptores-codigo")}
-                                                            name="codigo"
-                                                            value={this.state.dataActual.descriptores[i].codigo}
-                                                            onChange={e => { this.handleChange(e, "descriptores", i) }}
-                                                        />
-                                                        <TextField
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                            fullWidth
-                                                            multiline
-                                                            rows={5}
-                                                            label={t("instrumento.descriptores-contenido")}
-                                                            name="contenido"
-                                                            value={this.state.dataActual.descriptores[i].contenido}
-                                                            onChange={e => { this.handleChange(e, "descriptores", i) }}
-                                                        />
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <TextField
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                                className="w-100 w-md-auto"
+                                                                label={t("instrumento.descriptores-codigo")}
+                                                                name="codigo"
+                                                                value={this.state.dataActual.descriptores[i].codigo}
+                                                                onChange={e => { this.handleChange(e, "descriptores", i) }}
+                                                            />
+                                                            <TextField
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                                className="w-100 w-md-auto flex-grow-1 mx-4"
+                                                                label={t("instrumento.descriptores-contenido")}
+                                                                name="contenido"
+                                                                value={this.state.dataActual.descriptores[i].contenido}
+                                                                onChange={e => { this.handleChange(e, "descriptores", i) }}
+                                                            />
+                                                            <div className="d-flex align-items-center justify-content-end">
+                                                                <IconButton color="primary" onClick={this.confirmarDelete}>
+                                                                    <DeleteOutlined color="primary"/>
+                                                                </IconButton>
+                                                            </div>
+                                                        </div>
                                                     </Paper>
                                                 </Grid>
                                             ))
@@ -222,7 +266,46 @@ class Instrumento extends Component {
                 );
                 break;
             case 2:
-
+                tabMostrado = (
+                    <Translation>
+                        {
+                            t => (
+                                <Grid item xs={12}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            {
+                                                this.state.dataActual.prueba.map((pregunta, i) => (
+                                                    <Paper className="p-4 mb-4" key={i}>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            margin="normal"
+                                                            fullWidth
+                                                            label={t("instrumento.encuestas-pregunta")}
+                                                            name="codigoDescriptor"
+                                                            value={this.state.dataActual.prueba[i].codigoDescriptor}
+                                                            onChange={e => { this.handleChange(e, "prueba", i) }}
+                                                        />
+                                                        <TextField
+                                                            variant="outlined"
+                                                            margin="normal"
+                                                            fullWidth
+                                                            multiline
+                                                            rows={2}
+                                                            label={t("instrumento.encuestas-pregunta")}
+                                                            name="enunciado"
+                                                            value={this.state.dataActual.prueba[i].enunciado}
+                                                            onChange={e => { this.handleChange(e, "prueba", i) }}
+                                                        />
+                                                    </Paper>
+                                                ))
+                                            }
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
+                );
                 break;
             case 3:
 
@@ -285,6 +368,18 @@ class Instrumento extends Component {
                                 <DialogActions className="p-3 pt-0 d-block d-md-flex">
                                     <Button color="primary" variant="outlined" onClick={this.confirmarCrearVersion} className="w-100 w-md-auto">{t("instrumento.crear-si")}</Button>
                                     <Button color="primary" variant="contained" onClick={this.crearVersion} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-no")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Dialog open={this.state.shouldConfirmDelete} onClose={this.confirmarDelete}>
+                                <DialogTitle>{t("instrumento.eliminar")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText className="mb-3">
+                                        {t("instrumento.eliminar-ayuda")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions className="p-3 pt-0 d-block d-md-flex">
+                                    <Button color="primary" variant="outlined" onClick={this.deleteElement} className="w-100 w-md-auto">{t("instrumento.eliminar-si")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.confirmarDelete} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.eliminar-no")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>
