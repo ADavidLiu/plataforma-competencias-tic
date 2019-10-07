@@ -25,23 +25,22 @@ import descriptores from "../../models/descriptores";
 import encuestas from "../../models/encuestas";
 
 import { equals } from "equally";
-import df from "deeply-freeze";
+
+encuestas.splice(2, 1);
 
 class Instrumento extends Component {
     constructor() {
         super();
-
-        encuestas.splice(2, 1);
         
-        this.dataOriginal = df({
-            descriptores: descriptores,
-            encuestas: encuestas,
+        this.dataOriginal = {
+            descriptores: JSON.parse(JSON.stringify(descriptores)),
+            encuestas: JSON.parse(JSON.stringify(encuestas)),
             prueba: "",
             preentrevista: ""
-        });
+        };
 
         this.state = {
-            dataActual: this.dataOriginal,
+            dataActual: JSON.parse(JSON.stringify(this.dataOriginal)),
             shouldConfirmCreateVersion: false,
             divisionMostrada: 1,
             isLoading: true,
@@ -60,7 +59,12 @@ class Instrumento extends Component {
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.dataActual !== this.state.dataActual) {
-            if (equals(this.state.dataActual, this.dataOriginal)) {
+            if (equals(this.state.dataActual, {
+                descriptores: JSON.parse(JSON.stringify(descriptores)),
+                encuestas: JSON.parse(JSON.stringify(encuestas)),
+                prueba: "",
+                preentrevista: ""
+            })) {
                 this.setState({
                     didDataChange: false
                 });
@@ -100,7 +104,8 @@ class Instrumento extends Component {
     }
 
     handleChange = (e, categoria, index) => {
-        const elementosActualizados = [...this.state.dataActual[categoria]];
+        /* const elementosActualizados = [...this.state.dataActual[categoria]]; */
+        const elementosActualizados = JSON.parse(JSON.stringify(this.dataOriginal[categoria]));
 
         switch (categoria) {
             case "descriptores":
@@ -114,7 +119,6 @@ class Instrumento extends Component {
                 break;
             case "encuestas":
                 elementosActualizados[index.i][index.j] = e.target.value;
-                /* this.state.dataActual.encuestas[index.i][index.j] = e.target.value; */
                 break;
             case "prueba":
 
