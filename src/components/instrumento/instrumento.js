@@ -24,18 +24,21 @@ import TextField from "@material-ui/core/TextField";
 import descriptores from "../../models/descriptores";
 import encuestas from "../../models/encuestas";
 
+import { equals } from "equally";
+import df from "deeply-freeze";
+
 class Instrumento extends Component {
     constructor() {
         super();
 
         encuestas.splice(2, 1);
-
-        this.dataOriginal = {
+        
+        this.dataOriginal = df({
             descriptores: descriptores,
             encuestas: encuestas,
             prueba: "",
             preentrevista: ""
-        }
+        });
 
         this.state = {
             dataActual: this.dataOriginal,
@@ -52,18 +55,16 @@ class Instrumento extends Component {
                 isLoading: false
             });
             clearTimeout(timeout);
-        }, 2000);
+        }, 1000);
     }
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.dataActual !== this.state.dataActual) {
-            if (JSON.stringify(this.state.dataActual) === JSON.stringify(this.dataOriginal)) {
-                console.log("Igual, ocultar");
+            if (equals(this.state.dataActual, this.dataOriginal)) {
                 this.setState({
                     didDataChange: false
                 });
             } else {
-                console.log("Diferente, mostrar");
                 this.setState({
                     didDataChange: true
                 });
@@ -73,8 +74,10 @@ class Instrumento extends Component {
 
     handleTabChange = (e, newValue) => {
         this.setState({
+            dataActual: {...this.dataOriginal},
             divisionMostrada: newValue,
-            isLoading: true
+            isLoading: true,
+            didDataChange: false
         });
 
         const timeout = setTimeout(() => {
@@ -82,7 +85,7 @@ class Instrumento extends Component {
                 isLoading: false
             });
             clearTimeout(timeout);
-        }, 2000);
+        }, 1000);
     }
 
     confirmarCrearVersion = () => {
@@ -97,38 +100,38 @@ class Instrumento extends Component {
     }
 
     handleChange = (e, categoria, index) => {
+        const elementosActualizados = [...this.state.dataActual[categoria]];
+
         switch (categoria) {
             case "descriptores":
                 if (e.target.name === "codigo") {
                     e.target.value = e.target.value.toUpperCase();
                 }
-        
-                const elementosActualizados = [...this.state.dataActual[categoria]];
                 elementosActualizados[index] = {
                     ...elementosActualizados[index],
                     [e.target.name]: e.target.value
                 }
-        
-                this.setState({
-                    dataActual: {
-                        ...this.state.dataActual,
-                        [categoria]: elementosActualizados
-                    }
-                });
                 break;
             case "encuestas":
-                const newEncuestas = [...this.state.dataActual.encuestas];
-                newEncuestas[index.i][index.j] = e.target.value;
-                this.setState({
-                    dataActual: {
-                        ...this.state.dataActual,
-                        encuestas: newEncuestas
-                    }
-                });
+                elementosActualizados[index.i][index.j] = e.target.value;
+                /* this.state.dataActual.encuestas[index.i][index.j] = e.target.value; */
+                break;
+            case "prueba":
+
+                break;
+            case "preentrevista":
+
                 break;
             default:
                 break;
         }
+
+        this.setState({
+            dataActual: {
+                ...this.state.dataActual,
+                [categoria]: elementosActualizados
+            }
+        });
     }
 
     render() {

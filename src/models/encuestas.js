@@ -1,5 +1,5 @@
 export const factor1 = [
-    "Enunciación de la incorporación de las TIC para favorecer  los procesos de enseñanza y aprendizaje en la visión de la institución",
+    "Enunciación de la incorporación de las TIC para favorecer los procesos de enseñanza y aprendizaje en la visión de la institución",
     "Enunciación de la incorporación de las TIC en los procesos de enseñanza y aprendizaje en el proyecto educativo institucional (PEI)",
     "Enunciación de la incorporación de las TIC en los procesos de enseñanza y aprendizaje en el plan de desarrollo, plan estratégico o el equivalente de la institución",
     "Alineación de las estrategias institucionales para la incorporación de las TIC con las estrategias locales, regionales y nacionales",
