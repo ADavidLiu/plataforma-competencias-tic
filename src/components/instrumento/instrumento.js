@@ -27,6 +27,12 @@ import encuestas from "../../models/encuestas";
 import { equals } from "equally";
 
 encuestas.splice(2, 1);
+const dataBackup = {
+    descriptores: JSON.parse(JSON.stringify(descriptores)),
+    encuestas: JSON.parse(JSON.stringify(encuestas)),
+    prueba: "",
+    preentrevista: ""
+}
 
 class Instrumento extends Component {
     constructor() {
@@ -59,12 +65,7 @@ class Instrumento extends Component {
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.dataActual !== this.state.dataActual) {
-            if (equals(this.state.dataActual, {
-                descriptores: JSON.parse(JSON.stringify(descriptores)),
-                encuestas: JSON.parse(JSON.stringify(encuestas)),
-                prueba: "",
-                preentrevista: ""
-            })) {
+            if (equals(this.state.dataActual, dataBackup)) {
                 this.setState({
                     didDataChange: false
                 });
@@ -78,7 +79,7 @@ class Instrumento extends Component {
 
     handleTabChange = (e, newValue) => {
         this.setState({
-            dataActual: {...this.dataOriginal},
+            dataActual: dataBackup,
             divisionMostrada: newValue,
             isLoading: true,
             didDataChange: false
@@ -104,8 +105,7 @@ class Instrumento extends Component {
     }
 
     handleChange = (e, categoria, index) => {
-        /* const elementosActualizados = [...this.state.dataActual[categoria]]; */
-        const elementosActualizados = JSON.parse(JSON.stringify(this.dataOriginal[categoria]));
+        const elementosActualizados = JSON.parse(JSON.stringify(this.state.dataActual[categoria]));
 
         switch (categoria) {
             case "descriptores":
