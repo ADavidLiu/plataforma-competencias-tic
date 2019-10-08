@@ -441,8 +441,8 @@ class Instrumento extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="d-md-flex align-items-center justify-content-start mt-3">
-                                                            <FormControl component="fieldset">
-                                                                <RadioGroup name={`${pregunta.id}-respuestas`} value={pregunta.respuesta} onChange={e => { this.changeRespuestaPrueba(e, i); }} row>
+                                                            <FormControl component="fieldset" className="w-100">
+                                                                <RadioGroup name={`${pregunta.id}-respuestas`} value={pregunta.respuesta} onChange={e => { this.changeRespuestaPrueba(e, i); }} className="w-100">
                                                                     {
                                                                         pregunta.opciones.map((opcion, j) => (
                                                                             <div className="w-100 d-block d-flex align-items-center justify-content-between" key={j}>
@@ -460,7 +460,7 @@ class Instrumento extends Component {
                                                                             </div>
                                                                         ))
                                                                     }
-                                                                    <Button variant="outlined" color="primary" className="mt-3" onClick={() => { this.toggleNewRespuestaOption(i); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                    <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption(i); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
                                                                 </RadioGroup>
                                                             </FormControl>
                                                         </div>
