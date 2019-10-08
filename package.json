@@ -25,6 +25,7 @@
     "react-scripts": "3.0.1",
     "react-select": "^3.0.5",
     "react-sticky": "^6.0.3",
+    "react-virtualized": "^9.21.1",
     "reaptcha": "^1.6.0",
     "sort-by": "^1.2.0",
     "sweet-scroll": "^4.0.0",
