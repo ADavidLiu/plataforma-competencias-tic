@@ -60,7 +60,7 @@ class Instrumento extends Component {
             isLoading: true,
             didDataChange: false,
             active: {
-                category: "",
+                category: "descriptores",
                 index: 0
             }
         }
@@ -116,32 +116,45 @@ class Instrumento extends Component {
         console.log("Creada!");
     }
 
-    confirmarDelete = () => {
+    confirmarDelete = (category, index) => {
+        this.setState({
+            shouldConfirmDelete: true,
+            active: {
+                category: category,
+                index: index
+            }
+        });
+    }
+
+    toggleDelete = () => {
         this.setState({
             shouldConfirmDelete: !this.state.shouldConfirmDelete
         });
     }
 
-    deleteElement = (categoria, index) => {
+    deleteElement = () => {
         /* Conectarse al backend */
-        this.confirmarDelete();
+        this.toggleDelete();
         /* Luego de recibir la confirmación 200, eliminar visualmente */
-        const newElements = this.state.dataActual[categoria];
+        const newElements = this.state.dataActual[this.state.active.category];
         
-        switch(categoria) {
+        switch(this.state.active.category) {
             case "descriptores":
             case "prueba":
-                newElements.splice(index, 1);
+                newElements.splice(this.state.active.index, 1);
                 break;
             case "encuestas":
-                newElements[index.i].splice(index.j, 1);
+                newElements[this.state.active.index.i].splice(this.state.active.index.j, 1);
                 break;
             default:
                 break;
         }
 
         this.setState({
-            dataActual: newElements
+            dataActual: {
+                ...this.state.dataActual,
+                [this.state.active.category]: newElements
+            }
         });
     }
 
@@ -211,7 +224,7 @@ class Instrumento extends Component {
                                                                 onChange={e => { this.handleChange(e, "descriptores", i) }}
                                                             />
                                                             <div className="d-flex align-items-center justify-content-end">
-                                                                <IconButton color="primary" onClick={this.confirmarDelete}>
+                                                                <IconButton color="primary" onClick={() => { this.confirmarDelete("descriptores", i); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
@@ -370,7 +383,7 @@ class Instrumento extends Component {
                                     <Button color="primary" variant="contained" onClick={this.crearVersion} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-no")}</Button>
                                 </DialogActions>
                             </Dialog>
-                            <Dialog open={this.state.shouldConfirmDelete} onClose={this.confirmarDelete}>
+                            <Dialog open={this.state.shouldConfirmDelete} onClose={this.toggleDelete}>
                                 <DialogTitle>{t("instrumento.eliminar")}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText className="mb-3">
@@ -379,7 +392,7 @@ class Instrumento extends Component {
                                 </DialogContent>
                                 <DialogActions className="p-3 pt-0 d-block d-md-flex">
                                     <Button color="primary" variant="outlined" onClick={this.deleteElement} className="w-100 w-md-auto">{t("instrumento.eliminar-si")}</Button>
-                                    <Button color="primary" variant="contained" onClick={this.confirmarDelete} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.eliminar-no")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.toggleDelete} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.eliminar-no")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>
