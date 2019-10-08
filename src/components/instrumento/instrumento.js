@@ -29,7 +29,7 @@ import preguntasPreentrevista from "../../models/preentrevista-new";
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
 import Edit from '@material-ui/icons/Edit';
-import AddCircle from "@material-ui/icons/AddCircle";
+import Add from "@material-ui/icons/Add";
 
 import { equals } from "equally";
 
@@ -190,6 +190,39 @@ class Instrumento extends Component {
         });
     }
 
+    addElement = (categoria, index) => {
+        let copiaElementos = [...this.state.dataActual[categoria]];
+
+        switch (categoria) {
+            case "descriptores":
+                copiaElementos.push({
+                    codigo: "",
+                    contenido: ""
+                });
+                break;
+            case "encuestas":
+                copiaElementos[index].push("");
+                break;
+            case "prueba":
+                copiaElementos.push({
+                    codigoDescriptor: "",
+                    enunciado: "",
+                    opciones: [],
+                    respuesta: ""
+                });
+                break;
+            default:
+                break;
+        }
+
+        this.setState({
+            dataActual: {
+                ...this.state.dataActual,
+                [categoria]: copiaElementos
+            }
+        });
+    }
+
     render() {
         let tabMostrado;
         switch (this.state.divisionMostrada) {
@@ -233,6 +266,11 @@ class Instrumento extends Component {
                                                 </Grid>
                                             ))
                                         }
+                                        <Grid item xs={12}>
+                                            <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("descriptores"); }}>
+                                                <Add className="d-block mx-auto"/>
+                                            </Button>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             )
@@ -249,8 +287,14 @@ class Instrumento extends Component {
                                     <Grid container spacing={3}>
                                         {
                                             this.state.dataActual.encuestas.map((factor, i) => (
-                                                <Grid item xs={12} key={i}>
-                                                    <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} ${i + 1}`}</Typography>
+                                                <Grid item xs={12} key={i} className="pb-0">
+                                                    {
+                                                        i !== 2 ? (
+                                                            <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} ${i + 1}`}</Typography>
+                                                        ) : (
+                                                            <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} 4`}</Typography>
+                                                        )
+                                                    }
                                                     {
                                                         factor.map((pregunta, j) => (
                                                             <Paper className="p-4 mb-4" key={j}>
@@ -275,6 +319,10 @@ class Instrumento extends Component {
                                                             </Paper>
                                                         ))
                                                     }
+                                                    <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("encuestas", i); }}>
+                                                        <Add className="d-block mx-auto"/>
+                                                    </Button>
+                                                    <hr className="my-4"/>
                                                 </Grid>
                                             ))
                                         }
@@ -296,29 +344,41 @@ class Instrumento extends Component {
                                             {
                                                 this.state.dataActual.prueba.map((pregunta, i) => (
                                                     <Paper className="p-4 mb-4" key={i}>
-                                                        <TextField
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                            fullWidth
-                                                            label={t("instrumento.encuestas-pregunta")}
-                                                            name="codigoDescriptor"
-                                                            value={this.state.dataActual.prueba[i].codigoDescriptor}
-                                                            onChange={e => { this.handleChange(e, "prueba", i) }}
-                                                        />
-                                                        <TextField
-                                                            variant="outlined"
-                                                            margin="normal"
-                                                            fullWidth
-                                                            multiline
-                                                            rows={2}
-                                                            label={t("instrumento.encuestas-pregunta")}
-                                                            name="enunciado"
-                                                            value={this.state.dataActual.prueba[i].enunciado}
-                                                            onChange={e => { this.handleChange(e, "prueba", i) }}
-                                                        />
+                                                        <div className="d-flex align-items-center justify-content-between">
+                                                            <TextField
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                                className="w-100 w-md-auto"
+                                                                multiline
+                                                                rows={2}
+                                                                label={t("instrumento.descriptores-codigo")}
+                                                                name="codigoDescriptor"
+                                                                value={this.state.dataActual.prueba[i].codigoDescriptor}
+                                                                onChange={e => { this.handleChange(e, "prueba", i) }}
+                                                            />
+                                                            <TextField
+                                                                variant="outlined"
+                                                                margin="normal"
+                                                                multiline
+                                                                rows={2}
+                                                                label={t("instrumento.encuestas-pregunta")}
+                                                                name="enunciado"
+                                                                className="w-100 w-md-auto flex-grow-1 mx-4"
+                                                                value={this.state.dataActual.prueba[i].enunciado}
+                                                                onChange={e => { this.handleChange(e, "prueba", i) }}
+                                                            />
+                                                            <div className="d-flex align-items-center justify-content-end">
+                                                                <IconButton color="primary" onClick={() => { this.confirmarDelete("prueba", i); }}>
+                                                                    <DeleteOutlined color="primary"/>
+                                                                </IconButton>
+                                                            </div>
+                                                        </div>
                                                     </Paper>
                                                 ))
                                             }
+                                            <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("prueba"); }}>
+                                                <Add className="d-block mx-auto"/>
+                                            </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>

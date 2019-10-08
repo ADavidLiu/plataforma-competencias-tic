@@ -551,7 +551,7 @@ const es = {
         "instrumento.encuestas-factor": "Factor",
         "instrumento.encuestas-pregunta": "Pregunta",
         "instrumento.eliminar": "¿Está seguro de que desea eliminar este elemento del instrumento?",
-        "instrumento.eliminar-ayuda": "Esto ocasionará la creación de una nueva versión sin él, mas no afectará a usuarios que ya lo usen.",
+        "instrumento.eliminar-ayuda": "Si éste hace parte del instrumento actual, sólo afectará a usuarios que inicien nuevos procesos.",
         "instrumento.eliminar-si": "Sí, eliminar elemento",
         "instrumento.eliminar-no": "No, regresar",
     }
