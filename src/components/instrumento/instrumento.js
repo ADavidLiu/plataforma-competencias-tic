@@ -254,17 +254,24 @@ class Instrumento extends Component {
                                                     {
                                                         factor.map((pregunta, j) => (
                                                             <Paper className="p-4 mb-4" key={j}>
-                                                                <TextField
-                                                                    variant="outlined"
-                                                                    margin="normal"
-                                                                    fullWidth
-                                                                    multiline
-                                                                    rows={2}
-                                                                    label={t("instrumento.encuestas-pregunta")}
-                                                                    name="pregunta"
-                                                                    value={this.state.dataActual.encuestas[i][j]}
-                                                                    onChange={e => { this.handleChange(e, "encuestas", {i: i, j: j}) }}
-                                                                />
+                                                                <div className="d-flex align-items-center justify-content-between">
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        margin="normal"
+                                                                        fullWidth
+                                                                        multiline
+                                                                        rows={2}
+                                                                        label={t("instrumento.encuestas-pregunta")}
+                                                                        name="pregunta"
+                                                                        value={this.state.dataActual.encuestas[i][j]}
+                                                                        onChange={e => { this.handleChange(e, "encuestas", {i: i, j: j}) }}
+                                                                    />
+                                                                    <div className="d-flex align-items-center justify-content-end ml-4">
+                                                                        <IconButton color="primary" onClick={() => { this.confirmarDelete("encuestas", {i: i, j: j}); }}>
+                                                                            <DeleteOutlined color="primary"/>
+                                                                        </IconButton>
+                                                                    </div>
+                                                                </div>
                                                             </Paper>
                                                         ))
                                                     }
