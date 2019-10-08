@@ -35,7 +35,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from "@material-ui/core/TextField";
 
-import { List, AutoSizer } from "react-virtualized";
+import VirtualList from 'react-tiny-virtual-list';
 
 import { equals } from "equally";
 
@@ -401,80 +401,86 @@ class Instrumento extends Component {
                 break;
             case 2:
                 tabMostrado = (
-                    <Translation>
-                        {
-                            t => (
-                                <Grid item xs={12}>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={12}>
-                                            {
-                                                this.state.dataActual.prueba.map((pregunta, i) => (
-                                                    <Paper className="p-4 mb-4" key={i}>
-                                                        <div className="d-flex align-items-center justify-content-between">
-                                                            <TextField
-                                                                variant="outlined"
-                                                                margin="normal"
-                                                                className="w-100 w-md-auto"
-                                                                multiline
-                                                                rows={2}
-                                                                label={t("instrumento.descriptores-codigo")}
-                                                                name="codigoDescriptor"
-                                                                value={this.state.dataActual.prueba[i].codigoDescriptor}
-                                                                onChange={e => { this.handleChange(e, "prueba", i) }}
-                                                            />
-                                                            <TextField
-                                                                variant="outlined"
-                                                                margin="normal"
-                                                                multiline
-                                                                rows={2}
-                                                                label={t("instrumento.encuestas-pregunta")}
-                                                                name="enunciado"
-                                                                className="w-100 w-md-auto flex-grow-1 mx-4"
-                                                                value={this.state.dataActual.prueba[i].enunciado}
-                                                                onChange={e => { this.handleChange(e, "prueba", i) }}
-                                                            />
-                                                            <div className="d-flex align-items-center justify-content-end">
-                                                                <IconButton color="primary" onClick={() => { this.confirmarDelete("prueba", i); }}>
-                                                                    <DeleteOutlined color="primary"/>
-                                                                </IconButton>
+                    <Grid item xs={12}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>    
+                                <VirtualList
+                                    width="100%"
+                                    height="65vh"
+                                    itemCount={this.state.dataActual.prueba.length}
+                                    itemSize={450}
+                                    renderItem={({index, style}) =>
+                                        <div key={index} style={style}>
+                                            <Translation>
+                                                {
+                                                    t => (
+                                                        <Paper className="p-4 mb-4">
+                                                            <div className="d-flex align-items-center justify-content-between">
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                    className="w-100 w-md-auto"
+                                                                    multiline
+                                                                    rows={2}
+                                                                    label={t("instrumento.descriptores-codigo")}
+                                                                    name="codigoDescriptor"
+                                                                    value={this.state.dataActual.prueba[index].codigoDescriptor}
+                                                                    onChange={e => { this.handleChange(e, "prueba", index) }}
+                                                                />
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    margin="normal"
+                                                                    multiline
+                                                                    rows={2}
+                                                                    label={t("instrumento.encuestas-pregunta")}
+                                                                    name="enunciado"
+                                                                    className="w-100 w-md-auto flex-grow-1 mx-4"
+                                                                    value={this.state.dataActual.prueba[index].enunciado}
+                                                                    onChange={e => { this.handleChange(e, "prueba", index) }}
+                                                                />
+                                                                <div className="d-flex align-items-center justify-content-end">
+                                                                    <IconButton color="primary" onClick={() => { this.confirmarDelete("prueba", index); }}>
+                                                                        <DeleteOutlined color="primary"/>
+                                                                    </IconButton>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="d-md-flex align-items-center justify-content-start mt-3">
-                                                            <FormControl component="fieldset" className="w-100">
-                                                                <RadioGroup name={`${pregunta.id}-respuestas`} value={pregunta.respuesta} onChange={e => { this.changeRespuestaPrueba(e, i); }} className="w-100">
-                                                                    {
-                                                                        pregunta.opciones.map((opcion, j) => (
-                                                                            <div className="w-100 d-block d-flex align-items-center justify-content-between" key={j}>
-                                                                                <FormControlLabel
-                                                                                    value={opcion}
-                                                                                    control={<Radio color="primary" />}
-                                                                                    label={opcion}
-                                                                                    labelPlacement="end"
-                                                                                />
-                                                                                <div className="ml-3">
-                                                                                    <IconButton color="primary" onClick={() => { this.deleteRespuestaOption({ i: i, j: j }); }}>
-                                                                                        <Cancel color="primary"/>
-                                                                                    </IconButton>
+                                                            <div className="d-md-flex align-items-center justify-content-start mt-3">
+                                                                <FormControl component="fieldset" className="w-100">
+                                                                    <RadioGroup name={`${this.state.dataActual.prueba[index].id}-respuestas`} value={this.state.dataActual.prueba[index].respuesta} onChange={e => { this.changeRespuestaPrueba(e, index); }} className="w-100">
+                                                                        {
+                                                                            this.state.dataActual.prueba[index].opciones.map((opcion, j) => (
+                                                                                <div className="w-100 d-block d-flex align-items-center justify-content-between" key={j}>
+                                                                                    <FormControlLabel
+                                                                                        value={opcion}
+                                                                                        control={<Radio color="primary" />}
+                                                                                        label={opcion}
+                                                                                        labelPlacement="end"
+                                                                                    />
+                                                                                    <div className="ml-3">
+                                                                                        <IconButton color="primary" onClick={() => { this.deleteRespuestaOption({ i: index, j: j }); }}>
+                                                                                            <Cancel color="primary"/>
+                                                                                        </IconButton>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        ))
-                                                                    }
-                                                                    <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption(i); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
-                                                                </RadioGroup>
-                                                            </FormControl>
-                                                        </div>
-                                                    </Paper>
-                                                ))
-                                            }
-                                            <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("prueba"); }}>
-                                                <Add className="d-block mx-auto"/>
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            )
-                        }
-                    </Translation>
+                                                                            ))
+                                                                        }
+                                                                        <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption(index); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                    </RadioGroup>
+                                                                </FormControl>
+                                                            </div>
+                                                        </Paper>
+                                                    )
+                                                }
+                                            </Translation>
+                                        </div>
+                                    }
+                                />
+                                <Button className="mt-4 mt-md-2" variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("prueba"); }}>
+                                    <Add className="d-block mx-auto"/>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 );
                 break;
             case 3:
