@@ -30,6 +30,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
 import Edit from '@material-ui/icons/Edit';
 import Add from "@material-ui/icons/Add";
+import Cancel from "@material-ui/icons/Cancel";
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import { equals } from "equally";
 
@@ -56,13 +63,17 @@ class Instrumento extends Component {
             dataActual: JSON.parse(JSON.stringify(this.dataOriginal)),
             shouldConfirmCreateVersion: false,
             shouldConfirmDelete: false,
-            divisionMostrada: 0,
+            divisionMostrada: 2,
             isLoading: true,
             didDataChange: false,
             active: {
                 category: "descriptores",
                 index: 0
-            }
+            },
+            shouldOpenNewRespuestaOptionForm: false,
+            newRespuestaValue: "",
+            indexNewRespuestaValue: 0
+
         }
     }
 
@@ -211,6 +222,9 @@ class Instrumento extends Component {
                     respuesta: ""
                 });
                 break;
+            case "preentrevista":
+
+                break;
             default:
                 break;
         }
@@ -220,6 +234,59 @@ class Instrumento extends Component {
                 ...this.state.dataActual,
                 [categoria]: copiaElementos
             }
+        });
+    }
+
+    changeRespuestaPrueba = (e, index) => {
+        const newElementos = [...this.state.dataActual.prueba];
+        newElementos[index].respuesta = e.target.value;
+        this.setState({
+            dataActual: {
+                ...this.state.dataActual,
+                prueba: newElementos
+            }
+        });
+    }
+
+    addRespuestaOption = () => {
+        this.toggleNewRespuestaOption();
+        const newElementos = [...this.state.dataActual.prueba];
+        newElementos[this.state.indexNewRespuestaValue].opciones.push(this.state.newRespuestaValue);
+        this.setState({
+            dataActual: {
+                ...this.state.dataActual,
+                prueba: newElementos
+            },
+            newRespuestaValue: ""
+        });
+    }
+
+    deleteRespuestaOption = index => {
+        const newElementos = [...this.state.dataActual.prueba];
+        newElementos[index.i].opciones.splice(index.j, 1);
+        this.setState({
+            dataActual: {
+                ...this.state.dataActual,
+                prueba: newElementos
+            }
+        });
+    }
+
+    updateNewRespuestaOption = e => {
+        this.setState({
+            newRespuestaValue: e.target.value
+        });
+    }
+
+    toggleNewRespuestaOption = index => {
+        let newIndex = 0;
+        if (index) {
+            newIndex = index;
+        }
+
+        this.setState({
+            shouldOpenNewRespuestaOptionForm: !this.state.shouldOpenNewRespuestaOptionForm,
+            indexNewRespuestaValue: newIndex
         });
     }
 
@@ -373,6 +440,30 @@ class Instrumento extends Component {
                                                                 </IconButton>
                                                             </div>
                                                         </div>
+                                                        <div className="d-md-flex align-items-center justify-content-start mt-3">
+                                                            <FormControl component="fieldset">
+                                                                <RadioGroup name={`${pregunta.id}-respuestas`} value={pregunta.respuesta} onChange={e => { this.changeRespuestaPrueba(e, i); }} row>
+                                                                    {
+                                                                        pregunta.opciones.map((opcion, j) => (
+                                                                            <div className="w-100 d-block d-flex align-items-center justify-content-between" key={j}>
+                                                                                <FormControlLabel
+                                                                                    value={opcion}
+                                                                                    control={<Radio color="primary" />}
+                                                                                    label={opcion}
+                                                                                    labelPlacement="end"
+                                                                                />
+                                                                                <div className="ml-3">
+                                                                                    <IconButton color="primary" onClick={() => { this.deleteRespuestaOption({ i: i, j: j }); }}>
+                                                                                        <Cancel color="primary"/>
+                                                                                    </IconButton>
+                                                                                </div>
+                                                                            </div>
+                                                                        ))
+                                                                    }
+                                                                    <Button variant="outlined" color="primary" className="mt-3" onClick={() => { this.toggleNewRespuestaOption(i); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                </RadioGroup>
+                                                            </FormControl>
+                                                        </div>
                                                     </Paper>
                                                 ))
                                             }
@@ -460,6 +551,26 @@ class Instrumento extends Component {
                                 <DialogActions className="p-3 pt-0 d-block d-md-flex">
                                     <Button color="primary" variant="outlined" onClick={this.deleteElement} className="w-100 w-md-auto">{t("instrumento.eliminar-si")}</Button>
                                     <Button color="primary" variant="contained" onClick={this.toggleDelete} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.eliminar-no")}</Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Dialog open={this.state.shouldOpenNewRespuestaOptionForm} onClose={this.toggleNewRespuestaOption} maxWidth="md" fullWidth>
+                                <DialogTitle>{t("instrumento.crear-opcion-respuesta")}</DialogTitle>
+                                <DialogContent>
+                                    <TextField
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        multiline
+                                        rows={2}
+                                        label={t("instrumento.respuesta")}
+                                        name="pregunta"
+                                        value={this.state.newRespuestaValue}
+                                        onChange={this.updateNewRespuestaOption}
+                                    />
+                                </DialogContent>
+                                <DialogActions className="p-3 pt-0 d-block d-md-flex">
+                                    <Button color="primary" variant="outlined" onClick={this.toggleNewRespuestaOption} className="w-100 w-md-auto">{t("instrumento.crear-no")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.addRespuestaOption} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-si")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>
