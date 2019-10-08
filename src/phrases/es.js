@@ -554,11 +554,16 @@ const es = {
         "instrumento.eliminar-ayuda": "Si éste hace parte del instrumento actual, sólo afectará a usuarios que inicien nuevos procesos.",
         "instrumento.eliminar-si": "Sí, eliminar elemento",
         "instrumento.eliminar-no": "No, regresar",
-        "instrumento.agregar-opcion-respuesta": "Agregar nueva respuesta",
+        "instrumento.agregar-opcion-respuesta": "Agregar nueva opción de respuesta",
         "instrumento.crear-opcion-respuesta": "Nueva opción de respuesta",
         "instrumento.crear-si": "Agregar",
         "instrumento.crear-no": "Cancelar",
         "instrumento.respuesta": "Respuesta",
+        "instrumento.grupo":  "Grupo",
+        "instrumento.evidencia":  "Evidencia requerida",
+        "instrumento.tipo-nivel":  "Nivel de la pregunta",
+        "instrumento.tipo-respuesta":  "Tipo de respuesta",
+        "instrumento.descriptores":  "Descriptores evaluados",
     }
 }
 

@@ -40,11 +40,26 @@ import VirtualList from 'react-tiny-virtual-list';
 import { equals } from "equally";
 
 encuestas.splice(2, 1);
+let grupos = [];
+const preguntasPorGrupo = [];
+preguntasPreentrevista.forEach(pregunta => {
+    grupos.push(pregunta.group);
+});
+grupos = [...new Set(grupos)];
+for (let i = 0; i < grupos.length; i++) {
+    preguntasPorGrupo[i] = [];
+    preguntasPreentrevista.forEach(pregunta => {
+        if (pregunta.group === i.toString()) {
+            preguntasPorGrupo[i].push(pregunta);
+        }
+    });
+}
+
 const dataBackup = {
     descriptores: JSON.parse(JSON.stringify(descriptores)),
     encuestas: JSON.parse(JSON.stringify(encuestas)),
     prueba: JSON.parse(JSON.stringify(preguntasPrueba)),
-    preentrevista: JSON.parse(JSON.stringify(preguntasPreentrevista))
+    preentrevista: JSON.parse(JSON.stringify(preguntasPorGrupo))
 }
 
 class Instrumento extends Component {
@@ -55,14 +70,14 @@ class Instrumento extends Component {
             descriptores: JSON.parse(JSON.stringify(descriptores)),
             encuestas: JSON.parse(JSON.stringify(encuestas)),
             prueba: JSON.parse(JSON.stringify(preguntasPrueba)),
-            preentrevista: JSON.parse(JSON.stringify(preguntasPreentrevista))
+            preentrevista: JSON.parse(JSON.stringify(preguntasPorGrupo))
         };
 
         this.state = {
             dataActual: JSON.parse(JSON.stringify(this.dataOriginal)),
             shouldConfirmCreateVersion: false,
             shouldConfirmDelete: false,
-            divisionMostrada: 2,
+            divisionMostrada: 3,
             isLoading: true,
             didDataChange: false,
             active: {
@@ -484,7 +499,69 @@ class Instrumento extends Component {
                 );
                 break;
             case 3:
+                tabMostrado = (
+                    <Translation>
+                        {
+                            t => (
+                                <Grid item xs={12}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            {
+                                                this.state.dataActual.preentrevista.map((grupo, i) => (
+                                                    grupo.map((pregunta, j) => (
+                                                        <Paper className="p-4 mb-4" key={j}>
+                                                            <Grid container spacing={3}>
+                                                                <Grid item xs={12} md={4}>
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        fullWidth
+                                                                        className="w-100"
+                                                                        label={t("instrumento.grupo")}
+                                                                        name="group"
+                                                                        value={this.state.dataActual.preentrevista[i][j].group}
+                                                                        onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                    />
+                                                                </Grid>
+                                                                <Grid item xs={12} md={4}>
+                                                                    
+                                                                </Grid>
+                                                                <Grid item xs={12} md={4}>
 
+                                                                </Grid>
+                                                                <Grid item xs={12}>
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        fullWidth
+                                                                        className="w-100"
+                                                                        label={t("pregunta")}
+                                                                        name="label"
+                                                                        value={this.state.dataActual.preentrevista[i][j].label}
+                                                                        onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                    />
+                                                                </Grid>
+                                                                <Grid item xs={12}>
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        fullWidth
+                                                                        className="w-100"
+                                                                        label={t("instrumento.evidencia")}
+                                                                        name="evidencia"
+                                                                        value={this.state.dataActual.preentrevista[i][j].evidencia}
+                                                                        onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                    />
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Paper>
+                                                    ))
+                                                ))
+                                            }
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
+                );
                 break;
             default:
                 break;
