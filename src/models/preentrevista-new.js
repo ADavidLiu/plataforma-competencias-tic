@@ -35,7 +35,7 @@ const preguntas = [
         options: ["Sí", "No"],
         descriptores: [],
         evidencia: "",
-        isTriggerFor: "",
+        isTriggeredBy: "",
         isTriggerFor: "3"
     },
     {

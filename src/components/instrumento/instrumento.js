@@ -166,7 +166,7 @@ class Instrumento extends Component {
         /* Conectarse al backend */
         this.toggleDelete();
         /* Luego de recibir la confirmación 200, eliminar visualmente */
-        const newElements = this.state.dataActual[this.state.active.category];
+        const newElements = [...JSON.parse(JSON.stringify(this.state.dataActual[this.state.active.category]))];
         
         switch(this.state.active.category) {
             case "descriptores":
@@ -289,20 +289,37 @@ class Instrumento extends Component {
 
     addRespuestaOption = () => {
         this.toggleNewRespuestaOption();
-        const newElementos = [...this.state.dataActual.prueba];
-        newElementos[this.state.indexNewRespuestaValue].opciones.push(this.state.newRespuestaValue);
+        const newElementos = [...JSON.parse(JSON.stringify(this.state.dataActual[this.state.active.category]))];
+
+        if (typeof this.state.indexNewRespuestaValue === "object") {
+            newElementos[this.state.indexNewRespuestaValue.i][this.state.indexNewRespuestaValue.j].options.push(this.state.newRespuestaValue);
+        } else {
+            newElementos[this.state.indexNewRespuestaValue].opciones.push(this.state.newRespuestaValue);
+        }
+
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
-                prueba: newElementos
+                [this.state.active.category]: newElementos
             },
             newRespuestaValue: ""
         });
     }
 
-    deleteRespuestaOption = index => {
-        const newElementos = [...this.state.dataActual.prueba];
-        newElementos[index.i].opciones.splice(index.j, 1);
+    deleteRespuestaOption = (categoria, index) => {
+        const newElementos = [...this.state.dataActual[categoria]];
+        
+        switch (categoria) {
+            case "prueba":
+                newElementos[index.i].opciones.splice(index.j, 1);
+                break;
+            case "preentrevista":
+                newElementos[index.i][index.j].options.splice(index.k, 1);
+                break;
+            default:
+                break;
+        }
+
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
@@ -317,10 +334,30 @@ class Instrumento extends Component {
         });
     }
 
-    toggleNewRespuestaOption = index => {
+    toggleNewRespuestaOption = (categoria, index) => {
         let newIndex = 0;
         if (index) {
             newIndex = index;
+        }
+        if (categoria) {
+            let newCategoria = "";
+            switch (categoria) {
+                case "prueba":
+                    newCategoria = "prueba";
+                    break;
+                case "preentrevista":
+                    newCategoria = "preentrevista";
+                    break;
+                default:
+                    break;
+            }
+
+            this.setState({
+                active: {
+                    ...this.state.active,
+                    category: newCategoria
+                }
+            });
         }
 
         this.setState({
@@ -497,14 +534,14 @@ class Instrumento extends Component {
                                                                                         labelPlacement="end"
                                                                                     />
                                                                                     <div className="ml-3">
-                                                                                        <IconButton color="primary" onClick={() => { this.deleteRespuestaOption({ i: index, j: j }); }}>
+                                                                                        <IconButton color="primary" onClick={() => { this.deleteRespuestaOption("prueba", { i: index, j: j }); }}>
                                                                                             <Cancel color="primary"/>
                                                                                         </IconButton>
                                                                                     </div>
                                                                                 </div>
                                                                             ))
                                                                         }
-                                                                        <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption(index); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                        <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption("prueba", index); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
                                                                     </RadioGroup>
                                                                 </FormControl>
                                                             </div>
@@ -543,6 +580,17 @@ class Instrumento extends Component {
                                                                                 variant="outlined"
                                                                                 fullWidth
                                                                                 className="w-100"
+                                                                                label={t("ID")}
+                                                                                name="id"
+                                                                                value={this.state.dataActual.preentrevista[i][j].id}
+                                                                                onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                            />
+                                                                        </Grid>
+                                                                        <Grid item xs={6} md={2}>
+                                                                            <TextField
+                                                                                variant="outlined"
+                                                                                fullWidth
+                                                                                className="w-100"
                                                                                 label={t("instrumento.grupo")}
                                                                                 name="group"
                                                                                 value={this.state.dataActual.preentrevista[i][j].group}
@@ -560,7 +608,7 @@ class Instrumento extends Component {
                                                                                 onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
                                                                             />
                                                                         </Grid>
-                                                                        <Grid item xs={12} md={4}>
+                                                                        <Grid item xs={12} md={3}>
                                                                             <FormControl variant="outlined" className="w-100">
                                                                                 <InputLabel>{t("instrumento.tipo-nivel")}</InputLabel>
                                                                                 <Select
@@ -575,7 +623,7 @@ class Instrumento extends Component {
                                                                                 </Select>
                                                                             </FormControl>
                                                                         </Grid>
-                                                                        <Grid item xs={12} md={4}>
+                                                                        <Grid item xs={12} md={3}>
                                                                             <FormControl variant="outlined" className="w-100">
                                                                                 <InputLabel>{t("instrumento.tipo-respuesta")}</InputLabel>
                                                                                 <Select
@@ -646,14 +694,14 @@ class Instrumento extends Component {
                                                                                                         <div className="w-100 d-block d-flex align-items-center justify-content-between" key={k}>
                                                                                                             <Typography variant="body1">{opcion}</Typography>
                                                                                                             <div className="ml-3">
-                                                                                                                <IconButton color="primary" onClick={() => { this.deleteRespuestaOption({ i: i, j: j, k: k }); }}>
+                                                                                                                <IconButton color="primary" onClick={() => { this.deleteRespuestaOption("preentrevista", { i: i, j: j, k: k }); }}>
                                                                                                                     <Cancel color="primary"/>
                                                                                                                 </IconButton>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     ))
                                                                                                 }
-                                                                                                <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption(i); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                                                <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption("preentrevista", {i: i, j: j}); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
                                                                                             </RadioGroup>
                                                                                         </FormControl>
                                                                                     }
