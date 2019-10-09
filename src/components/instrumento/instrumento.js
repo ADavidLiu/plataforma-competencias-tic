@@ -38,6 +38,7 @@ import TextField from "@material-ui/core/TextField";
 import VirtualList from 'react-tiny-virtual-list';
 
 import { equals } from "equally";
+import df from "deeply-freeze";
 
 encuestas.splice(2, 1);
 let grupos = [];
@@ -55,12 +56,12 @@ for (let i = 0; i < grupos.length; i++) {
     });
 }
 
-const dataBackup = {
+const dataBackup = df({
     descriptores: JSON.parse(JSON.stringify(descriptores)),
     encuestas: JSON.parse(JSON.stringify(encuestas)),
     prueba: JSON.parse(JSON.stringify(preguntasPrueba)),
     preentrevista: JSON.parse(JSON.stringify(preguntasPorGrupo))
-}
+});
 
 class Instrumento extends Component {
     constructor() {
@@ -226,7 +227,9 @@ class Instrumento extends Component {
                 });
                 break;
             case "encuestas":
-                copiaElementos[index].push("");
+                const newCopia = JSON.parse(JSON.stringify(copiaElementos));
+                newCopia[index].push("");
+                copiaElementos = newCopia;
                 break;
             case "prueba":
                 copiaElementos.push({
@@ -242,6 +245,11 @@ class Instrumento extends Component {
             default:
                 break;
         }
+
+        /* const timeout = setTimeout(() => {
+            console.log(copiaElementos, dataBackup.encuestas);
+            console.log(equals(copiaElementos, dataBackup.encuestas));
+        }, 2000); */
 
         this.setState({
             dataActual: {
