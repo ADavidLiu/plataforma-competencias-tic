@@ -40,6 +40,7 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
 import VirtualList from 'react-tiny-virtual-list';
+import { List } from "react-virtualized";
 
 import { equals } from "equally";
 import df from "deeply-freeze";
@@ -166,7 +167,12 @@ class Instrumento extends Component {
         /* Conectarse al backend */
         this.toggleDelete();
         /* Luego de recibir la confirmación 200, eliminar visualmente */
-        const newElements = [...JSON.parse(JSON.stringify(this.state.dataActual[this.state.active.category]))];
+        let categoriaActiva = this.state.active.category;
+        if (categoriaActiva.includes("-")) {
+            categoriaActiva = this.state.active.category.split("-")[0];
+        }
+
+        const newElements = [...JSON.parse(JSON.stringify(this.state.dataActual[categoriaActiva]))];
         
         switch(this.state.active.category) {
             case "descriptores":
@@ -182,7 +188,7 @@ class Instrumento extends Component {
                 }
                 break;
             case "preentrevista-grupo":
-
+                newElements.splice(this.state.active.index, 1);
                 break;
             default:
                 break;
@@ -191,7 +197,7 @@ class Instrumento extends Component {
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
-                [this.state.active.category]: newElements
+                [categoriaActiva]: newElements
             }
         });
     }
@@ -706,7 +712,7 @@ class Instrumento extends Component {
                                                                             />
                                                                         </Grid>
                                                                         {
-                                                                            this.state.dataActual.preentrevista[i][j].options ? (
+                                                                            this.state.dataActual.preentrevista[i][j].typeOfAnswer === "RADIO" || this.state.dataActual.preentrevista[i][j].typeOfAnswer === "CHECKBOX" ? (
                                                                                 <Grid item xs={12}>
                                                                                     <Typography variant="body1" className="mb-3"><strong>{t("instrumento.respuestas-opciones")}</strong></Typography>
                                                                                     {
@@ -742,9 +748,16 @@ class Instrumento extends Component {
                                                                 </Paper>
                                                             ))
                                                         }
-                                                        <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("preentrevista", i); }}>
-                                                            <Add className="d-block mx-auto"/>
-                                                        </Button>
+                                                        <div className="d-md-flex align-items-stretch justify-content-between">
+                                                            <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.confirmarDelete("preentrevista-grupo", i); }}>
+                                                                <DeleteOutlined style={{color: "#ffffff"}} className="mr-1" fontSize="small"/>
+                                                                {t("instrumento.borrar-grupo")}
+                                                            </Button>
+                                                            <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.addElement("preentrevista", i); }}>
+                                                                <Add className="d-block mx-auto mr-1" fontSize="small"/>
+                                                                {t("instrumento.nueva-pregunta")}
+                                                            </Button>
+                                                        </div>
                                                         <hr className="my-5"/>
                                                     </div>
                                                 ))

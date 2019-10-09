@@ -576,6 +576,8 @@ const es = {
         "instrumento.trigger-for": "Inicializa la pregunta con ID...",
         "instrumento.respuestas-opciones": "Opciones de respuesta",
         "instrumento.preentrevista-borrar-pregunta": "Borrar pregunta",
+        "instrumento.borrar-grupo": "Borrar grupo",
+        "instrumento.nueva-pregunta": "Nueva pregunta",
     }
 }
 
