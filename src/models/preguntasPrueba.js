@@ -15,14 +15,14 @@ const preguntas = [
     },
     {
         id: "2.1",
-        codigoDescriptor: "I1b",
+        codigoDescriptor: "I1B",
         enunciado: "Un docente de ciencias naturales que pidió a sus estudiantes realizar un trabajo sobre el sistema respiratorio, al llegar a casa se percata que ha olvidado los mismos en el colegio. De acuerdo con lo anterior ¿Qué le recomendaría para la entrega de trabajos en próximas oportunidades?",
         opciones: ["Esperar hasta el día siguiente y pedir más tiempo para calificar y entregar notas.", "Solicitar a los estudiantes el envío de los trabajos por correo electrónico.", "Solicitar los trabajos digitalmente para guardarlos en una memoria USB.", "Solicitar el envío de trabajos usando una herramienta de almacenamiento en la nube."],
         respuesta: "Solicitar el envío de trabajos usando una herramienta de almacenamiento en la nube."
     },
     {
         id: "2.2",
-        codigoDescriptor: "I1b",
+        codigoDescriptor: "I1B",
         enunciado: "De los siguientes, ¿Cuáles son los tres aspectos para el apoyo de los procesos educativos que se flexibilizan más con el uso de videollamadas y el correo electrónico?",
         opciones: ["Espacio, tiempo y manejo de recursos.", "Gestión, manejo de recursos y costos.", "Espacio, tiempo y planeación.", "Gestión, tiempo y planeación."],
         respuesta: "Gestión, tiempo y planeación."

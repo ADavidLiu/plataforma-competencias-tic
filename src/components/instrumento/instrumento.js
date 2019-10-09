@@ -181,6 +181,9 @@ class Instrumento extends Component {
                     newElements.splice(this.state.active.index.i, 1);
                 }
                 break;
+            case "preentrevista-grupo":
+
+                break;
             default:
                 break;
         }
@@ -226,7 +229,12 @@ class Instrumento extends Component {
     }
 
     addElement = (categoria, index) => {
-        let copiaElementos = [...this.state.dataActual[categoria]];
+        let copiaElementos;
+        if (categoria.includes("-")) {
+            copiaElementos = [...this.state.dataActual[categoria.split("-")[0]]];
+        } else {
+            copiaElementos = [...this.state.dataActual[categoria]];
+        }
 
         switch (categoria) {
             case "descriptores":
@@ -252,17 +260,32 @@ class Instrumento extends Component {
                 copiaElementos[index].push({
                     id: "",
                     group: "",
+                    subgroup: "",
                     label: "",
                     typeOfLevel: "",
                     typeOfAnswer: "",
                     options: [],
                     descriptores: [],
+                    evidencia: "",
                     isTriggerFor: "",
                     isTriggeredBy: ""
                 });
                 break;
             case "preentrevista-grupo":
-
+                copiaElementos.push([{
+                    id: "",
+                    group: "",
+                    subgroup: "",
+                    label: "",
+                    typeOfLevel: "",
+                    typeOfAnswer: "",
+                    options: [],
+                    descriptores: [],
+                    evidencia: "",
+                    isTriggerFor: "",
+                    isTriggeredBy: ""
+                }]);
+                categoria = "preentrevista";
                 break;
             default:
                 break;
