@@ -96,6 +96,7 @@ const es = {
         "link.instrumento": "instrumento",
         "link.auditoria": "auditoria",
         "link.ayuda": "ayuda",
+        "link.cursos": "cursos",
         "titulo.primerIngreso": "Primer ingreso - Cambie su contraseña",
         "titulo.no-login": "Inicio de sesión | Plataforma de Competencias TIC",
         "titulo.nombre-plataforma": "Plataforma de Competencias TIC",
@@ -109,6 +110,7 @@ const es = {
         "titulo.encuesta-revision": "Revisión de Encuesta",
         "titulo.ayuda": "Ayuda",
         "titulo.encuesta": "Encuesta",
+        "titulo.cursos": "Cursos en la plataforma",
         "incipiente": "Incipiente",
         "en-desarrollo": "En Desarrollo",
         "establecido": "Establecido",
@@ -377,6 +379,7 @@ const es = {
         "configuracion.niveles": "¿En qué niveles enseña?",
         "configuracion.areas": "¿En qué áreas disciplinares trabaja en el establecimiento educativo?",
         "configuracion.areas-otras-cuales": "¿Cuál(es)?",
+        "usuarios.titulo": "Usuarios",
         "usuarios.label-registro-admins": "Registrar Administradores",
         "usuarios.label-registro-evaluadores": "Registrar Evaluadores y Gobiernos",
         "usuarios.label-registro-instituciones": "Registrar Instituciones",
@@ -578,6 +581,7 @@ const es = {
         "instrumento.preentrevista-borrar-pregunta": "Borrar pregunta",
         "instrumento.borrar-grupo": "Borrar grupo",
         "instrumento.nueva-pregunta": "Nueva pregunta",
+        "cursos.titulo": "Cursos",
     }
 }
 

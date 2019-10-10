@@ -360,6 +360,7 @@ class Configuracion extends Component {
                                 <Typography variant="h5">
                                     {t("configuracion.titulo")}
                                 </Typography>
+                                <hr/>
                             </Grid>
                             <Grid item xs={12}>
                                 <Typography variant="h6" className="mr-4">

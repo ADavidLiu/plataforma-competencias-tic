@@ -26,6 +26,7 @@ import Assignment from "@material-ui/icons/Assignment";
 import Build from "@material-ui/icons/Build";
 import YoutubeSearchedFor from "@material-ui/icons/YoutubeSearchedFor";
 import Help from "@material-ui/icons/Help";
+import Book from "@material-ui/icons/Book";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -56,6 +57,7 @@ import Auditoria from "../auditoria/auditoria";
 import Instrumento from "../instrumento/instrumento";
 import Ayuda from "../ayuda/ayuda";
 import Encuesta from "../encuesta/encuesta";
+import Cursos from "../cursos/cursos";
 
 class LoginCheck extends Component {
     constructor() {
@@ -216,15 +218,26 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
-                                                                <Tooltip title={t("auditoria.titulo-alt")} placement="right">
-                                                                    <Link to={`/${t("link.auditoria")}`}>
-                                                                        <IconButton style={{
-                                                                            color: "#ffffff"
-                                                                        }}>
-                                                                            <YoutubeSearchedFor/>
-                                                                        </IconButton>
-                                                                    </Link>
-                                                                </Tooltip>
+                                                                <React.Fragment>
+                                                                    <Tooltip title={t("auditoria.titulo-alt")} placement="right">
+                                                                        <Link to={`/${t("link.auditoria")}`}>
+                                                                            <IconButton style={{
+                                                                                color: "#ffffff"
+                                                                            }}>
+                                                                                <YoutubeSearchedFor/>
+                                                                            </IconButton>
+                                                                        </Link>
+                                                                    </Tooltip>
+                                                                    <Tooltip title={t("cursos.titulo")} placement="right">
+                                                                        <Link to={`/${t("link.cursos")}`}>
+                                                                            <IconButton style={{
+                                                                                color: "#ffffff"
+                                                                            }}>
+                                                                                <Book fontSize="small"/>
+                                                                            </IconButton>
+                                                                        </Link>
+                                                                    </Tooltip>
+                                                                </React.Fragment>
                                                             ) : ""
                                                         }
                                                         {
@@ -363,6 +376,7 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
                                                                     <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""
@@ -372,6 +386,7 @@ class LoginCheck extends Component {
                                                                 <Switch>
                                                                     <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""

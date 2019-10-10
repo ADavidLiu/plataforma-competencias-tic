@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-ro
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -390,6 +391,8 @@ class Usuarios extends Component {
                                 <title>{`${tituloPagina} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
                             <Grid item xs={12}>
+                                <Typography variant="h5">{t("usuarios.titulo")}</Typography>
+                                <hr className="mb-4"/>
                                 <Paper>
                                     { tabs }
                                 </Paper>

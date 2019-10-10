@@ -67,8 +67,7 @@ class Auditoria extends Component {
                             <Grid container spacing={5}>
                                 <Grid item xs={12}>
                                     <Typography variant="h5">{t("auditoria.titulo")}</Typography>
-                                </Grid>
-                                <Grid item xs={12}>
+                                    <hr className="mb-4"/>
                                     <Paper className="p-4">
                                         <Typography variant="body1" className="mb-3"><strong>{t("auditoria.buscar")}</strong></Typography>
                                         <AsyncSelect
