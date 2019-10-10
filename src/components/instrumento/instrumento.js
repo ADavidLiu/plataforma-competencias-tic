@@ -590,189 +590,195 @@ class Instrumento extends Component {
                 break;
             case 3:
                 tabMostrado = (
-                    <Grid item xs={12}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <VirtualList
-                                    width="100%"
-                                    height="65vh"
-                                    itemCount={this.state.dataActual.preentrevista.length}
-                                    itemSize={870}
-                                    renderItem={({index, style}) => (
-                                        <div key={index} style={style}>
-                                            <Translation>
-                                                {
-                                                    t => (
-                                                        <div>
-                                                            {
-                                                                this.state.dataActual.preentrevista[index].map((pregunta, j) => (
-                                                                    <Paper className="p-4 mb-4" key={j}>
-                                                                        <Grid container spacing={3}>
-                                                                            <Grid item xs={6} md={2}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("ID")}
-                                                                                    name="id"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].id}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={6} md={2}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("instrumento.grupo")}
-                                                                                    name="group"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].group}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={6} md={2}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("instrumento.subgrupo")}
-                                                                                    name="subgroup"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].subgroup}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={12} md={3}>
-                                                                                <FormControl variant="outlined" className="w-100">
-                                                                                    <InputLabel>{t("instrumento.tipo-nivel")}</InputLabel>
-                                                                                    <Select
-                                                                                        value={this.state.dataActual.preentrevista[index][j].typeOfLevel}
-                                                                                        onChange={e => { this.handleChange(e, "preentrevista", { i: index, j: j }); }}
-                                                                                        input={<OutlinedInput required 
-                                                                                        name="typeOfLevel"/>}
-                                                                                    >
-                                                                                        <MenuItem value="ROOT">{t("instrumento.nivel-root")}</MenuItem>
-                                                                                        <MenuItem value="MIDDLE">{t("instrumento.nivel-middle")}</MenuItem>
-                                                                                        <MenuItem value="FINAL">{t("instrumento.nivel-final")}</MenuItem>
-                                                                                    </Select>
-                                                                                </FormControl>
-                                                                            </Grid>
-                                                                            <Grid item xs={12} md={3}>
-                                                                                <FormControl variant="outlined" className="w-100">
-                                                                                    <InputLabel>{t("instrumento.tipo-respuesta")}</InputLabel>
-                                                                                    <Select
-                                                                                        value={this.state.dataActual.preentrevista[index][j].typeOfAnswer}
-                                                                                        onChange={e => { this.handleChange(e, "preentrevista", { i: index, j: j }); }}
-                                                                                        input={<OutlinedInput required 
-                                                                                        name="typeOfAnswer"/>}
-                                                                                    >
-                                                                                        <MenuItem value="RADIO">{t("instrumento.answer-radio")}</MenuItem>
-                                                                                        <MenuItem value="CHECKBOX">{t("instrumento.answer-checkbox")}</MenuItem>
-                                                                                        <MenuItem value="INPUT">{t("instrumento.answer-input")}</MenuItem>
-                                                                                    </Select>
-                                                                                </FormControl>
-                                                                            </Grid>
-                                                                            <Grid item xs={12} md={6}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("instrumento.triggered-by")}
-                                                                                    name="isTriggeredBy"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].isTriggeredBy}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={12} md={6}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("instrumento.trigger-for")}
-                                                                                    name="isTriggerFor"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].isTriggerFor}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={12}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("pregunta")}
-                                                                                    name="label"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].label}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            <Grid item xs={12}>
-                                                                                <TextField
-                                                                                    variant="outlined"
-                                                                                    fullWidth
-                                                                                    className="w-100"
-                                                                                    label={t("instrumento.evidencia")}
-                                                                                    name="evidencia"
-                                                                                    value={this.state.dataActual.preentrevista[index][j].evidencia}
-                                                                                    onChange={e => { this.handleChange(e, "preentrevista", {i: index, j: j}) }}
-                                                                                />
-                                                                            </Grid>
-                                                                            {
-                                                                                this.state.dataActual.preentrevista[index][j].typeOfAnswer === "RADIO" || this.state.dataActual.preentrevista[index][j].typeOfAnswer === "CHECKBOX" ? (
-                                                                                    <Grid item xs={12}>
-                                                                                        <Typography variant="body1" className="mb-3"><strong>{t("instrumento.respuestas-opciones")}</strong></Typography>
-                                                                                        {
-                                                                                            <FormControl component="fieldset" className="w-100">
-                                                                                                <RadioGroup name={`${this.state.dataActual.preentrevista[index][j].id}-respuestas`} value={this.state.dataActual.prueba[index].respuesta} onChange={e => { this.changeRespuestaPrueba(e, index); }} className="w-100">
-                                                                                                    {
-                                                                                                        this.state.dataActual.preentrevista[index][j].options.map((opcion, k) => (
-                                                                                                            <div className="w-100 d-block d-flex align-items-center justify-content-between" key={k}>
-                                                                                                                <Typography variant="body1">{opcion}</Typography>
-                                                                                                                <div className="ml-3">
-                                                                                                                    <IconButton color="primary" onClick={() => { this.deleteRespuestaOption("preentrevista", { i: index, j: j, k: k }); }}>
-                                                                                                                        <Cancel color="primary"/>
-                                                                                                                    </IconButton>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                    <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption("preentrevista", {i: index, j: j}); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
-                                                                                                </RadioGroup>
-                                                                                            </FormControl>
-                                                                                        }
+                    <Translation>
+                        {
+                            t => (
+                                <Grid item xs={12}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            {
+                                                this.state.dataActual.preentrevista.map((grupo, i) => (
+                                                    <div key={i}>
+                                                        {
+                                                            grupo.map((pregunta, j) => (
+                                                                <VirtualList
+                                                                    key={j}
+                                                                    width="100%"
+                                                                    height="65vh"
+                                                                    itemCount={grupo.length}
+                                                                    itemSize={670}
+                                                                    renderItem={({index, style}) => (
+                                                                        <div key={index} style={style}>
+                                                                            <Paper className="p-4 mb-4" key={j}>
+                                                                                <Grid container spacing={3}>
+                                                                                    <Grid item xs={6} md={2}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("ID")}
+                                                                                            name="id"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].id}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
                                                                                     </Grid>
-                                                                                ) : null
-                                                                            }
-                                                                            <Grid item xs={12}>
-                                                                                <hr className="mt-0 mb-4"/>
-                                                                                <Button fullWidth className="w-100" variant="outlined" color="primary" onClick={() => { this.confirmarDelete("preentrevista", {i: index, j: j}); }}>
-                                                                                    <DeleteOutlined color="primary" className="mr-1" fontSize="small"/>
-                                                                                    {t("instrumento.preentrevista-borrar-pregunta")}
-                                                                                </Button>
-                                                                            </Grid>
-                                                                        </Grid>
-                                                                    </Paper>
-                                                                ))
-                                                            }
-                                                            <div className="d-md-flex align-items-stretch justify-content-between">
-                                                                <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.confirmarDelete("preentrevista-grupo", index); }}>
-                                                                    <DeleteOutlined style={{color: "#ffffff"}} className="mr-1" fontSize="small"/>
-                                                                    {t("instrumento.borrar-grupo")}
-                                                                </Button>
-                                                                <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.addElement("preentrevista", index); }}>
-                                                                    <Add className="d-block mx-auto mr-1" fontSize="small"/>
-                                                                    {t("instrumento.nueva-pregunta")}
-                                                                </Button>
-                                                            </div>
-                                                            <hr className="my-5"/>
+                                                                                    <Grid item xs={6} md={2}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("instrumento.grupo")}
+                                                                                            name="group"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].group}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    <Grid item xs={6} md={2}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("instrumento.subgrupo")}
+                                                                                            name="subgroup"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].subgroup}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12} md={3}>
+                                                                                        <FormControl variant="outlined" className="w-100">
+                                                                                            <InputLabel>{t("instrumento.tipo-nivel")}</InputLabel>
+                                                                                            <Select
+                                                                                                value={this.state.dataActual.preentrevista[i][j].typeOfLevel}
+                                                                                                onChange={e => { this.handleChange(e, "preentrevista", { i: i, j: j }); }}
+                                                                                                input={<OutlinedInput required 
+                                                                                                name="typeOfLevel"/>}
+                                                                                            >
+                                                                                                <MenuItem value="ROOT">{t("instrumento.nivel-root")}</MenuItem>
+                                                                                                <MenuItem value="MIDDLE">{t("instrumento.nivel-middle")}</MenuItem>
+                                                                                                <MenuItem value="FINAL">{t("instrumento.nivel-final")}</MenuItem>
+                                                                                            </Select>
+                                                                                        </FormControl>
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12} md={3}>
+                                                                                        <FormControl variant="outlined" className="w-100">
+                                                                                            <InputLabel>{t("instrumento.tipo-respuesta")}</InputLabel>
+                                                                                            <Select
+                                                                                                value={this.state.dataActual.preentrevista[i][j].typeOfAnswer}
+                                                                                                onChange={e => { this.handleChange(e, "preentrevista", { i: i, j: j }); }}
+                                                                                                input={<OutlinedInput required 
+                                                                                                name="typeOfAnswer"/>}
+                                                                                            >
+                                                                                                <MenuItem value="RADIO">{t("instrumento.answer-radio")}</MenuItem>
+                                                                                                <MenuItem value="CHECKBOX">{t("instrumento.answer-checkbox")}</MenuItem>
+                                                                                                <MenuItem value="INPUT">{t("instrumento.answer-input")}</MenuItem>
+                                                                                            </Select>
+                                                                                        </FormControl>
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12} md={6}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("instrumento.triggered-by")}
+                                                                                            name="isTriggeredBy"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].isTriggeredBy}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12} md={6}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("instrumento.trigger-for")}
+                                                                                            name="isTriggerFor"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].isTriggerFor}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("pregunta")}
+                                                                                            name="label"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].label}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    <Grid item xs={12}>
+                                                                                        <TextField
+                                                                                            variant="outlined"
+                                                                                            fullWidth
+                                                                                            className="w-100"
+                                                                                            label={t("instrumento.evidencia")}
+                                                                                            name="evidencia"
+                                                                                            value={this.state.dataActual.preentrevista[i][j].evidencia}
+                                                                                            onChange={e => { this.handleChange(e, "preentrevista", {i: i, j: j}) }}
+                                                                                        />
+                                                                                    </Grid>
+                                                                                    {
+                                                                                        this.state.dataActual.preentrevista[i][j].typeOfAnswer === "RADIO" || this.state.dataActual.preentrevista[i][j].typeOfAnswer === "CHECKBOX" ? (
+                                                                                            <Grid item xs={12}>
+                                                                                                <Typography variant="body1" className="mb-3"><strong>{t("instrumento.respuestas-opciones")}</strong></Typography>
+                                                                                                {
+                                                                                                    <FormControl component="fieldset" className="w-100">
+                                                                                                        <RadioGroup name={`${this.state.dataActual.preentrevista[i][j].id}-respuestas`} value={this.state.dataActual.prueba[i].respuesta} onChange={e => { this.changeRespuestaPrueba(e, i); }} className="w-100">
+                                                                                                            {
+                                                                                                                this.state.dataActual.preentrevista[i][j].options.map((opcion, k) => (
+                                                                                                                    <div className="w-100 d-block d-flex align-items-center justify-content-between" key={k}>
+                                                                                                                        <Typography variant="body1">{opcion}</Typography>
+                                                                                                                        <div className="ml-3">
+                                                                                                                            <IconButton color="primary" onClick={() => { this.deleteRespuestaOption("preentrevista", { i: i, j: j, k: k }); }}>
+                                                                                                                                <Cancel color="primary"/>
+                                                                                                                            </IconButton>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                ))
+                                                                                                            }
+                                                                                                            <Button variant="outlined" color="primary" className="mt-3 w-auto flex-grow-0 align-self-start" onClick={() => { this.toggleNewRespuestaOption("preentrevista", {i: i, j: j}); }}>{t("instrumento.agregar-opcion-respuesta")}</Button>
+                                                                                                        </RadioGroup>
+                                                                                                    </FormControl>
+                                                                                                }
+                                                                                            </Grid>
+                                                                                        ) : null
+                                                                                    }
+                                                                                    <Grid item xs={12}>
+                                                                                        <hr className="mt-0 mb-4"/>
+                                                                                        <Button fullWidth className="w-100" variant="outlined" color="primary" onClick={() => { this.confirmarDelete("preentrevista", {i: i, j: j}); }}>
+                                                                                            <DeleteOutlined color="primary" className="mr-1" fontSize="small"/>
+                                                                                            {t("instrumento.preentrevista-borrar-pregunta")}
+                                                                                        </Button>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            </Paper>
+                                                                        </div>
+                                                                    )}
+                                                                />
+                                                            ))
+                                                        }
+                                                        <div className="d-md-flex align-items-stretch justify-content-between">
+                                                            <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.confirmarDelete("preentrevista-grupo", i); }}>
+                                                                <DeleteOutlined style={{color: "#ffffff"}} className="mr-1" fontSize="small"/>
+                                                                {t("instrumento.borrar-grupo")}
+                                                            </Button>
+                                                            <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.addElement("preentrevista", i); }}>
+                                                                <Add className="d-block mx-auto mr-1" fontSize="small"/>
+                                                                {t("instrumento.nueva-pregunta")}
+                                                            </Button>
                                                         </div>
-                                                    )
-                                                }
-                                            </Translation>
-                                        </div>
-                                    )}
-                                />
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                                                        <hr className="my-5"/>
+                                                    </div>
+                                                ))
+                                            }
+                                            <Button variant="outlined" color="primary" fullWidth size="large" onClick={() => { this.addElement("preentrevista-grupo"); }}>{t("instrumento.preentrevista-nuevo-grupo")}</Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             default:
