@@ -161,7 +161,7 @@ class Cursos extends Component {
                 ...this.state.cursos,
                 nuevos: newCursosNuevos
             }
-        });
+        }, () => { this.checkNewCourseDataChanged(); });
     }
 
     deleteNewCourseElement = (categoria, index) => {
@@ -172,7 +172,7 @@ class Cursos extends Component {
                 ...this.state.cursos,
                 nuevos: newCursosNuevos
             }
-        });
+        }, () => { this.checkNewCourseDataChanged(); });
     }
 
     createNewObjetivoEspecifico = index => {
@@ -184,7 +184,7 @@ class Cursos extends Component {
                 ...this.state.cursos,
                 nuevos: newCursosNuevos
             }
-        });
+        }, () => { this.checkNewCourseDataChanged(); });
     }
 
     deleteObjetivoEspecifico = index => {
@@ -195,7 +195,7 @@ class Cursos extends Component {
                 ...this.state.cursos,
                 nuevos: newCursosNuevos
             }
-        });
+        }, () => { this.checkNewCourseDataChanged(); });
     }
 
     crearCurso = () => {
