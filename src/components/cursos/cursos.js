@@ -26,7 +26,15 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlined from "@material-ui/icons/DeleteOutline";
 import Add from "@material-ui/icons/Add";
 
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+
 import { CircularProgress } from "@material-ui/core";
+
+import { equals } from "equally";
 
 class Cursos extends Component {
     constructor() {
@@ -72,8 +80,10 @@ class Cursos extends Component {
                 actuales: [],
                 nuevos: [JSON.parse(JSON.stringify(this.placeholderCurso))]
             },
+            isNewInfoAdded: false,
             divisionMostrada: 0,
-            isLoading: true
+            isLoading: true,
+            shouldConfirmCreated: false
         }
     }
 
@@ -89,6 +99,17 @@ class Cursos extends Component {
     handleTabChange = (e, newValue) => {
         this.setState({
             divisionMostrada: newValue
+        });
+    }
+
+    checkNewCourseDataChanged = () => {
+        let newState = false;
+        if (!equals(...this.state.cursos.nuevos, this.placeholderCurso)) {
+            newState = true;
+        }
+
+        this.setState({
+            isNewInfoAdded: newState
         });
     }
 
@@ -116,6 +137,7 @@ class Cursos extends Component {
                     updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value.toUpperCase();
                     break;
                 case "contenidos":
+                case "criterios":
                     updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value;
                     break;
                 default:
@@ -126,7 +148,7 @@ class Cursos extends Component {
 
         this.setState({
             cursos: updatedCourses
-        });
+        }, () => { this.checkNewCourseDataChanged(); });
     }
 
     createNewObjetivoEspecifico = index => {
@@ -244,6 +266,26 @@ class Cursos extends Component {
         });
     }
 
+    crearCurso = () => {
+        console.log(this.state.cursos.nuevos);
+        this.toggleConfirmationDialog();
+        /* Enviar al backend */
+
+        /* Reiniciar los campos */
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: [JSON.parse(JSON.stringify(this.placeholderCurso))]
+            }
+        });
+    }
+
+    toggleConfirmationDialog = () => {
+        this.setState({
+            shouldConfirmCreated: !this.state.shouldConfirmCreated
+        });
+    }
+
     render() {
         let division;
         switch (this.state.divisionMostrada) {
@@ -253,351 +295,354 @@ class Cursos extends Component {
                         {
                             t => (
                                 this.state.cursos.nuevos.map((curso, i) => (
-                                    <Paper className="p-4 mb-4" key={i}>
-                                        <Grid container alignItems="stretch" spacing={3}>
-                                            <Grid item xs={12}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        fullWidth
-                                                        label={t("cursos.new-nombre")}
-                                                        name="nombre"
-                                                        value={curso.nombre}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        fullWidth
-                                                        label={t("cursos.new-resumen")}
-                                                        multiline
-                                                        rows={5}
-                                                        name="resumen"
-                                                        value={curso.resumen}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        label={t("cursos.new-dedicacion")}
-                                                        fullWidth
-                                                        inputProps={{
-                                                            type: "number"
-                                                        }}
-                                                        name="dedicacion"
-                                                        value={curso.dedicacion}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        label={t("cursos.new-ubicacion")}
-                                                        fullWidth
-                                                        name="ubicacion"
-                                                        value={curso.ubicacion}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={4}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        label={t("cursos.new-institucion")}
-                                                        fullWidth
-                                                        name="institucion"
-                                                        value={curso.institucion}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        label={t("cursos.new-enlace")}
-                                                        fullWidth
-                                                        name="enlace"
-                                                        value={curso.enlace}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <InputLabel>{t("cursos.new-nivel")}</InputLabel>
-                                                    <Select
-                                                        value={curso.nivel}
-                                                        onChange={e => { this.handleInputChange(e, "nuevos", i); }}
-                                                        input={<OutlinedInput required name="nivel"/>}
-                                                    >
-                                                        <MenuItem value="integracion-basico">{t("cursos.niveles-ib")}</MenuItem>
-                                                        <MenuItem value="integracion-avanzado">{t("cursos.niveles-ia")}</MenuItem>
-                                                        <MenuItem value="integracion-actualizacion">{t("cursos.niveles-iact")}</MenuItem>
-                                                        <MenuItem value="reorientacion-basico">{t("cursos.niveles-rb")}</MenuItem>
-                                                        <MenuItem value="reorientacion-avanzado">{t("cursos.niveles-ra")}</MenuItem>
-                                                        <MenuItem value="reorientacion-actualizacion">{t("cursos.niveles-ract")}</MenuItem>
-                                                        <MenuItem value="evolucion-basico">{t("cursos.niveles-eb")}</MenuItem>
-                                                        <MenuItem value="evolucion-avanzado">{t("cursos.niveles-ea")}</MenuItem>
-                                                        <MenuItem value="evolucion-actualizacion">{t("cursos.niveles-eact")}</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl component="fieldset">
-                                                    <FormLabel component="legend"><strong>{t("cursos.new-competencias")}</strong></FormLabel>
-                                                    <FormGroup row>
-                                                        <FormControlLabel
-                                                            name="competencias.disenio"
-                                                            control={<Checkbox color="primary" checked={curso.competencias.disenio} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="disenio" />}
-                                                            label={t("cursos.new-descriptores-disenio")}
+                                    <React.Fragment key={i}>
+                                        <Paper className="p-4 mb-4">
+                                            <Grid container alignItems="stretch" spacing={3}>
+                                                <Grid item xs={12}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            fullWidth
+                                                            label={t("cursos.new-nombre")}
+                                                            name="nombre"
+                                                            value={curso.nombre}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                        <FormControlLabel
-                                                            name="competencias.implementacion"
-                                                            control={<Checkbox color="primary" checked={curso.competencias.implementacion} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="implementacion" />}
-                                                            label={t("cursos.new-descriptores-implementacion")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            fullWidth
+                                                            label={t("cursos.new-resumen")}
+                                                            multiline
+                                                            rows={5}
+                                                            name="resumen"
+                                                            value={curso.resumen}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                        <FormControlLabel
-                                                            name="competencias.evaluacion"
-                                                            control={<Checkbox color="primary" checked={curso.competencias.evaluacion} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="evaluacion" />}
-                                                            label={t("cursos.new-descriptores-evaluacion")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={4}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            label={t("cursos.new-dedicacion")}
+                                                            fullWidth
+                                                            inputProps={{
+                                                                type: "number"
+                                                            }}
+                                                            name="dedicacion"
+                                                            value={curso.dedicacion}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                    </FormGroup>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl component="fieldset">
-                                                    <FormLabel component="legend"><strong>{t("cursos.new-requerimientos")}</strong></FormLabel>
-                                                    <FormGroup row>
-                                                        <FormControlLabel
-                                                            name="requerimientos.internet"
-                                                            control={<Checkbox color="primary" checked={curso.requerimientos.internet} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="internet" />}
-                                                            label={t("cursos.requerimientos-internet")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={4}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            label={t("cursos.new-ubicacion")}
+                                                            fullWidth
+                                                            name="ubicacion"
+                                                            value={curso.ubicacion}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                        <FormControlLabel
-                                                            name="requerimientos.computador"
-                                                            control={<Checkbox color="primary" checked={curso.requerimientos.computador} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="computador" />}
-                                                            label={t("cursos.requerimientos-computador")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={4}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            label={t("cursos.new-institucion")}
+                                                            fullWidth
+                                                            name="institucion"
+                                                            value={curso.institucion}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                        <FormControlLabel
-                                                            name="requerimientos.mobile"
-                                                            control={<Checkbox color="primary" checked={curso.requerimientos.mobile} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="mobile" />}
-                                                            label={t("cursos.requerimientos-mobile")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            label={t("cursos.new-enlace")}
+                                                            fullWidth
+                                                            name="enlace"
+                                                            value={curso.enlace}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                        <FormControlLabel
-                                                            name="requerimientos.lms"
-                                                            control={<Checkbox color="primary" checked={curso.requerimientos.lms} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="lms" />}
-                                                            label={t("cursos.requerimientos-lms")}
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <InputLabel>{t("cursos.new-nivel")}</InputLabel>
+                                                        <Select
+                                                            value={curso.nivel}
+                                                            onChange={e => { this.handleInputChange(e, "nuevos", i); }}
+                                                            input={<OutlinedInput required name="nivel"/>}
+                                                        >
+                                                            <MenuItem value="integracion-basico">{t("cursos.niveles-ib")}</MenuItem>
+                                                            <MenuItem value="integracion-avanzado">{t("cursos.niveles-ia")}</MenuItem>
+                                                            <MenuItem value="integracion-actualizacion">{t("cursos.niveles-iact")}</MenuItem>
+                                                            <MenuItem value="reorientacion-basico">{t("cursos.niveles-rb")}</MenuItem>
+                                                            <MenuItem value="reorientacion-avanzado">{t("cursos.niveles-ra")}</MenuItem>
+                                                            <MenuItem value="reorientacion-actualizacion">{t("cursos.niveles-ract")}</MenuItem>
+                                                            <MenuItem value="evolucion-basico">{t("cursos.niveles-eb")}</MenuItem>
+                                                            <MenuItem value="evolucion-avanzado">{t("cursos.niveles-ea")}</MenuItem>
+                                                            <MenuItem value="evolucion-actualizacion">{t("cursos.niveles-eact")}</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl component="fieldset">
+                                                        <FormLabel component="legend"><strong>{t("cursos.new-competencias")}</strong></FormLabel>
+                                                        <FormGroup row>
+                                                            <FormControlLabel
+                                                                name="competencias.disenio"
+                                                                control={<Checkbox color="primary" checked={curso.competencias.disenio} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="disenio" />}
+                                                                label={t("cursos.new-descriptores-disenio")}
+                                                            />
+                                                            <FormControlLabel
+                                                                name="competencias.implementacion"
+                                                                control={<Checkbox color="primary" checked={curso.competencias.implementacion} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="implementacion" />}
+                                                                label={t("cursos.new-descriptores-implementacion")}
+                                                            />
+                                                            <FormControlLabel
+                                                                name="competencias.evaluacion"
+                                                                control={<Checkbox color="primary" checked={curso.competencias.evaluacion} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="evaluacion" />}
+                                                                label={t("cursos.new-descriptores-evaluacion")}
+                                                            />
+                                                        </FormGroup>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl component="fieldset">
+                                                        <FormLabel component="legend"><strong>{t("cursos.new-requerimientos")}</strong></FormLabel>
+                                                        <FormGroup row>
+                                                            <FormControlLabel
+                                                                name="requerimientos.internet"
+                                                                control={<Checkbox color="primary" checked={curso.requerimientos.internet} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="internet" />}
+                                                                label={t("cursos.requerimientos-internet")}
+                                                            />
+                                                            <FormControlLabel
+                                                                name="requerimientos.computador"
+                                                                control={<Checkbox color="primary" checked={curso.requerimientos.computador} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="computador" />}
+                                                                label={t("cursos.requerimientos-computador")}
+                                                            />
+                                                            <FormControlLabel
+                                                                name="requerimientos.mobile"
+                                                                control={<Checkbox color="primary" checked={curso.requerimientos.mobile} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="mobile" />}
+                                                                label={t("cursos.requerimientos-mobile")}
+                                                            />
+                                                            <FormControlLabel
+                                                                name="requerimientos.lms"
+                                                                control={<Checkbox color="primary" checked={curso.requerimientos.lms} onChange={e => { this.handleInputChange(e, "nuevos", i); }} value="lms" />}
+                                                                label={t("cursos.requerimientos-lms")}
+                                                            />
+                                                        </FormGroup>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            label={t("cursos.new-descripcion")}
+                                                            fullWidth
+                                                            multiline
+                                                            rows={5}
+                                                            name="descripcion"
+                                                            value={curso.descripcion}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
-                                                    </FormGroup>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <FormControl variant="outlined" className="w-100">
-                                                    <TextField
-                                                        variant="outlined"
-                                                        label={t("cursos.new-descripcion")}
-                                                        fullWidth
-                                                        multiline
-                                                        rows={5}
-                                                        name="descripcion"
-                                                        value={curso.descripcion}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
-                                                    <TextField
-                                                        inputProps={{className: "h-100"}}
-                                                        className="h-100"
-                                                        variant="outlined"
-                                                        label={t("cursos.new-objetivo-general")}
-                                                        fullWidth
-                                                        multiline
-                                                        rows={5}
-                                                        name="objetivo.general"
-                                                        value={curso.objetivo.general}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-objetivos-especificos")}</strong></Typography>
-                                                <FormControl variant="outlined" className="w-100">
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                                        <TextField
+                                                            inputProps={{className: "h-100"}}
+                                                            className="h-100"
+                                                            variant="outlined"
+                                                            label={t("cursos.new-objetivo-general")}
+                                                            fullWidth
+                                                            multiline
+                                                            rows={5}
+                                                            name="objetivo.general"
+                                                            value={curso.objetivo.general}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-objetivos-especificos")}</strong></Typography>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        {
+                                                            curso.objetivo.especificos.map((objetivo, j) => (
+                                                                <div key={j} className="d-flex align-items-center justify-content-between mb-2">
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        fullWidth
+                                                                        name="objetivo.especificos"
+                                                                        value={curso.objetivo.especificos[j]}
+                                                                        onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
+                                                                    />
+                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ i: i, j: j }); }}>
+                                                                        <DeleteOutlined color="primary"/>
+                                                                    </IconButton>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        <Button className="w-auto mt-3"
+                                                        size="small" variant="outlined" color="primary" onClick={() => { this.createNewObjetivoEspecifico(i); }}>
+                                                            <Add className="d-block mx-auto"/>
+                                                        </Button>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("descriptores")}</strong></Typography>
                                                     {
-                                                        curso.objetivo.especificos.map((objetivo, j) => (
-                                                            <div key={j} className="d-flex align-items-center justify-content-between mb-2">
+                                                        curso.descriptores.map((descriptor, j) => (
+                                                            <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                                                 <TextField
                                                                     variant="outlined"
+                                                                    label={t("instrumento.descriptores-codigo")}
                                                                     fullWidth
-                                                                    name="objetivo.especificos"
-                                                                    value={curso.objetivo.especificos[j]}
+                                                                    name="descriptores"
+                                                                    value={descriptor}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ i: i, j: j }); }}>
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteDescriptor({ i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button className="w-auto mt-3"
-                                                    size="small" variant="contained" color="primary" onClick={() => { this.createNewObjetivoEspecifico(i); }}>
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewDescriptor(i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("descriptores")}</strong></Typography>
-                                                {
-                                                    curso.descriptores.map((descriptor, j) => (
-                                                        <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                            <TextField
-                                                                variant="outlined"
-                                                                label={t("instrumento.descriptores-codigo")}
-                                                                fullWidth
-                                                                name="descriptores"
-                                                                value={descriptor}
-                                                                onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
-                                                            />
-                                                            <IconButton className="ml-3" color="primary" onClick={() => { this.deleteDescriptor({ i: i, j: j }); }}>
-                                                                <DeleteOutlined color="primary"/>
-                                                            </IconButton>
-                                                        </div>
-                                                    ))
-                                                }
-                                                <Button fullWidth className="w-100 mt-3" size="small" variant="contained" color="primary" onClick={() => { this.createNewDescriptor(i); }}>
-                                                    <Add className="d-block mx-auto"/>
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-contenidos")}</strong></Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-contenidos")}</strong></Typography>
+                                                        {
+                                                            curso.contenidos.map((contenido, j) => (
+                                                                <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                                    <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        fullWidth
+                                                                        name="contenidos"
+                                                                        value={contenido}
+                                                                        onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
+                                                                    />
+                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteContenidosItem({ i: i, j: j }); }}>
+                                                                        <DeleteOutlined color="primary"/>
+                                                                    </IconButton>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewContenidosItem(i); }}>
+                                                            <Add className="d-block mx-auto"/>
+                                                        </Button>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                                        <TextField
+                                                            className="h-100"
+                                                            variant="outlined"
+                                                            label={t("cursos.new-metodologia")}
+                                                            inputProps={{className:"h-100"}}
+                                                            fullWidth
+                                                            multiline
+                                                            rows={5}
+                                                            name="metodologia"
+                                                            value={curso.metodologia}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-procedimiento")}</strong></Typography>
                                                     {
-                                                        curso.contenidos.map((contenido, j) => (
+                                                        curso.procedimiento.map((procedimiento, j) => (
                                                             <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                                                 <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                                                 <TextField
                                                                     variant="outlined"
                                                                     fullWidth
-                                                                    name="contenidos"
-                                                                    value={contenido}
+                                                                    name="procedimiento"
+                                                                    value={procedimiento}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteContenidosItem({ i: i, j: j }); }}>
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteProcedimientoItem({ i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="contained" color="primary" onClick={() => { this.createNewContenidosItem(i); }}>
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewProcedimientoItem(i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                                        <TextField
+                                                            className="h-100"
+                                                            inputProps={{className: "h-100"}}
+                                                            variant="outlined"
+                                                            label={t("cursos.new-evidencias")}
+                                                            fullWidth
+                                                            multiline
+                                                            rows={5}
+                                                            name="evidencias"
+                                                            value={curso.evidencias}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-criterios")}</strong></Typography>
+                                                    {
+                                                        curso.criterios.map((criterio, j) => (
+                                                            <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                                <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    fullWidth
+                                                                    name="criterios"
+                                                                    value={criterio}
+                                                                    onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
+                                                                />
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteCriteriosItem({ i: i, j: j }); }}>
+                                                                    <DeleteOutlined color="primary"/>
+                                                                </IconButton>
+                                                            </div>
+                                                        ))
+                                                    }
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCriteriosItem(i); }}>
+                                                        <Add className="d-block mx-auto"/>
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                                        <TextField
+                                                            className="h-100"
+                                                            inputProps={{className: "h-100"}}
+                                                            variant="outlined"
+                                                            label={t("cursos.new-observaciones")}
+                                                            fullWidth
+                                                            multiline
+                                                            rows={5}
+                                                            name="observaciones"
+                                                            value={curso.observaciones}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", i) }}
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
-                                                    <TextField
-                                                        className="h-100"
-                                                        variant="outlined"
-                                                        label={t("cursos.new-metodologia")}
-                                                        inputProps={{className:"h-100"}}
-                                                        fullWidth
-                                                        multiline
-                                                        rows={5}
-                                                        name="metodologia"
-                                                        value={curso.metodologia}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-procedimiento")}</strong></Typography>
-                                                {
-                                                    curso.procedimiento.map((procedimiento, j) => (
-                                                        <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                            <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
-                                                            <TextField
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                name="procedimiento"
-                                                                value={procedimiento}
-                                                                onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
-                                                            />
-                                                            <IconButton className="ml-3" color="primary" onClick={() => { this.deleteProcedimientoItem({ i: i, j: j }); }}>
-                                                                <DeleteOutlined color="primary"/>
-                                                            </IconButton>
-                                                        </div>
-                                                    ))
-                                                }
-                                                <Button fullWidth className="w-100 mt-3" size="small" variant="contained" color="primary" onClick={() => { this.createNewProcedimientoItem(i); }}>
-                                                    <Add className="d-block mx-auto"/>
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
-                                                    <TextField
-                                                        className="h-100"
-                                                        inputProps={{className: "h-100"}}
-                                                        variant="outlined"
-                                                        label={t("cursos.new-evidencias")}
-                                                        fullWidth
-                                                        multiline
-                                                        rows={5}
-                                                        name="evidencias"
-                                                        value={curso.evidencias}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} md={6}>
-                                                <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-criterios")}</strong></Typography>
-                                                {
-                                                    curso.criterios.map((criterio, j) => (
-                                                        <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                            <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
-                                                            <TextField
-                                                                variant="outlined"
-                                                                fullWidth
-                                                                name="criterios"
-                                                                value={criterio}
-                                                                onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
-                                                            />
-                                                            <IconButton className="ml-3" color="primary" onClick={() => { this.deleteCriteriosItem({ i: i, j: j }); }}>
-                                                                <DeleteOutlined color="primary"/>
-                                                            </IconButton>
-                                                        </div>
-                                                    ))
-                                                }
-                                                <Button fullWidth className="w-100 mt-3" size="small" variant="contained" color="primary" onClick={() => { this.createNewCriteriosItem(i); }}>
-                                                    <Add className="d-block mx-auto"/>
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
-                                                    <TextField
-                                                        className="h-100"
-                                                        inputProps={{className: "h-100"}}
-                                                        variant="outlined"
-                                                        label={t("cursos.new-observaciones")}
-                                                        fullWidth
-                                                        multiline
-                                                        rows={5}
-                                                        name="observaciones"
-                                                        value={curso.observaciones}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", i) }}
-                                                    />
-                                                </FormControl>
-                                            </Grid>
-                                        </Grid>
-                                    </Paper>
+                                        </Paper>
+                                        <Button disabled={!this.state.isNewInfoAdded} onClick={this.crearCurso} fullWidth size="large" variant="contained" color="primary">{t("cursos.crear-btn")}</Button>
+                                    </React.Fragment>
                                 ))
                             )
                         }
@@ -609,7 +654,13 @@ class Cursos extends Component {
                     <Translation>
                         {
                             t => (
-                                ""
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Paper className="p-4">
+                                            
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
                             )
                         }
                     </Translation>
@@ -650,6 +701,15 @@ class Cursos extends Component {
                                     }
                                 </Grid>
                             </Grid>
+                            <Dialog open={this.state.shouldConfirmCreated} onClose={this.toggleConfirmationDialog}>
+                                <DialogTitle>{t("cursos.creado")}</DialogTitle>
+                                <DialogContent>
+                                <DialogContentText>{t("cursos.creado-ayuda")}</DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={this.toggleConfirmationDialog} color="primary">{t("cursos.creado-btn")}</Button>
+                                </DialogActions>
+                            </Dialog>
                         </React.Fragment>
                     )
                 }

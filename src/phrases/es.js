@@ -627,6 +627,10 @@ const es = {
         "cursos.requerimientos-lms": "LMS",
         "cursos.descriptores-nivel": "Nivel",
         "cursos.descriptores-elemento": "Elemento",
+        "cursos.creado": "Curso creado",
+        "cursos.creado-ayuda": "El curso ha sido creado exitosamente.",
+        "cursos.creado-btn": "Regresar",
+        "cursos.crear-btn": "Crear curso",
     }
 }
 
