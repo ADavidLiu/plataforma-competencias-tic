@@ -137,6 +137,7 @@ class Cursos extends Component {
                     updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value.toUpperCase();
                     break;
                 case "contenidos":
+                case "procedimiento":
                 case "criterios":
                     updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value;
                     break;
@@ -149,6 +150,29 @@ class Cursos extends Component {
         this.setState({
             cursos: updatedCourses
         }, () => { this.checkNewCourseDataChanged(); });
+    }
+
+    createNewCourseElement = (categoria, index) => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index][categoria].push("");
+
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        });
+    }
+
+    deleteNewCourseElement = (categoria, index) => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index.i][categoria].splice(index.j, 1);
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        });
     }
 
     createNewObjetivoEspecifico = index => {
@@ -174,102 +198,9 @@ class Cursos extends Component {
         });
     }
 
-    createNewDescriptor = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index].descriptores.push("");
-
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    deleteDescriptor = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i].descriptores.splice(index.j, 1);
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    createNewContenidosItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index].contenidos.push("");
-
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    deleteContenidosItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i].contenidos.splice(index.j, 1);
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    createNewProcedimientoItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index].procedimiento.push("");
-
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    deleteProcedimientoItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i].procedimiento.splice(index.j, 1);
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    createNewCriteriosItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index].criterios.push("");
-
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
-    deleteCriteriosItem = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i].criterios.splice(index.j, 1);
-        this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
-            }
-        });
-    }
-
     crearCurso = () => {
-        console.log(this.state.cursos.nuevos);
-        this.toggleConfirmationDialog();
         /* Enviar al backend */
+        this.toggleConfirmationDialog();
 
         /* Reiniciar los campos */
         this.setState({
@@ -512,13 +443,13 @@ class Cursos extends Component {
                                                                     value={descriptor}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteDescriptor({ i: i, j: j }); }}>
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("descriptores", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewDescriptor(i); }}>
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("descriptores", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
@@ -535,13 +466,13 @@ class Cursos extends Component {
                                                                         value={contenido}
                                                                         onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                     />
-                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteContenidosItem({ i: i, j: j }); }}>
+                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("contenidos", { i: i, j: j }); }}>
                                                                         <DeleteOutlined color="primary"/>
                                                                     </IconButton>
                                                                 </div>
                                                             ))
                                                         }
-                                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewContenidosItem(i); }}>
+                                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("contenidos", i); }}>
                                                             <Add className="d-block mx-auto"/>
                                                         </Button>
                                                 </Grid>
@@ -574,13 +505,13 @@ class Cursos extends Component {
                                                                     value={procedimiento}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteProcedimientoItem({ i: i, j: j }); }}>
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("procedimiento", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewProcedimientoItem(i); }}>
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("procedimiento", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
@@ -613,13 +544,13 @@ class Cursos extends Component {
                                                                     value={criterio}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteCriteriosItem({ i: i, j: j }); }}>
+                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("criterios", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCriteriosItem(i); }}>
+                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("criterios", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
