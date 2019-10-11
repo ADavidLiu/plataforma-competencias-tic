@@ -21,6 +21,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlined from "@material-ui/icons/DeleteOutline";
@@ -36,6 +38,8 @@ import { CircularProgress } from "@material-ui/core";
 
 import { equals } from "equally";
 
+import ListaCursos from "./listaCursos";
+
 class Cursos extends Component {
     constructor() {
         super();
@@ -43,7 +47,7 @@ class Cursos extends Component {
         this.placeholderCurso = {
             nombre: "",
             resumen: "",
-            mediacion: "",
+            mediacion: false,
             modalidad: "",
             dedicacion: "",
             ubicacion: "",
@@ -98,8 +102,17 @@ class Cursos extends Component {
 
     handleTabChange = (e, newValue) => {
         this.setState({
-            divisionMostrada: newValue
+            divisionMostrada: newValue,
+            isLoading: true
         });
+
+        /* Simulando el delay al traer los datos del backend */
+        const timeout = setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+            clearTimeout(timeout);
+        }, 1500);
     }
 
     checkNewCourseDataChanged = () => {
@@ -207,7 +220,8 @@ class Cursos extends Component {
             cursos: {
                 ...this.state.cursos,
                 nuevos: [JSON.parse(JSON.stringify(this.placeholderCurso))]
-            }
+            },
+            isNewInfoAdded: false
         });
     }
 
@@ -253,6 +267,30 @@ class Cursos extends Component {
                                                             value={curso.resumen}
                                                             onInput={e => { this.handleInputChange(e, "nuevos", i) }}
                                                         />
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl component="fieldset">
+                                                        <FormLabel component="legend">{t("cursos.new-mediacion")}</FormLabel>
+                                                        <RadioGroup row name="mediacion" value={curso.mediacion} onChange={this.handleInputChange}>
+                                                            <FormControlLabel value={true} control={<Radio color="primary" />} label={t("si")} />
+                                                            <FormControlLabel value={false} control={<Radio color="primary" />} label={t("no")} />
+                                                        </RadioGroup>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <InputLabel>{t("cursos.new-modalidad")}</InputLabel>
+                                                        <Select
+                                                            value={curso.modalidad}
+                                                            onChange={e => { this.handleInputChange(e, "nuevos", i); }}
+                                                            input={<OutlinedInput required name="modalidad"/>}
+                                                        >
+                                                            <MenuItem value="presencial">{t("cursos.modalidad-presencial")}</MenuItem>
+                                                            <MenuItem value="virtual">{t("cursos.modalidad-virtual")}</MenuItem>
+                                                            <MenuItem value="blended">{t("cursos.modalidad-blended")}</MenuItem>
+                                                            <MenuItem value="cualquiera">{t("cursos.modalidad-cualquiera")}</MenuItem>
+                                                        </Select>
                                                     </FormControl>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
@@ -581,21 +619,7 @@ class Cursos extends Component {
                 );
                 break;
             case 1:
-                division = (
-                    <Translation>
-                        {
-                            t => (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper className="p-4">
-                                            
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            )
-                        }
-                    </Translation>
-                );
+                division = <ListaCursos/>;
                 break;
             default:
                 break;

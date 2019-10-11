@@ -198,7 +198,7 @@ class VisorPerfiles extends Component {
                                 )
                             }
                             <Grid container spacing={2}>
-                                <Grid item xs={4}>
+                                <Grid item xs={4} md={6}>
                                     {this.state.perfiles.length > this.props.numPorPagina ? (
                                         <Link style={{
                                             textDecoration: "none"
@@ -222,7 +222,7 @@ class VisorPerfiles extends Component {
                                         ""
                                     )}
                                 </Grid>
-                                <Grid item xs={8} className="text-right">
+                                <Grid item xs={8} md={6} className="text-right">
                                     {this.state.hasPreviousPerfiles ? (
                                         <Button
                                             type="button"
