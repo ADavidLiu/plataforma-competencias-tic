@@ -203,4 +203,8 @@ main:before {
     .MuiContainer-root {
         padding-left: 102px !important;
     }
+
+    .cursos-full-height .MuiInputBase-root {
+        height: 100%;
+    }
 }

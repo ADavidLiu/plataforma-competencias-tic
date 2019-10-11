@@ -625,6 +625,8 @@ const es = {
         "cursos.requerimientos-computador": "Computador",
         "cursos.requerimientos-mobile": "Dispositivo móvil",
         "cursos.requerimientos-lms": "LMS",
+        "cursos.descriptores-nivel": "Nivel",
+        "cursos.descriptores-elemento": "Elemento",
     }
 }
 
