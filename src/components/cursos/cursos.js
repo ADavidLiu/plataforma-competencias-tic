@@ -47,7 +47,7 @@ class Cursos extends Component {
         this.placeholderCurso = {
             nombre: "",
             resumen: "",
-            mediacion: false,
+            mediacion: "false",
             modalidad: "",
             dedicacion: "",
             ubicacion: "",
@@ -153,6 +153,9 @@ class Cursos extends Component {
                 case "procedimiento":
                 case "criterios":
                     updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value;
+                    break;
+                case "mediacion":
+                    updatedCourses[categoria][index][e.target.name] = e.target.value;
                     break;
                 default:
                     updatedCourses[categoria][index][e.target.name] = e.target.value;
@@ -272,9 +275,9 @@ class Cursos extends Component {
                                                 <Grid item xs={12} md={6}>
                                                     <FormControl component="fieldset">
                                                         <FormLabel component="legend">{t("cursos.new-mediacion")}</FormLabel>
-                                                        <RadioGroup row name="mediacion" value={curso.mediacion} onChange={this.handleInputChange}>
-                                                            <FormControlLabel value={true} control={<Radio color="primary" />} label={t("si")} />
-                                                            <FormControlLabel value={false} control={<Radio color="primary" />} label={t("no")} />
+                                                        <RadioGroup row name="mediacion" value={curso.mediacion} onChange={e => { this.handleInputChange(e, "nuevos", i); }}>
+                                                            <FormControlLabel value="true" control={<Radio color="primary" />} label={t("si")} />
+                                                            <FormControlLabel value="false" control={<Radio color="primary" />} label={t("no")} />
                                                         </RadioGroup>
                                                     </FormControl>
                                                 </Grid>
