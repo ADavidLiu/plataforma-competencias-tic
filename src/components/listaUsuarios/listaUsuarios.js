@@ -545,6 +545,7 @@ class ListaUsuarios extends Component {
     }
 
     componentDidUpdate = prevProps => {
+        console.log(this.state.editingForm);
         /* Se cambió de categoría de tab */
         if (this.props.tipoUsuariosMostrados !== prevProps.tipoUsuariosMostrados) {
             /* Reiniciar los filtros */
@@ -658,9 +659,16 @@ class ListaUsuarios extends Component {
         
         switch (this.props.userType) {
             case "AUDITORIA":
-            case "CURSOS":
                 this.setState({
                     activeID: id
+                });
+                break;
+            case "CURSOS":
+                const encontradoCursos = this.state.usuarios.cursos.find(curso => curso.id === id);
+
+                this.setState({
+                    activeID: id,
+                    editingForm: encontradoCursos
                 });
                 break;
             case "SUPERADMIN":
@@ -1327,8 +1335,9 @@ class ListaUsuarios extends Component {
         });
     }
 
-    handleInputChange = (e, categoria, index) => {
-        const updatedCourses = {...this.state.cursos};
+    handleInputChange = (e, index) => {
+        const updatedCourses = [...this.state.usuarios.cursos];
+        const indexEncontrado = updatedCourses.findIndex(course => course.id === this.state.activeID);
         
         if (e.target.name.includes(".")) {
             const key = e.target.name.split(".")[0];
@@ -1337,10 +1346,19 @@ class ListaUsuarios extends Component {
             switch (key) {
                 case "competencias":
                 case "requerimientos":
-                    updatedCourses[categoria][index][key][value] = e.target.checked;
+                    updatedCourses[indexEncontrado][key][value] = e.target.checked;
                     break;
                 case "objetivo":
-                    updatedCourses[categoria][index.i][key][value][index.j] = e.target.value;
+                    switch (value) {
+                        case "general":
+                            updatedCourses[indexEncontrado][key][value] = e.target.value;
+                            break;
+                        case "especificos":
+                            updatedCourses[indexEncontrado][key][value][index.j] = e.target.value;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
@@ -1348,71 +1366,122 @@ class ListaUsuarios extends Component {
         } else {
             switch (e.target.name) {
                 case "descriptores":
-                    updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value.toUpperCase();
+                    updatedCourses[indexEncontrado][e.target.name][index.j] = e.target.value.toUpperCase();
                     break;
                 case "contenidos":
                 case "procedimiento":
                 case "criterios":
-                    updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value;
+                    updatedCourses[indexEncontrado][e.target.name][index.j] = e.target.value;
                     break;
                 case "mediacion":
-                    updatedCourses[categoria][index][e.target.name] = e.target.value;
+                    updatedCourses[indexEncontrado][e.target.name] = e.target.value.toString();
                     break;
                 default:
-                    updatedCourses[categoria][index][e.target.name] = e.target.value;
+                    updatedCourses[indexEncontrado][e.target.name] = e.target.value;
+                    this.setState({
+                        editingForm: {
+                            ...this.state.editingForm,
+                            [e.target.name]: e.target.value
+                        }
+                    });
                     break;
             }
         }
 
         this.setState({
-            cursos: updatedCourses
-        }, () => { this.checkNewCourseDataChanged(); });
+            usuarios: {
+                ...this.state.usuarios,
+                cursos: updatedCourses
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                cursos: updatedCourses
+            }
+        });
     }
 
-    createNewCourseElement = (categoria, index) => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index][categoria].push("");
+    createNewCourseElement = tipo => {
+        const updatedCourses = [...this.state.usuarios.cursos];
+        const index = updatedCourses.findIndex(curso => curso.id === this.state.activeID);
+        updatedCourses[index][tipo].push("");
 
         this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
+            usuarios: {
+                ...this.state.usuarios,
+                cursos: updatedCourses
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                cursos: updatedCourses
+            },
+            editingForm: {
+                ...this.state.editingForm,
+                cursos: updatedCourses
             }
-        }, () => { this.checkNewCourseDataChanged(); });
+        });
     }
 
     deleteNewCourseElement = (categoria, index) => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i][categoria].splice(index.j, 1);
+        const updatedCourses = [...this.state.usuarios.cursos];
+        const indexEncontrado = updatedCourses.findIndex(curso => curso.id === this.state.activeID);
+        updatedCourses[indexEncontrado][categoria].splice(index.j, 1);
+
         this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
+            usuarios: {
+                ...this.state.usuarios,
+                cursos: updatedCourses
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                cursos: updatedCourses
+            },
+            editingForm: {
+                ...this.state.editingForm,
+                cursos: updatedCourses
             }
-        }, () => { this.checkNewCourseDataChanged(); });
+        });
     }
 
     createNewObjetivoEspecifico = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index].objetivo.especificos.push("");
+        const updatedCourses = [...this.state.usuarios.cursos];
+        const indexEncontrado = updatedCourses.findIndex(curso => curso.id === this.state.activeID);
+        updatedCourses[indexEncontrado].objetivo.especificos.push("");
 
         this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
+            usuarios: {
+                ...this.state.usuarios,
+                cursos: updatedCourses
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                cursos: updatedCourses
+            },
+            editingForm: {
+                ...this.state.editingForm,
+                cursos: updatedCourses
             }
-        }, () => { this.checkNewCourseDataChanged(); });
+        });
     }
 
     deleteObjetivoEspecifico = index => {
-        const newCursosNuevos = [...this.state.cursos.nuevos];
-        newCursosNuevos[index.i].objetivo.especificos.splice(index.j, 1);
+        const updatedCourses = [...this.state.usuarios.cursos];
+        const indexEncontrado = updatedCourses.findIndex(curso => curso.id === this.state.activeID);
+        updatedCourses[indexEncontrado].objetivo.especificos.splice(index.j, 1);
+
         this.setState({
-            cursos: {
-                ...this.state.cursos,
-                nuevos: newCursosNuevos
+            usuarios: {
+                ...this.state.usuarios,
+                cursos: updatedCourses
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                cursos: updatedCourses
+            },
+            editingForm: {
+                ...this.state.editingForm,
+                cursos: updatedCourses
             }
-        }, () => { this.checkNewCourseDataChanged(); });
+        });
     }
 
 	render() {
@@ -1529,7 +1598,7 @@ class ListaUsuarios extends Component {
                                                 label={t("cursos.new-nombre")}
                                                 name="nombre"
                                                 value={this.state.editingForm.nombre}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1543,14 +1612,14 @@ class ListaUsuarios extends Component {
                                                 rows={5}
                                                 name="resumen"
                                                 value={this.state.editingForm.resumen}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
                                         <FormControl component="fieldset">
                                             <FormLabel component="legend">{t("cursos.new-mediacion")}</FormLabel>
-                                            <RadioGroup row name="mediacion" value={this.state.editingForm.mediacion} onChange={e => { this.handleInputChange(e, "nuevos"); }}>
+                                            <RadioGroup row name="mediacion" value={this.state.editingForm.mediacion} onChange={this.handleInputChange}>
                                                 <FormControlLabel value="true" control={<Radio color="primary" />} label={t("si")} />
                                                 <FormControlLabel value="false" control={<Radio color="primary" />} label={t("no")} />
                                             </RadioGroup>
@@ -1561,7 +1630,7 @@ class ListaUsuarios extends Component {
                                             <InputLabel>{t("cursos.new-modalidad")}</InputLabel>
                                             <Select
                                                 value={this.state.editingForm.modalidad}
-                                                onChange={e => { this.handleInputChange(e, "nuevos"); }}
+                                                onChange={this.handleInputChange}
                                                 input={<OutlinedInput required name="modalidad"/>}
                                             >
                                                 <MenuItem value="presencial">{t("cursos.modalidad-presencial")}</MenuItem>
@@ -1582,7 +1651,7 @@ class ListaUsuarios extends Component {
                                                 }}
                                                 name="dedicacion"
                                                 value={this.state.editingForm.dedicacion}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1594,7 +1663,7 @@ class ListaUsuarios extends Component {
                                                 fullWidth
                                                 name="ubicacion"
                                                 value={this.state.editingForm.ubicacion}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1606,7 +1675,7 @@ class ListaUsuarios extends Component {
                                                 fullWidth
                                                 name="institucion"
                                                 value={this.state.editingForm.institucion}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1616,9 +1685,9 @@ class ListaUsuarios extends Component {
                                                 variant="outlined"
                                                 label={t("cursos.new-enlace")}
                                                 fullWidth
-                                                name="enlace"
+                                                name="link"
                                                 value={this.state.editingForm.enlace}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1627,7 +1696,7 @@ class ListaUsuarios extends Component {
                                             <InputLabel>{t("cursos.new-nivel")}</InputLabel>
                                             <Select
                                                 value={this.state.editingForm.nivel}
-                                                onChange={e => { this.handleInputChange(e, "nuevos"); }}
+                                                onChange={this.handleInputChange}
                                                 input={<OutlinedInput required name="nivel"/>}
                                             >
                                                 <MenuItem value="integracion-basico">{t("cursos.niveles-ib")}</MenuItem>
@@ -1648,17 +1717,17 @@ class ListaUsuarios extends Component {
                                             <FormGroup row>
                                                 <FormControlLabel
                                                     name="competencias.disenio"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.disenio} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="disenio" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.disenio} onChange={this.handleInputChange} value="disenio" />}
                                                     label={t("cursos.new-descriptores-disenio")}
                                                 />
                                                 <FormControlLabel
                                                     name="competencias.implementacion"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.implementacion} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="implementacion" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.implementacion} onChange={this.handleInputChange} value="implementacion" />}
                                                     label={t("cursos.new-descriptores-implementacion")}
                                                 />
                                                 <FormControlLabel
                                                     name="competencias.evaluacion"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.evaluacion} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="evaluacion" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.evaluacion} onChange={this.handleInputChange} value="evaluacion" />}
                                                     label={t("cursos.new-descriptores-evaluacion")}
                                                 />
                                             </FormGroup>
@@ -1670,22 +1739,22 @@ class ListaUsuarios extends Component {
                                             <FormGroup row>
                                                 <FormControlLabel
                                                     name="requerimientos.internet"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.internet} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="internet" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.internet} onChange={this.handleInputChange} value="internet" />}
                                                     label={t("cursos.requerimientos-internet")}
                                                 />
                                                 <FormControlLabel
                                                     name="requerimientos.computador"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.computador} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="computador" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.computador} onChange={this.handleInputChange} value="computador" />}
                                                     label={t("cursos.requerimientos-computador")}
                                                 />
                                                 <FormControlLabel
                                                     name="requerimientos.mobile"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.mobile} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="mobile" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.mobile} onChange={this.handleInputChange} value="mobile" />}
                                                     label={t("cursos.requerimientos-mobile")}
                                                 />
                                                 <FormControlLabel
                                                     name="requerimientos.lms"
-                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.lms} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="lms" />}
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.lms} onChange={this.handleInputChange} value="lms" />}
                                                     label={t("cursos.requerimientos-lms")}
                                                 />
                                             </FormGroup>
@@ -1701,7 +1770,7 @@ class ListaUsuarios extends Component {
                                                 rows={5}
                                                 name="descripcion"
                                                 value={this.state.editingForm.descripcion}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1717,7 +1786,7 @@ class ListaUsuarios extends Component {
                                                 rows={5}
                                                 name="objetivo.general"
                                                 value={this.state.editingForm.objetivo.general}
-                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                                onInput={this.handleInputChange}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -1732,7 +1801,7 @@ class ListaUsuarios extends Component {
                                                             fullWidth
                                                             name="objetivo.especificos"
                                                             value={this.state.editingForm.objetivo.especificos[j]}
-                                                            onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                            onInput={e => { this.handleInputChange(e, {j: j}) }}
                                                         />
                                                         <IconButton className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ j: j }); }}>
                                                             <DeleteOutlined color="primary"/>
@@ -1780,7 +1849,7 @@ class ListaUsuarios extends Component {
                                                             fullWidth
                                                             name="contenidos"
                                                             value={contenido}
-                                                            onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                            onInput={e => { this.handleInputChange(e, {j: j}) }}
                                                         />
                                                         <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("contenidos", { j: j }); }}>
                                                             <DeleteOutlined color="primary"/>
@@ -1819,7 +1888,7 @@ class ListaUsuarios extends Component {
                                                         fullWidth
                                                         name="procedimiento"
                                                         value={procedimiento}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                        onInput={e => { this.handleInputChange(e, {j: j}) }}
                                                     />
                                                     <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("procedimiento", { j: j }); }}>
                                                         <DeleteOutlined color="primary"/>
@@ -1858,7 +1927,7 @@ class ListaUsuarios extends Component {
                                                         fullWidth
                                                         name="criterios"
                                                         value={criterio}
-                                                        onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                        onInput={e => { this.handleInputChange(e, {j: j}) }}
                                                     />
                                                     <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("criterios", { j: j }); }}>
                                                         <DeleteOutlined color="primary"/>

@@ -139,7 +139,16 @@ class Cursos extends Component {
                     updatedCourses[categoria][index][key][value] = e.target.checked;
                     break;
                 case "objetivo":
-                    updatedCourses[categoria][index.i][key][value][index.j] = e.target.value;
+                    switch (value) {
+                        case "general":
+                            updatedCourses[categoria][index][key][value] = e.target.value;
+                            break;
+                        case "especificos":
+                            updatedCourses[categoria][index.i][key][value][index.j] = e.target.value;
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
