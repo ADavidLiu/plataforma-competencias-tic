@@ -37,6 +37,19 @@ import OpenInNew from "@material-ui/icons/OpenInNewOutlined";
 import Search from "@material-ui/icons/Search";
 import Warning from "@material-ui/icons/Warning";
 import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
+import Add from "@material-ui/icons/Add";
+
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Radio from "@material-ui/core/Radio";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+
+import cursos from "../../models/cursos";
 
 import { CircularProgress } from "@material-ui/core";
 
@@ -46,6 +59,7 @@ class ListaUsuarios extends Component {
         
         this.formularioPlaceholder = {};
         this.headCells = {
+            cursos: ["usuarios.registro-idNacional", "cursos.new-nombre", "cursos.fecha-creacion", "usuarios.acciones"],
             auditoria: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "id-evento", "accion", "fecha-realizacion", "ver-data", "usuarios.acciones"],
             superadmin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-ee-telefono", "registro.email", "usuarios.registro-pais", "usuarios.registro-departamento", "usuarios.registro-municipio", "usuarios.registro-ee-direccion", "usuarios.acciones"],
             admin: ["usuarios.registro-idNacional", "usuarios.registro-ee-nombre", "usuarios.registro-pais", "usuarios.acciones"],
@@ -56,6 +70,44 @@ class ListaUsuarios extends Component {
         };
 
         switch (props.userType) {
+            case "CURSOS":
+                this.formularioPlaceholder = {
+                    id: "",
+                    nombre: "",
+                    fechaCreacion: "",
+                    resumen: "",
+                    mediacion: "false",
+                    modalidad: "",
+                    dedicacion: 0,
+                    ubicacion: "",
+                    institucion: "",
+                    link: "",
+                    nivel: "",
+                    competencias: {
+                        disenio: false,
+                        implementacion: false,
+                        evaluacion: false
+                    },
+                    requerimientos: {
+                        internet: false,
+                        computador: false,
+                        mobile: false,
+                        lms: false
+                    },
+                    descripcion: "",
+                    objetivo: {
+                        general: "",
+                        especificos: [""]
+                    },
+                    descriptores: [""],
+                    contenidos: [""],
+                    metodologia: "",
+                    procedimiento: [""],
+                    evidencias: "",
+                    criterios: [""],
+                    observaciones: ""
+                };
+                break;
             case "AUDITORIA":
                 this.formularioPlaceholder = {
                     idNacional: "",
@@ -134,6 +186,7 @@ class ListaUsuarios extends Component {
         }
 
         this.mockData = {
+            cursos: [...cursos],
             auditoria: [
                 {
                     idNacional: "123234345",
@@ -443,6 +496,7 @@ class ListaUsuarios extends Component {
             isLoading: true,
             isEditing: false,
             isDeleting: false,
+            isDeletingCourses: false,
             isFiltering: false,
             isViewingData: false,
             activeID: "",
@@ -516,7 +570,7 @@ class ListaUsuarios extends Component {
             const timeout = setTimeout(() => {
                 this.setState({
                     isLoading: false
-                }); 
+                });
                 clearTimeout(timeout);
             }, 500);
         }
@@ -536,22 +590,48 @@ class ListaUsuarios extends Component {
             isDeleting: !this.state.isDeleting
         });
     }
-
-    deleteUser = id => {
+    
+    toggleDeletingCourse = () => {
         this.setState({
-            isDeleting: true,
-            activeID: id
+            isDeletingCourses: !this.state.isDeletingCourses
         });
     }
 
+    deleteUser = id => {
+        switch (this.props.userType) {
+            case "CURSOS":
+                this.setState({
+                    isDeletingCourses: true,
+                    activeID: id
+                });
+                break;
+            default:
+                this.setState({
+                    isDeleting: true,
+                    activeID: id
+                });
+                break;
+        }
+    }
+
     confirmUserDeletion = () => {
-        this.toggleDeleting();
+        let key = "idNacional";
+
+        switch (this.props.userType) {
+            case "CURSOS":
+                this.toggleDeletingCourse();
+                key = "id";
+                break;
+            default:
+                this.toggleDeleting();
+                break;
+        }
 
         /* Conectarse al backend para hacer los cambios */
 
         /* Luego, eliminarlo visualmente de la interfaz */
         let newUsuarios = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
-        newUsuarios = newUsuarios.filter(usuario => usuario.idNacional !== this.state.activeID);
+        newUsuarios = newUsuarios.filter(usuario => usuario[key] !== this.state.activeID);
 
         this.setState({
             usuarios: {
@@ -578,6 +658,7 @@ class ListaUsuarios extends Component {
         
         switch (this.props.userType) {
             case "AUDITORIA":
+            case "CURSOS":
                 this.setState({
                     activeID: id
                 });
@@ -793,6 +874,33 @@ class ListaUsuarios extends Component {
         switch (e.target.name) {
             case "categoria":
                 switch (e.target.value) {
+                    case "ID":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "ID",
+                                categoriaFormatted: "id"
+                            }
+                        });
+                        break;
+                    case "cursos.new-nombre":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "cursos.new-nombre",
+                                categoriaFormatted: "nombre"
+                            }
+                        });
+                        break;
+                    case "cursos.fecha-creacion":
+                        this.setState({
+                            filtros: {
+                                ...this.state.filtros,
+                                categoria: "cursos.fecha-creacion",
+                                categoriaFormatted: "fechaCreacion"
+                            }
+                        });
+                        break;
                     case "usuarios.registro-nombreInstitucion":
                         this.setState({
                             filtros: {
@@ -1086,18 +1194,38 @@ class ListaUsuarios extends Component {
 
             this.state.usuarios[this.props.tipoUsuariosMostrados].forEach(elem => {
                 let values = Object.values(elem);
-                if (this.props.userType === "AUDITORIA") {
-                    Object.values(elem).forEach(val => {
-                        rawValuesToSearchFrom.push(val);
-                    });
-                } else {
-                    values.forEach(val => {
-                        rawValuesToSearchFrom.push(val);
-                    });
+                switch (this.props.userType) {
+                    case "AUDITORIA":
+                        Object.values(elem).forEach(val => {
+                            rawValuesToSearchFrom.push(val);
+                        });
+                        break;
+                    case "CURSOS":
+                        Object.values(elem).forEach((val, i) => {
+                            if (i < 4) {
+                                rawValuesToSearchFrom.push(val);
+                            }
+                        });
+                        break;
+                    default:
+                        values.forEach(val => {
+                            rawValuesToSearchFrom.push(val);
+                        });
+                        break;
                 }
             });
 
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += this.headCells[this.props.userType.toLowerCase()].length - 1) {
+            let maxLength = 0;
+            switch (this.props.userType) {
+                case "CURSOS":
+                    maxLength = 4;
+                    break;
+                default:
+                    maxLength = this.headCells[this.props.userType.toLowerCase()].length - 1;
+                    break;
+            }
+
+            for (let i = 0; i < rawValuesToSearchFrom.length; i += maxLength) {
                 arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.headCells[this.props.userType.toLowerCase()].length - 1));
             }
             arraysValuesToSearchFrom.forEach(array => {
@@ -1199,11 +1327,571 @@ class ListaUsuarios extends Component {
         });
     }
 
+    handleInputChange = (e, categoria, index) => {
+        const updatedCourses = {...this.state.cursos};
+        
+        if (e.target.name.includes(".")) {
+            const key = e.target.name.split(".")[0];
+            const value = e.target.name.split(".")[1];
+            
+            switch (key) {
+                case "competencias":
+                case "requerimientos":
+                    updatedCourses[categoria][index][key][value] = e.target.checked;
+                    break;
+                case "objetivo":
+                    updatedCourses[categoria][index.i][key][value][index.j] = e.target.value;
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (e.target.name) {
+                case "descriptores":
+                    updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value.toUpperCase();
+                    break;
+                case "contenidos":
+                case "procedimiento":
+                case "criterios":
+                    updatedCourses[categoria][index.i][e.target.name][index.j] = e.target.value;
+                    break;
+                case "mediacion":
+                    updatedCourses[categoria][index][e.target.name] = e.target.value;
+                    break;
+                default:
+                    updatedCourses[categoria][index][e.target.name] = e.target.value;
+                    break;
+            }
+        }
+
+        this.setState({
+            cursos: updatedCourses
+        }, () => { this.checkNewCourseDataChanged(); });
+    }
+
+    createNewCourseElement = (categoria, index) => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index][categoria].push("");
+
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        }, () => { this.checkNewCourseDataChanged(); });
+    }
+
+    deleteNewCourseElement = (categoria, index) => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index.i][categoria].splice(index.j, 1);
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        }, () => { this.checkNewCourseDataChanged(); });
+    }
+
+    createNewObjetivoEspecifico = index => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index].objetivo.especificos.push("");
+
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        }, () => { this.checkNewCourseDataChanged(); });
+    }
+
+    deleteObjetivoEspecifico = index => {
+        const newCursosNuevos = [...this.state.cursos.nuevos];
+        newCursosNuevos[index.i].objetivo.especificos.splice(index.j, 1);
+        this.setState({
+            cursos: {
+                ...this.state.cursos,
+                nuevos: newCursosNuevos
+            }
+        }, () => { this.checkNewCourseDataChanged(); });
+    }
+
 	render() {
         let tabla;
         let formularioEdicion;
 
         switch (this.props.userType) {
+            case "CURSOS":
+                tabla = (
+                    <Translation>
+                        {
+                            t => (
+                                <Paper>
+                                    <div className="scrolling-table-outer">
+                                        <div className="scrolling-table-wrapper">
+                                            <Table className="scrolling-table">
+                                                <TableHead>
+                                                    <TableRow>
+                                                        {
+                                                            this.headCells.cursos.map((title, i) => i < this.headCells.cursos.length ? <TableCell key={i}>{t(title)}</TableCell> : null)
+                                                        }
+                                                    </TableRow>
+                                                </TableHead>
+                                                {
+                                                    this.state.usuarios[this.props.tipoUsuariosMostrados].length > 0 ? (
+                                                        <TableBody>
+                                                            {
+                                                                this.state.isFiltering ? (
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                ) : (
+                                                                    this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length === 0 ? (
+                                                                        <TableRow>
+                                                                            <TableCell colSpan={this.headCells[this.props.userType.toLowerCase()].length}>
+                                                                                <div className="d-flex align-items-center justify-content-center">
+                                                                                    <Warning className="mr-2" fontSize="small"/>
+                                                                                    {t("visorPerfiles.no-resultados")}
+                                                                                </div>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ) : (
+                                                                        <React.Fragment>
+                                                                            {
+                                                                                this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                    const values = Object.values(elemento);
+                                                                                    const keys = Object.keys(elemento);
+                                                                                    return (
+                                                                                        <TableRow key={i}>
+                                                                                            {
+                                                                                                values.map((val, j) => {
+                                                                                                    if (typeof val !== "object") {
+                                                                                                        if (keys[j] === "id" || keys[j] === "nombre" || keys[j] === "fechaCreacion" || keys[j] === "0" || keys[j] === "1" || keys[j] === "2") {
+                                                                                                            return <TableCell key={j}>{val}</TableCell>;
+                                                                                                        }
+                                                                                                    }
+                                                                                                })
+                                                                                            }
+                                                                                            <TableCell>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.id); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.id); }}/>
+                                                                                            </TableCell>
+                                                                                        </TableRow>
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        </React.Fragment>
+                                                                    )
+                                                                )
+                                                            }
+                                                        </TableBody>
+                                                    ) : (
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    )
+                                                }
+                                            </Table>
+                                        </div>
+                                    </div>
+                                    <TablePagination
+                                        labelDisplayedRows={({from, to, count}) => {
+                                            return `${from}-${to} / ${count}`;
+                                        }}
+                                        labelRowsPerPage={t("filasPorPagina")}
+                                        rowsPerPageOptions={[10, 25, 100]}
+                                        component="div"
+                                        count={this.state.elementosMostrados[this.props.tipoUsuariosMostrados].length}
+                                        rowsPerPage={this.state.rowsPerPage}
+                                        page={this.state.page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                    />
+                                </Paper>
+                            )
+                        }
+                    </Translation>
+                );
+
+                formularioEdicion = (
+                    <Translation>
+                        {
+                            t => (
+                                <Grid container alignItems="stretch" spacing={3}>
+                                    <Grid item xs={12}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                fullWidth
+                                                label={t("cursos.new-nombre")}
+                                                name="nombre"
+                                                value={this.state.editingForm.nombre}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                fullWidth
+                                                label={t("cursos.new-resumen")}
+                                                multiline
+                                                rows={5}
+                                                name="resumen"
+                                                value={this.state.editingForm.resumen}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">{t("cursos.new-mediacion")}</FormLabel>
+                                            <RadioGroup row name="mediacion" value={this.state.editingForm.mediacion} onChange={e => { this.handleInputChange(e, "nuevos"); }}>
+                                                <FormControlLabel value="true" control={<Radio color="primary" />} label={t("si")} />
+                                                <FormControlLabel value="false" control={<Radio color="primary" />} label={t("no")} />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <InputLabel>{t("cursos.new-modalidad")}</InputLabel>
+                                            <Select
+                                                value={this.state.editingForm.modalidad}
+                                                onChange={e => { this.handleInputChange(e, "nuevos"); }}
+                                                input={<OutlinedInput required name="modalidad"/>}
+                                            >
+                                                <MenuItem value="presencial">{t("cursos.modalidad-presencial")}</MenuItem>
+                                                <MenuItem value="virtual">{t("cursos.modalidad-virtual")}</MenuItem>
+                                                <MenuItem value="blended">{t("cursos.modalidad-blended")}</MenuItem>
+                                                <MenuItem value="cualquiera">{t("cursos.modalidad-cualquiera")}</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                label={t("cursos.new-dedicacion")}
+                                                fullWidth
+                                                inputProps={{
+                                                    type: "number"
+                                                }}
+                                                name="dedicacion"
+                                                value={this.state.editingForm.dedicacion}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                label={t("cursos.new-ubicacion")}
+                                                fullWidth
+                                                name="ubicacion"
+                                                value={this.state.editingForm.ubicacion}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                label={t("cursos.new-institucion")}
+                                                fullWidth
+                                                name="institucion"
+                                                value={this.state.editingForm.institucion}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                label={t("cursos.new-enlace")}
+                                                fullWidth
+                                                name="enlace"
+                                                value={this.state.editingForm.enlace}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <InputLabel>{t("cursos.new-nivel")}</InputLabel>
+                                            <Select
+                                                value={this.state.editingForm.nivel}
+                                                onChange={e => { this.handleInputChange(e, "nuevos"); }}
+                                                input={<OutlinedInput required name="nivel"/>}
+                                            >
+                                                <MenuItem value="integracion-basico">{t("cursos.niveles-ib")}</MenuItem>
+                                                <MenuItem value="integracion-avanzado">{t("cursos.niveles-ia")}</MenuItem>
+                                                <MenuItem value="integracion-actualizacion">{t("cursos.niveles-iact")}</MenuItem>
+                                                <MenuItem value="reorientacion-basico">{t("cursos.niveles-rb")}</MenuItem>
+                                                <MenuItem value="reorientacion-avanzado">{t("cursos.niveles-ra")}</MenuItem>
+                                                <MenuItem value="reorientacion-actualizacion">{t("cursos.niveles-ract")}</MenuItem>
+                                                <MenuItem value="evolucion-basico">{t("cursos.niveles-eb")}</MenuItem>
+                                                <MenuItem value="evolucion-avanzado">{t("cursos.niveles-ea")}</MenuItem>
+                                                <MenuItem value="evolucion-actualizacion">{t("cursos.niveles-eact")}</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend"><strong>{t("cursos.new-competencias")}</strong></FormLabel>
+                                            <FormGroup row>
+                                                <FormControlLabel
+                                                    name="competencias.disenio"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.disenio} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="disenio" />}
+                                                    label={t("cursos.new-descriptores-disenio")}
+                                                />
+                                                <FormControlLabel
+                                                    name="competencias.implementacion"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.implementacion} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="implementacion" />}
+                                                    label={t("cursos.new-descriptores-implementacion")}
+                                                />
+                                                <FormControlLabel
+                                                    name="competencias.evaluacion"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.competencias.evaluacion} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="evaluacion" />}
+                                                    label={t("cursos.new-descriptores-evaluacion")}
+                                                />
+                                            </FormGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend"><strong>{t("cursos.new-requerimientos")}</strong></FormLabel>
+                                            <FormGroup row>
+                                                <FormControlLabel
+                                                    name="requerimientos.internet"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.internet} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="internet" />}
+                                                    label={t("cursos.requerimientos-internet")}
+                                                />
+                                                <FormControlLabel
+                                                    name="requerimientos.computador"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.computador} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="computador" />}
+                                                    label={t("cursos.requerimientos-computador")}
+                                                />
+                                                <FormControlLabel
+                                                    name="requerimientos.mobile"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.mobile} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="mobile" />}
+                                                    label={t("cursos.requerimientos-mobile")}
+                                                />
+                                                <FormControlLabel
+                                                    name="requerimientos.lms"
+                                                    control={<Checkbox color="primary" checked={this.state.editingForm.requerimientos.lms} onChange={e => { this.handleInputChange(e, "nuevos"); }} value="lms" />}
+                                                    label={t("cursos.requerimientos-lms")}
+                                                />
+                                            </FormGroup>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControl variant="outlined" className="w-100">
+                                            <TextField
+                                                variant="outlined"
+                                                label={t("cursos.new-descripcion")}
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                name="descripcion"
+                                                value={this.state.editingForm.descripcion}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                            <TextField
+                                                inputProps={{className: "h-100"}}
+                                                className="h-100"
+                                                variant="outlined"
+                                                label={t("cursos.new-objetivo-general")}
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                name="objetivo.general"
+                                                value={this.state.editingForm.objetivo.general}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-objetivos-especificos")}</strong></Typography>
+                                        <FormControl variant="outlined" className="w-100">
+                                            {
+                                                this.state.editingForm.objetivo.especificos.map((objetivo, j) => (
+                                                    <div key={j} className="d-flex align-items-center justify-content-between mb-2">
+                                                        <TextField
+                                                            variant="outlined"
+                                                            fullWidth
+                                                            name="objetivo.especificos"
+                                                            value={this.state.editingForm.objetivo.especificos[j]}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                        />
+                                                        <IconButton className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ j: j }); }}>
+                                                            <DeleteOutlined color="primary"/>
+                                                        </IconButton>
+                                                    </div>
+                                                ))
+                                            }
+                                            <Button className="w-auto mt-3"
+                                            size="small" variant="outlined" color="primary" onClick={() => { this.createNewObjetivoEspecifico(); }}>
+                                                <Add className="d-block mx-auto"/>
+                                            </Button>
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("descriptores")}</strong></Typography>
+                                        {
+                                            this.state.editingForm.descriptores.map((descriptor, j) => (
+                                                <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                    <TextField
+                                                        variant="outlined"
+                                                        label={t("instrumento.descriptores-codigo")}
+                                                        fullWidth
+                                                        name="descriptores"
+                                                        value={descriptor}
+                                                        onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                    />
+                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("descriptores", { j: j }); }}>
+                                                        <DeleteOutlined color="primary"/>
+                                                    </IconButton>
+                                                </div>
+                                            ))
+                                        }
+                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("descriptores"); }}>
+                                            <Add className="d-block mx-auto"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-contenidos")}</strong></Typography>
+                                            {
+                                                this.state.editingForm.contenidos.map((contenido, j) => (
+                                                    <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                        <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                        <TextField
+                                                            variant="outlined"
+                                                            fullWidth
+                                                            name="contenidos"
+                                                            value={contenido}
+                                                            onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                        />
+                                                        <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("contenidos", { j: j }); }}>
+                                                            <DeleteOutlined color="primary"/>
+                                                        </IconButton>
+                                                    </div>
+                                                ))
+                                            }
+                                            <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("contenidos"); }}>
+                                                <Add className="d-block mx-auto"/>
+                                            </Button>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                            <TextField
+                                                className="h-100"
+                                                variant="outlined"
+                                                label={t("cursos.new-metodologia")}
+                                                inputProps={{className:"h-100"}}
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                name="metodologia"
+                                                value={this.state.editingForm.metodologia}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-procedimiento")}</strong></Typography>
+                                        {
+                                            this.state.editingForm.procedimiento.map((procedimiento, j) => (
+                                                <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                    <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                    <TextField
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        name="procedimiento"
+                                                        value={procedimiento}
+                                                        onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                    />
+                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("procedimiento", { j: j }); }}>
+                                                        <DeleteOutlined color="primary"/>
+                                                    </IconButton>
+                                                </div>
+                                            ))
+                                        }
+                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("procedimiento"); }}>
+                                            <Add className="d-block mx-auto"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                            <TextField
+                                                className="h-100"
+                                                inputProps={{className: "h-100"}}
+                                                variant="outlined"
+                                                label={t("cursos.new-evidencias")}
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                name="evidencias"
+                                                value={this.state.editingForm.evidencias}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Typography className="mb-3" style={{color: "rgba(0, 0, 0, 0.54)"}}><strong>{t("cursos.new-criterios")}</strong></Typography>
+                                        {
+                                            this.state.editingForm.criterios.map((criterio, j) => (
+                                                <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
+                                                    <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                    <TextField
+                                                        variant="outlined"
+                                                        fullWidth
+                                                        name="criterios"
+                                                        value={criterio}
+                                                        onInput={e => { this.handleInputChange(e, "nuevos", {j: j}) }}
+                                                    />
+                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("criterios", { j: j }); }}>
+                                                        <DeleteOutlined color="primary"/>
+                                                    </IconButton>
+                                                </div>
+                                            ))
+                                        }
+                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("criterios"); }}>
+                                            <Add className="d-block mx-auto"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
+                                            <TextField
+                                                className="h-100"
+                                                inputProps={{className: "h-100"}}
+                                                variant="outlined"
+                                                label={t("cursos.new-observaciones")}
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                name="observaciones"
+                                                value={this.state.editingForm.observaciones}
+                                                onInput={e => { this.handleInputChange(e, "nuevos") }}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
+                );
+                break;
             case "AUDITORIA":
                 tabla = (
                     <Translation>
@@ -2449,6 +3137,20 @@ class ListaUsuarios extends Component {
                                         <strong>{t("usuarios.ayuda-borrar-0")}</strong>
                                         <br/>
                                         {t("usuarios.ayuda-borrar-1")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.confirmUserDeletion}>{t("usuarios.btn-borrar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Dialog open={this.state.isDeletingCourses} onClose={this.toggleDeletingCourse} aria-labelledby="form-dialog-title">
+                                <DialogTitle id="form-dialog-title">{t("cursos.eliminar-titulo")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        <strong>{t("cursos.eliminar-ayuda-1")}</strong>
+                                        <br/>
+                                        {t("cursos.eliminar-ayuda-2")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>

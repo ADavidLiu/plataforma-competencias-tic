@@ -635,6 +635,10 @@ const es = {
         "cursos.creado-ayuda": "El curso ha sido creado exitosamente.",
         "cursos.creado-btn": "Regresar",
         "cursos.crear-btn": "Crear curso",
+        "cursos.fecha-creacion": "Fecha de creación",
+        "cursos.eliminar-titulo": "Desactivar curso",
+        "cursos.eliminar-ayuda-1": "¿Está seguro de que desea desactivar este curso?",
+        "cursos.eliminar-ayuda-2": "Esto afectará a todos los usuarios de la plataforma, independientemente de la versión del instrumento actual."
     }
 }
 

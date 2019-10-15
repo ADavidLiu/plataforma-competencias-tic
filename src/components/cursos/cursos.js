@@ -38,7 +38,7 @@ import { CircularProgress } from "@material-ui/core";
 
 import { equals } from "equally";
 
-import ListaCursos from "./listaCursos";
+import ListaUsuarios from "../listaUsuarios/listaUsuarios";
 
 class Cursos extends Component {
     constructor() {
@@ -85,7 +85,7 @@ class Cursos extends Component {
                 nuevos: [JSON.parse(JSON.stringify(this.placeholderCurso))]
             },
             isNewInfoAdded: false,
-            divisionMostrada: 0,
+            divisionMostrada: 1,
             isLoading: true,
             shouldConfirmCreated: false
         }
@@ -622,7 +622,7 @@ class Cursos extends Component {
                 );
                 break;
             case 1:
-                division = <ListaCursos/>;
+                division = <ListaUsuarios userType="CURSOS" tipoUsuariosMostrados="cursos"/>;
                 break;
             default:
                 break;
