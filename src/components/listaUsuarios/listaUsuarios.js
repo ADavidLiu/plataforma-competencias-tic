@@ -545,7 +545,6 @@ class ListaUsuarios extends Component {
     }
 
     componentDidUpdate = prevProps => {
-        console.log(this.state.editingForm);
         /* Se cambió de categoría de tab */
         if (this.props.tipoUsuariosMostrados !== prevProps.tipoUsuariosMostrados) {
             /* Reiniciar los filtros */
@@ -1531,6 +1530,7 @@ class ListaUsuarios extends Component {
                                                                                 this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                     const values = Object.values(elemento);
                                                                                     const keys = Object.keys(elemento);
+                                                                                    const elementoID = elemento.id ? elemento.id : elemento[0];
                                                                                     return (
                                                                                         <TableRow key={i}>
                                                                                             {
@@ -1543,8 +1543,8 @@ class ListaUsuarios extends Component {
                                                                                                 })
                                                                                             }
                                                                                             <TableCell>
-                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.id); }}/>
-                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.id); }}/>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             </TableCell>
                                                                                         </TableRow>
                                                                                     );
@@ -2102,6 +2102,8 @@ class ListaUsuarios extends Component {
                                                                                 this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                     const values = Object.values(elemento);
                                                                                     const keys = Object.keys(elemento);
+                                                                                    const elementoID = elemento.idNacional ? elemento.idNacional : elemento[0];
+
                                                                                     return (
                                                                                         <TableRow key={i}>
                                                                                             {
@@ -2118,12 +2120,12 @@ class ListaUsuarios extends Component {
                                                                                                 })
                                                                                             }
                                                                                             <TableCell>
-                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                                 <Link to={{
                                                                                                     pathname: "/dashboard-admin",
                                                                                                     state: {
-                                                                                                        adminID: elemento.idNacional
+                                                                                                        adminID: elementoID
                                                                                                     }
                                                                                                 }} style={{textDecoration: "none"}}>
                                                                                                     <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2324,6 +2326,8 @@ class ListaUsuarios extends Component {
                                                                                 this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                     const values = Object.values(elemento);
                                                                                     const keys = Object.keys(elemento);
+                                                                                    const elementoID = elemento.idNacional ? elemento.idNacional : elemento[0];
+
                                                                                     return (
                                                                                         <TableRow key={i}>
                                                                                             {
@@ -2340,12 +2344,12 @@ class ListaUsuarios extends Component {
                                                                                                 })
                                                                                             }
                                                                                             <TableCell>
-                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                                <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                                <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                                 <Link to={{
                                                                                                     pathname: "/dashboard-gobierno",
                                                                                                     state: {
-                                                                                                        gobiernoID: elemento.idNacional
+                                                                                                        gobiernoID: elementoID
                                                                                                     }
                                                                                                 }} style={{textDecoration: "none"}}>
                                                                                                     <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2489,6 +2493,8 @@ class ListaUsuarios extends Component {
                                                                             this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
                                                                                 const keys = Object.keys(elemento);
+                                                                                const elementoID = elemento.idNacional ? elemento.idNacional : elemento[0];
+
                                                                                 return (
                                                                                     <TableRow key={i}>
                                                                                         {
@@ -2505,12 +2511,12 @@ class ListaUsuarios extends Component {
                                                                                             })
                                                                                         }
                                                                                         <TableCell>
-                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
                                                                                                 pathname: "/dashboard-ie",
                                                                                                 state: {
-                                                                                                    institucionID: elemento.idNacional
+                                                                                                    institucionID: elementoID
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2675,6 +2681,8 @@ class ListaUsuarios extends Component {
                                                                             this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
                                                                                 const keys = Object.keys(elemento);
+                                                                                const elementoID = elemento.idNacional ? elemento.idNacional : elemento[0];
+
                                                                                 return (
                                                                                     <TableRow key={i}>
                                                                                         {
@@ -2691,12 +2699,12 @@ class ListaUsuarios extends Component {
                                                                                             })
                                                                                         }
                                                                                         <TableCell>
-                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
                                                                                                 pathname: "/dashboard-ee",
                                                                                                 state: {
-                                                                                                    establecimientoID: elemento.idNacional
+                                                                                                    establecimientoID: elementoID
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2977,6 +2985,8 @@ class ListaUsuarios extends Component {
                                                                             this.state.elementosMostrados[this.props.tipoUsuariosMostrados].slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
                                                                                 const keys = Object.keys(elemento);
+                                                                                const elementoID = elemento.idNacional ? elemento.idNacional : elemento[0];
+
                                                                                 return (
                                                                                     <TableRow key={i}>
                                                                                         {
@@ -3002,12 +3012,12 @@ class ListaUsuarios extends Component {
                                                                                             })
                                                                                         }
                                                                                         <TableCell>
-                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elemento.idNacional); }}/>
-                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elemento.idNacional); }}/>
+                                                                                            <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
+                                                                                            <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
                                                                                                 pathname: "/dashboard-docente",
                                                                                                 state: {
-                                                                                                    docenteID: elemento.idNacional
+                                                                                                    docenteID: elementoID
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
