@@ -68,7 +68,7 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "SUPERADMIN",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"]
         }

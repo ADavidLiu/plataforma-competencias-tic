@@ -85,7 +85,7 @@ class Cursos extends Component {
                 nuevos: [JSON.parse(JSON.stringify(this.placeholderCurso))]
             },
             isNewInfoAdded: false,
-            divisionMostrada: 1,
+            divisionMostrada: 0,
             isLoading: true,
             shouldConfirmCreated: false
         }
