@@ -7,6 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from "@material-ui/core/Fab";
+import Paper from "@material-ui/core/Paper";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -70,7 +71,8 @@ class LoginCheck extends Component {
             locale: "es",
             tipo: "SUPERADMIN",
             id: "loremipsum",
-            roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"]
+            roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"],
+            isInViewingMode: false
         }
 
         /* Pruebas de integración con backend */
@@ -132,6 +134,12 @@ class LoginCheck extends Component {
         }
 
         this.links = {};
+    }
+
+    actualizarIsInViewingMode = nuevoEstado => {
+        this.setState({
+            isInViewingMode: nuevoEstado
+        });
     }
 
     actualizarLogeado = nuevoEstado => {
@@ -308,6 +316,13 @@ class LoginCheck extends Component {
                                 )
                             }
                             <Container component="main" className="pt-5" id="top">
+                                {
+                                    this.state.isInViewingMode ? (
+                                        <Paper className="p-4">
+                                            <Typography variant="body1">Is in viewing mode</Typography>
+                                        </Paper>
+                                    ) : null
+                                }
                                 <div className="py-5 pb-md-5 pt-md-0">
                                     <Switch>
                                         <Route path="/" exact render={(...routeProps) => {
@@ -327,15 +342,15 @@ class LoginCheck extends Component {
                                         {
                                             this.state.isLogeado ? (
                                                 this.state.isPrimerIngreso ? (
-                                                    <Route path={`/${t("link.primer-ingreso")}`} render={(...routeProps) => <PrimerIngreso userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>}/>
+                                                    <Route path={`/${t("link.primer-ingreso")}`} render={(...routeProps) => <PrimerIngreso {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>}/>
                                                 ) : (
                                                     <Switch>
-                                                        <Route path={`/${t("link.dashboard")}`} render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.dashboard-docente")}`} component={DashboardDocente} />
-                                                        <Route path={`/${t("link.dashboard-ie")}`} component={DashboardInstitucionEducativa} />
-                                                        <Route path={`/${t("link.dashboard-ee")}`} component={DashboardEstablecimientoEducativo} />
-                                                        <Route path={`/${t("link.dashboard-gobierno")}`} component={DashboardGobierno} />
-                                                        <Route path={`/${t("link.dashboard-evaluador")}`} component={DashboardEvaluador} />
+                                                        <Route path={`/${t("link.dashboard")}`} render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                        <Route path={`/${t("link.dashboard-docente")}`} render={(...routeProps) => <DashboardDocente {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                        <Route path={`/${t("link.dashboard-ie")}`} render={(...routeProps) => <DashboardInstitucionEducativa {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                        <Route path={`/${t("link.dashboard-ee")}`} render={(...routeProps) => <DashboardEstablecimientoEducativo {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                        <Route path={`/${t("link.dashboard-gobierno")}`} render={(...routeProps) => <DashboardGobierno {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                        <Route path={`/${t("link.dashboard-evaluador")}`} render={(...routeProps) => <DashboardEvaluador {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
                                                         <Route path={`/${t("link.encuesta")}`} render={(...routeProps) => <Encuesta {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
                                                         <Route path={`/${t("link.practica")}`} render={(...routeProps) => <Practica {...routeProps} userProfile={this.datosPerfil}/>} />
@@ -344,7 +359,7 @@ class LoginCheck extends Component {
                                                         <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
                                                         {
                                                             this.state.tipo !== "DOCENTE" ? (
-                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode}  userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
@@ -373,7 +388,7 @@ class LoginCheck extends Component {
                                                             this.state.tipo === "SUPERADMIN" ? (
                                                                 <Switch>
                                                                     <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
-                                                                    <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
+                                                                    <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
                                                                     <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
@@ -384,7 +399,7 @@ class LoginCheck extends Component {
                                                         {
                                                             this.state.tipo === "ADMIN" ? (
                                                                 <Switch>
-                                                                    <Route path={`/${t("link.dashboard-admin")}`} component={DashboardAdmin} />
+                                                                    <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route component={Pagina404} />

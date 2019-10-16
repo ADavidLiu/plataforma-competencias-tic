@@ -65,9 +65,21 @@ class DashboardExtablecimientoEducativo extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        if (this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
     componentDidMount() {
         /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
         let infoCargada = {};
+
+        if (this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
 
         if (this.props.location && this.props.location.state !== undefined) {
             infoCargada = {
@@ -143,6 +155,9 @@ class DashboardExtablecimientoEducativo extends Component {
 
     render() {
         if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
             return <Redirect to="/" />
         }
 

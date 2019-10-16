@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -47,6 +49,12 @@ class DashboardAdmin extends Component {
     }
 
     componentDidMount = () => {
+        if (this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
+
         /* Conectarse al backend para traer la información general de las divisiones */
         this.setState({
             divisiones: [
@@ -184,6 +192,10 @@ class DashboardAdmin extends Component {
     }
 
     componentWillUnmount = () => {
+        if (this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+
         this.timeouts.forEach(timeout => {
             clearTimeout(timeout);
         });
@@ -231,6 +243,13 @@ class DashboardAdmin extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <Translation>
                 {

@@ -2123,9 +2123,10 @@ class ListaUsuarios extends Component {
                                                                                                 <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                                 <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                                 <Link to={{
-                                                                                                    pathname: "/dashboard-admin",
+                                                                                                    pathname: `/${t("link.dashboard-admin")}`,
                                                                                                     state: {
-                                                                                                        adminID: elementoID
+                                                                                                        adminID: elementoID,
+                                                                                                        shouldActivateViewingMode: true
                                                                                                     }
                                                                                                 }} style={{textDecoration: "none"}}>
                                                                                                     <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2347,9 +2348,10 @@ class ListaUsuarios extends Component {
                                                                                                 <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                                 <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                                 <Link to={{
-                                                                                                    pathname: "/dashboard-gobierno",
+                                                                                                    pathname: `/${t("link.dashboard-evaluador")}`,
                                                                                                     state: {
-                                                                                                        gobiernoID: elementoID
+                                                                                                        evaluadorID: elementoID,
+                                                                                                        shouldActivateViewingMode: true
                                                                                                     }
                                                                                                 }} style={{textDecoration: "none"}}>
                                                                                                     <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2514,9 +2516,10 @@ class ListaUsuarios extends Component {
                                                                                             <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                             <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
-                                                                                                pathname: "/dashboard-ie",
+                                                                                                pathname: `/${t("link.dashboard-ie")}`,
                                                                                                 state: {
-                                                                                                    institucionID: elementoID
+                                                                                                    institucionID: elementoID,
+                                                                                                    shouldActivateViewingMode: true
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -2702,9 +2705,10 @@ class ListaUsuarios extends Component {
                                                                                             <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                             <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
-                                                                                                pathname: "/dashboard-ee",
+                                                                                                pathname: `/${t("link.dashboard-ee")}`,
                                                                                                 state: {
-                                                                                                    establecimientoID: elementoID
+                                                                                                    establecimientoID: elementoID,
+                                                                                                    shouldActivateViewingMode: true
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>
@@ -3015,9 +3019,10 @@ class ListaUsuarios extends Component {
                                                                                             <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                             <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                             <Link to={{
-                                                                                                pathname: "/dashboard-docente",
+                                                                                                pathname: `/${t("link.dashboard-docente")}`,
                                                                                                 state: {
-                                                                                                    docenteID: elementoID
+                                                                                                    docenteID: elementoID,
+                                                                                                    shouldActivateViewingMode: true
                                                                                                 }
                                                                                             }} style={{textDecoration: "none"}}>
                                                                                                 <OpenInNew color="primary" style={{cursor: "pointer"}}/>

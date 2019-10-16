@@ -49,9 +49,21 @@ class DashboardEvaluador extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        if (this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
     componentDidMount = () => {
         /* Conectarse al backend para traer los datos de las prácticas, preentrevistas y entrevistas */
         let infoCargada = {};
+
+        if (this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
 
         if (this.props.location && this.props.location.state !== undefined) {
             infoCargada = {
@@ -132,6 +144,9 @@ class DashboardEvaluador extends Component {
 
     render() {
         if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
             return <Redirect to="/" />
         }
 

@@ -168,12 +168,24 @@ class DashboardDocente extends Component {
         this.pasosNames = ["Registro de datos", "Prueba de conocimiento", "Práctica educativa", "Pre-entrevista", "Entrevista"];
     }
 
-    componentDidMount() {
+    componentWillUnmount = () => {
+        if (this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
+    componentDidMount = () => {
         /* Conexión al backend para almacenar timestamp del último ingreso */
         const timestamp = moment.now();
         /* console.log(timestamp); */
 
         let infoCargada = {};
+
+        if (this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
 
         if (this.props.location && this.props.location.state !== undefined) {
             infoCargada = {
@@ -378,6 +390,9 @@ class DashboardDocente extends Component {
 
     render() {
         if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
             return <Redirect to="/" />
         }
 
