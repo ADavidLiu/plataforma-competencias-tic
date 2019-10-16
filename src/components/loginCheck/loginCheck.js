@@ -363,17 +363,17 @@ class LoginCheck extends Component {
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "DOCENTE" ? (
+                                                            this.state.tipo === "DOCENTE" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN"  ? (
                                                                 <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "GOBIERNO" ? (
+                                                            this.state.tipo === "GOBIERNO" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
                                                                 <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "EVALUADOR" ? (
+                                                            this.state.tipo === "EVALUADOR" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
                                                                 <Switch>
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />

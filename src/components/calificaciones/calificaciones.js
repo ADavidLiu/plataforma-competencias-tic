@@ -411,6 +411,11 @@ class Calificaciones extends Component {
                                                     <TableHead>
                                                         <TableRow>
                                                             {
+                                                                this.state.headCells[this.state.categoriaDivisionMostrada].forEach((cellLabel, i) => {
+                                                                    console.log(cellLabel);
+                                                                })
+                                                            }
+                                                            {
                                                                 this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
                                                                     <TableCell key={i}>{t(cellLabel)}</TableCell>
                                                                 ))

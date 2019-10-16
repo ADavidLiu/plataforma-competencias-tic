@@ -2348,9 +2348,9 @@ class ListaUsuarios extends Component {
                                                                                                 <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { this.editUser(elementoID); }}/>
                                                                                                 <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { this.deleteUser(elementoID); }}/>
                                                                                                 <Link to={{
-                                                                                                    pathname: `/${t("link.dashboard-evaluador")}`,
+                                                                                                    pathname: this.props.tipoUsuariosMostrados === "evaluadores" ? `/${t("link.dashboard-evaluador")}` : `/${t("link.dashboard-gobierno")}`,
                                                                                                     state: {
-                                                                                                        evaluadorID: elementoID,
+                                                                                                        [this.props.tipoUsuariosMostrados === "evaluadores" ? "evaluadorID" : "gobiernoID"]: elementoID,
                                                                                                         shouldActivateViewingMode: true
                                                                                                     }
                                                                                                 }} style={{textDecoration: "none"}}>

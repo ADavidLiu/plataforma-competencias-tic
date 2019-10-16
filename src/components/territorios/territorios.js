@@ -650,6 +650,8 @@ class Territorios extends Component{
                                                                         ) : (
                                                                             this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
+                                                                                const elementoID = elemento.id ? elemento.id : elemento[0];
+
                                                                                 return (
                                                                                     <TableRow key={i}>
                                                                                         {
@@ -657,10 +659,10 @@ class Territorios extends Component{
                                                                                         }
                                                                                         <TableCell>
                                                                                             <EditOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                                this.editarTerritorio(elemento.id);
+                                                                                                this.editarTerritorio(elementoID);
                                                                                             }}/>
                                                                                             <DeleteOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                                this.eliminarTerritorio(elemento.id);
+                                                                                                this.eliminarTerritorio(elementoID);
                                                                                             }} className="ml-3"/>
                                                                                         </TableCell>
                                                                                     </TableRow>
