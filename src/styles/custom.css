@@ -136,6 +136,11 @@ main:before {
     color: #ffffff !important;
 }
 
+.formato-calificacion {
+    width: 80vw;
+    max-width: 450px;
+}
+
 @media screen and (max-width: 600px) {
     .MuiSnackbar-root {
         bottom: 16px !important;

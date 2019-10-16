@@ -68,7 +68,7 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "SUPERADMIN",
+            tipo: "EVALUADOR",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"]
         }
@@ -402,7 +402,7 @@ class LoginCheck extends Component {
                             </Container>
                             <Link to={t("link.ayuda")}>
                                 <Tooltip title={t("titulo.ayuda")} placement="left">
-                                    <Fab color="primary" className={window.location.pathname === "/prueba" ? "fab fab--alt" : "fab"}>
+                                    <Fab color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
                                         <Help/>
                                     </Fab>
                                 </Tooltip>
