@@ -69,7 +69,7 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: "SUPERADMIN",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"],
             isInViewingMode: false,
@@ -272,7 +272,13 @@ class LoginCheck extends Component {
                                                         {
                                                             this.state.tipo === "GOBIERNO" ? (
                                                                 <Tooltip title={t("territorios.titulo")} placement="right">
-                                                                    <Link to={`/${t("link.territorios")}`}>
+                                                                    <Link to={{
+                                                                        pathname: `/${t("link.territorios")}`,
+                                                                        state: {
+                                                                            userType: this.state.tipo,
+                                                                            userID: this.state.id
+                                                                        }
+                                                                    }}>
                                                                         <IconButton style={{color: "#ffffff"}}>
                                                                             <Layers/>
                                                                         </IconButton>
@@ -385,7 +391,7 @@ class LoginCheck extends Component {
                                                         }
                                                         {
                                                             this.state.tipo === "GOBIERNO" ? (
-                                                                <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
@@ -409,7 +415,7 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
@@ -426,7 +432,7 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />

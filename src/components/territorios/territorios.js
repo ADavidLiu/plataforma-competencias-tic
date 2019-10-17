@@ -41,7 +41,7 @@ class Territorios extends Component{
         super();
 
         this.state = {
-            divisionMostrada: 2,
+            divisionMostrada: 0,
             isLoading: false,
             isFiltering: false,
             isEditing: false,
@@ -78,13 +78,13 @@ class Territorios extends Component{
     }
 
     componentWillUnmount = () => {
-        if (this.props[0].location.state) {
+        if (this.props[0] && this.props[0].location.state) {
             this.props.updateIsInViewingMode(false);
         }
     }
 
     componentDidMount = () => {
-        if (this.props[0].location.state) {
+        if (this.props[0] && this.props[0].location.state) {
             if (this.props[0].location.state.shouldActivateViewingMode) {
                 this.props.updateIsInViewingMode(true);
             }
@@ -475,7 +475,7 @@ class Territorios extends Component{
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
         }
-        if (this.props[0].location && this.props[0].location.state === undefined) {
+        if (this.props[0] && this.props[0].location && this.props[0].location.state === undefined) {
             return <Redirect to="/" />
         }
         
