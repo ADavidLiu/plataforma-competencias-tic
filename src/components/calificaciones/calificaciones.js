@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import sortBy from "sort-by";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
@@ -110,7 +110,19 @@ class Calificaciones extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        if (this.props[0] && this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
     componentDidMount = () => {
+        if (this.props[0] && this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
+
         this.setState({
             isLoading: false,
             elementosMostrados: [...this.state.practicas]
@@ -332,6 +344,13 @@ class Calificaciones extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return (
             <Translation>
                 {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -76,7 +77,19 @@ class Territorios extends Component{
         }
     }
 
+    componentWillUnmount = () => {
+        if (this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
     componentDidMount = () => {
+        if (this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
+
         const dataCargada = {
             territorios: [
                 {
@@ -459,6 +472,13 @@ class Territorios extends Component{
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        
         let divisionMostrada;
         switch (this.state.divisionMostrada) {
             case 0:

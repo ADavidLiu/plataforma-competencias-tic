@@ -69,10 +69,11 @@ class LoginCheck extends Component {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "SUPERADMIN",
+            tipo: "EVALUADOR",
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"],
-            isInViewingMode: false
+            isInViewingMode: false,
+            viewingModeUserType: ""
         }
 
         /* Pruebas de integración con backend */
@@ -136,9 +137,10 @@ class LoginCheck extends Component {
         this.links = {};
     }
 
-    actualizarIsInViewingMode = nuevoEstado => {
+    actualizarIsInViewingMode = (nuevoEstado, nuevoViewingModeUserType) => {
         this.setState({
-            isInViewingMode: nuevoEstado
+            isInViewingMode: nuevoEstado,
+            viewingModeUserType: nuevoViewingModeUserType
         });
     }
 
@@ -251,7 +253,13 @@ class LoginCheck extends Component {
                                                         {
                                                             this.state.tipo === "DOCENTE" ? (
                                                                 <Tooltip title={t("procesos.titulo-alt")} placement="right">
-                                                                    <Link to={`/${t("link.procesos")}`}>
+                                                                    <Link to={{
+                                                                        pathname: `/${t("link.procesos")}`,
+                                                                        state: {
+                                                                            userType: this.state.tipo,
+                                                                            userID: this.state.id
+                                                                        }
+                                                                    }}>
                                                                         <IconButton style={{
                                                                             color: "#ffffff"
                                                                         }}>
@@ -286,7 +294,13 @@ class LoginCheck extends Component {
                                                         {
                                                             this.state.tipo === "EVALUADOR" ? (
                                                                 <Tooltip title="Calificaciones" placement="right">
-                                                                    <Link to={`/${t("link.calificaciones")}`}>
+                                                                    <Link to={{
+                                                                        pathname: `/${t("link.calificaciones")}`,
+                                                                        state: {
+                                                                            userType: this.state.tipo,
+                                                                            userID: this.state.id
+                                                                        }
+                                                                    }}>
                                                                         <IconButton style={{ color: "#ffffff" }}>
                                                                             <PlaylistAddCheck />
                                                                         </IconButton>
@@ -361,12 +375,12 @@ class LoginCheck extends Component {
                                                         <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
                                                         {
                                                             this.state.tipo !== "DOCENTE" ? (
-                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode}  userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
                                                             this.state.tipo === "DOCENTE"  ? (
-                                                                <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
@@ -381,7 +395,7 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""
@@ -394,13 +408,13 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""
@@ -411,13 +425,13 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""

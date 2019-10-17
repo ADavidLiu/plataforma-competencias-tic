@@ -167,7 +167,19 @@ class Procesos extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        if (this.props[0] && this.props[0].location.state) {
+            this.props.updateIsInViewingMode(false);
+        }
+    }
+
     componentDidMount = () => {
+        if (this.props[0] && this.props[0].location.state) {
+            if (this.props[0].location.state.shouldActivateViewingMode) {
+                this.props.updateIsInViewingMode(true);
+            }
+        }
+
         this.setState({
             elementosMostrados: this.state.procesos
         });
@@ -226,6 +238,13 @@ class Procesos extends Component {
     }
 
     render() {
+        if (this.props.location && this.props.location.state === undefined) {
+            return <Redirect to="/" />
+        }
+        if (this.props[0].location && this.props[0].location.state === undefined) {
+            return <Redirect to="/" />
+        }
+
         return(
             <Translation>
                 {
