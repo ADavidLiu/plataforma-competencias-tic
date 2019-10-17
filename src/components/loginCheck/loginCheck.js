@@ -318,9 +318,11 @@ class LoginCheck extends Component {
                             <Container component="main" className="pt-5" id="top">
                                 {
                                     this.state.isInViewingMode ? (
-                                        <Paper className="p-4">
-                                            <Typography variant="body1">Is in viewing mode</Typography>
-                                        </Paper>
+                                        <React.Fragment>
+                                            <Paper className="p-4 mb-5">
+                                                <Typography variant="body1">Is in viewing mode</Typography>
+                                            </Paper>
+                                        </React.Fragment>
                                     ) : null
                                 }
                                 <div className="py-5 pb-md-5 pt-md-0">
@@ -363,17 +365,17 @@ class LoginCheck extends Component {
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "DOCENTE" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN"  ? (
+                                                            this.state.tipo === "DOCENTE"  ? (
                                                                 <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "GOBIERNO" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
+                                                            this.state.tipo === "GOBIERNO" ? (
                                                                 <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
                                                             ) : ""
                                                         }
                                                         {
-                                                            this.state.tipo === "EVALUADOR" || this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" ? (
+                                                            this.state.tipo === "EVALUADOR" ? (
                                                                 <Switch>
                                                                     <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
                                                                     <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
@@ -392,6 +394,13 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""
@@ -402,6 +411,13 @@ class LoginCheck extends Component {
                                                                     <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
                                                                     <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
                                                                     <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
                                                                     <Route component={Pagina404} />
                                                                 </Switch>
                                                             ) : ""

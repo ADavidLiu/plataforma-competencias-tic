@@ -20,7 +20,7 @@ const Pagina404 = props => {
                         <div className="text-center my-5 py-5">
                             <Typography variant="h2" className="mb-2">{t("404.subtitulo")}</Typography>
                             <Typography variant="h4">{t("404.titulo")}</Typography>
-                            <Link to="/">
+                            <Link to="/" style={{textDecoration: "none"}}>
                                 <Button type="button" className="mt-5" color="primary" variant="contained" size="large">{t("404.btn")}</Button>
                             </Link>
                         </div>
