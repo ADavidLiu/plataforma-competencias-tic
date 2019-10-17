@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 
+import { StickyContainer, Sticky } from "react-sticky";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -358,127 +360,138 @@ class LoginCheck extends Component {
                                     </AppBar>
                                 )
                             }
-                            <Container component="main" className="pt-5" id="top">
-                                {
-                                    this.state.isInViewingMode ? (
-                                        <React.Fragment>
-                                            <Paper className="p-4 mt-5 mt-md-0 mb-md-5" style={{backgroundColor: "#009A9C"}}>
-                                                <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
-                                                    <Typography variant="h6" className="mb-3 mb-md-0" style={{color: "#ffffff"}}>{t("visualizacion.titulo")}</Typography>
-                                                    <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
-                                                        <Button className="w-100 w-md-auto" size="large" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}>{t("visualizacion.btn")}</Button>
-                                                    </Link>
-                                                </div>
-                                            </Paper>
-                                        </React.Fragment>
-                                    ) : null
-                                }
-                                <div className="py-5 pb-md-5 pt-md-0">
-                                    <Switch>
-                                        <Route path="/" exact render={(...routeProps) => {
-                                            if (this.state.isLogeado) {
-                                                if (this.state.isPrimerIngreso) {
-                                                    return <PrimerIngreso actualizarIsPrimerIngreso={this.actualizarIsPrimerIngreso} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>;
-                                                } else {
-                                                    return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;
+                            <StickyContainer>
+                                <Container component="main" className="pt-5" id="top">
+                                    {
+                                        this.state.isInViewingMode ? (
+                                            <Sticky>
+                                                {
+                                                    ({style}) => (
+                                                        <div style={{
+                                                            ...style,
+                                                            zIndex: 9999
+                                                        }} className="pt-5">
+                                                            <Paper className="p-4" style={{backgroundColor: "#009A9C"}}>
+                                                                <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
+                                                                    <Typography variant="h6" className="mb-3 mb-md-0" style={{color: "#ffffff"}}>{t("visualizacion.titulo")}</Typography>
+                                                                    <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
+                                                                        <Button className="w-100 w-md-auto" size="large" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}>{t("visualizacion.btn")}</Button>
+                                                                    </Link>
+                                                                </div>
+                                                            </Paper>
+                                                        </div>
+                                                    )
                                                 }
-                                            } else {
-                                                return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
-                                            }
-                                        }} />
-                                        <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login {...routeProps} actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                                        <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
-                                        <Route path={`/${t("link.ayuda")}`} component={Ayuda}/>
-                                        {
-                                            this.state.isLogeado ? (
-                                                this.state.isPrimerIngreso ? (
-                                                    <Route path={`/${t("link.primer-ingreso")}`} render={(...routeProps) => <PrimerIngreso {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>}/>
-                                                ) : (
-                                                    <Switch>
-                                                        <Route path={`/${t("link.dashboard")}`} render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.dashboard-docente")}`} render={(...routeProps) => <DashboardDocente {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.dashboard-ie")}`} render={(...routeProps) => <DashboardInstitucionEducativa {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.dashboard-ee")}`} render={(...routeProps) => <DashboardEstablecimientoEducativo {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.dashboard-gobierno")}`} render={(...routeProps) => <DashboardGobierno {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.dashboard-evaluador")}`} render={(...routeProps) => <DashboardEvaluador {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                        <Route path={`/${t("link.encuesta")}`} render={(...routeProps) => <Encuesta {...routeProps} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.practica")}`} render={(...routeProps) => <Practica {...routeProps} userProfile={this.datosPerfil}/>} />
-                                                        <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                        <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
-                                                        {
-                                                            this.state.tipo !== "DOCENTE" ? (
-                                                                <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                            ) : ""
-                                                        }
-                                                        {
-                                                            this.state.tipo === "DOCENTE"  ? (
-                                                                <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                            ) : ""
-                                                        }
-                                                        {
-                                                            this.state.tipo === "GOBIERNO" ? (
-                                                                <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                            ) : ""
-                                                        }
-                                                        {
-                                                            this.state.tipo === "EVALUADOR" ? (
-                                                                <Switch>
-                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
-                                                                    <Route component={Pagina404} />
-                                                                </Switch>
-                                                            ) : ""
-                                                        }
-                                                        {
-                                                            this.state.tipo === "SUPERADMIN" ? (
-                                                                <Switch>
-                                                                    <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
-                                                                    <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                                    <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                            </Sticky>
+                                        ) : null
+                                    }
+                                    <div className="py-5 pb-md-5 pt-md-0">
+                                        <Switch>
+                                            <Route path="/" exact render={(...routeProps) => {
+                                                if (this.state.isLogeado) {
+                                                    if (this.state.isPrimerIngreso) {
+                                                        return <PrimerIngreso actualizarIsPrimerIngreso={this.actualizarIsPrimerIngreso} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>;
+                                                    } else {
+                                                        return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;
+                                                    }
+                                                } else {
+                                                    return <Login actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />
+                                                }
+                                            }} />
+                                            <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login {...routeProps} actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
+                                            <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
+                                            <Route path={`/${t("link.ayuda")}`} component={Ayuda}/>
+                                            {
+                                                this.state.isLogeado ? (
+                                                    this.state.isPrimerIngreso ? (
+                                                        <Route path={`/${t("link.primer-ingreso")}`} render={(...routeProps) => <PrimerIngreso {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>}/>
+                                                    ) : (
+                                                        <Switch>
+                                                            <Route path={`/${t("link.dashboard")}`} render={(...routeProps) => <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.dashboard-docente")}`} render={(...routeProps) => <DashboardDocente {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.dashboard-ie")}`} render={(...routeProps) => <DashboardInstitucionEducativa {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.dashboard-ee")}`} render={(...routeProps) => <DashboardEstablecimientoEducativo {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.dashboard-gobierno")}`} render={(...routeProps) => <DashboardGobierno {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.dashboard-evaluador")}`} render={(...routeProps) => <DashboardEvaluador {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                            <Route path={`/${t("link.encuesta")}`} render={(...routeProps) => <Encuesta {...routeProps} userProfile={this.datosPerfil} />} />
+                                                            <Route path={`/${t("link.prueba")}`} render={(...routeProps) => <Prueba {...routeProps} userProfile={this.datosPerfil} />} />
+                                                            <Route path={`/${t("link.practica")}`} render={(...routeProps) => <Practica {...routeProps} userProfile={this.datosPerfil}/>} />
+                                                            <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                            <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
+                                                            <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
+                                                            {
+                                                                this.state.tipo !== "DOCENTE" ? (
+                                                                    <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                ) : ""
+                                                            }
+                                                            {
+                                                                this.state.tipo === "DOCENTE"  ? (
                                                                     <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                ) : ""
+                                                            }
+                                                            {
+                                                                this.state.tipo === "GOBIERNO" ? (
                                                                     <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
-                                                                    <Route component={Pagina404} />
-                                                                </Switch>
-                                                            ) : ""
-                                                        }
-                                                        {
-                                                            this.state.tipo === "ADMIN" ? (
-                                                                <Switch>
-                                                                    <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
-                                                                    <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
-                                                                    <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
-                                                                    <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
-                                                                    <Route component={Pagina404} />
-                                                                </Switch>
-                                                            ) : ""
-                                                        }
-                                                        <Route component={Pagina404} />
-                                                    </Switch>
-                                                )
-                                            ) : ""
-                                        }
-                                        <Route component={Pagina404} />
-                                    </Switch>
-                                </div>
-                            </Container>
+                                                                ) : ""
+                                                            }
+                                                            {
+                                                                this.state.tipo === "EVALUADOR" ? (
+                                                                    <Switch>
+                                                                        <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                        <Route component={Pagina404} />
+                                                                    </Switch>
+                                                                ) : ""
+                                                            }
+                                                            {
+                                                                this.state.tipo === "SUPERADMIN" ? (
+                                                                    <Switch>
+                                                                        <Route path={`/${t("link.dashboard-superadmin")}`} component={DashboardSuperadmin} />
+                                                                        <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                                        <Route path={`/${t("link.instrumento")}`} render={(...routeProps) => <Instrumento {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                        <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                        <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                        <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos  updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                        <Route component={Pagina404} />
+                                                                    </Switch>
+                                                                ) : ""
+                                                            }
+                                                            {
+                                                                this.state.tipo === "ADMIN" ? (
+                                                                    <Switch>
+                                                                        <Route path={`/${t("link.dashboard-admin")}`} render={(...routeProps) => <DashboardAdmin {...routeProps} isInViewingMode={this.state.isInViewingMode} updateIsInViewingMode={this.actualizarIsInViewingMode} />} />
+                                                                        <Route path={`/${t("link.auditoria")}`} component={(...routeProps) => <Auditoria {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                        <Route path={`/${t("link.cursos")}`} component={(...routeProps) => <Cursos {...routeProps} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />} />
+                                                                        <Route path={`/${t("link.procesos")}`} render={(...routeProps) => <Procesos updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.territorios")}`} render={(...routeProps) => <Territorios updateIsInViewingMode={this.actualizarIsInViewingMode} userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.practica-revision")}`} render={(...routeProps) => <PracticaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.preentrevista-revision")}`} render={(...routeProps) => <PreentrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.entrevista-revision")}`} render={(...routeProps) => <EntrevistaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.encuesta-revision")}`} render={(...routeProps) => <EncuestaRevision {...routeProps} userProfile={this.datosPerfil} userType={this.state.tipo} userID={this.state.id} />} />
+                                                                        <Route path={`/${t("link.calificaciones")}`} render={(...routeProps) => <Calificaciones {...routeProps} updateIsInViewingMode={this.actualizarIsInViewingMode} userType={this.state.tipo} userID={this.state.id} />} userProfile={this.datosPerfil} />
+                                                                        <Route component={Pagina404} />
+                                                                    </Switch>
+                                                                ) : ""
+                                                            }
+                                                            <Route component={Pagina404} />
+                                                        </Switch>
+                                                    )
+                                                ) : ""
+                                            }
+                                            <Route component={Pagina404} />
+                                        </Switch>
+                                    </div>
+                                </Container>
+                            </StickyContainer>
                             <Link to={t("link.ayuda")}>
                                 <Tooltip title={t("titulo.ayuda")} placement="left">
                                     <Fab color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
