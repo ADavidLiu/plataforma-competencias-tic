@@ -51,7 +51,7 @@ class DashboardEvaluador extends Component {
 
     componentWillUnmount = () => {
         if (this.props[0] && this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "EVALUADOR");
+            this.props.updateIsInViewingMode(false, "RESET");
         }
     }
 
@@ -171,7 +171,7 @@ class DashboardEvaluador extends Component {
                                                             docenteID: practica.docenteID,
                                                             docenteNombre: practica.nombre,
                                                             docenteImg: practica.imgSrc,
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
+                                                            shouldActivateViewingMode: (this.props[0] && this.props[0].location.state.shouldActivateViewingMode) || this.props.isInViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -200,7 +200,7 @@ class DashboardEvaluador extends Component {
                                                             docenteID: preentrevista.docenteID,
                                                             docenteNombre: preentrevista.nombre,
                                                             docenteImg: preentrevista.imgSrc,
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
+                                                            shouldActivateViewingMode: (this.props[0] && this.props[0].location.state.shouldActivateViewingMode) || this.props.isInViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -229,7 +229,7 @@ class DashboardEvaluador extends Component {
                                                             docenteID: entrevista.docenteID,
                                                             docenteNombre: entrevista.nombre,
                                                             docenteImg: entrevista.imgSrc,
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
+                                                            shouldActivateViewingMode: (this.props[0] && this.props[0].location.state.shouldActivateViewingMode) || this.props.isInViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -267,7 +267,7 @@ class DashboardEvaluador extends Component {
                                                             userNombre: encuesta.nombre,
                                                             userImg: encuesta.imgSrc,
                                                             nombreEE: encuesta.establecimientoEducativo,
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
+                                                            shouldActivateViewingMode: (this.props[0] && this.props[0].location.state.shouldActivateViewingMode) || this.props.isInViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">

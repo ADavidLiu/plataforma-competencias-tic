@@ -641,7 +641,10 @@ const es = {
         "cursos.fecha-creacion": "Fecha de creación",
         "cursos.eliminar-titulo": "Desactivar curso",
         "cursos.eliminar-ayuda-1": "¿Está seguro de que desea desactivar este curso?",
-        "cursos.eliminar-ayuda-2": "Esto afectará a todos los usuarios de la plataforma, independientemente de la versión del instrumento actual."
+        "cursos.eliminar-ayuda-2": "Esto afectará a todos los usuarios de la plataforma, independientemente de la versión del instrumento actual.",
+        "visualizacion.titulo": "Actualmente está previsualizando un usuario",
+        "visualizacion.btn": "Regresar a inicio",
+
     }
 }
 

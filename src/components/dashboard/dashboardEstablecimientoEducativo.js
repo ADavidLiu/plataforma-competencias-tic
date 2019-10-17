@@ -67,7 +67,7 @@ class DashboardExtablecimientoEducativo extends Component {
 
     componentWillUnmount = () => {
         if (this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "ESTABLECIMIENTO");
+            this.props.updateIsInViewingMode(false, "RESET");
         }
     }
 

@@ -170,7 +170,7 @@ class DashboardDocente extends Component {
 
     componentWillUnmount = () => {
         if (this.props[0] && this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "DOCENTE");
+            this.props.updateIsInViewingMode(false, "RESET");
         }
     }
 

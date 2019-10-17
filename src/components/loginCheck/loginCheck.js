@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from "@material-ui/core/Fab";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -65,11 +66,12 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
+        this.tipoPerfil = "SUPERADMIN";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
             locale: "es",
-            tipo: "EVALUADOR",
+            tipo: this.tipoPerfil,
             id: "loremipsum",
             roles: ["SUPERADMIN", "ADMIN", "EVALUADOR"],
             isInViewingMode: false,
@@ -138,9 +140,45 @@ class LoginCheck extends Component {
     }
 
     actualizarIsInViewingMode = (nuevoEstado, nuevoViewingModeUserType) => {
+        console.log("-----------------------");
+        console.log("nuevoEstado", nuevoEstado);
+        console.log("nuevoViewingModeUserType", nuevoViewingModeUserType);
+        console.log("-----------------------");
+
+        let newTipo = this.tipoPerfil;
+        if (nuevoViewingModeUserType !== "RESET") {
+            newTipo = nuevoViewingModeUserType;
+        } else {
+            if (!nuevoEstado) {
+                nuevoViewingModeUserType = this.state.viewingModeUserType
+            }
+        }
+
+        if (!nuevoEstado) {
+            switch (window.location.pathname) {
+                case "/":
+                    nuevoEstado = false;
+                    newTipo = this.tipoPerfil;
+                    nuevoViewingModeUserType = this.tipoPerfil;
+                    break;
+                default:
+                    nuevoEstado = true;
+                    break;
+            }
+        }
+        
         this.setState({
+            tipo: newTipo,
             isInViewingMode: nuevoEstado,
             viewingModeUserType: nuevoViewingModeUserType
+        });
+    }
+
+    resetViewingMode = () => {
+        this.setState({
+            tipo: this.tipoPerfil,
+            isInViewingMode: false,
+            viewingModeUserType: ""
         });
     }
 
@@ -339,8 +377,13 @@ class LoginCheck extends Component {
                                 {
                                     this.state.isInViewingMode ? (
                                         <React.Fragment>
-                                            <Paper className="p-4 mb-5">
-                                                <Typography variant="body1">Is in viewing mode</Typography>
+                                            <Paper className="p-4 mt-5 mt-md-0 mb-md-5" style={{backgroundColor: "#009A9C"}}>
+                                                <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
+                                                    <Typography variant="h6" className="mb-3 mb-md-0" style={{color: "#ffffff"}}>{t("visualizacion.titulo")}</Typography>
+                                                    <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
+                                                        <Button className="w-100 w-md-auto" size="large" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}>{t("visualizacion.btn")}</Button>
+                                                    </Link>
+                                                </div>
                                             </Paper>
                                         </React.Fragment>
                                     ) : null
