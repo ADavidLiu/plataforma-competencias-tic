@@ -294,8 +294,8 @@ class Calificaciones extends Component {
                 });
             });
 
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += 6) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 6));
+            for (let i = 0; i < rawValuesToSearchFrom.length; i += this.state.headCells[this.state.categoriaDivisionMostrada].length - 1) {
+                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.state.headCells[this.state.categoriaDivisionMostrada].length - 1));
             }
             arraysValuesToSearchFrom.forEach(array => {
                 array.forEach(val => {
@@ -410,11 +410,6 @@ class Calificaciones extends Component {
                                                 <Table>
                                                     <TableHead>
                                                         <TableRow>
-                                                            {
-                                                                this.state.headCells[this.state.categoriaDivisionMostrada].forEach((cellLabel, i) => {
-                                                                    console.log(cellLabel);
-                                                                })
-                                                            }
                                                             {
                                                                 this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
                                                                     <TableCell key={i}>{t(cellLabel)}</TableCell>
