@@ -168,12 +168,6 @@ class DashboardDocente extends Component {
         this.pasosNames = ["Registro de datos", "Prueba de conocimiento", "Práctica educativa", "Pre-entrevista", "Entrevista"];
     }
 
-    componentWillUnmount = () => {
-        if (this.props[0] && this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "RESET");
-        }
-    }
-
     componentDidMount = () => {
         /* Conexión al backend para almacenar timestamp del último ingreso */
         const timestamp = moment.now();

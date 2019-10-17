@@ -49,12 +49,6 @@ class DashboardEvaluador extends Component {
         }
     }
 
-    componentWillUnmount = () => {
-        if (this.props[0] && this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "RESET");
-        }
-    }
-
     componentDidMount = () => {
         /* Conectarse al backend para traer los datos de las prácticas, preentrevistas y entrevistas */
         let infoCargada = {};

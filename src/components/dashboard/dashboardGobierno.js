@@ -51,12 +51,6 @@ class DashboardGobierno extends Component {
         this.currentData = {};
     }
 
-    componentWillUnmount = () => {
-        if (this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "RESET");
-        }
-    }
-
     componentDidMount = () => {
         let infoCargada = {};
 

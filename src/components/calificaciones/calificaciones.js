@@ -110,12 +110,6 @@ class Calificaciones extends Component {
         }
     }
 
-    componentWillUnmount = () => {
-        if (this.props[0] && this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "RESET");
-        }
-    }
-
     componentDidMount = () => {
         if (this.props[0] && this.props[0].location.state) {
             if (this.props[0].location.state.shouldActivateViewingMode) {

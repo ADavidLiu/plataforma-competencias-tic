@@ -140,25 +140,10 @@ class LoginCheck extends Component {
     }
 
     actualizarIsInViewingMode = (nuevoEstado, nuevoViewingModeUserType) => {
-        console.log("-----------------------");
-        console.log("nuevoEstado", nuevoEstado);
-        console.log("nuevoViewingModeUserType", nuevoViewingModeUserType);
-        console.log("-----------------------");
-
-        let newTipo = this.tipoPerfil;
-        if (nuevoViewingModeUserType !== "RESET") {
-            newTipo = nuevoViewingModeUserType;
-        } else {
-            if (!nuevoEstado) {
-                nuevoViewingModeUserType = this.state.viewingModeUserType
-            }
-        }
-
         if (!nuevoEstado) {
             switch (window.location.pathname) {
                 case "/":
                     nuevoEstado = false;
-                    newTipo = this.tipoPerfil;
                     nuevoViewingModeUserType = this.tipoPerfil;
                     break;
                 default:
@@ -168,7 +153,7 @@ class LoginCheck extends Component {
         }
         
         this.setState({
-            tipo: newTipo,
+            tipo: nuevoViewingModeUserType,
             isInViewingMode: nuevoEstado,
             viewingModeUserType: nuevoViewingModeUserType
         });
@@ -238,9 +223,9 @@ class LoginCheck extends Component {
                                                     <React.Fragment>
                                                     <div className="d-flex align-items-center justify-content-end flex-grow-1 flex-md-column justify-content-md-center navbar-icons">
                                                         <Tooltip title="Inicio" placement="right">
-                                                            <Link to="/">
+                                                            <Link to="/" onClick={this.resetViewingMode}>
                                                                 <IconButton style={{ color: "#ffffff" }}>
-                                                                    <Home />
+                                                                    <Home/>
                                                                 </IconButton>
                                                             </Link>
                                                         </Tooltip>

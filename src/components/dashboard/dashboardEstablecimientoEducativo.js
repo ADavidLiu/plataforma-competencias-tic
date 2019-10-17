@@ -65,12 +65,6 @@ class DashboardExtablecimientoEducativo extends Component {
         }
     }
 
-    componentWillUnmount = () => {
-        if (this.props[0].location.state) {
-            this.props.updateIsInViewingMode(false, "RESET");
-        }
-    }
-
     componentDidMount() {
         /* Conectarse al backend para traer el índice de apropiación y los perfiles asociados a este EE por su datosID */
         let infoCargada = {};

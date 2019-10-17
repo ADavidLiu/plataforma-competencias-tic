@@ -644,7 +644,6 @@ const es = {
         "cursos.eliminar-ayuda-2": "Esto afectará a todos los usuarios de la plataforma, independientemente de la versión del instrumento actual.",
         "visualizacion.titulo": "Actualmente está previsualizando un usuario",
         "visualizacion.btn": "Regresar a inicio",
-
     }
 }
 

@@ -33,9 +33,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-docente",
+                                        pathname: `/${t("link.dashboard-docente")}`,
                                         state: {
-                                            docenteID: userID
+                                            docenteID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -90,9 +91,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-ee",
+                                        pathname: `/${t("link.dashboard-ee")}`,
                                         state: {
-                                            establecimientoID: userID
+                                            establecimientoID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -125,9 +127,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-ie",
+                                        pathname: `/${t("link.dashboard-ie")}`,
                                         state: {
-                                            institucionID: userID
+                                            institucionID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -161,9 +164,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-gobierno",
+                                        pathname: `/${t("link.dashboard-gobierno")}`,
                                         state: {
-                                            gobiernoID: userID
+                                            gobiernoID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -198,9 +202,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-evaluador",
+                                        pathname: `/${t("link.dashboard-evaluador")}`,
                                         state: {
-                                            evaluadorID: userID
+                                            evaluadorID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -232,9 +237,10 @@ function Perfil(props) {
                                 </Grid>
                                 <Grid item xs={6} className="text-right">
                                     <Link to={{
-                                        pathname: "/dashboard-admin",
+                                        pathname: `/${t("link.dashboard-admin")}`,
                                         state: {
-                                            adminID: userID
+                                            adminID: userID,
+                                            shouldActivateViewingMode: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
