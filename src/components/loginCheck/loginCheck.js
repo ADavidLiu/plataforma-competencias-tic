@@ -369,13 +369,13 @@ class LoginCheck extends Component {
                                                     ({style}) => (
                                                         <div style={{
                                                             ...style,
-                                                            zIndex: 9999
+                                                            zIndex: 1
                                                         }} className="pt-5">
-                                                            <Paper className="p-4" style={{backgroundColor: "#009A9C"}}>
+                                                            <Paper className="p-3" style={{backgroundColor: "#009A9C"}}>
                                                                 <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
-                                                                    <Typography variant="h6" className="mb-3 mb-md-0" style={{color: "#ffffff"}}>{t("visualizacion.titulo")}</Typography>
+                                                                    <Typography variant="body1" className="mb-3 mb-md-0" style={{color: "#ffffff"}}><strong>{t("visualizacion.titulo")}</strong></Typography>
                                                                     <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
-                                                                        <Button className="w-100 w-md-auto" size="large" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}>{t("visualizacion.btn")}</Button>
+                                                                        <Button className="w-100 w-md-auto" size="medium" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}><strong>{t("visualizacion.btn")}</strong></Button>
                                                                     </Link>
                                                                 </div>
                                                             </Paper>
