@@ -393,7 +393,7 @@ class Territorios extends Component{
 
     editarTerritorio = id => {
         this.toggleEditor();
-        
+
         const selected = this.state.territoriosActuales.find(territorio => territorio.id === id);
         
         this.setState({
@@ -650,7 +650,7 @@ class Territorios extends Component{
                                                                         ) : (
                                                                             this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
                                                                                 const values = Object.values(elemento);
-                                                                                const elementoID = elemento.id ? elemento.id : elemento[0];
+                                                                                const elementoID = elemento.id !== undefined ? elemento.id : elemento[0];
 
                                                                                 return (
                                                                                     <TableRow key={i}>
