@@ -191,8 +191,6 @@ class PreentrevistaRevision extends Component {
             return <Redirect to="/" />
         }
 
-        console.log(this.state.calificaciones);
-
         return (
             <Translation>
                 {
@@ -201,13 +199,17 @@ class PreentrevistaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.preentrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>
@@ -247,41 +249,49 @@ class PreentrevistaRevision extends Component {
                                                             <div className="order-md-2 mt-md-4">
                                                                 {
                                                                     pregunta.evidencia ? (
-                                                                        <a href={pregunta.evidencia}>
+                                                                        <a href={pregunta.evidencia} style={{textDecoration: "none"}}>
                                                                             <Button color="primary" variant="contained"
                                                                             fullWidth>{t("revision.descargar-evidencia")}</Button>
                                                                         </a>
                                                                     ) : ""
                                                                 }
                                                             </div>
-                                                            <div className="order-md-1">
-                                                                <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
-                                                                <FormControl variant="outlined" className="w-100">
-                                                                    <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
-                                                                    <Select
-                                                                        required
-                                                                        value={
-                                                                            this.state.calificaciones[i] ? (
-                                                                                this.state.calificaciones[i].calificacion
-                                                                            ) : ""
-                                                                        }
-                                                                        onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
-                                                                        input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                                    >
-                                                                        <MenuItem value={1}>1</MenuItem>
-                                                                        <MenuItem value={2}>2</MenuItem>
-                                                                        <MenuItem value={3}>3</MenuItem>
-                                                                        <MenuItem value={4}>4</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
-                                                            </div>
+                                                            {
+                                                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                                                    <div className="order-md-1">
+                                                                        <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
+                                                                        <FormControl variant="outlined" className="w-100">
+                                                                            <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
+                                                                            <Select
+                                                                                required
+                                                                                value={
+                                                                                    this.state.calificaciones[i] ? (
+                                                                                        this.state.calificaciones[i].calificacion
+                                                                                    ) : ""
+                                                                                }
+                                                                                onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
+                                                                                input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                                            >
+                                                                                <MenuItem value={1}>1</MenuItem>
+                                                                                <MenuItem value={2}>2</MenuItem>
+                                                                                <MenuItem value={3}>3</MenuItem>
+                                                                                <MenuItem value={4}>4</MenuItem>
+                                                                            </Select>
+                                                                        </FormControl>
+                                                                    </div>
+                                                                ) : null
+                                                            }
                                                         </Grid>
                                                     </Grid>
                                                 </Paper>
                                             );
                                         })
                                     }
-                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isGraded}>{t("enviar")}</Button>
+                                    {
+                                        !this.props[0].location.state.shouldActivateViewingMode ? (
+                                            <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isGraded}>{t("enviar")}</Button>
+                                        ) :null
+                                    }
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>

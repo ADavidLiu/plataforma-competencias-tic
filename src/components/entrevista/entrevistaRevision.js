@@ -134,13 +134,17 @@ class EntrevistaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.entrevista-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>
@@ -183,26 +187,30 @@ class EntrevistaRevision extends Component {
                                                                 <Grid item xs={12} className="d-sm-none py-0">
                                                                     <hr/>
                                                                 </Grid>
-                                                                <Grid item xs={12} sm={4} md={3}>
-                                                                    <Typography variant="body1" className="mb-3"><strong>{t("revision.entrevista-calificacion")}</strong></Typography>
-                                                                    <FormControl variant="outlined" className="w-100">
-                                                                        <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
-                                                                        <Select
-                                                                            required
-                                                                            value={
-                                                                                this.state.calificaciones[i] ? (
-                                                                                    this.state.calificaciones[i].calificacion
-                                                                                ) : ""
-                                                                            }
-                                                                            onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
-                                                                            input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                                        >
-                                                                            <MenuItem value={1}>1</MenuItem>
-                                                                            <MenuItem value={2}>2</MenuItem>
-                                                                            <MenuItem value={3}>3</MenuItem>
-                                                                        </Select>
-                                                                    </FormControl>
-                                                                </Grid>
+                                                                {
+                                                                    !this.props[0].location.state.shouldActivateViewingMode ? (
+                                                                        <Grid item xs={12} sm={4} md={3}>
+                                                                            <Typography variant="body1" className="mb-3"><strong>{t("revision.entrevista-calificacion")}</strong></Typography>
+                                                                            <FormControl variant="outlined" className="w-100">
+                                                                                <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
+                                                                                <Select
+                                                                                    required
+                                                                                    value={
+                                                                                        this.state.calificaciones[i] ? (
+                                                                                            this.state.calificaciones[i].calificacion
+                                                                                        ) : ""
+                                                                                    }
+                                                                                    onChange={e => { this.handleChange(e, i, pregunta.descriptores); }}
+                                                                                    input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                                                >
+                                                                                    <MenuItem value={1}>1</MenuItem>
+                                                                                    <MenuItem value={2}>2</MenuItem>
+                                                                                    <MenuItem value={3}>3</MenuItem>
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                    ) : null
+                                                                }
                                                             </Grid>
                                                         </Paper>
                                                     );
@@ -210,7 +218,11 @@ class EntrevistaRevision extends Component {
                                             }
                                         </Grid>
                                     </Grid>
-                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isGraded}>{t("enviar")}</Button>
+                                    {
+                                        !this.props[0].location.state.shouldActivateViewingMode ? (
+                                            <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isGraded}>{t("enviar")}</Button>
+                                        ) : null
+                                    }
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>

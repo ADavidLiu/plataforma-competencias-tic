@@ -325,13 +325,17 @@ class PracticaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.practica-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container justify="center" spacing={5}>
                                 <Grid item xs={12}>
                                     <Grid container>
@@ -522,11 +526,15 @@ class PracticaRevision extends Component {
                                 </form>
                             </Drawer>
 
-                            <Tooltip title={t("revision.practica-calificar")} placement="left">
-                                <Fab color="primary" className="fab prueba-fab" onClick={this.toggleGrading}>
-                                    <PlaylistAddCheck/>
-                                </Fab>
-                            </Tooltip>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <Tooltip title={t("revision.practica-calificar")} placement="left">
+                                        <Fab color="primary" className="fab prueba-fab" onClick={this.toggleGrading}>
+                                            <PlaylistAddCheck/>
+                                        </Fab>
+                                    </Tooltip>
+                                ) : null
+                            }
 
                             <Dialog open={this.state.isEnviado}>
                                 <DialogTitle>{t("revision.enviada")}</DialogTitle>

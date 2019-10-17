@@ -166,11 +166,12 @@ class DashboardEvaluador extends Component {
                                             this.state.practicas.map((practica, i) => {
                                                 return (
                                                     <Link key={i} to={{
-                                                        pathname: "/practica-revision",
+                                                        pathname: `/${t("link.practica-revision")}`,
                                                         state: {
                                                             docenteID: practica.docenteID,
                                                             docenteNombre: practica.nombre,
-                                                            docenteImg: practica.imgSrc
+                                                            docenteImg: practica.imgSrc,
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -194,11 +195,12 @@ class DashboardEvaluador extends Component {
                                             this.state.preentrevistas.map((preentrevista, i) => {
                                                 return (
                                                     <Link key={i} to={{
-                                                        pathname: "/preentrevista-revision",
+                                                        pathname: `/${t("link.preentrevista-revision")}`,
                                                         state: {
                                                             docenteID: preentrevista.docenteID,
                                                             docenteNombre: preentrevista.nombre,
-                                                            docenteImg: preentrevista.imgSrc
+                                                            docenteImg: preentrevista.imgSrc,
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -222,11 +224,12 @@ class DashboardEvaluador extends Component {
                                             this.state.entrevistas.map((entrevista, i) => {
                                                 return (
                                                     <Link key={i} to={{
-                                                        pathname: "/entrevista-revision",
+                                                        pathname: `/${t("link.entrevista-revision")}`,
                                                         state: {
                                                             docenteID: entrevista.docenteID,
                                                             docenteNombre: entrevista.nombre,
-                                                            docenteImg: entrevista.imgSrc
+                                                            docenteImg: entrevista.imgSrc,
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">
@@ -258,12 +261,13 @@ class DashboardEvaluador extends Component {
                                             this.state.encuestas.map((encuesta, i) => {
                                                 return (
                                                     <Link key={i} to={{
-                                                        pathname: "/encuesta-revision",
+                                                        pathname: `/${t("link.encuesta-revision")}`,
                                                         state: {
                                                             userID: encuesta.userID,
                                                             userNombre: encuesta.nombre,
                                                             userImg: encuesta.imgSrc,
                                                             nombreEE: encuesta.establecimientoEducativo,
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode ? true : false
                                                         }
                                                     }} className="d-block w-100 mb-3" style={{textDecoration: "none"}}>
                                                         <Paper className="p-4">

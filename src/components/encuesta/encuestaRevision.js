@@ -239,13 +239,17 @@ class EncuestaRevision extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.encuesta-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12}>
                                     <Grid container>
@@ -280,58 +284,66 @@ class EncuestaRevision extends Component {
                                                         <Grid item xs={12}>
                                                             {this.state.preguntasPreparadas[i]}
                                                         </Grid>
-                                                        <Grid item xs={12}>
-                                                            <Grid container spacing={3}>
+                                                        {
+                                                            !this.props[0].location.state.shouldActivateViewingMode ? (
                                                                 <Grid item xs={12}>
-                                                                    <hr className="my-0"/>
+                                                                    <Grid container spacing={3}>
+                                                                        <Grid item xs={12}>
+                                                                            <hr className="my-0"/>
+                                                                        </Grid>
+                                                                        <Grid item xs={12} md={4}>
+                                                                            <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
+                                                                            <FormControl variant="outlined" className="w-100">
+                                                                                <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
+                                                                                <Select
+                                                                                    required
+                                                                                    value={
+                                                                                        this.state.calificaciones[i] ? (
+                                                                                            this.state.calificaciones[i].calificacion
+                                                                                        ) : ""
+                                                                                    }
+                                                                                    onChange={e => { this.handleChange(e, i, pregunta.factor, pregunta.criterio); }}
+                                                                                    input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
+                                                                                >
+                                                                                    <MenuItem value={1}>1</MenuItem>
+                                                                                    <MenuItem value={2}>2</MenuItem>
+                                                                                    <MenuItem value={3}>3</MenuItem>
+                                                                                    <MenuItem value={4}>4</MenuItem>
+                                                                                </Select>
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                        <Grid item xs={12} md={8}>
+                                                                            <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
+                                                                            <FormControl variant="outlined" className="w-100">
+                                                                                <TextField
+                                                                                    variant="outlined"
+                                                                                    multiline
+                                                                                    fullWidth
+                                                                                    rows="5"
+                                                                                    name="feedback"
+                                                                                    value={
+                                                                                        this.state.calificaciones[i] ? (
+                                                                                            this.state.calificaciones[i].feedback
+                                                                                        ) : ""
+                                                                                    }
+                                                                                    onInput={e => { this.asignarFeedback(e, i); }}
+                                                                                />
+                                                                            </FormControl>
+                                                                        </Grid>
+                                                                    </Grid>
                                                                 </Grid>
-                                                                <Grid item xs={12} md={4}>
-                                                                    <Typography variant="body1" className="mb-3"><strong>{t("calificacion")}</strong></Typography>
-                                                                    <FormControl variant="outlined" className="w-100">
-                                                                        <InputLabel htmlFor={`calificacion-${i}`}>{t("revision.seleccione-valor")}</InputLabel>
-                                                                        <Select
-                                                                            required
-                                                                            value={
-                                                                                this.state.calificaciones[i] ? (
-                                                                                    this.state.calificaciones[i].calificacion
-                                                                                ) : ""
-                                                                            }
-                                                                            onChange={e => { this.handleChange(e, i, pregunta.factor, pregunta.criterio); }}
-                                                                            input={<OutlinedInput name={`calificaciones-${i}`} id="calificacion"/>}
-                                                                        >
-                                                                            <MenuItem value={1}>1</MenuItem>
-                                                                            <MenuItem value={2}>2</MenuItem>
-                                                                            <MenuItem value={3}>3</MenuItem>
-                                                                            <MenuItem value={4}>4</MenuItem>
-                                                                        </Select>
-                                                                    </FormControl>
-                                                                </Grid>
-                                                                <Grid item xs={12} md={8}>
-                                                                    <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
-                                                                    <FormControl variant="outlined" className="w-100">
-                                                                        <TextField
-                                                                            variant="outlined"
-                                                                            multiline
-                                                                            fullWidth
-                                                                            rows="5"
-                                                                            name="feedback"
-                                                                            value={
-                                                                                this.state.calificaciones[i] ? (
-                                                                                    this.state.calificaciones[i].feedback
-                                                                                ) : ""
-                                                                            }
-                                                                            onInput={e => { this.asignarFeedback(e, i); }}
-                                                                        />
-                                                                    </FormControl>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Grid>
+                                                            ) : null
+                                                        }
                                                     </Grid>
                                                 </Paper>
                                             );
                                         })
                                     }
-                                    <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isCompletado}>{t("enviar")}</Button>
+                                    {
+                                        !this.props[0].location.state.shouldActivateViewingMode ? (
+                                            <Button variant="contained" color="primary" size="large" fullWidth onClick={this.enviar} disabled={!this.state.isCompletado}>{t("enviar")}</Button>
+                                        ) : null
+                                    }
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>
