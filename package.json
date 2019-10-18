@@ -18,6 +18,7 @@
     "node-polyglot": "^2.3.1",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.7.6",
+    "react-chop": "^0.1.2",
     "react-device-detect": "^1.9.10",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
