@@ -139,13 +139,17 @@ class Encuesta extends Component {
                             <Helmet>
                                 <title>{`${t("titulo.encuesta")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12} md={8}>
                                     <Typography variant="h5" className="mb-4 text-center">{t("encuestas.titulo")}</Typography>
@@ -156,46 +160,60 @@ class Encuesta extends Component {
                                             preguntas[this.state.factor - 1].map((pregunta, i) => (
                                                 <Paper className="p-4 mb-4" key={i}>
                                                     <Grid container spacing={3}>
-                                                        <Grid item xs={12} md={8} lg={9}>
+                                                        <Grid item xs={12} md={!this.props[0].location.state.shouldActivateViewingMode ? 8 : 12} lg={!this.props[0].location.state.shouldActivateViewingMode ? 9 : 12}>
                                                             <Typography className="w-100 pr-4" variant="body1">{pregunta}</Typography>
-                                                            <hr/>
                                                             {
-                                                                this.state.respuestas[i].evidencia.nombre !== "" ? (
-                                                                    <Typography variant="body2" className="mb-3">{t("encuestas.subido")}: <strong>{this.state.respuestas[i].evidencia.nombre}</strong></Typography>
+                                                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                                                    <React.Fragment>
+                                                                        <hr/>
+                                                                        {
+                                                                            this.state.respuestas[i].evidencia.nombre !== "" ? (
+                                                                                <Typography variant="body2" className="mb-3">{t("encuestas.subido")}: <strong>{this.state.respuestas[i].evidencia.nombre}</strong></Typography>
+                                                                            ) : null
+                                                                        }
+                                                                        <Button
+                                                                            variant="outlined"
+                                                                            color="primary"
+                                                                            component="label"
+                                                                            fullWidth
+                                                                        >
+                                                                            {t("encuestas.adjuntar")}
+                                                                            <input type="file" accept={this.state.formatosAceptados} onChange={e => { this.actualizarEvidencias(e, i); }} style={{ display: "none" }} />
+                                                                        </Button>
+                                                                    </React.Fragment>
                                                                 ) : null
                                                             }
-                                                            <Button
-                                                                variant="outlined"
-                                                                color="primary"
-                                                                component="label"
-                                                                fullWidth
-                                                            >
-                                                                {t("encuestas.adjuntar")}
-                                                                <input type="file" accept={this.state.formatosAceptados} onChange={e => { this.actualizarEvidencias(e, i); }} style={{ display: "none" }} />
-                                                            </Button>
                                                         </Grid>
-                                                        <Grid item xs={12} md={4} lg={3}>
-                                                            <Typography variant="body1" className="mb-2"><strong>{t("encuestas.asignar")}</strong></Typography>
-                                                            <FormControl variant="outlined" className="w-100">
-                                                                <Select
-                                                                    value={this.state.respuestas[i].nivel}
-                                                                    onChange={e => { this.handleRespuesta(e, i); }}
-                                                                    input={<OutlinedInput required 
-                                                                    name="rolSeleccionado"/>}
-                                                                >
-                                                                    <MenuItem value={1}>{t("encuestas.no-iniciado")}</MenuItem>
-                                                                    <MenuItem value={2}>{t("encuestas.estado-inicial")}</MenuItem>
-                                                                    <MenuItem value={3}>{t("encuestas.desarrollo")}</MenuItem>
-                                                                    <MenuItem value={4}>{t("encuestas.establecido")}</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                        </Grid>
+                                                        {
+                                                            !this.props[0].location.state.shouldActivateViewingMode ? (
+                                                                <Grid item xs={12} md={4} lg={3}>
+                                                                    <Typography variant="body1" className="mb-2"><strong>{t("encuestas.asignar")}</strong></Typography>
+                                                                    <FormControl variant="outlined" className="w-100">
+                                                                        <Select
+                                                                            value={this.state.respuestas[i].nivel}
+                                                                            onChange={e => { this.handleRespuesta(e, i); }}
+                                                                            input={<OutlinedInput required 
+                                                                            name="rolSeleccionado"/>}
+                                                                        >
+                                                                            <MenuItem value={1}>{t("encuestas.no-iniciado")}</MenuItem>
+                                                                            <MenuItem value={2}>{t("encuestas.estado-inicial")}</MenuItem>
+                                                                            <MenuItem value={3}>{t("encuestas.desarrollo")}</MenuItem>
+                                                                            <MenuItem value={4}>{t("encuestas.establecido")}</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                </Grid>
+                                                            ) : null
+                                                        }
                                                     </Grid>
                                                 </Paper>
                                             ))
                                          ) : null
                                     }
-                                    <Button variant="contained" color="primary" onClick={this.enviar} size="large" fullWidth className="mt-4" disabled={!this.state.isFinished}>{t("enviar")}</Button>
+                                    {
+                                        !this.props[0].location.state.shouldActivateViewingMode ? (
+                                            <Button variant="contained" color="primary" onClick={this.enviar} size="large" fullWidth className="mt-4" disabled={!this.state.isFinished}>{t("enviar")}</Button>
+                                        ) : null
+                                    }
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.isEnviado}>

@@ -24,7 +24,7 @@ import pasos from "../../models/pasos";
 import cursos from "../../models/cursos";
 import { docentesCargados } from "../../models/perfiles";
 
-class DashboardExtablecimientoEducativo extends Component {
+class DashboardEstablecimientoEducativo extends Component {
     constructor() {
         super();
         
@@ -177,11 +177,12 @@ class DashboardExtablecimientoEducativo extends Component {
                                                         </div>
                                                         <div className="d-flex align-items-center justify-content-start justify-content-lg-end">
                                                             <Link to={{
-                                                                pathname: "/encuesta",
+                                                                pathname: `/${t("link.encuesta")}`,
                                                                 state: {
-                                                                    factor: encuesta.factor
+                                                                    factor: encuesta.factor,
+                                                                    shouldActivateViewingMode: this.props.isInViewingMode ? true : false
                                                                 }
-                                                            }}>
+                                                            }} style={{textDecoration: "none"}}>
                                                                 <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>
                                                             </Link>
                                                             <Typography variant="body1" className="mx-3">{t("o")}</Typography>
@@ -353,4 +354,4 @@ class DashboardExtablecimientoEducativo extends Component {
     }
 }
 
-export default DashboardExtablecimientoEducativo;
+export default DashboardEstablecimientoEducativo;

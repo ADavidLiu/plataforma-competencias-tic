@@ -3,6 +3,13 @@ body {
     overflow-x: hidden;
 }
 
+@media screen and (max-width: 600px) {
+    html,
+    body {
+        font-size: 3.5vw;
+    }
+}
+
 main {
     position: relative;
 }

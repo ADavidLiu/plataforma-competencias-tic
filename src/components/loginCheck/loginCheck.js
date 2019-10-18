@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
-
 import { StickyContainer, Sticky } from "react-sticky";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { isMobile } from "react-device-detect";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,8 +12,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Fab from "@material-ui/core/Fab";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -364,25 +363,36 @@ class LoginCheck extends Component {
                                 <Container component="main" className="pt-5" id="top">
                                     {
                                         this.state.isInViewingMode ? (
-                                            <Sticky>
-                                                {
-                                                    ({style}) => (
-                                                        <div style={{
-                                                            ...style,
-                                                            zIndex: 1
-                                                        }} className="pt-5">
-                                                            <Paper className="p-3" style={{backgroundColor: "#009A9C"}}>
-                                                                <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
-                                                                    <Typography variant="body1" className="mb-3 mb-md-0" style={{color: "#ffffff"}}><strong>{t("visualizacion.titulo")}</strong></Typography>
-                                                                    <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
-                                                                        <Button className="w-100 w-md-auto" size="medium" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}><strong>{t("visualizacion.btn")}</strong></Button>
-                                                                    </Link>
-                                                                </div>
-                                                            </Paper>
-                                                        </div>
-                                                    )
-                                                }
-                                            </Sticky>
+                                            isMobile ? (
+                                                <Paper className="p-3 mt-5" style={{backgroundColor: "#009A9C"}}>
+                                                    <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
+                                                        <Typography variant="body1" className="mb-3 mb-md-0" style={{color: "#ffffff"}}><strong>{t("visualizacion.titulo")}</strong></Typography>
+                                                        <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
+                                                            <Button className="w-100 w-md-auto" size="medium" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}><strong>{t("visualizacion.btn")}</strong></Button>
+                                                        </Link>
+                                                    </div>
+                                                </Paper>
+                                            ) : (
+                                                <Sticky>
+                                                    {
+                                                        ({style}) => (
+                                                            <div style={{
+                                                                ...style,
+                                                                zIndex: 1
+                                                            }} className="mt-5 mt-md-0 pt-5">
+                                                                <Paper className="p-3" style={{backgroundColor: "#009A9C"}}>
+                                                                    <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
+                                                                        <Typography variant="body1" className="mb-3 mb-md-0" style={{color: "#ffffff"}}><strong>{t("visualizacion.titulo")}</strong></Typography>
+                                                                        <Link to="/" style={{textDecoration: "none"}} onClick={this.resetViewingMode}>
+                                                                            <Button className="w-100 w-md-auto" size="medium" variant="contained" style={{color: "#009A9C", backgroundColor: "#ffffff"}}><strong>{t("visualizacion.btn")}</strong></Button>
+                                                                        </Link>
+                                                                    </div>
+                                                                </Paper>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </Sticky>
+                                            )
                                         ) : null
                                     }
                                     <div className="py-5 pb-md-5 pt-md-0">

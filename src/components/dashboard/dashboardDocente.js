@@ -411,7 +411,8 @@ class DashboardDocente extends Component {
                                                         <Link to={{
                                                             pathname: `/${t("link.encuesta")}`,
                                                             state: {
-                                                                factor: encuesta.factor
+                                                                factor: encuesta.factor,
+                                                                shouldActivateViewingMode: this.props.isInViewingMode ? true : false
                                                             }
                                                         }} style={{"textDecoration": "none"}}>
                                                             <Button color="primary" variant="contained" size="large">{t("dashboardEE.responder")}</Button>

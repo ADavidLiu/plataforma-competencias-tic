@@ -178,7 +178,7 @@ class EntrevistaRevision extends Component {
                                                     return (
                                                         <Paper key={i} className="p-4 mb-4">
                                                             <Grid container spacing={5}>
-                                                                <Grid item xs={12} sm={8} md={9}>
+                                                                <Grid item xs={12} sm={!this.props[0].location.state.shouldActivateViewingMode ? 8 : 12} md={!this.props[0].location.state.shouldActivateViewingMode ? 9 : 12}>
                                                                     <Typography variant="body1" className="mb-3"><strong>{t("descriptores")}:</strong> {pregunta.descriptores.map(descriptor => "• " + descriptor)}</Typography>
                                                                     <Typography variant="body1" className="mb-3"><strong>{t("definicion")}:</strong> {pregunta.definicion}</Typography>
                                                                     <Typography variant="body1" className="mb-3"><strong>{t("revision.entrevista-respuesta-original")}:</strong> {pregunta.respuestaOriginal}</Typography>
