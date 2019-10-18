@@ -349,6 +349,7 @@ const es = {
         "configuracion.formatos": "Formatos permitidos para cargar archivos",
         "configuracion.formatos-actuales": "Formatos actuales:",
         "configuracion.tamanio-archivos": "Tamaño máximo para archivos cargados (Bytes)",
+        "configuracion.sitekey": "Google reCAPTCHA sitekey",
         "configuracion.encuestas": "Responder encuestas por",
         "configuracion.encuestas-institucion": "Institución",
         "configuracion.encuestas-sedes": "Sedes / Establecimientos",

@@ -52,8 +52,10 @@ class Configuracion extends Component {
             parametrosPlataforma: {
                 nuevoFormato: "",
                 formatosActuales: [".pdf", ".jpg", ".png", ".xlsx", ".xlsm", ".doc", ".docx", ".mp4", ".mp3"],
-                tamanioArchivosBytes: 5000
+                tamanioArchivosBytes: 5000,
+                recaptchaSitekey: "Officiaelitveniamcommodoeiusmodaliquip",
             },
+            mostrarRecaptchaSitekey: false,
             imgPerfil: {
                 file: "",
                 src: "https://via.placeholder.com/500",
@@ -64,6 +66,7 @@ class Configuracion extends Component {
             mostrarContrasenia: false,
             isEditandoInfoCuenta: false,
             isEditandoInfoPersonal: false,
+            isEditandoInfoPlataforma: false,
             isEliminarChecked: false,
             isCuentaEliminada: false,
             docente: {
@@ -187,6 +190,12 @@ class Configuracion extends Component {
             isEditandoInfoPersonal: !this.state.isEditandoInfoPersonal
         });
     }
+    
+    toggleEditingPlatformData = () => {
+        this.setState({
+            isEditandoInfoPlataforma: !this.state.isEditandoInfoPlataforma
+        });
+    }
 
     actualizarInfoCuenta = () => {
         this.toggleEditingAccountData();
@@ -199,6 +208,12 @@ class Configuracion extends Component {
 
         /* Enviar al backend los datos nuevos del estado correspondiente */
     }
+    
+    actualizarInfoPlataforma = () => {
+        this.toggleEditingPlatformData();
+
+        /* Enviar al backend los datos nuevos del estado correspondiente */
+    }
 
     handleClickMostrarContrasenia = () => {
         this.setState({
@@ -207,6 +222,16 @@ class Configuracion extends Component {
     }
 
     handleMouseDownMostrarContrasenia = e => {
+        e.preventDefault();
+    }
+    
+    handleClickMostrarRecaptchaSitekey = () => {
+        this.setState({
+            mostrarRecaptchaSitekey: !this.state.mostrarRecaptchaSitekey
+        });
+    }
+
+    handleMouseDownMostrarRecaptchaSitekey = e => {
         e.preventDefault();
     }
 
@@ -331,15 +356,17 @@ class Configuracion extends Component {
     }
 
     borrarFormato = index => {
-        const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
-        nuevosFormatos.splice(index, 1);
-
-        this.setState({
-            parametrosPlataforma: {
-                ...this.state.parametrosPlataforma,
-                formatosActuales: nuevosFormatos
-            }
-        });
+        if (this.state.isEditandoInfoPlataforma) {
+            const nuevosFormatos = [...this.state.parametrosPlataforma.formatosActuales];
+            nuevosFormatos.splice(index, 1);
+    
+            this.setState({
+                parametrosPlataforma: {
+                    ...this.state.parametrosPlataforma,
+                    formatosActuales: nuevosFormatos
+                }
+            });   
+        }
     }
 
     render() {
@@ -882,6 +909,9 @@ class Configuracion extends Component {
                                                 <Typography variant="h6" className="mr-4">
                                                     {t("configuracion.parametros-plataforma")}
                                                 </Typography>
+                                                <IconButton color="primary" onClick={this.toggleEditingPlatformData}>
+                                                    <Edit color="primary"/>
+                                                </IconButton>
                                             </div>
                                             <hr/>
                                         </Grid>
@@ -901,6 +931,7 @@ class Configuracion extends Component {
                                                             fullWidth
                                                             value={this.state.parametrosPlataforma.nuevoFormato}
                                                             onInput={this.handleChangeParametrosPlataforma}
+                                                            disabled={!this.state.isEditandoInfoPlataforma}
                                                             endAdornment={
                                                                 <InputAdornment position="end">
                                                                     <IconButton
@@ -934,6 +965,7 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            disabled={!this.state.isEditandoInfoPlataforma}
                                                             type="number"
                                                             variant="outlined"
                                                             required
@@ -943,6 +975,46 @@ class Configuracion extends Component {
                                                             onInput={this.handleChangeParametrosPlataforma}
                                                         />
                                                     </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={5} alignItems="center">
+                                                <Grid item xs={6}>
+                                                    <Typography variant="subtitle2" className="mr-4 mt-1 mt-md-3">
+                                                        {t("configuracion.sitekey")}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControl variant="outlined" className="w-100">
+                                                        <OutlinedInput
+                                                            id="recaptchaSitekey"
+                                                            type={this.state.mostrarRecaptchaSitekey ? 'text' : 'password'}
+                                                            value={this.state.parametrosPlataforma.recaptchaSitekey}
+                                                            onChange={this.handleChangeParametrosPlataforma}
+                                                            disabled={!this.state.isEditandoInfoPlataforma}
+                                                            endAdornment={
+                                                                <InputAdornment position="end">
+                                                                    <IconButton
+                                                                        aria-label="toggle password visibility"
+                                                                        onClick={this.handleClickMostrarRecaptchaSitekey}
+                                                                        onMouseDown={this.handleMouseDownMostrarRecaptchaSitekey}
+                                                                    >
+                                                                        {this.state.mostrarRecaptchaSitekey ? <Visibility /> : <VisibilityOff />}
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            }
+                                                        />
+                                                    </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={5}>
+                                                <Grid item xs={12}>
+                                                    <div className="d-flex align-items-center justify-content-end">
+                                                        {
+                                                            this.state.isEditandoInfoPlataforma ? (
+                                                                <Button size="large" color="primary" variant="contained" onClick={this.actualizarInfoPlataforma}>{t("usuarios.btn-guardar")}</Button>
+                                                            ) : ""
+                                                        }
+                                                    </div>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -957,6 +1029,9 @@ class Configuracion extends Component {
                                                 <Typography variant="h6" className="mr-4">
                                                     {t("configuracion.parametros-plataforma")}
                                                 </Typography>
+                                                <IconButton color="primary" onClick={this.toggleEditingPlatformData}>
+                                                    <Edit color="primary"/>
+                                                </IconButton>
                                             </div>
                                             <hr/>
                                         </Grid>
@@ -970,6 +1045,7 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <Select
+                                                            disabled={!this.state.isEditandoInfoPlataforma}
                                                             value={this.state.tipoEncuestas}
                                                             onChange={this.handleChange}
                                                             input={<OutlinedInput required 
@@ -979,6 +1055,17 @@ class Configuracion extends Component {
                                                             <MenuItem value="sedes">{t("configuracion.encuestas-sedes")}</MenuItem>
                                                         </Select>
                                                     </FormControl>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid container spacing={5}>
+                                                <Grid item xs={12}>
+                                                    <div className="d-flex align-items-center justify-content-end">
+                                                        {
+                                                            this.state.isEditandoInfoPlataforma ? (
+                                                                <Button size="large" color="primary" variant="contained" onClick={this.actualizarInfoPlataforma}>{t("usuarios.btn-guardar")}</Button>
+                                                            ) : ""
+                                                        }
+                                                    </div>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
