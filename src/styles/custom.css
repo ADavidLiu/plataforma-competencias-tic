@@ -148,11 +148,20 @@ main:before {
     max-width: 450px;
 }
 
+.instrumento-preentrevista {
+    height: 80vh;
+    overflow: auto;
+}
+
 @media screen and (max-width: 600px) {
     .MuiSnackbar-root {
         bottom: 16px !important;
         left: 16px !important;
         width: 50%;
+    }
+
+    .instrumento-preentrevista {
+        height: 65vh;
     }
 }
 
