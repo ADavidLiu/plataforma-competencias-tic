@@ -169,7 +169,13 @@ class LoginCheck extends Component {
     }
 
     actualizarLogeado = nuevoEstado => {
+        let newIsInViewingMode = this.state.isInViewingMode;
+        if (!nuevoEstado) {
+            newIsInViewingMode = false;
+        }
+
         this.setState({
+            isInViewingMode: newIsInViewingMode,
             isLogeado: nuevoEstado
         });
     }
@@ -224,7 +230,7 @@ class LoginCheck extends Component {
                                                     <React.Fragment>
                                                     <div className="d-flex align-items-center justify-content-end flex-grow-1 flex-md-column justify-content-md-center navbar-icons">
                                                         <Tooltip title="Inicio" placement="right">
-                                                            <Link to="/" onClick={this.resetViewingMode}>
+                                                            <Link to="/">
                                                                 <IconButton style={{ color: "#ffffff" }}>
                                                                     <Home/>
                                                                 </IconButton>

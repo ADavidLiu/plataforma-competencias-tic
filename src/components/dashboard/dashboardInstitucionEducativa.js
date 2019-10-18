@@ -69,7 +69,7 @@ class DashboardInstitucionEducativa extends Component {
     componentDidMount = () => {
         let infoCargada = {};
 
-        if (this.props[0].location.state) {
+        if (this.props[0] && this.props[0].location.state) {
             if (this.props[0].location.state.shouldActivateViewingMode) {
                 this.props.updateIsInViewingMode(true, "INSTITUCION");
             }
