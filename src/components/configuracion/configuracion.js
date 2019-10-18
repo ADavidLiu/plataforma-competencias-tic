@@ -1072,41 +1072,47 @@ class Configuracion extends Component {
                                     </React.Fragment>
                                 ) : null
                             }
-                            <Grid item xs={12} className="mb-5">
-                                <hr />
-                            </Grid>
-                            <Paper className="p-5 w-100">
-                                <Grid item xs={12}>
-                                    <Typography variant="h6" className="mr-4" color="secondary">
-                                        {t("configuracion.label-eliminar")}
-                                    </Typography>
-                                    <hr/>
-                                </Grid>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        <Grid container spacing={5} alignItems="center">
-                                            <Grid item xs={12} md={6}>
-                                                <Typography variant="body1" className="mr-4 mb-2">
-                                                    <strong>{t("configuracion.label-eliminar-confirmacion")}</strong>
-                                                </Typography>
-                                                <Typography variant="body1" className="mr-4">
-                                                    {t("configuracion.label-eliminar-confirmacion-2")}
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} md={6} className="d-flex flex-column justify-content-end">
-                                                <FormControlLabel
-                                                    control={<Checkbox style={{color: "#e53935"}} onChange={this.handleEliminarCheck} color="primary" 
-                                                    checked={this.state.isEliminarChecked} name="isEliminarChecked" />}
-                                                    label={<Typography variant="subtitle2" color="secondary">{t("configuracion.label-radio")}</Typography>}
-                                                />
-                                                <Button disabled={!this.state.isEliminarChecked} onClick={this.eliminarCuenta} fullWidth color="secondary" variant="outlined">
-                                                    {t("configuracion.label-btn-eliminar")}
-                                                </Button>
-                                            </Grid>
+                            {
+                                !this.props.isInViewingMode ? (
+                                    <React.Fragment>
+                                        <Grid item xs={12} className="mb-5">
+                                            <hr />
                                         </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Paper>
+                                        <Paper className="p-5 w-100">
+                                            <Grid item xs={12}>
+                                                <Typography variant="h6" className="mr-4" color="secondary">
+                                                    {t("configuracion.label-eliminar")}
+                                                </Typography>
+                                                <hr/>
+                                            </Grid>
+                                            <Grid container>
+                                                <Grid item xs={12}>
+                                                    <Grid container spacing={5} alignItems="center">
+                                                        <Grid item xs={12} md={6}>
+                                                            <Typography variant="body1" className="mr-4 mb-2">
+                                                                <strong>{t("configuracion.label-eliminar-confirmacion")}</strong>
+                                                            </Typography>
+                                                            <Typography variant="body1" className="mr-4">
+                                                                {t("configuracion.label-eliminar-confirmacion-2")}
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12} md={6} className="d-flex flex-column justify-content-end">
+                                                            <FormControlLabel
+                                                                control={<Checkbox style={{color: "#e53935"}} onChange={this.handleEliminarCheck} color="primary" 
+                                                                checked={this.state.isEliminarChecked} name="isEliminarChecked" />}
+                                                                label={<Typography variant="subtitle2" color="secondary">{t("configuracion.label-radio")}</Typography>}
+                                                            />
+                                                            <Button disabled={!this.state.isEliminarChecked} onClick={this.eliminarCuenta} fullWidth color="secondary" variant="outlined">
+                                                                {t("configuracion.label-btn-eliminar")}
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Paper>
+                                    </React.Fragment>
+                                ) : null
+                            }
                         </Grid>
                     )
                 }
