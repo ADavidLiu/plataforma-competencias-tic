@@ -148,7 +148,7 @@ main:before {
     max-width: 450px;
 }
 
-.instrumento-preentrevista {
+.instrumento-viewer {
     height: 80vh;
     overflow: auto;
 }
@@ -160,7 +160,7 @@ main:before {
         width: 50%;
     }
 
-    .instrumento-preentrevista {
+    .instrumento-viewer {
         height: 65vh;
     }
 }
