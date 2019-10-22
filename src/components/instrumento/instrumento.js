@@ -86,7 +86,6 @@ class Instrumento extends Component {
             divisionMostrada: 0,
             isLoading: true,
             didDataChange: false,
-            shouldEnableVisibilitySensor: false,
             active: {
                 category: "descriptores",
                 index: 0
@@ -119,22 +118,7 @@ class Instrumento extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        /* this.state.virtualListsRefs.preentrevista.forEach(ref => {
-            console.log(ref);
-            if (ref !== null) {
-                console.log("Recomputed!");
-                ref.recomputeSizes();
-            }
-        }); */
-        
         if (prevState.dataActual !== this.state.dataActual) {
-            /* this.state.virtualListsRefs.preentrevista.forEach(ref => {
-                if (ref !== null) {
-                    console.log("Recomputed!");
-                    ref.recomputeSizes();
-                }
-            }); */
-
             if (equals(this.state.dataActual, dataBackup)) {
                 this.setState({
                     didDataChange: false
@@ -152,14 +136,12 @@ class Instrumento extends Component {
             dataActual: dataBackup,
             divisionMostrada: newValue,
             isLoading: true,
-            didDataChange: false,
-            shouldEnableVisibilitySensor: false
+            didDataChange: false
         });
 
         const timeout = setTimeout(() => {
             this.setState({
-                isLoading: false,
-                shouldEnableVisibilitySensor: true
+                isLoading: false
             });
             clearTimeout(timeout);
         }, 1000);
@@ -262,13 +244,20 @@ class Instrumento extends Component {
                 [categoria]: elementosActualizados
             }
         }, () => {
-            elementosActualizados[index.i].pop();
-            this.setState({
-                dataActual: {
-                    ...this.state.dataActual,
-                    [categoria]: elementosActualizados
+            if (categoria === "preentrevista") {
+                if (typeof index === "object") {
+                    elementosActualizados[index.i].pop();
+                } else {
+                    elementosActualizados[index].pop();
                 }
-            });
+
+                this.setState({
+                    dataActual: {
+                        ...this.state.dataActual,
+                        [categoria]: elementosActualizados
+                    }
+                });
+            }
         });
     }
 
@@ -361,8 +350,16 @@ class Instrumento extends Component {
 
         if (typeof this.state.indexNewRespuestaValue === "object") {
             newElementos[this.state.indexNewRespuestaValue.i][this.state.indexNewRespuestaValue.j].options.push(this.state.newRespuestaValue);
+
+            if (this.state.active.category === "preentrevista") {
+                newElementos[this.state.indexNewRespuestaValue.i].push("");
+            }
         } else {
             newElementos[this.state.indexNewRespuestaValue].opciones.push(this.state.newRespuestaValue);
+            
+            if (this.state.active.category === "preentrevista") {
+                newElementos[this.state.indexNewRespuestaValue].push("");
+            }
         }
 
         this.setState({
@@ -371,6 +368,21 @@ class Instrumento extends Component {
                 [this.state.active.category]: newElementos
             },
             newRespuestaValue: ""
+        }, () => {
+            if (this.state.active.category === "preentrevista") {
+                if (typeof this.state.indexNewRespuestaValue === "object") {
+                    newElementos[this.state.indexNewRespuestaValue.i].pop();
+                } else {
+                    newElementos[this.state.indexNewRespuestaValue].pop();
+                }
+
+                this.setState({
+                    dataActual: {
+                        ...this.state.dataActual,
+                        [this.state.active.category]: newElementos
+                    }
+                });
+            }
         });
     }
 
@@ -383,6 +395,7 @@ class Instrumento extends Component {
                 break;
             case "preentrevista":
                 newElementos[index.i][index.j].options.splice(index.k, 1);
+                newElementos[index.i].push("");
                 break;
             default:
                 break;
@@ -392,6 +405,16 @@ class Instrumento extends Component {
             dataActual: {
                 ...this.state.dataActual,
                 [categoria]: newElementos
+            }
+        }, () => {
+            if (categoria === "preentrevista") {
+                newElementos[index.i].pop();
+                this.setState({
+                    dataActual: {
+                        ...this.state.dataActual,
+                        [categoria]: newElementos
+                    }
+                });
             }
         });
     }
