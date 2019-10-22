@@ -602,7 +602,8 @@ class DashboardDocente extends Component {
                                     <Link to={{
                                         pathname: `/${t("link.registro")}`,
                                         state: {
-                                            tipoUsuario: "DOCENTE"
+                                            tipoUsuario: "DOCENTE",
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -617,7 +618,8 @@ class DashboardDocente extends Component {
                                     <Link to={{
                                         pathname: `/${t("link.prueba")}`,
                                         state: {
-                                            tipoUsuario: "DOCENTE"
+                                            tipoUsuario: "DOCENTE",
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -632,7 +634,8 @@ class DashboardDocente extends Component {
                                     <Link to={{
                                         pathname: `/${t("link.practica")}`,
                                         state: {
-                                            tipoUsuario: "DOCENTE"
+                                            tipoUsuario: "DOCENTE",
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -647,7 +650,8 @@ class DashboardDocente extends Component {
                                     <Link to={{
                                         pathname: `/${t("link.preentrevista")}`,
                                         state: {
-                                            tipoUsuario: "DOCENTE"
+                                            tipoUsuario: "DOCENTE",
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -662,7 +666,8 @@ class DashboardDocente extends Component {
                                     <Link to={{
                                         pathname: `/${t("link.entrevista")}`,
                                         state: {
-                                            tipoUsuario: "DOCENTE"
+                                            tipoUsuario: "DOCENTE",
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button

@@ -320,9 +320,10 @@ class Procesos extends Component {
                                                         <Grid container spacing={3}>
                                                             <Grid item xs={12}>
                                                                 <Link to={{
-                                                                    pathname: "/prueba",
+                                                                    pathname: `/${t("link.prueba")}`,
                                                                     state: {
-                                                                        tipoUsuario: "DOCENTE"
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: true
                                                                     }
                                                                 }} style={{textDecoration: "none"}}>
                                                                     <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
@@ -350,7 +351,8 @@ class Procesos extends Component {
                                                                 <Link to={{
                                                                     pathname: `/${t("link.practica")}`,
                                                                     state: {
-                                                                        tipoUsuario: "DOCENTE"
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateIsInViewingMode: true
                                                                     }
                                                                 }} style={{textDecoration: "none"}}>
                                                                     <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
@@ -372,7 +374,8 @@ class Procesos extends Component {
                                                                 <Link to={{
                                                                     pathname: `/${t("link.preentrevista")}`,
                                                                     state: {
-                                                                        tipoUsuario: "DOCENTE"
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateIsInViewingMode: true
                                                                     }
                                                                 }} style={{textDecoration: "none"}}>
                                                                     <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">
@@ -398,7 +401,8 @@ class Procesos extends Component {
                                                                 <Link to={{
                                                                     pathname: `/${t("link.entrevista")}`,
                                                                     state: {
-                                                                        tipoUsuario: "DOCENTE"
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateIsInViewingMode: true
                                                                     }
                                                                 }} style={{textDecoration: "none"}}>
                                                                     <Button color="primary" variant="contained" className="d-inline-flex align-items-center justify-content-start">

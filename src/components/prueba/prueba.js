@@ -268,16 +268,18 @@ class Prueba extends Component {
 
         let duracion = this.state.tiempoDisponible;
 
-        this.countdown = setInterval(() => {
-            const tempTime = moment.duration(duracion);
-            const nuevoTiempoRestante = `${tempTime.hours()}:${tempTime.minutes()}:${tempTime.seconds()}`;
-
-            this.setState({
-                tiempoRestante: nuevoTiempoRestante
-            });
-
-            duracion -= 1000;
-        }, 1000);
+        if (!this.props[0].location.state.shouldActivateViewingMode) {
+            this.countdown = setInterval(() => {
+                const tempTime = moment.duration(duracion);
+                const nuevoTiempoRestante = `${tempTime.hours()}:${tempTime.minutes()}:${tempTime.seconds()}`;
+    
+                this.setState({
+                    tiempoRestante: nuevoTiempoRestante
+                });
+    
+                duracion -= 1000;
+            }, 1000);
+        }
 
         this.tiempoLimite = setTimeout(() => {
             this.revisarRespuestas();
@@ -359,7 +361,7 @@ class Prueba extends Component {
     }
 
     render() {
-        if ((this.props.location && this.props.location.state === undefined) || this.state.shouldRedirect) {
+        if ((this.props[0].location && this.props[0].location.state === undefined) || (this.props.location && this.props.location.state === undefined) || this.state.shouldRedirect) {
             return <Redirect to="/" />
         }
 
@@ -371,13 +373,17 @@ class Prueba extends Component {
                             <Helmet>
                                 <title>{`${t("procesoPaso.1")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isPruebaTerminada}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir guardar onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isPruebaTerminada}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir guardar onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container justify="center" className="pb-5">
                                 <Grid item xs={12} sm={10} md={8}>
                                     <form>
@@ -432,20 +438,24 @@ class Prueba extends Component {
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
-                                                <Grid item xs={12}>
-                                                    <Button
-                                                        type="submit"
-                                                        fullWidth
-                                                        variant="contained"
-                                                        color="primary"
-                                                        className="mt-2"
-                                                        size="large"
-                                                        onClick={this.revisarRespuestas}
-                                                        disabled={!this.state.isRespondidoCompleto}
-                                                    >
-                                                        {t("prueba.btn-enviar")}
-                                                    </Button>
-                                                </Grid>
+                                                {
+                                                    !this.props[0].location.state.shouldActivateViewingMode ? (
+                                                        <Grid item xs={12}>
+                                                            <Button
+                                                                type="submit"
+                                                                fullWidth
+                                                                variant="contained"
+                                                                color="primary"
+                                                                className="mt-2"
+                                                                size="large"
+                                                                onClick={this.revisarRespuestas}
+                                                                disabled={!this.state.isRespondidoCompleto}
+                                                            >
+                                                                {t("prueba.btn-enviar")}
+                                                            </Button>
+                                                        </Grid>
+                                                    ) : null
+                                                }
                                             </React.Fragment>
                                         )}
                                     </form>
@@ -466,15 +476,19 @@ class Prueba extends Component {
                                     <Button color="primary" onClick={this.terminarPrueba}>{t("prueba.btn-volver-inicio")}</Button>
                                 </DialogActions>
                             </Dialog>
-                            <Snackbar
-                                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                                key="tiempo-restante"
-                                open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
-                                ContentProps={{ 'aria-describedby': 'message-id' }}
-                                message={<span>{t("prueba.label-tiempo")} {this.state.tiempoRestante}</span>}
-                            />
                             {
-                                this.state.isPruebaIniciada ? (
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <Snackbar
+                                        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                                        key="tiempo-restante"
+                                        open={!this.state.isPruebaTerminada && this.state.isPruebaIniciada}
+                                        ContentProps={{ 'aria-describedby': 'message-id' }}
+                                        message={<span>{t("prueba.label-tiempo")} {this.state.tiempoRestante}</span>}
+                                    />
+                                ) : null
+                            }
+                            {
+                                this.state.isPruebaIniciada && !this.props[0].location.state.shouldActivateViewingMode ? (
                                     <Tooltip title={t("prueba.pausar")} placement="left">
                                         <Fab color="primary" onClick={this.pausarPrueba} className="prueba-fab fab">
                                             <Save fontSize="small"/>
