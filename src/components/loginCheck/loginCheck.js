@@ -26,10 +26,10 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import PlaylistAddCheck from '@material-ui/icons/PlaylistAddCheck';
 import Layers from "@material-ui/icons/Layers";
 import Assignment from "@material-ui/icons/Assignment";
-import Build from "@material-ui/icons/Build";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import YoutubeSearchedFor from "@material-ui/icons/YoutubeSearchedFor";
 import Help from "@material-ui/icons/Help";
-import Book from "@material-ui/icons/Book";
+import CollectionsBookmark from "@material-ui/icons/CollectionsBookmark";
 
 import Registro from "../registro/registro";
 import Login from "../login/login";
@@ -251,7 +251,7 @@ class LoginCheck extends Component {
                                                                         <IconButton style={{
                                                                             color: "#ffffff"
                                                                         }}>
-                                                                            <Build fontSize="small"/>
+                                                                            <LibraryBooks fontSize="small"/>
                                                                         </IconButton>
                                                                     </Link>
                                                                 </Tooltip>
@@ -274,7 +274,7 @@ class LoginCheck extends Component {
                                                                             <IconButton style={{
                                                                                 color: "#ffffff"
                                                                             }}>
-                                                                                <Book fontSize="small"/>
+                                                                                <CollectionsBookmark fontSize="small"/>
                                                                             </IconButton>
                                                                         </Link>
                                                                     </Tooltip>
