@@ -693,7 +693,7 @@ class Registro extends Component {
                             <hr className="my-4"/>
                             <div className="text-center">
                                 <Typography variant="body2">{t("registro.login")}</Typography>
-                                <Link to="/login">
+                                <Link to={`/${t("link.login")}`} color="primary" style={{color:"#009A9C"}}>
                                     <Typography variant="body2" color="primary"><strong>{t("registro.login-link")}</strong></Typography>
                                 </Link>
                             </div>

@@ -120,7 +120,7 @@ class Login extends Component {
                                 >
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <form onSubmit={this.login}>
+                                            <form className="mb-3" onSubmit={this.login}>
                                                 <TextField
                                                     variant="outlined"
                                                     margin="normal"
@@ -159,9 +159,12 @@ class Login extends Component {
                                                     {t("login.btn")}
                                                 </Button>
                                             </form>
+                                            <Link color="primary" to={t("link.recuperacion-datos")} style={{color:"#009A9C"}}>
+                                                <Typography color="primary" component="small" variant="body2">{t("login.no-recuerda")}</Typography>
+                                            </Link>
                                             <hr className="my-4"/>
                                             <Typography variant="body2">{t("login.registro")}</Typography>
-                                            <Link to="/registro">
+                                            <Link to={`/${t("link.registro")}`} style={{color:"#009A9C"}}>
                                                 <Typography variant="body2" color="primary"><strong>{t("login.registro-link")}</strong></Typography>
                                             </Link>
                                         </Grid>

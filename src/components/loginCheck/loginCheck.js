@@ -61,6 +61,7 @@ import Instrumento from "../instrumento/instrumento";
 import Ayuda from "../ayuda/ayuda";
 import Encuesta from "../encuesta/encuesta";
 import Cursos from "../cursos/cursos";
+import RecuperacionDatos from "../recuperacionDatos/recuperacionDatos";
 
 class LoginCheck extends Component {
     constructor() {
@@ -69,7 +70,7 @@ class LoginCheck extends Component {
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
         this.tipoPerfil = "SUPERADMIN";
         this.state = {
-            isLogeado: true,
+            isLogeado: false,
             isPrimerIngreso: false,
             locale: "es",
             tipo: this.tipoPerfil,
@@ -384,7 +385,7 @@ class LoginCheck extends Component {
                                                         ({style}) => (
                                                             <div style={{
                                                                 ...style,
-                                                                zIndex: 1
+                                                                zIndex: 2
                                                             }} className="mt-5 mt-md-0 pt-5">
                                                                 <Paper className="p-3" style={{backgroundColor: "#009A9C"}}>
                                                                     <div className="d-md-flex align-items-center justify-content-between text-center text-md-left">
@@ -417,6 +418,7 @@ class LoginCheck extends Component {
                                             <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login {...routeProps} actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
                                             <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
                                             <Route path={`/${t("link.ayuda")}`} component={Ayuda}/>
+                                            <Route path={`/${t("link.recuperacion-datos")}`} render={(...routeProps) => <RecuperacionDatos userType={this.state.tipo} userID={this.state.id}/>}/>
                                             {
                                                 this.state.isLogeado ? (
                                                     this.state.isPrimerIngreso ? (

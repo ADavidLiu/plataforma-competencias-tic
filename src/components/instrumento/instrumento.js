@@ -44,6 +44,9 @@ import ChopList from "react-chop";
 import { DVL } from "react-dynamic-virtual-list";
 import shortid from "shortid";
 
+import VisibilitySensor from "react-visibility-sensor";
+import handleViewport from "react-in-viewport";
+
 import { equals } from "equally";
 import df from "deeply-freeze";
 
@@ -88,6 +91,7 @@ class Instrumento extends Component {
             divisionMostrada: 0,
             isLoading: true,
             didDataChange: false,
+            shouldEnableVisibilitySensor: false,
             active: {
                 category: "descriptores",
                 index: 0
@@ -120,23 +124,21 @@ class Instrumento extends Component {
     }
 
     componentDidUpdate = (prevProps, prevState) => {
-        this.state.virtualListsRefs.preentrevista.forEach(ref => {
+        /* this.state.virtualListsRefs.preentrevista.forEach(ref => {
             console.log(ref);
             if (ref !== null) {
                 console.log("Recomputed!");
                 ref.recomputeSizes();
             }
-        });
+        }); */
         
         if (prevState.dataActual !== this.state.dataActual) {
-            this.state.virtualListsRefs.preentrevista.forEach(ref => {
+            /* this.state.virtualListsRefs.preentrevista.forEach(ref => {
                 if (ref !== null) {
                     console.log("Recomputed!");
                     ref.recomputeSizes();
                 }
-            });
-
-            
+            }); */
 
             if (equals(this.state.dataActual, dataBackup)) {
                 this.setState({
@@ -155,12 +157,14 @@ class Instrumento extends Component {
             dataActual: dataBackup,
             divisionMostrada: newValue,
             isLoading: true,
-            didDataChange: false
+            didDataChange: false,
+            shouldEnableVisibilitySensor: false
         });
 
         const timeout = setTimeout(() => {
             this.setState({
-                isLoading: false
+                isLoading: false,
+                shouldEnableVisibilitySensor: true
             });
             clearTimeout(timeout);
         }, 1000);
@@ -1204,7 +1208,7 @@ class Instrumento extends Component {
                                                     <div key={i}>
                                                         {
                                                             grupo.map((pregunta, j) => (
-                                                                <Paper className="p-4 mb-4" key={j}>
+                                                                <Paper className="p-4 mb-4" key={j} ref={elem => { this.state.virtualListsRefs.preentrevista.push(elem) }}>
                                                                     <Grid container spacing={3}>
                                                                         <Grid item xs={6} md={2}>
                                                                             <TextField
