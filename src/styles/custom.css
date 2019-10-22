@@ -153,6 +153,14 @@ main:before {
     overflow: auto;
 }
 
+.message-success .MuiSnackbarContent-root {
+    background-color: #43a047;
+}
+
+.message-error .MuiSnackbarContent-root {
+    background-color: #d32f2f;
+}
+
 @media screen and (max-width: 600px) {
     .MuiSnackbar-root {
         bottom: 16px !important;

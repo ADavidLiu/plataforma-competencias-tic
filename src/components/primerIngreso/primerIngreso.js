@@ -23,7 +23,7 @@ class PrimerIngreso extends Component {
         this.state = {
             contrasenia: "",
             didSubmit: false,
-            mostrarContrasenia: false,
+            mostrarContrasenia: false
         }
     }
 
