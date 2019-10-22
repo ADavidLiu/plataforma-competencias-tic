@@ -39,7 +39,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import VirtualList from "react-tiny-virtual-list";
 import ChopList from "react-chop";
 
 import { equals } from "equally";
@@ -226,9 +225,11 @@ class Instrumento extends Component {
                     ...elementosActualizados[index],
                     [e.target.name]: e.target.value
                 }
+                elementosActualizados.push("");
                 break;
             case "encuestas":
                 elementosActualizados[index.i][index.j] = e.target.value;
+                elementosActualizados[index.i].push("");
                 break;
             case "preentrevista":
                 elementosActualizados[index.i][index.j][e.target.name] = e.target.value;
@@ -244,20 +245,26 @@ class Instrumento extends Component {
                 [categoria]: elementosActualizados
             }
         }, () => {
-            if (categoria === "preentrevista") {
-                if (typeof index === "object") {
-                    elementosActualizados[index.i].pop();
-                } else {
-                    elementosActualizados[index].pop();
+            if (typeof index === "object") {
+                elementosActualizados[index.i].pop();
+            } else {
+                switch (categoria) {
+                    case "descriptores":
+                    case "prueba":
+                        elementosActualizados.pop();
+                        break;
+                    default:
+                        elementosActualizados[index].pop();
+                        break;
                 }
-
-                this.setState({
-                    dataActual: {
-                        ...this.state.dataActual,
-                        [categoria]: elementosActualizados
-                    }
-                });
             }
+
+            this.setState({
+                dataActual: {
+                    ...this.state.dataActual,
+                    [categoria]: elementosActualizados
+                }
+            });
         });
     }
 
@@ -336,11 +343,21 @@ class Instrumento extends Component {
         const newElementos = [...JSON.parse(JSON.stringify(this.state.dataActual.prueba))];
         newElementos[index].respuesta = e.target.value;
 
+        newElementos.push("");
+
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
                 [categoria]: newElementos
             }
+        }, () => {
+            newElementos.pop();
+            this.setState({
+                dataActual: {
+                    ...this.state.dataActual,
+                    [categoria]: newElementos
+                }
+            });
         });
     }
 
@@ -350,15 +367,18 @@ class Instrumento extends Component {
 
         if (typeof this.state.indexNewRespuestaValue === "object") {
             newElementos[this.state.indexNewRespuestaValue.i][this.state.indexNewRespuestaValue.j].options.push(this.state.newRespuestaValue);
-
-            if (this.state.active.category === "preentrevista") {
-                newElementos[this.state.indexNewRespuestaValue.i].push("");
-            }
+            newElementos[this.state.indexNewRespuestaValue.i].push("");
         } else {
             newElementos[this.state.indexNewRespuestaValue].opciones.push(this.state.newRespuestaValue);
-            
-            if (this.state.active.category === "preentrevista") {
-                newElementos[this.state.indexNewRespuestaValue].push("");
+
+            switch (this.state.active.category) {
+                case "prueba":
+                case "descriptores":
+                    newElementos.push("");
+                    break;
+                default:
+                    newElementos[this.state.indexNewRespuestaValue].push("");
+                    break;
             }
         }
 
@@ -369,20 +389,26 @@ class Instrumento extends Component {
             },
             newRespuestaValue: ""
         }, () => {
-            if (this.state.active.category === "preentrevista") {
-                if (typeof this.state.indexNewRespuestaValue === "object") {
-                    newElementos[this.state.indexNewRespuestaValue.i].pop();
-                } else {
-                    newElementos[this.state.indexNewRespuestaValue].pop();
+            if (typeof this.state.indexNewRespuestaValue === "object") {
+                newElementos[this.state.indexNewRespuestaValue.i].pop();
+            } else {
+                switch (this.state.active.category) {
+                    case "prueba":
+                    case "descriptores":
+                        newElementos.pop();
+                        break;
+                    default:
+                        newElementos[this.state.indexNewRespuestaValue].pop();
+                        break;
                 }
-
-                this.setState({
-                    dataActual: {
-                        ...this.state.dataActual,
-                        [this.state.active.category]: newElementos
-                    }
-                });
             }
+
+            this.setState({
+                dataActual: {
+                    ...this.state.dataActual,
+                    [this.state.active.category]: newElementos
+                }
+            });
         });
     }
 
@@ -392,6 +418,7 @@ class Instrumento extends Component {
         switch (categoria) {
             case "prueba":
                 newElementos[index.i].opciones.splice(index.j, 1);
+                newElementos.push("");
                 break;
             case "preentrevista":
                 newElementos[index.i][index.j].options.splice(index.k, 1);
@@ -409,13 +436,16 @@ class Instrumento extends Component {
         }, () => {
             if (categoria === "preentrevista") {
                 newElementos[index.i].pop();
-                this.setState({
-                    dataActual: {
-                        ...this.state.dataActual,
-                        [categoria]: newElementos
-                    }
-                });
+            } else {
+                newElementos.pop();
             }
+
+            this.setState({
+                dataActual: {
+                    ...this.state.dataActual,
+                    [categoria]: newElementos
+                }
+            });
         });
     }
 
@@ -569,20 +599,17 @@ class Instrumento extends Component {
                 break;
             case 2:
                 tabMostrado = (
-                    <Grid item xs={12}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>    
-                                <VirtualList
-                                    width="100%"
-                                    height="65vh"
-                                    itemCount={this.state.dataActual.prueba.length}
-                                    itemSize={450}
-                                    renderItem={({index, style}) =>
-                                        <div key={index} style={style}>
-                                            <Translation>
-                                                {
-                                                    t => (
-                                                        <Paper className="p-4 mb-4" ref={element => { this.state.refs.prueba.push(element); }}>
+                    <Translation>
+                        {
+                            t => (
+                                <Grid item xs={12}>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <div className="instrumento-viewer">
+                                                <ChopList
+                                                    itemCount={this.state.dataActual.prueba.length}
+                                                    itemRenderer={({key, index, style}) => (
+                                                        <Paper className="p-4 mb-4" key={key}>
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                 <TextField
                                                                     variant="outlined"
@@ -637,19 +664,18 @@ class Instrumento extends Component {
                                                                 </FormControl>
                                                             </div>
                                                         </Paper>
-                                                    )
-                                                }
-                                            </Translation>
-                                        </div>
-                                    }
-                                />
-
-                                <Button className="mt-4 mt-md-2" variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("prueba"); }}>
-                                    <Add className="d-block mx-auto"/>
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                                                    )}
+                                                />
+                                            </div>
+                                            <Button className="mt-4" variant="contained" color="primary" fullWidth size="large" onClick={() => { this.addElement("prueba"); }}>
+                                                <Add className="d-block mx-auto"/>
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            )
+                        }
+                    </Translation>
                 );
                 break;
             case 3:
@@ -816,7 +842,7 @@ class Instrumento extends Component {
                                                                 );
                                                             }}
                                                         />
-                                                        <div className="d-flex align-items-stretch justify-content-between mt-5 mt-md-3">
+                                                        <div className="d-flex align-items-stretch justify-content-between mt-3">
                                                             <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { this.confirmarDelete("preentrevista-grupo", i); }}>
                                                                 <DeleteOutlined style={{color: "#ffffff"}} className="mr-1" fontSize="small"/>
                                                                 {t("instrumento.borrar-grupo")}
