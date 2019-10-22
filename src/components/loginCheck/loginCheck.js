@@ -237,13 +237,17 @@ class LoginCheck extends Component {
                                                                 </IconButton>
                                                             </Link>
                                                         </Tooltip>
-                                                        <Tooltip title="Configuración" placement="right">
-                                                            <Link to={`/${t("link.configuracion")}`}>
-                                                                <IconButton style={{ color: "#ffffff" }}>
-                                                                    <SettingsApplications />
-                                                                </IconButton>
-                                                            </Link>
-                                                        </Tooltip>
+                                                        {
+                                                            !this.state.isInViewingMode ? (
+                                                                <Tooltip title="Configuración" placement="right">
+                                                                    <Link to={`/${t("link.configuracion")}`}>
+                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                            <SettingsApplications />
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                </Tooltip>
+                                                            ) : null
+                                                        }
                                                         {
                                                             this.state.tipo === "SUPERADMIN" ? (
                                                                 <Tooltip title={t("instrumento.titulo-alt")} placement="right">

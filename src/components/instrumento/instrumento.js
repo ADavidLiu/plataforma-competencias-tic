@@ -91,19 +91,7 @@ class Instrumento extends Component {
             },
             shouldOpenNewRespuestaOptionForm: false,
             newRespuestaValue: "",
-            indexNewRespuestaValue: 0,
-            virtualListsRefs: {
-                descriptores: [],
-                encuestas: [],
-                prueba: [],
-                preentrevista: []
-            },
-            refs: {
-                descriptores: [],
-                encuestas: [],
-                prueba: [],
-                preentrevista: []
-            }
+            indexNewRespuestaValue: 0
         }
     }
 
