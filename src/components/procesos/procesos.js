@@ -25,6 +25,8 @@ import Event from "@material-ui/icons/Event";
 import Launch from "@material-ui/icons/Launch";
 import Build from "@material-ui/icons/Build";
 import Done from "@material-ui/icons/Done";
+import Stars from "@material-ui/icons/Stars";
+import ListAlt from "@material-ui/icons/ListAlt";
 
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
@@ -301,9 +303,14 @@ class Procesos extends Component {
                                             <ExpansionPanelDetails className="d-block">
                                                 <Typography variant="h6" className="mb-2">{t("indice-tic")}: {proceso.reporte.indiceTic}</Typography>
                                                 <Typography variant="body1" className="mb-3">{proceso.reporte.descripcion}</Typography>
-                                                <a href="#" style={{textDecoration: "none"}}>
-                                                    <Button variant="contained" color="primary">{t("descargar-certificado")}</Button>
-                                                </a>
+                                                <div className="d-lg-flex align-items-center justify-content-start">
+                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto" style={{textDecoration: "none"}}>
+                                                        <Button className="w-100 w-lg-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
+                                                    </a>
+                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto mt-3 mt-lg-0 ml-lg-3" style={{textDecoration: "none"}}>
+                                                        <Button className="w-100 w-lg-auto" variant="contained" color="primary"><ListAlt className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                                    </a>
+                                                </div>
                                                 <hr/>
                                                 <Typography variant="h6" className="mb-2">{t("procesos.resultados")}</Typography>
                                                 <Tabs

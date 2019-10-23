@@ -58,6 +58,7 @@ const es = {
         "imagen-perfil": "Imagen de perfil",
         "actividades": "Actividades",
         "descargar-certificado": "Descargar certificado",
+        "descargar-resultados": "Descargar resultados",
         "salir.no-guardar-terminar": "¿Está seguro de que desea salir sin guardar o terminar? Todos los cambios realizados se perderán.",
         "salir.no-terminar": "¿Está seguro de que desea salir sin terminar? Todos los cambios realizados se perderán.",
         "salir.confirmar": "Confirmación",
