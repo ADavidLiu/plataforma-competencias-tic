@@ -175,7 +175,9 @@ class Instrumento extends Component {
         switch(this.state.active.category) {
             case "descriptores":
             case "prueba":
+            case "preentrevista-grupo":
                 newElements.splice(this.state.active.index, 1);
+                newElements[this.state.active.index].push("");
                 break;
             case "encuestas":
             case "preentrevista":
@@ -185,18 +187,34 @@ class Instrumento extends Component {
                     newElements.splice(this.state.active.index.i, 1);
                 }
                 break;
-            case "preentrevista-grupo":
-                newElements.splice(this.state.active.index, 1);
-                break;
             default:
                 break;
         }
+
+        console.log("newElements", newElements);
 
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
                 [categoriaActiva]: newElements
             }
+        }, () => {
+            switch (this.state.active.category) {
+                case "descriptores":
+                case "prueba":
+                case "preentrevista-grupo":
+                    newElements[this.state.active.index].pop();
+                    break;
+                default:
+                    break;
+            }
+
+            this.setState({
+                dataActual: {
+                    ...this.state.dataActual,
+                    [categoriaActiva]: newElements
+                }
+            });
         });
     }
 
@@ -844,6 +862,10 @@ class Instrumento extends Component {
                                                     </React.Fragment>
                                                 ))
                                             }
+                                            <Button variant="contained" color="primary" size="large" className="w-100 mb-5" onClick={() => { this.addElement("preentrevista-grupo"); }}>
+                                                <Add className="d-block mr-1" fontSize="small"/>
+                                                {t("instrumento.nuevo-grupo")}
+                                            </Button>
                                         </Grid>
                                     </Grid>
                                 </Grid>

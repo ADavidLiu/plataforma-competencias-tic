@@ -594,6 +594,7 @@ const es = {
         "instrumento.preentrevista-borrar-pregunta": "Borrar pregunta",
         "instrumento.borrar-grupo": "Borrar grupo",
         "instrumento.nueva-pregunta": "Nueva pregunta",
+        "instrumento.nuevo-grupo": "Nuevo grupo",
         "cursos.titulo": "Cursos",
         "cursos.title": "Administrar cursos",
         "cursos.label-agregar": "Agregar cursos",
