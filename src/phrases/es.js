@@ -302,7 +302,7 @@ const es = {
         "registro.num-contacto": "Número de contacto",
         "registro.web-personal": "Página web personal",
         "registro.btn-guardar": "Registrarse",
-        "registro.login": "¿Ya está registrado?",
+        "registro.login": "¿Ya está registrado en un establecimiento educativo?",
         "registro.login-link": "Ingrese aquí",
         "entrevista.titulo": "Evidencias requeridas",
         "entrevista.ayuda": "Señor(a) docente, por favor prepare los siguientes recursos para presentar durante su próxima sesión de entrevista.",

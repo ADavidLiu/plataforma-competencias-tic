@@ -303,12 +303,12 @@ class Procesos extends Component {
                                             <ExpansionPanelDetails className="d-block">
                                                 <Typography variant="h6" className="mb-2">{t("indice-tic")}: {proceso.reporte.indiceTic}</Typography>
                                                 <Typography variant="body1" className="mb-3">{proceso.reporte.descripcion}</Typography>
-                                                <div className="d-lg-flex align-items-center justify-content-start">
-                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto" style={{textDecoration: "none"}}>
-                                                        <Button className="w-100 w-lg-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
+                                                <div className="d-md-flex align-items-center justify-content-start">
+                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-md-auto" style={{textDecoration: "none"}}>
+                                                        <Button className="w-100 w-md-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
                                                     </a>
-                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto mt-3 mt-lg-0 ml-lg-3" style={{textDecoration: "none"}}>
-                                                        <Button className="w-100 w-lg-auto" variant="contained" color="primary"><ListAlt className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                                    <a href="#" className="d-block d-md-inline-block w-100 w-md-auto mt-3 mt-md-0 ml-md-3" style={{textDecoration: "none"}}>
+                                                        <Button className="w-100 w-md-auto" variant="contained" color="primary"><ListAlt className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
                                                     </a>
                                                 </div>
                                                 <hr/>
