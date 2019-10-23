@@ -465,6 +465,11 @@ class DashboardDocente extends Component {
                                 </Grid>
                                 <Grid item xs={12} sm={8} lg={9}>
                                     <Typography variant="h5" className="mb-4">{t("dashboardDocente.diagnostico")}</Typography>
+                                    <hr/>
+                                    <a href="#" style={{textDecoration: "none"}}>
+                                        <Button variant="contained" color="primary">{t("descargar-certificado")}</Button>
+                                    </a>
+                                    <hr/>
                                     {
                                         this.state.pasoActual > 1 ? (
                                             <Grid container>
@@ -603,7 +608,7 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.registro")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -619,7 +624,7 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.prueba")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -635,7 +640,7 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.practica")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -651,7 +656,7 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.preentrevista")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button
@@ -667,7 +672,7 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.entrevista")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : this.props[0] === undefined ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button

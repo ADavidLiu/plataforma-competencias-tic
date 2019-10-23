@@ -300,7 +300,10 @@ class Procesos extends Component {
                                             </ExpansionPanelSummary>
                                             <ExpansionPanelDetails className="d-block">
                                                 <Typography variant="h6" className="mb-2">{t("indice-tic")}: {proceso.reporte.indiceTic}</Typography>
-                                                <Typography variant="body1">{proceso.reporte.descripcion}</Typography>
+                                                <Typography variant="body1" className="mb-3">{proceso.reporte.descripcion}</Typography>
+                                                <a href="#" style={{textDecoration: "none"}}>
+                                                    <Button variant="contained" color="primary">{t("descargar-certificado")}</Button>
+                                                </a>
                                                 <hr/>
                                                 <Typography variant="h6" className="mb-2">{t("procesos.resultados")}</Typography>
                                                 <Tabs
