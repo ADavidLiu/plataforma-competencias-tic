@@ -812,7 +812,7 @@ class AgregarUsuarios extends Component {
                                                         </Select>
                                                     </Grid>
                                                     <Grid item xs={6} md={4} lg={2}>
-                                                        <Typography variant="body1" className="text-center"><strong>{t("usuarios.registro-ee-departamento")}</strong></Typography>
+                                                        <Typography variant="body1" className="text-center"><strong>{t("usuarios.registro-departamento")}</strong></Typography>
                                                         <Select
                                                             className="w-100 mt-3"
                                                             value={this.state.nuevosUsuarios[i].departamento}
