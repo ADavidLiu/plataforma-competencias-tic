@@ -571,7 +571,7 @@ class AgregarUsuarios extends Component {
                                         <Grid container>
                                             <Grid item xs={12}>
                                                 <Grid container spacing={3} alignItems="flex-end">
-                                                    <Grid item xs={6} md={4}>
+                                                    <Grid item xs={6} md={3}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
                                                         <TextField
                                                             variant="outlined"
@@ -582,7 +582,7 @@ class AgregarUsuarios extends Component {
                                                             onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={6} md={4}>
+                                                    <Grid item xs={6} md={9}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
                                                         <TextField
                                                             variant="outlined"
@@ -593,7 +593,7 @@ class AgregarUsuarios extends Component {
                                                             onChange={e => { this.actualizarDatosNuevos(e, "GOBIERNO", i); }}
                                                         />
                                                     </Grid>
-                                                    <Grid item xs={12} md={4}>
+                                                    <Grid item xs={12} md={6}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-pais")}</strong></Typography>
                                                         <Select
                                                             className="w-100"
@@ -616,7 +616,7 @@ class AgregarUsuarios extends Component {
                                                     </Grid>
                                                     {
                                                         this.props.userType === "ADMIN" ? (
-                                                            <Grid item xs={12} md={4}>
+                                                            <Grid item xs={12} md={6}>
                                                                 <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.tipo-registro")}</strong></Typography>
                                                                 <RadioGroup
                                                                     className="d-flex align-items-center justify-content-around"
@@ -650,9 +650,6 @@ class AgregarUsuarios extends Component {
                         </Translation>
                     );
                 }
-                break;
-            case "EVALUADOR":
-
                 break;
             case "GOBIERNO":
                 for (let i = 0; i < this.state.numNuevosUsuarios; i++) {
@@ -982,6 +979,7 @@ class AgregarUsuarios extends Component {
                     );
                 }
                 break;
+            case "EVALUADOR":
             case "DOCENTE":
             default:
                 break;
