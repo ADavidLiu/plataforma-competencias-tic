@@ -420,9 +420,9 @@ class LoginCheck extends Component {
                                                 }
                                             }} />
                                             <Route path={`/${t("link.login")}`} render={(...routeProps) => <Login {...routeProps} actualizarLogeado={this.actualizarLogeado} isLogeado={this.state.isLogeado} />} />
-                                            <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} />} />
+                                            <Route path={`/${t("link.registro")}`} render={(...routeProps) => <Registro {...routeProps} userProfile={this.datosPerfil} isLogeado={this.state.isLogeado} />} />
                                             <Route path={`/${t("link.ayuda")}`} component={Ayuda}/>
-                                            <Route path={`/${t("link.recuperacion-datos")}`} render={(...routeProps) => <RecuperacionDatos userType={this.state.tipo} userID={this.state.id}/>}/>
+                                            <Route path={`/${t("link.recuperacion-datos")}`} render={(...routeProps) => <RecuperacionDatos userType={this.state.tipo} userID={this.state.id} isLogeado={this.state.isLogeado} />}/>
                                             {
                                                 this.state.isLogeado ? (
                                                     this.state.isPrimerIngreso ? (

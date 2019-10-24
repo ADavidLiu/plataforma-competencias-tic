@@ -14,8 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -94,6 +93,9 @@ class Login extends Component {
     }
 
     render() {
+        if (this.props.isLogeado) {
+            return <Redirect to="/"/>
+        }
         if (this.state.didSubmit && this.props.isLogeado) {
             return <Redirect to="/" />;
         }

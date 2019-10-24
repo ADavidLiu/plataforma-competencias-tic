@@ -59,6 +59,10 @@ class RecuperacionDatos extends Component {
     };
 
     render() {
+        if (this.props.isLogeado) {
+            return <Redirect to="/"/>
+        }
+
         return (
             <Translation>
                 {

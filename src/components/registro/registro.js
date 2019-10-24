@@ -18,8 +18,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
 import Reaptcha from "reaptcha";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -249,6 +248,9 @@ class Registro extends Component {
     }
 
     render() {
+        if (this.props.isLogeado) {
+            return <Redirect to="/"/>
+        }
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />
         }
