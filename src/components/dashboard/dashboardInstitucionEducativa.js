@@ -210,7 +210,7 @@ class DashboardInstitucionEducativa extends Component {
                                                 datasets: [
                                                     {
                                                         data: [this.state.descriptores[0].items.length, this.state.descriptores[1].items.length, this.state.descriptores[2].items.length],
-                                                        backgroundColor: ["#5f77ff", "#4b60d6", "#009A9C"]
+                                                        backgroundColor: ["#00bdbf", "#00a9ab", "#009A9C"]
                                                     }
                                                 ]
                                             }
@@ -266,7 +266,7 @@ class DashboardInstitucionEducativa extends Component {
                                         datasets: [{
                                             label: `${t("estado-actual")}`,
                                             data: [this.state.niveles[0].porcentaje, this.state.niveles[1].porcentaje, this.state.niveles[2].porcentaje],
-                                            backgroundColor: "rgba(63,81,181, .5)",
+                                            backgroundColor: "rgba(0, 154, 156, .5)",
                                             pointBackgroundColor: "#009A9C",
                                             borderColor: "#009A9C"
                                         }]

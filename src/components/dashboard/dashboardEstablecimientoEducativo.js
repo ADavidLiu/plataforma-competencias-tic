@@ -296,7 +296,7 @@ class DashboardEstablecimientoEducativo extends Component {
 
                                                 const doughnutDatasets = [{
                                                     data: [],
-                                                    backgroundColor: ["#5f77ff", "#546bf0", "#4b60d6", "#4357c5", "#4154c0", "#009A9C"]
+                                                    backgroundColor: ["#00e8eb", "#00dcde", "#00cfd1", "#00bdbf", "#00a9ab", "#009A9C"]
                                                 }];
                                                 pasos.avanzado.forEach(paso => {
                                                     doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);
