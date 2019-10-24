@@ -103,7 +103,7 @@ class Usuarios extends Component {
 
     render() {
         if (this.props.location && this.props.location.state === undefined) {
-            return <Redirect to="/" />
+            return <Redirect to="/"/>
         }
         
         let tabs;
