@@ -191,8 +191,6 @@ class Instrumento extends Component {
                 break;
         }
 
-        console.log("newElements", newElements);
-
         this.setState({
             dataActual: {
                 ...this.state.dataActual,
