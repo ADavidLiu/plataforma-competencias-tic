@@ -127,6 +127,7 @@ const es = {
         "recuperacionDatos.ayuda": "Digite la dirección de correo electrónico asociada a su cuenta. Le enviaremos un enlace con el que podrá actualizar sus credenciales en la plataforma.",
         "recuperacionDatos.mensaje-correcto": "¡Correo enviado exitosamente!",
         "recuperacionDatos.mensaje-error": "¡Correo no encontrado!",
+        "recuperacionDatos.regresar": "Regresar al inicio de sesión",
         "primerIngreso.titulo": "Cambiar contraseña",
         "loginCheck.mensaje-navbar": "Plataforma de competencias TIC",
         "dashboardGobierno.division": "Actualmente viendo datos de:",

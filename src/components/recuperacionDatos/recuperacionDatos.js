@@ -10,6 +10,8 @@ import FormControl from "@material-ui/core/FormControl";
 
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 
+import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -96,6 +98,10 @@ class RecuperacionDatos extends Component {
                                                     >
                                                         {t("enviar")}
                                                     </Button>
+                                                    <hr className="my-4"/>
+                                                    <Link to={`/${t("link.login")}`} style={{color:"#009A9C"}}>
+                                                        <Typography variant="body2" component="small" color="primary" className="text-center">{t("recuperacionDatos.regresar")}</Typography>
+                                                    </Link>
                                                 </Grid>
                                             </Grid>
                                         </form>
