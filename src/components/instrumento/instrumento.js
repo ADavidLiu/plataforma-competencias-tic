@@ -175,6 +175,8 @@ class Instrumento extends Component {
         switch(this.state.active.category) {
             case "descriptores":
             case "prueba":
+                newElements.splice(this.state.active.index, 1);
+                break;
             case "preentrevista-grupo":
                 newElements.splice(this.state.active.index, 1);
                 newElements[this.state.active.index].push("");
@@ -198,8 +200,6 @@ class Instrumento extends Component {
             }
         }, () => {
             switch (this.state.active.category) {
-                case "descriptores":
-                case "prueba":
                 case "preentrevista-grupo":
                     newElements[this.state.active.index].pop();
                     break;
