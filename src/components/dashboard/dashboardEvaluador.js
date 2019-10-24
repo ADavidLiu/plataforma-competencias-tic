@@ -298,7 +298,7 @@ class DashboardEvaluador extends Component {
                                                         return {
                                                             datasets: [
                                                                 {
-                                                                    data: dataPercentages,backgroundColor: ["#5f77ff", "#4b60d6", "#009A9C", "#37479e"],
+                                                                    data: dataPercentages,backgroundColor: ["#00cfd1", "#00bdbf", "#00a9ab", "#009A9C"],
                                                                     borderColor: "#FFFFFF"
                                                                 }
                                                             ],

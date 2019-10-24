@@ -3132,6 +3132,7 @@ class ListaUsuarios extends Component {
                                             <MenuItem value={"procesoPaso.2"}>{t("procesoPaso.2")}</MenuItem>
                                             <MenuItem value={"procesoPaso.3"}>{t("procesoPaso.3")}</MenuItem>
                                             <MenuItem value={"procesoPaso.4"}>{t("procesoPaso.4")}</MenuItem>
+                                            <MenuItem value={"procesoPaso.finalizado"}>{t("procesoPaso.finalizado")}</MenuItem>
                                         </Select>
                                     </Grid>
                                 </Grid>

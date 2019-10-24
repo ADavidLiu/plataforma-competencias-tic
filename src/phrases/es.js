@@ -166,6 +166,7 @@ const es = {
         "procesoPaso.4": "Entrevista",
         "procesoPaso.4-plural": "Entrevistas",
         "procesoPaso.5": "Encuestas",
+        "procesoPaso.finalizado": "Finalizado",
         "practicas.titulo": "Práctica Educativa",
         "practicas.label-informacion-general": "Información general",
         "practicas.informacion-general": 'A continuación, se le pedirá información sobre una práctica educativa apoyada en TIC. Se entiende por práctica educativa "la actividad o conjunto de actividades intencionalmente diseñadas, implementadas y evaluadas por agentes educativos para favorecer la apropiación de conocimiento". Tenga en cuenta que una práctica educativa puede implicar actividades para explorar conocimientos previos, presentar contenidos, brindar oportunidades de práctica y evaluar el aprendizaje.',
