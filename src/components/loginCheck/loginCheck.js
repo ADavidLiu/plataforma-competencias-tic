@@ -68,7 +68,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "SUPERADMIN";
+        this.tipoPerfil = "EVALUADOR";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,

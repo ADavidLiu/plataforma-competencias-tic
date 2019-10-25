@@ -418,85 +418,87 @@ class Calificaciones extends Component {
                             <Grid item xs={12}>
                                 {
                                     this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto" /> : (
-                                        <Paper className="scrolling-table-outer">
-                                            <div className="scrolling-table-wrapper">
-                                                <Table>
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            {
-                                                                this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
-                                                                    <TableCell key={i}>{t(cellLabel)}</TableCell>
-                                                                ))
-                                                            }
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    {
-                                                        this.state.isFiltering ? (
-                                                            <TableBody>
-                                                                <TableRow>
-                                                                    <TableCell colSpan={Object.keys(this.state[this.state.categoriaDivisionMostrada][0]).length + 1}>
-                                                                        <CircularProgress color="primary" className="d-block mx-auto"/>
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            </TableBody>
-                                                        ) : (
-                                                            <TableBody>
+                                        <Paper>
+                                            <div className="scrolling-table-outer">
+                                                <div className="scrolling-table-wrapper">
+                                                    <Table className="scrolling-table">
+                                                        <TableHead>
+                                                            <TableRow>
                                                                 {
-                                                                    this.state.elementosMostrados.length === 0 ? (
-                                                                        <TableRow>
-                                                                            <TableCell colSpan={this.state.headCells[this.state.categoriaDivisionMostrada].length}>
-                                                                                <div className="d-flex align-items-center justify-content-center">
-                                                                                    <Warning className="mr-2" fontSize="small"/>
-                                                                                    {t("visorPerfiles.no-resultados")}
-                                                                                </div>
-                                                                            </TableCell>
-                                                                        </TableRow>
-                                                                    ) : (
-                                                                        <React.Fragment>
-                                                                            {
-                                                                                this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                                    const values = Object.values(elemento);
-                                                                                    return (
-                                                                                        <TableRow key={i}>
-                                                                                            {
-                                                                                                values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                                            }
-                                                                                            <TableCell>
-                                                                                                <Link to={{
-                                                                                                    pathname: `/${t(`link.${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`)}`,
-                                                                                                    state: {
-                                                                                                        tipoUsuario: "EVALUADOR",
-                                                                                                        shouldActivateViewingMode: true
-                                                                                                    }
-                                                                                                }}>
-                                                                                                    <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
-                                                                                                </Link>
-                                                                                            </TableCell>
-                                                                                        </TableRow>
-                                                                                    );
-                                                                                })
-                                                                            }
-                                                                        </React.Fragment>
-                                                                    )
+                                                                    this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => (
+                                                                        <TableCell key={i}>{t(cellLabel)}</TableCell>
+                                                                    ))
                                                                 }
-                                                            </TableBody>
-                                                        )
-                                                    }
-                                                </Table>
-                                                <TablePagination
-                                                    labelDisplayedRows={({from, to, count}) => {
-                                                        return `${from}-${to} / ${count}`;
-                                                    }}
-                                                    labelRowsPerPage={t("filasPorPagina")}
-                                                    rowsPerPageOptions={[10, 25, 100]}
-                                                    component="div"
-                                                    count={this.state.elementosMostrados.length}
-                                                    rowsPerPage={this.state.rowsPerPage}
-                                                    page={this.state.page}
-                                                    onChangePage={this.handleChangePage}
-                                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                                />
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        {
+                                                            this.state.isFiltering ? (
+                                                                <TableBody>
+                                                                    <TableRow>
+                                                                        <TableCell colSpan={Object.keys(this.state[this.state.categoriaDivisionMostrada][0]).length + 1}>
+                                                                            <CircularProgress color="primary" className="d-block mx-auto"/>
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                </TableBody>
+                                                            ) : (
+                                                                <TableBody>
+                                                                    {
+                                                                        this.state.elementosMostrados.length === 0 ? (
+                                                                            <TableRow>
+                                                                                <TableCell colSpan={this.state.headCells[this.state.categoriaDivisionMostrada].length}>
+                                                                                    <div className="d-flex align-items-center justify-content-center">
+                                                                                        <Warning className="mr-2" fontSize="small"/>
+                                                                                        {t("visorPerfiles.no-resultados")}
+                                                                                    </div>
+                                                                                </TableCell>
+                                                                            </TableRow>
+                                                                        ) : (
+                                                                            <React.Fragment>
+                                                                                {
+                                                                                    this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
+                                                                                        const values = Object.values(elemento);
+                                                                                        return (
+                                                                                            <TableRow key={i}>
+                                                                                                {
+                                                                                                    values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
+                                                                                                }
+                                                                                                <TableCell>
+                                                                                                    <Link to={{
+                                                                                                        pathname: `/${t(`link.${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`)}`,
+                                                                                                        state: {
+                                                                                                            tipoUsuario: "EVALUADOR",
+                                                                                                            shouldActivateViewingMode: true
+                                                                                                        }
+                                                                                                    }}>
+                                                                                                        <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>
+                                                                                                    </Link>
+                                                                                                </TableCell>
+                                                                                            </TableRow>
+                                                                                        );
+                                                                                    })
+                                                                                }
+                                                                            </React.Fragment>
+                                                                        )
+                                                                    }
+                                                                </TableBody>
+                                                            )
+                                                        }
+                                                    </Table>
+                                                </div>
                                             </div>
+                                            <TablePagination
+                                                labelDisplayedRows={({from, to, count}) => {
+                                                    return `${from}-${to} / ${count}`;
+                                                }}
+                                                labelRowsPerPage={t("filasPorPagina")}
+                                                rowsPerPageOptions={[10, 25, 100]}
+                                                component="div"
+                                                count={this.state.elementosMostrados.length}
+                                                rowsPerPage={this.state.rowsPerPage}
+                                                page={this.state.page}
+                                                onChangePage={this.handleChangePage}
+                                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                            />
                                         </Paper>
                                     )
                                 }
