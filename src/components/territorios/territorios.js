@@ -793,6 +793,7 @@ class Territorios extends Component{
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
+                                                disabled
                                                 fullWidth
                                                 name="fechaCreacion"
                                                 value={this.state.editingForm.fechaCreacion}

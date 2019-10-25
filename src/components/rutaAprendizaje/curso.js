@@ -17,7 +17,7 @@ function Curso(props) {
 							<CardActionArea>
 								<CardContent>
 									<div className="p-4">
-										<Typography gutterBottom variant="h5" component="h2">
+										<Typography gutterBottom variant="h6" component="h2">
 											{props.titulo}
 										</Typography>
 										<hr className="my-3"/>
