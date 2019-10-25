@@ -8,7 +8,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
-const Ayuda = () => {
+const Ayuda = (props) => {
+    function regresar() {
+        props.history.goBack();
+    }
+
     return (
         <Translation>
             {
@@ -26,9 +30,7 @@ const Ayuda = () => {
                                         <Button color="primary" variant="contained" size="large">{t("ayuda.btn-label")}</Button>
                                     </a>
                                     <Typography className="my-3 my-md-0 mx-md-3" variant="body1">{t("o")}</Typography>
-                                    <Link to="/" style={{textDecoration: "none"}}>
-                                        <Button color="primary" variant="outlined" size="large">{t("404.btn")}</Button>
-                                    </Link>
+                                    <Button onClick={regresar} color="primary" variant="outlined" size="large">{t("ayuda.regresar")}</Button>
                                 </div>
                             </Grid>
                         </Grid>
