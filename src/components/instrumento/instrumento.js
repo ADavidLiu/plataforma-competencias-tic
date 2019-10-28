@@ -24,22 +24,7 @@ import encuestas from "../../models/encuestas";
 import preguntasPrueba from "../../models/preguntasPrueba";
 import preguntasPreentrevista from "../../models/preentrevista-new";
 
-import IconButton from '@material-ui/core/IconButton';
-import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
-import Cancel from "@material-ui/icons/Cancel";
-import Add from "@material-ui/icons/Add";
-
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from "@material-ui/core/TextField";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-
-import ChopList from "react-chop";
 
 import { equals } from "equally";
 import df from "deeply-freeze";
@@ -108,10 +93,6 @@ class Instrumento extends PureComponent {
             clearTimeout(timeout);
         }, 1000);
     }
-
-    /* shouldComponentUpdate = (nextProps, nextState) => {
-
-    } */
 
     componentDidUpdate = (prevProps, prevState) => {
         if (prevState.dataActual !== this.state.dataActual) {
