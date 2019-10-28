@@ -198,7 +198,7 @@ const Preentrevista = props => {
                                         </React.Fragment>
                                     ))
                                 }
-                                <Button variant="contained" color="primary" size="large" className="w-100 mb-5" onClick={() => { props.addElement("preentrevista-grupo"); }}>
+                                <Button variant="contained" color="primary" size="large" className="w-100" onClick={() => { props.addElement("preentrevista-grupo"); }}>
                                     <Add className="d-block mr-1" fontSize="small"/>
                                     {t("instrumento.nuevo-grupo")}
                                 </Button>

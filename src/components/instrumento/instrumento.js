@@ -531,7 +531,8 @@ class Instrumento extends PureComponent {
                                     this.state.isLoading ? <CircularProgress color="primary" className="d-block mx-auto my-5"/> : (
                                         <React.Fragment>
                                             { tabMostrado }
-                                            <Grid item xs={12} className="pt-md-0 mb-md-5" hidden={!this.state.didDataChange}>
+                                            <Grid item xs={12} className="mb-md-5" hidden={!this.state.didDataChange}>
+                                                <hr className="mb-5"/>
                                                 <div className="d-md-flex align-items-center justify-content-end">
                                                     <Button variant="outlined" size="large" color="primary" className="w-100 w-md-auto">{t("instrumento.btn-crear")}</Button>
                                                     <Button className="mt-3 mt-md-0 ml-md-3 w-100 w-md-auto" variant="contained" size="large" color="primary">{t("instrumento.btn-actualizar")}</Button>
