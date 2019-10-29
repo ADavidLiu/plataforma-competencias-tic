@@ -87,10 +87,10 @@ class Territorios extends Component{
         const dataCargada = {
             territorios: [
                 {
-                    id: 0,
+                    id: "is-root",
                     nombre: "No es subdivisión",
                     padre: "No es subdivisión",
-                    fechaCreacion: "2019-06-29"
+                    fechaCreacion: "2019-06-29",
                 },
                 {
                     id: 1,
@@ -764,6 +764,7 @@ class Territorios extends Component{
                                                 margin="normal"
                                                 required
                                                 fullWidth
+                                                disabled={this.state.activeTerritoryID === "is-root"}
                                                 name="nombre"
                                                 value={this.state.editingForm.nombre}
                                                 onChange={this.handleEdicionChange}
@@ -775,6 +776,7 @@ class Territorios extends Component{
                                                 value={this.state.editingForm.padre}
                                                 onChange={this.handleEdicionChange}
                                                 variant="filled"
+                                                disabled={this.state.activeTerritoryID === "is-root"}
                                                 input={<OutlinedInput fullWidth required name="padre"/>}
                                             >
                                                 {
