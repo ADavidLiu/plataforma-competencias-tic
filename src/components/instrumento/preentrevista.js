@@ -25,9 +25,9 @@ const Preentrevista = props => {
         <Translation>
             {
                 t => (
-                    <Grid item xs={12} className="pb-md-0">
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} className="instrumento-viewer">
+                    <Grid item xs={12} className="pb-md-0 no-scrollbar">
+                        <Grid container spacing={3} className="no-scrollbar">
+                            <Grid item xs={12} className="instrumento-viewer no-scrollbar">
                                 {
                                     props.dataActual.preentrevista.map((grupo, i) => (
                                         <React.Fragment key={i}>

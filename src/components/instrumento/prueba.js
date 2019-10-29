@@ -26,11 +26,11 @@ const Prueba = props => {
                     <Grid item xs={12}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                <div className="instrumento-viewer">
+                                <div className="instrumento-viewer no-scrollbar">
                                     <ChopList
                                         itemCount={props.dataActual.prueba.length}
                                         itemRenderer={({key, index, style}) => (
-                                            <Paper className="p-4 mb-4" key={key}>
+                                            <Paper className="p-4 mb-4 no-scrollbar" key={key}>
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <TextField
                                                         variant="outlined"
