@@ -29,6 +29,8 @@ class Encuesta extends Component {
     constructor(props) {
         super(props);
 
+        preguntas.splice(2, 0, null);
+
         this.state = {
             factor: "",
             respuestas: [],
