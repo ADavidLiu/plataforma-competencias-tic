@@ -326,7 +326,7 @@ class PracticaRevision extends Component {
                                 <title>{`${t("titulo.practica-revision")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
                             {
-                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                !this.props[0].location.state.shouldActivateViewingMode || (this.props[0].location.state.isRegrading && !this.props[0].location.state.shouldActivateViewingMode) ? (
                                     <NavigationPrompt when={!this.state.isEnviado}>
                                         {
                                             ({ onConfirm, onCancel }) => (
@@ -527,7 +527,7 @@ class PracticaRevision extends Component {
                             </Drawer>
 
                             {
-                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                !this.props[0].location.state.shouldActivateViewingMode || (this.props[0].location.state.isRegrading && !this.props[0].location.state.shouldActivateViewingMode) ? (
                                     <Tooltip title={t("revision.practica-calificar")} placement="left">
                                         <Fab color="primary" className="fab prueba-fab" onClick={this.toggleGrading}>
                                             <PlaylistAddCheck/>
