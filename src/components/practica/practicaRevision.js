@@ -490,7 +490,7 @@ class PracticaRevision extends Component {
                                 </Grid>
                             </Grid>
 
-                            <Drawer anchor="right" variant="temporary" open={this.state.isGradingOpen} onClose={this.toggleGrading}>
+                            <Drawer anchor="right" variant="temporary" open={this.state.isGradingOpen} onClose={this.toggleGrading} className="no-scrollbar">
                                 <form onSubmit={this.enviarCalificacion} className="formato-calificacion pt-4 pb-5 px-5">
                                     <Typography variant="h6" className="mb-3">{t("revision.produccion-asignar-calificacion")}</Typography>
                                     <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
