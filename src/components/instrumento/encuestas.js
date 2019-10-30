@@ -64,7 +64,7 @@ class Encuestas extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     {
-                                        this.state.isLoading ? <CircularProgress className="d-block mx-auto"/> : (
+                                        this.state.isLoading ? <CircularProgress className="d-block mx-auto my-5"/> : (
                                             <Grid item xs={12} className="pb-0">
                                                 {
                                                     this.state.divisionMostrada !== 2 ? (
