@@ -467,8 +467,7 @@ class Calificaciones extends Component {
                                                                                                         pathname: `/${t(`link.${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`)}`,
                                                                                                         state: {
                                                                                                             tipoUsuario: "EVALUADOR",
-                                                                                                            shouldActivateViewingMode: true,
-                                                                                                            isRegrading: true
+                                                                                                            shouldActivateViewingMode: this.props[0].location.state.isInViewingMode ? true : false
                                                                                                         }
                                                                                                     }}>
                                                                                                         <OpenInNew onClick={this.openFormRevision} color="primary" fontSize="small" style={{cursor: "pointer"}}/>

@@ -339,7 +339,8 @@ class LoginCheck extends Component {
                                                                         pathname: `/${t("link.calificaciones")}`,
                                                                         state: {
                                                                             userType: this.state.tipo,
-                                                                            userID: this.state.id
+                                                                            userID: this.state.id,
+                                                                            isInViewingMode: this.state.isInViewingMode
                                                                         }
                                                                     }}>
                                                                         <IconButton style={{ color: "#ffffff" }}>
