@@ -149,14 +149,26 @@ class ListaUsuarios extends Component {
                     pais: "",
                     departamento: "",
                     municipio: "",
-                    direccion: ""
+                    direccion: "",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 };
                 break;
             case "ADMIN":
                 this.formularioPlaceholder = {
                     idNacional: "",
                     nombre: "",
-                    pais: ""
+                    pais: "",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 };
                 break;
             case "GOBIERNO":
@@ -165,7 +177,13 @@ class ListaUsuarios extends Component {
                     nombre: "",
                     pais: "",
                     departamento: "",
-                    municipio: ""
+                    municipio: "",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 };
                 break;
             case "INSTITUCION":
@@ -192,7 +210,13 @@ class ListaUsuarios extends Component {
                     nombreCompleto: "",
                     idEstablecimiento: "",
                     tiempoRestantePrueba: "",
-                    etapaActualProceso: ""
+                    etapaActualProceso: "",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 };
                 break;
             default:
@@ -242,7 +266,13 @@ class ListaUsuarios extends Component {
                     pais: "CO-Colombia",
                     departamento: "Santander",
                     municipio: "Bucaramanga",
-                    direccion: "Calle 123 #45-67"
+                    direccion: "Calle 123 #45-67",
+                    roles: {
+                        admin: true,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 },
                 {
                     idNacional: "890123456",
@@ -252,31 +282,61 @@ class ListaUsuarios extends Component {
                     pais: "UY-Uruguay",
                     departamento: "Montevideo",
                     municipio: "Montevideo",
-                    direccion: "Calle 89 #01-23"
+                    direccion: "Calle 89 #01-23",
+                    roles: {
+                        admin: true,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: false
+                    }
                 }
             ],
             gobiernos: [
                 {
                     idNacional: "123098456",
                     nombre: "Esse nisi aute excepteur",
-                    pais: "CO-Colombia"
+                    pais: "CO-Colombia",
+                    roles: {
+                        admin: false,
+                        gobierno: true,
+                        evaluador: false,
+                        docente: false
+                    }
                 },
                 {
                     idNacional: "098123765",
                     nombre: "Commodo consectetur sit magna ea",
-                    pais: "VE-Venezuela"
+                    pais: "VE-Venezuela",
+                    roles: {
+                        admin: false,
+                        gobierno: true,
+                        evaluador: false,
+                        docente: false
+                    }
                 }
             ],
             evaluadores: [
                 {
                     idNacional: "678123098",
                     nombre: "Nulla exercitation ex occaecat",
-                    pais: "PA-Panama"
+                    pais: "PA-Panama",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: true,
+                        docente: false
+                    }
                 },
                 {
                     idNacional: "456321789",
                     nombre: "Adipisicing aliqua mollit",
-                    pais: "CL-Chile"
+                    pais: "CL-Chile",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: true,
+                        docente: false
+                    }
                 }
             ],
             instituciones: [
@@ -443,63 +503,117 @@ class ListaUsuarios extends Component {
                     nombreCompleto: "John Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 1200,
-                    etapaActualProceso: "procesoPaso.1"
+                    etapaActualProceso: "procesoPaso.1",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "123456980",
                     nombreCompleto: "Jane Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 0,
-                    etapaActualProceso: "procesoPaso.1"
+                    etapaActualProceso: "procesoPaso.1",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "098123456",
                     nombreCompleto: "John Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 2000,
-                    etapaActualProceso: "procesoPaso.2"
+                    etapaActualProceso: "procesoPaso.2",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "456789123",
                     nombreCompleto: "Jane Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 4000,
-                    etapaActualProceso: "procesoPaso.3"
+                    etapaActualProceso: "procesoPaso.3",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "098890123",
                     nombreCompleto: "John Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 5400,
-                    etapaActualProceso: "procesoPaso.1"
+                    etapaActualProceso: "procesoPaso.1",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "7651234890",
                     nombreCompleto: "Jane Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 1000,
-                    etapaActualProceso: "procesoPaso.1"
+                    etapaActualProceso: "procesoPaso.1",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "321123456",
                     nombreCompleto: "John Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 750,
-                    etapaActualProceso: "procesoPaso.2"
+                    etapaActualProceso: "procesoPaso.2",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "890098765",
                     nombreCompleto: "Jane Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 200,
-                    etapaActualProceso: "procesoPaso.3"
+                    etapaActualProceso: "procesoPaso.3",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
                 {
                     idNacional: "432123456",
                     nombreCompleto: "John Doe",
                     idEstablecimiento: "0981237654",
                     tiempoRestantePrueba: 100,
-                    etapaActualProceso: "procesoPaso.4"
+                    etapaActualProceso: "procesoPaso.4",
+                    roles: {
+                        admin: false,
+                        gobierno: false,
+                        evaluador: false,
+                        docente: true
+                    }
                 },
             ]
         }
@@ -709,7 +823,8 @@ class ListaUsuarios extends Component {
                         pais: encontrado.pais,
                         departamento: encontrado.departamento,
                         municipio: encontrado.municipio,
-                        direccion: encontrado.direccion
+                        direccion: encontrado.direccion,
+                        roles: encontrado.roles
                     },
                     departamentos: statesMenuItemsAdmin,
                     municipios: citiesMenuItemsAdmin
@@ -721,7 +836,8 @@ class ListaUsuarios extends Component {
                     editingForm: {
                         idNacional: id,
                         nombre: encontrado.nombre,
-                        pais: encontrado.pais
+                        pais: encontrado.pais,
+                        roles: encontrado.roles
                     }
                 });
                 break;
@@ -747,7 +863,8 @@ class ListaUsuarios extends Component {
                         nombre: encontrado.nombre,
                         pais: encontrado.pais,
                         departamento: encontrado.departamento,
-                        municipio: encontrado.municipio
+                        municipio: encontrado.municipio,
+                        roles: encontrado.roles
                     },
                     departamentos: statesMenuItemsGobierno,
                     municipios: citiesMenuItemsGobierno
@@ -792,7 +909,8 @@ class ListaUsuarios extends Component {
                         nombreCompleto: encontrado.nombreCompleto,
                         idEstablecimiento: encontrado.idEstablecimiento,
                         tiempoRestantePrueba: encontrado.tiempoRestantePrueba,
-                        etapaActualProceso: encontrado.etapaActualProceso
+                        etapaActualProceso: encontrado.etapaActualProceso,
+                        roles: encontrado.roles
                     }
                 });
                 break;
@@ -1497,6 +1615,10 @@ class ListaUsuarios extends Component {
         });
     }
 
+    updateRoles = e => {
+        console.log(e.target.name);
+    }
+
 	render() {
         let tabla;
         let formularioEdicion;
@@ -1533,7 +1655,7 @@ class ListaUsuarios extends Component {
             case "ESTABLECIMIENTO":
                 tabla = <Docentes headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
 
-                formularioEdicion = <DocentesForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} />;
+                formularioEdicion = <DocentesForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} updateRoles={this.updateRoles} />;
                 break;
             default:
                 break;

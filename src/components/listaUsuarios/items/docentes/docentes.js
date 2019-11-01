@@ -78,7 +78,7 @@ const Docentes = props => {
                                                                                                 return <TableCell key={j}>{t(val)}</TableCell>;
                                                                                             } else if (keys[j] === "3" && val === 0) {
                                                                                                 return <TableCell key={j}>{t("finalizada")}</TableCell>
-                                                                                            } else {
+                                                                                            } else if (typeof val !== "object") {
                                                                                                 return <TableCell key={j}>{val}</TableCell>;
                                                                                             }
                                                                                     }
