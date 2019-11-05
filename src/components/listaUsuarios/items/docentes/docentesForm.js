@@ -94,6 +94,7 @@ const DocentesForm = props => {
                                             value={true}
                                             color="primary"
                                             name="admin"
+                                            disabled={props.originalRole === "admins" ? true : false}
                                         />
                                     }
                                     label={t("roles.admin")}
@@ -106,6 +107,7 @@ const DocentesForm = props => {
                                             value={true}
                                             color="primary"
                                             name="gobierno"
+                                            disabled={props.originalRole === "gobiernos" ? true : false}
                                         />
                                     }
                                     label={t("roles.gobierno")}
@@ -118,6 +120,7 @@ const DocentesForm = props => {
                                             value={true}
                                             color="primary"
                                             name="evaluador"
+                                            disabled={props.originalRole === "evaluadores" ? true : false}
                                         />
                                     }
                                     label={t("roles.evaluador")}
@@ -130,6 +133,7 @@ const DocentesForm = props => {
                                             value={true}
                                             color="primary"
                                             name="docente"
+                                            disabled={props.originalRole === "docentes" ? true : false}
                                         />
                                     }
                                     label={t("roles.docente")}

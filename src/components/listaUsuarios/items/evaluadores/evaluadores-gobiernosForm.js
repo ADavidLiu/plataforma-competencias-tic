@@ -10,6 +10,10 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+
 const EvaluadoresGobiernosForm = props => {
     return (
         <Translation>
@@ -61,6 +65,63 @@ const EvaluadoresGobiernosForm = props => {
                                 <MenuItem value="BR-Brasil">Brasil</MenuItem>
                                 <MenuItem value="AR-Argentina">Argentina</MenuItem>
                             </Select>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="body1" className="mb-3">{t("usuarios.roles")}</Typography>
+                            <FormGroup row>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={props.editingForm.roles.admin}
+                                            onChange={props.updateRoles}
+                                            value={true}
+                                            color="primary"
+                                            name="admin"
+                                            disabled={props.originalRole === "admins" ? true : false}
+                                        />
+                                    }
+                                    label={t("roles.admin")}
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={props.editingForm.roles.gobierno}
+                                            onChange={props.updateRoles}
+                                            value={true}
+                                            color="primary"
+                                            name="gobierno"
+                                            disabled={props.originalRole === "gobiernos" ? true : false}
+                                        />
+                                    }
+                                    label={t("roles.gobierno")}
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={props.editingForm.roles.evaluador}
+                                            onChange={props.updateRoles}
+                                            value={true}
+                                            color="primary"
+                                            name="evaluador"
+                                            disabled={props.originalRole === "evaluadores" ? true : false}
+                                        />
+                                    }
+                                    label={t("roles.evaluador")}
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={props.editingForm.roles.docente}
+                                            onChange={props.updateRoles}
+                                            value={true}
+                                            color="primary"
+                                            name="docente"
+                                            disabled={props.originalRole === "docentes" ? true : false}
+                                        />
+                                    }
+                                    label={t("roles.docente")}
+                                />
+                            </FormGroup>
                         </Grid>
                     </Grid>
                 )

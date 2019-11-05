@@ -442,7 +442,7 @@ const es = {
         "usuarios.carga-encontrados": "Se encontraron <1>{{count}}</1> usuarios.",
         "usuarios.carga-encontrados-opciones": "Se encontraron <1>{{count}}</1> registros. Seleccione el tipo de usuarios cargados:",
         "usuarios.tipo-registro": "Tipo de usuario a registrar",
-        "usuarios.roles": "Tipos de roles",
+        "usuarios.roles": "Roles disponibles",
         "roles.gobierno": "Gobierno",
         "roles.docente": "Docente",
         "roles.evaluador": "Evaluador",
