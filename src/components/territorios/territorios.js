@@ -4,13 +4,6 @@ import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
 import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TablePagination from '@material-ui/core/TablePagination';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -20,11 +13,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import sortBy from "sort-by";
 
-import EditOutlined from "@material-ui/icons/EditOutlined";
-import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
-import Search from "@material-ui/icons/Search";
-
-import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -41,6 +29,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 
+import ListaTerritorios from "./listaTerritorios";
+import Clasificaciones from "./clasificaciones";
+
 class Territorios extends Component{
     constructor() {
         super();
@@ -50,11 +41,14 @@ class Territorios extends Component{
             isLoading: false,
             isFiltering: false,
             isEditing: false,
+            isEditingClasificacion: false,
             isDeleting: false,
+            isDeletingClasificacion: false,
             territoriosActuales: [],
             institucionesActuales: [],
             clasificacionesActuales: [],
             headCells: ["ID", "nombre", "territorios.lista-padre", "territorios.lista-clasificacion", "territorios.lista-fecha-creacion", "territorios.lista-acciones"],
+            headCellsClasificaciones: ["ID", "nombre", "territorios.lista-acciones"],
             crearForm: {
                 nombre: "",
                 padre: "",
@@ -138,7 +132,16 @@ class Territorios extends Component{
                     fechaCreacion: "2019-05-24"
                 }
             ],
-            clasificaciones: ["Nacional", "Departamental", "Municipal"],
+            clasificaciones: [{
+                id: "1",
+                nombre: "Nacional"
+            }, {
+                id: "2",
+                nombre: "Departamental"
+            }, {
+                id: "3",
+                nombre: "Municipal"
+            }],
             instituciones: ["Adipiscing", "Elit", "Occaecat", "dolore cillum", "anim id Lorem", "amet tempor laboris",  "pariatur officia occaecat"]
         };
 
@@ -406,10 +409,22 @@ class Territorios extends Component{
             isDeleting: !this.state.isDeleting
         });
     }
+    
+    toggleDeletingClasificacion = () => {
+        this.setState({
+            isDeletingClasificacion: !this.state.isDeletingClasificacion
+        });
+    }
 
     toggleEditor = () => {
         this.setState({
             isEditing: !this.state.isEditing
+        });
+    }
+    
+    toggleEditorClasificacion = () => {
+        this.setState({
+            isEditingClasificacion: !this.state.isEditingClasificacion
         });
     }
 
@@ -435,6 +450,28 @@ class Territorios extends Component{
         });
     }
 
+    editarClasificacion = id => {
+        this.toggleEditorClasificacion();
+
+        const selected = this.state.territoriosActuales.find(territorio => territorio.id === id);
+        
+        this.setState({
+            activeTerritoryID: id,
+            editingForm: {
+                nombre: selected.nombre,
+                padre: selected.padre,
+                fechaCreacion: selected.fechaCreacion
+            }
+        });
+    }
+
+    eliminarClasificacion = id => {
+        this.toggleDeletingClasificacion();
+        this.setState({
+            activeTerritoryID: id
+        });
+    }
+
     confirmUserDeletion = () => {
         this.toggleDeleting();
 
@@ -447,6 +484,21 @@ class Territorios extends Component{
         this.setState({
             territoriosActuales: newTerritorios,
             elementosMostrados: newTerritorios
+        });
+    }
+
+    confirmUserDeletionClasificacion = () => {
+        this.toggleDeletingClasificacion();
+
+        /* Conectarse al backend para hacer los cambios */
+
+        /* Luego, eliminarlo visualmente de la interfaz */
+        let newClasificaciones = [...this.state.territoriosActuales];
+        newClasificaciones = newClasificaciones.filter(clasificacion => clasificacion.id !== this.state.activeTerritoryID);
+
+        this.setState({
+            territoriosActuales: newClasificaciones,
+            elementosMostrados: newClasificaciones
         });
     }
 
@@ -664,133 +716,10 @@ class Territorios extends Component{
                 );
                 break;
             case 2:
-                divisionMostrada = (
-                    <Translation>
-                        {
-                            t => (
-                                <Grid container spacing={5}>
-                                    <Grid item xs={12} md={6} className="pb-0">
-                                        <TextField
-                                            placeholder={t("buscar")}
-                                            fullWidth
-                                            variant="outlined"
-                                            onChange={this.handleSearch}
-                                            value={this.state.searchTerm}
-                                            InputProps={{
-                                                endAdornment: (
-                                                    <InputAdornment position="start">
-                                                        <Search color="primary" />
-                                                    </InputAdornment>
-                                                )
-                                            }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6} className="pb-0">
-                                        <div className="d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-                                            <Select
-                                                value={this.state.filtros.categoria}
-                                                onChange={this.handleFiltroChange}
-                                                input={<OutlinedInput required name="categoria"/>}
-                                                className="w-50"
-                                            >
-                                                {
-                                                    this.state.headCells.map((cellLabel, i) => {
-                                                        if (i < this.state.headCells.length - 1) {
-                                                            return <MenuItem value={cellLabel} key={i}>{t(cellLabel)}</MenuItem>
-                                                        }
-                                                    })
-                                                }
-                                            </Select>
-                                            <Select
-                                                value={this.state.filtros.orden}
-                                                onChange={this.handleFiltroChange}
-                                                input={<OutlinedInput required name="orden"/>}
-                                                className="ml-3 w-50"
-                                            >
-                                                <MenuItem value="descendente">{t("filtros.descendente")}</MenuItem>
-                                                <MenuItem value="ascendente">{t("filtros.ascendente")}</MenuItem>
-                                            </Select>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Paper>
-                                            <div className="scrolling-table-outer">
-                                                <div className="scrolling-table-wrapper">
-                                                    <Table className="scrolling-table">
-                                                        <TableHead>
-                                                            <TableRow>
-                                                                <TableCell>{t("ID")}</TableCell>
-                                                                <TableCell>{t("nombre")}</TableCell>
-                                                                <TableCell>{t("territorios.lista-padre")}</TableCell>
-                                                                <TableCell>{t("territorios.lista-fecha-creacion")}</TableCell>
-                                                                <TableCell>{t("territorios.lista-acciones")}</TableCell>
-                                                            </TableRow>
-                                                        </TableHead>
-                                                        {
-                                                            this.state.territoriosActuales.length > 0 ? (
-                                                                <TableBody>
-                                                                    {
-                                                                        this.state.isFiltering ? (
-                                                                            <TableRow>
-                                                                                <TableCell colSpan={5}>
-                                                                                    <CircularProgress color="primary" className="d-block mx-auto"/>
-                                                                                </TableCell>
-                                                                            </TableRow>
-                                                                        ) : (
-                                                                            this.state.elementosMostrados.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((elemento, i) => {
-                                                                                const values = Object.values(elemento);
-                                                                                const elementoID = elemento.id !== undefined ? elemento.id : elemento[0];
-
-                                                                                return (
-                                                                                    <TableRow key={i}>
-                                                                                        {
-                                                                                            values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
-                                                                                        }
-                                                                                        <TableCell>
-                                                                                            <EditOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                                this.editarTerritorio(elementoID);
-                                                                                            }}/>
-                                                                                            <DeleteOutlined color="primary"  style={{cursor: "pointer"}} onClick={() => {
-                                                                                                this.eliminarTerritorio(elementoID);
-                                                                                            }} className="ml-3"/>
-                                                                                        </TableCell>
-                                                                                    </TableRow>
-                                                                                );
-                                                                            })
-                                                                        )
-                                                                    }
-                                                                </TableBody>
-                                                            ) : (
-                                                                <TableBody>
-                                                                    <TableRow>
-                                                                        <TableCell colSpan="5" align="center">{t("usuarios.no-datos")}</TableCell>
-                                                                    </TableRow>
-                                                                </TableBody>
-                                                            )
-                                                        }
-                                                    </Table>
-                                                </div>
-                                            </div>
-                                            <TablePagination
-                                                labelDisplayedRows={({from, to, count}) => {
-                                                    return `${from}-${to} / ${count}`;
-                                                }}
-                                                labelRowsPerPage={t("filasPorPagina")}
-                                                rowsPerPageOptions={[10, 25, 100]}
-                                                component="div"
-                                                count={this.state.elementosMostrados.length}
-                                                rowsPerPage={this.state.rowsPerPage}
-                                                page={this.state.page}
-                                                onChangePage={this.handleChangePage}
-                                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            )
-                        }
-                    </Translation>
-                );
+                divisionMostrada = <ListaTerritorios handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCells} territoriosActuales={this.state.territoriosActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarTerritorio={this.editarTerritorio} eliminarTerritorio={this.eliminarTerritorio} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                break;
+            case 3:
+                divisionMostrada = <Clasificaciones handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCellsClasificaciones} clasificacionesActuales={this.state.clasificacionesActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.clasificacionesActuales} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarClasificacion={this.editarClasificacion} eliminarClasificacion={this.eliminarClasificacion} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 break;
             default:
                 break;
@@ -816,6 +745,7 @@ class Territorios extends Component{
                                             <Tab label={t("territorios.crear")}/>
                                             <Tab label={t("territorios.asignar")}/>
                                             <Tab label={t("territorios.administrar")}/>
+                                            <Tab label={t("territorios.clasificaciones")}/>
                                         </Tabs>
                                     </Paper>
                                 </Grid>
@@ -888,13 +818,23 @@ class Territorios extends Component{
                                 <DialogTitle>{t("territorios.label-desactivar")}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        <strong>{t("territorios.ayuda-borrar-0")}</strong>
-                                        <br/>
-                                        {t("territorios.ayuda-borrar-1")}
+                                        {t("territorios.ayuda-borrar-0")}
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button color="primary" onClick={this.confirmUserDeletion}>{t("usuarios.btn-borrar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Dialog open={this.state.isDeletingClasificacion} onClose={this.toggleDeletingClasificacion} aria-labelledby="form-dialog-title">
+                                <DialogTitle>{t("territorios.label-desactivar-clasificacion")}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        {t("territorios.ayuda-borrar-0-clasificacion")}
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.confirmUserDeletionClasificacion}>{t("usuarios.btn-borrar")}</Button>
                                 </DialogActions>
                             </Dialog>
 
