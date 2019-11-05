@@ -1648,12 +1648,12 @@ class ListaUsuarios extends Component {
             case "SUPERADMIN":
                 tabla = <Admins headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
 
-                formularioEdicion = <AdminsForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} handleChangeLocationDropdown={this.handleChangeLocationDropdown} departamentos={this.state.departamentos} municipios={this.state.municipios} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} />;
+                formularioEdicion = <AdminsForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} handleChangeLocationDropdown={this.handleChangeLocationDropdown} departamentos={this.state.departamentos} municipios={this.state.municipios} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} accountType={this.props.accountType} />;
                 break;
             case "ADMIN":
                 tabla = <EvaluadoresGobiernos headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.state.userType} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
 
-                formularioEdicion = <EvaluadoresGobiernosForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} handleChangeLocationDropdown={this.handleChangeLocationDropdown} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} />;
+                formularioEdicion = <EvaluadoresGobiernosForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} handleChangeLocationDropdown={this.handleChangeLocationDropdown} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} accountType={this.props.accountType} />;
                 break;
             case "GOBIERNO":
                 tabla = <Instituciones headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
@@ -1668,7 +1668,7 @@ class ListaUsuarios extends Component {
             case "ESTABLECIMIENTO":
                 tabla = <Docentes headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
 
-                formularioEdicion = <DocentesForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} />;
+                formularioEdicion = <DocentesForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} accountType={this.props.accountType} />;
                 break;
             default:
                 break;

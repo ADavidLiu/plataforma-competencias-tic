@@ -83,63 +83,67 @@ const DocentesForm = props => {
                                 <MenuItem value={"procesoPaso.finalizado"}>{t("procesoPaso.finalizado")}</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1" className="mb-3">{t("usuarios.roles")}</Typography>
-                            <FormGroup row>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={props.editingForm.roles.admin}
-                                            onChange={props.updateRoles}
-                                            value={true}
-                                            color="primary"
-                                            name="admin"
-                                            disabled={props.originalRole === "admins" ? true : false}
+                        {
+                            props.accountType === "SUPERADMIN" || props.accountType === "ADMIN" ? (
+                                <Grid item xs={12}>
+                                    <Typography variant="body1" className="mb-3">{t("usuarios.roles")}</Typography>
+                                    <FormGroup row>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={props.editingForm.roles.admin}
+                                                    onChange={props.updateRoles}
+                                                    value={true}
+                                                    color="primary"
+                                                    name="admin"
+                                                    disabled={props.originalRole === "admins" ? true : false}
+                                                />
+                                            }
+                                            label={t("roles.admin")}
                                         />
-                                    }
-                                    label={t("roles.admin")}
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={props.editingForm.roles.gobierno}
-                                            onChange={props.updateRoles}
-                                            value={true}
-                                            color="primary"
-                                            name="gobierno"
-                                            disabled={props.originalRole === "gobiernos" ? true : false}
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={props.editingForm.roles.gobierno}
+                                                    onChange={props.updateRoles}
+                                                    value={true}
+                                                    color="primary"
+                                                    name="gobierno"
+                                                    disabled={props.originalRole === "gobiernos" ? true : false}
+                                                />
+                                            }
+                                            label={t("roles.gobierno")}
                                         />
-                                    }
-                                    label={t("roles.gobierno")}
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={props.editingForm.roles.evaluador}
-                                            onChange={props.updateRoles}
-                                            value={true}
-                                            color="primary"
-                                            name="evaluador"
-                                            disabled={props.originalRole === "evaluadores" ? true : false}
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={props.editingForm.roles.evaluador}
+                                                    onChange={props.updateRoles}
+                                                    value={true}
+                                                    color="primary"
+                                                    name="evaluador"
+                                                    disabled={props.originalRole === "evaluadores" ? true : false}
+                                                />
+                                            }
+                                            label={t("roles.evaluador")}
                                         />
-                                    }
-                                    label={t("roles.evaluador")}
-                                />
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            checked={props.editingForm.roles.docente}
-                                            onChange={props.updateRoles}
-                                            value={true}
-                                            color="primary"
-                                            name="docente"
-                                            disabled={props.originalRole === "docentes" ? true : false}
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={props.editingForm.roles.docente}
+                                                    onChange={props.updateRoles}
+                                                    value={true}
+                                                    color="primary"
+                                                    name="docente"
+                                                    disabled={props.originalRole === "docentes" ? true : false}
+                                                />
+                                            }
+                                            label={t("roles.docente")}
                                         />
-                                    }
-                                    label={t("roles.docente")}
-                                />
-                            </FormGroup>
-                        </Grid>
+                                    </FormGroup>
+                                </Grid>
+                            ) : null
+                        }
                     </Grid>
                 )
             }

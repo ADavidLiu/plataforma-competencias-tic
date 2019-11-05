@@ -273,7 +273,7 @@ class Usuarios extends Component {
                 divisionMostrada = (
                     <Grid container spacing={5}>
                         <Grid item xs={12}>
-                            <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[0]} userType={this.props.userType} />
+                            <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[0]} userType={this.props.userType} accountType={this.props.userType} />
                         </Grid>
                     </Grid>
                 );
@@ -284,13 +284,13 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="INSTITUCION" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="INSTITUCION" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ESTABLECIMIENTO" />
                                 ) : this.props.userType === "ADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
                                 ) : this.props.userType === "SUPERADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[1]} userType="ADMIN" />
                                 ) : ""
                             }
                         </Grid>
@@ -303,13 +303,13 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "GOBIERNO" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ESTABLECIMIENTO" />
                                 ) : this.props.userType === "INSTITUCION" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="DOCENTE" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="DOCENTE" />
                                 ) : this.props.userType === "ADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="GOBIERNO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="GOBIERNO" />
                                 ) : this.props.userType === "SUPERADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ADMIN" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[2]} userType="ADMIN" />
                                 ) : ""
                             }
                         </Grid>
@@ -322,9 +322,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "SUPERADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="GOBIERNO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="GOBIERNO" />
                                 ) : this.props.userType === "ADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="INSTITUCION" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[3]} userType="INSTITUCION" />
                                 ) : ""
                             }
                         </Grid>
@@ -337,9 +337,9 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "SUPERADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="INSTITUCION" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="INSTITUCION" />
                                 ) : this.props.userType === "ADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[4]} userType="ESTABLECIMIENTO" />
                                 ) : ""
                             }
                         </Grid>
@@ -352,7 +352,7 @@ class Usuarios extends Component {
                         <Grid item xs={12}>
                             {
                                 this.props.userType === "SUPERADMIN" ? (
-                                    <ListaUsuarios tipoUsuariosMostrados={tipoUsuariosMostrados[5]} userType="ESTABLECIMIENTO" />
+                                    <ListaUsuarios accountType={this.props.userType} tipoUsuariosMostrados={tipoUsuariosMostrados[5]} userType="ESTABLECIMIENTO" />
                                 ) : ""
                             }
                         </Grid>
