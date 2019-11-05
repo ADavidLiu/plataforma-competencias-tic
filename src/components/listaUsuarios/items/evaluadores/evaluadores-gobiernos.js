@@ -70,7 +70,7 @@ const EvaluadoresGobiernos = props => {
                                                                                         } else {
                                                                                             if (keys[j] === "2") {
                                                                                                 return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
-                                                                                            } else {
+                                                                                            } else if (typeof val !== "object") {
                                                                                                 return <TableCell key={j}>{val}</TableCell>;
                                                                                             }
                                                                                         }
