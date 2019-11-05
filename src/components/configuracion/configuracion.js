@@ -26,6 +26,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Edit from '@material-ui/icons/Edit';
 import AddCircle from "@material-ui/icons/AddCircle";
+import Cancel from "@material-ui/icons/Cancel";
 
 class Configuracion extends Component {
     constructor(props) {
@@ -543,7 +544,7 @@ class Configuracion extends Component {
                                                 endAdornment={
                                                     <InputAdornment position="end">
                                                         <IconButton
-                                                            aria-label="toggle password visibility"
+                                                            hidden={!this.state.isEditandoInfoCuenta}
                                                             onClick={this.handleClickMostrarContrasenia}
                                                             onMouseDown={this.handleMouseDownMostrarContrasenia}
                                                         >
@@ -935,6 +936,7 @@ class Configuracion extends Component {
                                                             endAdornment={
                                                                 <InputAdornment position="end">
                                                                     <IconButton
+                                                                        hidden={!this.state.isEditandoInfoPlataforma}
                                                                         onClick={this.agregarFormato}
                                                                     >
                                                                         <AddCircle color="primary"/>
@@ -947,6 +949,7 @@ class Configuracion extends Component {
                                                     {
                                                         this.state.parametrosPlataforma.formatosActuales.map((formato, i) => {
                                                             return <Chip
+                                                                deleteIcon={<Cancel hidden={!this.state.isEditandoInfoPlataforma} />}
                                                                 key={i}
                                                                 label={formato}
                                                                 onDelete={() => {this.borrarFormato(i)}}
@@ -994,7 +997,7 @@ class Configuracion extends Component {
                                                             endAdornment={
                                                                 <InputAdornment position="end">
                                                                     <IconButton
-                                                                        aria-label="toggle password visibility"
+                                                                        hidden={!this.state.isEditandoInfoPlataforma}
                                                                         onClick={this.handleClickMostrarRecaptchaSitekey}
                                                                         onMouseDown={this.handleMouseDownMostrarRecaptchaSitekey}
                                                                     >
