@@ -36,6 +36,11 @@ import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 
+import FormControl from "@material-ui/core/FormControl";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+
 class Territorios extends Component{
     constructor() {
         super();
@@ -48,10 +53,13 @@ class Territorios extends Component{
             isDeleting: false,
             territoriosActuales: [],
             institucionesActuales: [],
-            headCells: ["ID", "nombre", "territorios.lista-padre", "territorios.lista-fecha-creacion", "territorios.lista-acciones"],
+            clasificacionesActuales: [],
+            headCells: ["ID", "nombre", "territorios.lista-padre", "territorios.lista-clasificacion", "territorios.lista-fecha-creacion", "territorios.lista-acciones"],
             crearForm: {
                 nombre: "",
                 padre: "",
+                isClaseNew: "",
+                clase: "",
                 isFilled: false
             },
             asignarForm: {
@@ -71,6 +79,7 @@ class Territorios extends Component{
             editingForm: {
                 nombre: "",
                 padre: "",
+                clase: "",
                 fechaCreacion: ""
             },
             activeTerritoryID: ""
@@ -129,12 +138,14 @@ class Territorios extends Component{
                     fechaCreacion: "2019-05-24"
                 }
             ],
+            clasificaciones: ["Nacional", "Departamental", "Municipal"],
             instituciones: ["Adipiscing", "Elit", "Occaecat", "dolore cillum", "anim id Lorem", "amet tempor laboris",  "pariatur officia occaecat"]
         };
 
         this.setState({
             territoriosActuales: dataCargada.territorios,
             institucionesActuales: dataCargada.instituciones,
+            clasificacionesActuales: dataCargada.clasificaciones,
             elementosMostrados: dataCargada.territorios
         });
     }
@@ -146,6 +157,8 @@ class Territorios extends Component{
             crearForm: {
                 nombre: "",
                 padre: "",
+                isClaseNew: "",
+                clase: "",
                 isFilled: false
             },
             asignarForm: {
@@ -174,7 +187,7 @@ class Territorios extends Component{
 
         const timeout = setTimeout(() => {
             let newState = false;
-            if (this.state.crearForm.nombre !== "" && this.state.crearForm.padre !== "") {
+            if (this.state.crearForm.nombre !== "" && this.state.crearForm.padre !== "" && this.state.crearForm.isClaseNew !== "" && this.state.crearForm.clase !== "") {
                 newState = true;
             }
 
@@ -219,6 +232,8 @@ class Territorios extends Component{
             crearForm: {
                 nombre: "",
                 padre: "",
+                isClaseNew: "",
+                clase: "",
                 isFilled: false
             }
         });
@@ -516,6 +531,66 @@ class Territorios extends Component{
                                                             })
                                                         }
                                                     </Select>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div className="text-center text-md-left mb-3">
+                                                        <Typography className="mb-2" variant="body1"><strong>{t("territorios.clasificacion")}</strong></Typography>
+                                                        <Typography variant="body2">{t("territorios.clasificacion-descripcion")}</Typography>
+                                                    </div>
+                                                    <FormControl component="fieldset" className="w-100">
+                                                        <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+                                                            <RadioGroup
+                                                                value={this.state.crearForm.isClaseNew}
+                                                                onChange={this.handleCrearFormChange}
+                                                                name="isClaseNew"
+                                                                row>
+                                                                    <FormControlLabel
+                                                                        value="true"
+                                                                        control={<Radio color="primary" />}
+                                                                        label={t("si")}
+                                                                    />
+                                                                    <FormControlLabel
+                                                                        value="false"
+                                                                        control={<Radio color="primary" />}
+                                                                        label={t("no")}
+                                                                    />
+                                                            </RadioGroup>
+                                                        </div>
+                                                    </FormControl>
+                                                    {
+                                                        this.state.crearForm.isClaseNew === "true" ? (
+                                                            <React.Fragment>
+                                                                <Typography variant="body2" className="mb-2"><strong>{t("cual")}</strong></Typography>
+                                                                <Select
+                                                                    value={this.state.crearForm.clase}
+                                                                    onChange={this.handleCrearFormChange}
+                                                                    variant="filled"
+                                                                    input={<OutlinedInput fullWidth required name="clase"/>}
+                                                                >
+                                                                    {
+                                                                        this.state.clasificacionesActuales.map((clase, i) => {
+                                                                            return (
+                                                                                <MenuItem key={i} value={clase}>{clase}</MenuItem>
+                                                                            );
+                                                                        })
+                                                                    }
+                                                                </Select>
+                                                            </React.Fragment>
+                                                        ) : this.state.crearForm.isClaseNew === "false" ? (
+                                                            <React.Fragment>
+                                                                <Typography variant="body2" className="mb-2"><strong>{t("territorios.clasificacion-crear")}</strong></Typography>
+                                                                <TextField
+                                                                    variant="outlined"
+                                                                    margin="none"
+                                                                    required
+                                                                    fullWidth
+                                                                    name="clase"
+                                                                    value={this.state.crearForm.clase}
+                                                                    onChange={this.handleCrearFormChange}
+                                                                />
+                                                            </React.Fragment>
+                                                        ) : null
+                                                    }
                                                 </Grid>
                                             </Grid>
                                         </Paper>
