@@ -1616,7 +1616,20 @@ class ListaUsuarios extends Component {
     }
 
     updateRoles = e => {
-        console.log(e.target.name);
+        const newUsers = [...this.state.usuarios[this.props.tipoUsuariosMostrados]];
+        const found = newUsers.find(user => user.idNacional === this.state.activeID);
+        found.roles[e.target.name] = e.target.checked;
+
+        this.setState({
+            usuarios: {
+                ...this.state.usuarios,
+                [e.target.name]: newUsers
+            },
+            elementosMostrados: {
+                ...this.state.elementosMostrados,
+                [e.target.name]: newUsers
+            }
+        });
     }
 
 	render() {
