@@ -25,8 +25,8 @@ import Event from "@material-ui/icons/Event";
 import Launch from "@material-ui/icons/Launch";
 import Build from "@material-ui/icons/Build";
 import Done from "@material-ui/icons/Done";
+import InsertChartOutlined from "@material-ui/icons/InsertChartOutlined";
 import Stars from "@material-ui/icons/Stars";
-import ListAlt from "@material-ui/icons/ListAlt";
 
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
@@ -308,7 +308,7 @@ class Procesos extends Component {
                                                         <Button className="w-100 w-md-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
                                                     </a>
                                                     <a href="#" className="d-block d-md-inline-block w-100 w-md-auto mt-3 mt-md-0 ml-md-3" style={{textDecoration: "none"}}>
-                                                        <Button className="w-100 w-md-auto" variant="contained" color="primary"><ListAlt className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                                        <Button className="w-100 w-md-auto" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
                                                     </a>
                                                 </div>
                                                 <hr/>

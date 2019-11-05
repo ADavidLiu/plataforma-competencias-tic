@@ -15,7 +15,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from "@material-ui/core/Paper";
 
-import ListAlt from "@material-ui/icons/ListAlt";
+import InsertChartOutlined from "@material-ui/icons/InsertChartOutlined";
 import Stars from "@material-ui/icons/Stars";
 
 import { Bar, Radar } from "react-chartjs-2";
@@ -474,7 +474,7 @@ class DashboardDocente extends Component {
                                             <Button className="w-100 w-lg-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
                                         </a>
                                         <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto mt-3 mt-lg-0 ml-lg-3" style={{textDecoration: "none"}}>
-                                            <Button className="w-100 w-lg-auto" variant="contained" color="primary"><ListAlt className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                            <Button className="w-100 w-lg-auto" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
                                         </a>
                                     </div>
                                     <hr/>
