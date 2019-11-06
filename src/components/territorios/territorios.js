@@ -133,13 +133,13 @@ class Territorios extends Component{
                 }
             ],
             clasificaciones: [{
-                id: "1",
+                id: "3",
                 nombre: "Nacional"
             }, {
                 id: "2",
                 nombre: "Departamental"
             }, {
-                id: "3",
+                id: "1",
                 nombre: "Municipal"
             }],
             instituciones: ["Adipiscing", "Elit", "Occaecat", "dolore cillum", "anim id Lorem", "amet tempor laboris",  "pariatur officia occaecat"]
@@ -156,7 +156,9 @@ class Territorios extends Component{
     handleTabChange = (e, newValue) => {
         this.setState({
             divisionMostrada: newValue,
+            elementosMostrados: newValue === 3 ? this.state.clasificacionesActuales : this.state.territoriosActuales,
             isLoading: true,
+            searchTerm: "",
             crearForm: {
                 nombre: "",
                 padre: "",
@@ -181,12 +183,22 @@ class Territorios extends Component{
     }
 
     handleCrearFormChange = e => {
-        this.setState({
-            crearForm: {
-                ...this.state.crearForm,
-                [e.target.name]: e.target.value
-            }
-        });
+        if (e.target.name === "isClaseNew") {
+            this.setState({
+                crearForm: {
+                    ...this.state.crearForm,
+                    clase: "",
+                    [e.target.name]: e.target.value
+                }
+            });
+        } else {
+            this.setState({
+                crearForm: {
+                    ...this.state.crearForm,
+                    [e.target.name]: e.target.value
+                }
+            });
+        }
 
         const timeout = setTimeout(() => {
             let newState = false;
@@ -343,7 +355,14 @@ class Territorios extends Component{
     }
 
     handleSearch = e => {
-        const copiaElementos = [...this.state.territoriosActuales];
+        let searchedList = "";
+        if (this.state.divisionMostrada === 3) {
+            searchedList = "clasificacionesActuales";
+        } else {
+            searchedList = "territoriosActuales";
+        }
+
+        const copiaElementos = [...this.state[searchedList]];
         const searchTerm = e.target.value;
 
         this.setState({
@@ -359,15 +378,22 @@ class Territorios extends Component{
             const arraysValuesToSearchFrom = [];
             let matchedArrays = [];
 
-            this.state.territoriosActuales.forEach(elem => {
+            this.state[searchedList].forEach(elem => {
                 Object.values(elem).forEach(val => {
                     rawValuesToSearchFrom.push(val);
                 });
             });
 
-            for (let i = 0; i < rawValuesToSearchFrom.length; i += 4) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + 4));
+            if (this.state.divisionMostrada === 3) {
+                for (let i = 0; i < rawValuesToSearchFrom.length; i += this.state.headCellsClasificaciones.length - 1) {
+                    arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.state.headCellsClasificaciones.length - 1));
+                }
+            } else {
+                for (let i = 0; i < rawValuesToSearchFrom.length; i += this.state.headCells.length - 2) {
+                    arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.state.headCells.length - 2));
+                }
             }
+
             arraysValuesToSearchFrom.forEach(array => {
                 array.forEach(val => {
                     if (val.toString().toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -453,14 +479,13 @@ class Territorios extends Component{
     editarClasificacion = id => {
         this.toggleEditorClasificacion();
 
-        const selected = this.state.territoriosActuales.find(territorio => territorio.id === id);
+        const selected = this.state.clasificacionesActuales.find(clasificacion => clasificacion.id === id);
         
         this.setState({
             activeTerritoryID: id,
             editingForm: {
-                nombre: selected.nombre,
-                padre: selected.padre,
-                fechaCreacion: selected.fechaCreacion
+                id: selected.id,
+                nombre: selected.nombre                
             }
         });
     }
@@ -493,11 +518,11 @@ class Territorios extends Component{
         /* Conectarse al backend para hacer los cambios */
 
         /* Luego, eliminarlo visualmente de la interfaz */
-        let newClasificaciones = [...this.state.territoriosActuales];
+        let newClasificaciones = [...this.state.clasificacionesActuales];
         newClasificaciones = newClasificaciones.filter(clasificacion => clasificacion.id !== this.state.activeTerritoryID);
 
         this.setState({
-            territoriosActuales: newClasificaciones,
+            clasificacionesActuales: newClasificaciones,
             elementosMostrados: newClasificaciones
         });
     }
@@ -520,6 +545,25 @@ class Territorios extends Component{
         this.setState({
             territoriosActuales: newTerritorios,
             elementosMostrados: newTerritorios
+        });
+    }
+
+    saveUpdatedUserClasificacion = () => {
+        this.toggleEditorClasificacion();
+
+        const newClasificaciones = [...this.state.clasificacionesActuales];
+        let modified = newClasificaciones.find(clasificacion => clasificacion.id === this.state.activeTerritoryID);
+        const modifiedIndex = newClasificaciones.indexOf(modified);
+
+        modified = {
+            ...modified,
+            nombre: this.state.editingForm.nombre
+        }
+        newClasificaciones[modifiedIndex] = modified;
+
+        this.setState({
+            clasificacionesActuales: newClasificaciones,
+            elementosMostrados: newClasificaciones
         });
     }
 
@@ -622,7 +666,7 @@ class Territorios extends Component{
                                                                     {
                                                                         this.state.clasificacionesActuales.map((clase, i) => {
                                                                             return (
-                                                                                <MenuItem key={i} value={clase}>{clase}</MenuItem>
+                                                                                <MenuItem key={i} value={clase.nombre}>{clase.nombre}</MenuItem>
                                                                             );
                                                                         })
                                                                     }
@@ -719,7 +763,7 @@ class Territorios extends Component{
                 divisionMostrada = <ListaTerritorios handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCells} territoriosActuales={this.state.territoriosActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarTerritorio={this.editarTerritorio} eliminarTerritorio={this.eliminarTerritorio} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 break;
             case 3:
-                divisionMostrada = <Clasificaciones handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCellsClasificaciones} clasificacionesActuales={this.state.clasificacionesActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.clasificacionesActuales} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarClasificacion={this.editarClasificacion} eliminarClasificacion={this.eliminarClasificacion} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                divisionMostrada = <Clasificaciones handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCellsClasificaciones} clasificacionesActuales={this.state.clasificacionesActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarClasificacion={this.editarClasificacion} eliminarClasificacion={this.eliminarClasificacion} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 break;
             default:
                 break;
@@ -811,6 +855,42 @@ class Territorios extends Component{
                                 </DialogContent>
                                 <DialogActions>
                                     <Button color="primary" onClick={this.saveUpdatedUser}>{t("usuarios.btn-guardar")}</Button>
+                                </DialogActions>
+                            </Dialog>
+
+                            <Dialog open={this.state.isEditingClasificacion} onClose={this.toggleEditorClasificacion} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+                                <DialogTitle>{t("territorios.label-editar-clasificacion")}</DialogTitle>
+                                <DialogContent>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} md={4}>
+                                            <Typography variant="body1">{t("ID")}</Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                disabled
+                                                name="nombre"
+                                                value={this.state.editingForm.id}
+                                                onChange={this.handleEdicionChange}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={8}>
+                                            <Typography variant="body1">{t("territorios.nombre-clasificacion")}</Typography>
+                                            <TextField
+                                                variant="outlined"
+                                                margin="normal"
+                                                required
+                                                fullWidth
+                                                name="nombre"
+                                                value={this.state.editingForm.nombre}
+                                                onChange={this.handleEdicionChange}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button color="primary" onClick={this.saveUpdatedUserClasificacion}>{t("usuarios.btn-guardar")}</Button>
                                 </DialogActions>
                             </Dialog>
 

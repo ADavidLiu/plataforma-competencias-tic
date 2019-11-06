@@ -530,6 +530,8 @@ const es = {
         "territorios.lista-fecha-creacion": "Fecha de creación",
         "territorios.lista-acciones": "Acciones",
         "territorios.label-editar": "Editar división territorial",
+        "territorios.label-editar-clasificacion": "Editar clasificación territorial",
+        "territorios.nombre-clasificacion": "Nombre de la clasificación",
         "territorios.label-desactivar": "Desactivar división territorial",
         "territorios.ayuda-borrar-0": "¿Está seguro(a) de que desea desactivar este territorio?",
         "territorios.label-desactivar-clasificacion": "Desactivar clasificación territorial",
