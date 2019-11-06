@@ -4,6 +4,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import "./i18n";
+import axe from "react-axe";
+
+/* Auditoría automática de a11y */
+if (process.env.NODE_ENV !== "production") {
+    axe(React, ReactDOM, 1000);
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
