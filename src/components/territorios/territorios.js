@@ -629,12 +629,12 @@ class Territorios extends Component{
                                                     </Select>
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <div className="text-center text-md-left mb-3">
+                                                    <div className="text-center mb-3">
                                                         <Typography className="mb-2" variant="body1"><strong>{t("territorios.clasificacion")}</strong></Typography>
                                                         <Typography variant="body2">{t("territorios.clasificacion-descripcion")}</Typography>
                                                     </div>
                                                     <FormControl component="fieldset" className="w-100">
-                                                        <div className="d-flex align-items-center justify-content-center justify-content-md-start">
+                                                        <div className="d-flex align-items-center justify-content-center">
                                                             <RadioGroup
                                                                 value={this.state.crearForm.isClaseNew}
                                                                 onChange={this.handleCrearFormChange}
@@ -655,7 +655,7 @@ class Territorios extends Component{
                                                     </FormControl>
                                                     {
                                                         this.state.crearForm.isClaseNew === "true" ? (
-                                                            <React.Fragment>
+                                                            <div className="text-center">
                                                                 <Typography variant="body2" className="mb-2"><strong>{t("cual")}</strong></Typography>
                                                                 <Select
                                                                     value={this.state.crearForm.clase}
@@ -671,9 +671,9 @@ class Territorios extends Component{
                                                                         })
                                                                     }
                                                                 </Select>
-                                                            </React.Fragment>
+                                                            </div>
                                                         ) : this.state.crearForm.isClaseNew === "false" ? (
-                                                            <React.Fragment>
+                                                            <div className="text-center">
                                                                 <Typography variant="body2" className="mb-2"><strong>{t("territorios.clasificacion-crear")}</strong></Typography>
                                                                 <TextField
                                                                     variant="outlined"
@@ -684,7 +684,7 @@ class Territorios extends Component{
                                                                     value={this.state.crearForm.clase}
                                                                     onChange={this.handleCrearFormChange}
                                                                 />
-                                                            </React.Fragment>
+                                                            </div>
                                                         ) : null
                                                     }
                                                 </Grid>
@@ -760,10 +760,10 @@ class Territorios extends Component{
                 );
                 break;
             case 2:
-                divisionMostrada = <ListaTerritorios handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCells} territoriosActuales={this.state.territoriosActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarTerritorio={this.editarTerritorio} eliminarTerritorio={this.eliminarTerritorio} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                divisionMostrada = <ListaTerritorios handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCells} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarTerritorio={this.editarTerritorio} eliminarTerritorio={this.eliminarTerritorio} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 break;
             case 3:
-                divisionMostrada = <Clasificaciones handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCellsClasificaciones} clasificacionesActuales={this.state.clasificacionesActuales} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarClasificacion={this.editarClasificacion} eliminarClasificacion={this.eliminarClasificacion} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
+                divisionMostrada = <Clasificaciones handleSearch={this.handleSearch} searchTerm={this.state.searchTerm} filtros={this.state.filtros} handleFiltroChange={this.handleFiltroChange} headCells={this.state.headCellsClasificaciones} isFiltering={this.state.isFiltering} elementosMostrados={this.state.elementosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editarClasificacion={this.editarClasificacion} eliminarClasificacion={this.eliminarClasificacion} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />
                 break;
             default:
                 break;

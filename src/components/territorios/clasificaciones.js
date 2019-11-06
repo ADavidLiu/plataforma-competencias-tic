@@ -83,7 +83,7 @@ const Clasificaciones = props => {
                                                 </TableRow>
                                             </TableHead>
                                             {
-                                                props.clasificacionesActuales.length > 0 ? (
+                                                props.elementosMostrados.length > 0 ? (
                                                     <TableBody>
                                                         {
                                                             props.isFiltering ? (

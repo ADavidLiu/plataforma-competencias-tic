@@ -85,7 +85,7 @@ const ListaTerritorios = props => {
                                                 </TableRow>
                                             </TableHead>
                                             {
-                                                props.territoriosActuales.length > 0 ? (
+                                                props.elementosMostrados.length > 0 ? (
                                                     <TableBody>
                                                         {
                                                             props.isFiltering ? (
