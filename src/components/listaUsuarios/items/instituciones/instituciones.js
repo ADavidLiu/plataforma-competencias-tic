@@ -79,7 +79,7 @@ const Instituciones = props => {
                                                                                 <TableCell>
                                                                                     <Edit color="primary" style={{cursor: "pointer"}} onClick={() => { props.editUser(elementoID); }}/>
                                                                                     <DeleteOutlined color="primary" className="mx-2" style={{cursor: "pointer"}} onClick={() => { props.deleteUser(elementoID); }}/>
-                                                                                    <Link to={{
+                                                                                    <Link aria-label={t("aria.abrir-perfil")} to={{
                                                                                         pathname: `/${t("link.dashboard-ie")}`,
                                                                                         state: {
                                                                                             institucionID: elementoID,
@@ -112,6 +112,12 @@ const Instituciones = props => {
                         <TablePagination
                             labelDisplayedRows={({from, to, count}) => {
                                 return `${from}-${to} / ${count}`;
+                            }}
+                            backIconButtonProps={{
+                                "aria-label": `${t("aria.pagina-anterior")}`
+                            }}
+                            nextIconButtonProps={{
+                                "aria-label": `${t("aria.pagina-siguiente")}`
                             }}
                             labelRowsPerPage={t("filasPorPagina")}
                             rowsPerPageOptions={[10, 25, 100]}

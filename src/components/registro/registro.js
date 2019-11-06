@@ -273,6 +273,9 @@ class Registro extends Component {
                                 <Grid container spacing={2} className="mb-2">
                                     <Grid item xs={12} md={6} className="py-0">
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.nombres")}`
+                                            }}
                                             variant="outlined"
                                             margin="normal"
                                             required
@@ -286,6 +289,9 @@ class Registro extends Component {
                                     </Grid>
                                     <Grid item xs={12} md={6} className="py-0">
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.apellidos")}`
+                                            }}
                                             variant="outlined"
                                             margin="normal"
                                             required
@@ -299,6 +305,9 @@ class Registro extends Component {
                                     </Grid>
                                     <Grid item xs={12} className="py-0">
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.fecha-nacimiento")}`
+                                            }}
                                             margin="normal"
                                             required
                                             fullWidth
@@ -312,6 +321,9 @@ class Registro extends Component {
                                     </Grid>
                                     <Grid item xs={12} className="py-0">
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.descripcion-personal")}`
+                                            }}
                                             variant="outlined"
                                             margin="normal"
                                             required
@@ -561,6 +573,9 @@ class Registro extends Component {
                                                         <Grid container>
                                                             <Grid item xs={12} className="py-0">
                                                                 <TextField
+                                                                    inputProps={{
+                                                                        "aria-label": `${t("aria.usuario")}`
+                                                                    }}
                                                                     variant="outlined"
                                                                     margin="normal"
                                                                     required
@@ -574,6 +589,9 @@ class Registro extends Component {
                                                             </Grid>
                                                             <Grid item xs={12} className="py-0">
                                                                 <TextField
+                                                                    inputProps={{
+                                                                        "aria-label": `${t("aria.contrasenia")}`
+                                                                    }}
                                                                     variant="outlined"
                                                                     margin="normal"
                                                                     required
@@ -611,6 +629,9 @@ class Registro extends Component {
                                             </Grid>
                                             <Grid item xs={12} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.email")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -625,6 +646,9 @@ class Registro extends Component {
                                             </Grid>
                                             <Grid item xs={12} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.num-contacto")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -639,6 +663,9 @@ class Registro extends Component {
                                             </Grid>
                                             <Grid item xs={12} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.web-personal")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     fullWidth

@@ -3,14 +3,11 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
 
-import { StickyContainer, Sticky } from 'react-sticky';
-
 import GetApp from "@material-ui/icons/GetApp";
 import PlaylistAddCheck from "@material-ui/icons/PlaylistAddCheck";
 
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 
@@ -343,7 +340,7 @@ class PracticaRevision extends Component {
                                             <div className="d-flex align-items-center justify-content-start">
                                                 <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
                                                 <div>
-                                                    <Typography variant="h5" className="mb-2">{t("titulo.practica-revision")}</Typography>
+                                                    <Typography component="h1" variant="h5" className="mb-2">{t("titulo.practica-revision")}</Typography>
                                                     <Typography variant="body1">{t("revision.nombre-evaluado")} <strong>{this.state.docenteNombre}</strong></Typography>
                                                 </div>
                                             </div>
@@ -453,7 +450,7 @@ class PracticaRevision extends Component {
                                                                                         <React.Fragment key={i}>
                                                                                             <div className="d-flex align-items-center justify-content-between mb-2">
                                                                                                 <Typography><em>{evidencia.archivo.nombre}</em></Typography>
-                                                                                                <a href={evidencia.archivo.linkDescarga}>
+                                                                                                <a aria-label={t("aria.descargar")} href={evidencia.archivo.linkDescarga}>
                                                                                                     <GetApp color="primary" />
                                                                                                 </a>
                                                                                             </div>
@@ -469,7 +466,7 @@ class PracticaRevision extends Component {
                                                                                         <Typography variant="body1" className="mb-3"><strong>{t("revision.produccion-retroalimentada")}</strong></Typography>
                                                                                         <div className="d-flex align-items-center justify-content-between mb-2">
                                                                                             <Typography><em>{actividad.retroalimentacion.archivo.nombre}</em></Typography>
-                                                                                            <a href={actividad.retroalimentacion.archivo.linkDescarga}>
+                                                                                            <a aria-label={t("aria.descargar")} href={actividad.retroalimentacion.archivo.linkDescarga}>
                                                                                                 <GetApp color="primary" />
                                                                                             </a>
                                                                                         </div>
@@ -529,7 +526,7 @@ class PracticaRevision extends Component {
                             {
                                 !this.props[0].location.state.shouldActivateViewingMode ? (
                                     <Tooltip title={t("revision.practica-calificar")} placement="left">
-                                        <Fab color="primary" className="fab prueba-fab" onClick={this.toggleGrading}>
+                                        <Fab aria-label={t("aria.abrir-formato-calificaciones")} color="primary" className="fab prueba-fab" onClick={this.toggleGrading}>
                                             <PlaylistAddCheck/>
                                         </Fab>
                                     </Tooltip>

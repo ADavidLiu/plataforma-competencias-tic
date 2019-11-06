@@ -68,9 +68,9 @@ class Encuestas extends Component {
                                             <Grid item xs={12} className="pb-0">
                                                 {
                                                     this.state.divisionMostrada !== 2 ? (
-                                                        <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} ${this.state.divisionMostrada + 1}`}</Typography>
+                                                        <Typography component="h2" variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} ${this.state.divisionMostrada + 1}`}</Typography>
                                                     ) : (
-                                                        <Typography variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} 4`}</Typography>
+                                                        <Typography component="h2" variant="h6" className="mb-4">{`${t("instrumento.encuestas-factor")} 4`}</Typography>
                                                     )
                                                 }
                                                 {
@@ -78,6 +78,9 @@ class Encuestas extends Component {
                                                         <Paper className="p-4 mb-4" key={j}>
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                 <TextField
+                                                                    inputProps={{
+                                                                        "aria-label": `${t("aria.pregunta")}`
+                                                                    }}
                                                                     variant="outlined"
                                                                     margin="normal"
                                                                     fullWidth
@@ -89,7 +92,7 @@ class Encuestas extends Component {
                                                                     onChange={e => { this.props.handleChange(e, "encuestas", {i: this.state.divisionMostrada, j: j}) }}
                                                                 />
                                                                 <div className="d-flex align-items-center justify-content-end ml-4">
-                                                                    <IconButton color="primary" onClick={() => { this.props.confirmarDelete("encuestas", {i: this.state.divisionMostrada, j: j}); }}>
+                                                                    <IconButton aria-label={t("aria.eliminar-elemento")} color="primary" onClick={() => { this.props.confirmarDelete("encuestas", {i: this.state.divisionMostrada, j: j}); }}>
                                                                         <DeleteOutlined color="primary"/>
                                                                     </IconButton>
                                                                 </div>
@@ -97,7 +100,7 @@ class Encuestas extends Component {
                                                         </Paper>
                                                     ))
                                                 }
-                                                <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { this.props.addElement("encuestas", this.state.divisionMostrada); }}>
+                                                <Button aria-label={t("aria.agregar-elemento")} variant="contained" color="primary" fullWidth size="large" onClick={() => { this.props.addElement("encuestas", this.state.divisionMostrada); }}>
                                                     <Add className="d-block mx-auto"/>
                                                 </Button>
                                             </Grid>

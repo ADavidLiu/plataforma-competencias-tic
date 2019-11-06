@@ -391,7 +391,7 @@ class Usuarios extends Component {
                                 <title>{`${tituloPagina} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
                             <Grid item xs={12}>
-                                <Typography variant="h5">{t("usuarios.titulo")}</Typography>
+                                <Typography component="h1" variant="h5">{t("usuarios.titulo")}</Typography>
                                 <hr className="mb-4"/>
                                 <Paper>
                                     { tabs }

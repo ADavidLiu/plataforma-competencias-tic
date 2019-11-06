@@ -29,6 +29,9 @@ const Clasificaciones = props => {
                     <Grid container spacing={5}>
                         <Grid item xs={12} md={6} className="pb-0">
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.buscar")}`
+                                }}
                                 placeholder={t("buscar")}
                                 fullWidth
                                 variant="outlined"
@@ -130,6 +133,12 @@ const Clasificaciones = props => {
                                 <TablePagination
                                     labelDisplayedRows={({from, to, count}) => {
                                         return `${from}-${to} / ${count}`;
+                                    }}
+                                    backIconButtonProps={{
+                                        "aria-label": `${t("aria.pagina-anterior")}`
+                                    }}
+                                    nextIconButtonProps={{
+                                        "aria-label": `${t("aria.pagina-siguiente")}`
                                     }}
                                     labelRowsPerPage={t("filasPorPagina")}
                                     rowsPerPageOptions={[10, 25, 100]}

@@ -257,7 +257,7 @@ class EncuestaRevision extends Component {
                                             <div className="d-flex align-items-center justify-content-start">
                                                 <Avatar alt={t("imagen-perfil")} src={this.state.establecimientoImg} className="mr-3" style={{height: "60px", width: "60px"}} />
                                                 <div>
-                                                    <Typography variant="h5" className="mb-2">{t("revision.encuesta-titulo")}</Typography>
+                                                    <Typography component="h1" variant="h5" className="mb-2">{t("revision.encuesta-titulo")}</Typography>
                                                     <Typography variant="body1">{t("revision.encuesta-evaluado")} <strong>{this.state.establecimientoNombre}</strong></Typography>
                                                 </div>
                                             </div>
@@ -316,6 +316,9 @@ class EncuestaRevision extends Component {
                                                                             <Typography className="mb-3" variant="body1"><strong>{t("revision.feedback")}</strong></Typography>
                                                                             <FormControl variant="outlined" className="w-100">
                                                                                 <TextField
+                                                                                    inputProps={{
+                                                                                        "aria-label": `${t("aria.por-que-decision")}`
+                                                                                    }}
                                                                                     variant="outlined"
                                                                                     multiline
                                                                                     fullWidth

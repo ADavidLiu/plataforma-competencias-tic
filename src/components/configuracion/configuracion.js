@@ -385,7 +385,7 @@ class Configuracion extends Component {
                                 <title>{`${t("titulo.configuracion")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
                             <Grid item xs={12} className="mb-5">
-                                <Typography variant="h5">
+                                <Typography variant="h5" component="h1">
                                     {t("configuracion.titulo")}
                                 </Typography>
                                 <hr/>
@@ -479,7 +479,7 @@ class Configuracion extends Component {
                                     <Typography variant="h6" className="mr-4">
                                         {t("configuracion.ajustes-cuenta")}
                                     </Typography>
-                                    <IconButton color="primary" onClick={this.toggleEditingAccountData}>
+                                    <IconButton aria-label={t("aria.activar-edicion")} color="primary" onClick={this.toggleEditingAccountData}>
                                         <Edit color="primary"/>
                                     </IconButton>
                                 </div>
@@ -516,6 +516,9 @@ class Configuracion extends Component {
                                     </Grid>
                                     <Grid item xs={6}>
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.usuario")}`
+                                            }}
                                             variant="outlined"
                                             required
                                             fullWidth
@@ -536,6 +539,9 @@ class Configuracion extends Component {
                                     <Grid item xs={6}>
                                         <FormControl className="w-100">
                                             <OutlinedInput
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.contrasenia")}`
+                                                }}
                                                 id="contrasenia"
                                                 type={this.state.mostrarContrasenia ? 'text' : 'password'}
                                                 value={this.state.contrasenia}
@@ -544,6 +550,7 @@ class Configuracion extends Component {
                                                 endAdornment={
                                                     <InputAdornment position="end">
                                                         <IconButton
+                                                            aria-label={t("aria.switch-visibilidad")}
                                                             hidden={!this.state.isEditandoInfoCuenta}
                                                             onClick={this.handleClickMostrarContrasenia}
                                                             onMouseDown={this.handleMouseDownMostrarContrasenia}
@@ -576,7 +583,7 @@ class Configuracion extends Component {
                                                 <Typography variant="h6" className="mr-4">
                                                     {t("configuracion.label-personal")}
                                                 </Typography>
-                                                <IconButton color="primary" onClick={this.toggleEditingPersonalData}>
+                                                <IconButton aria-label={t("aria.activar-edicion")} color="primary" onClick={this.toggleEditingPersonalData}>
                                                     <Edit color="primary"/>
                                                 </IconButton>
                                             </div>
@@ -592,6 +599,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombres")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -613,6 +623,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.appelidos")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -634,6 +647,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.fecha-nacimiento")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -682,6 +698,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.descripcion-personal")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -872,6 +891,9 @@ class Configuracion extends Component {
                                                         this.state.docente.isOtrasAreas ? (
                                                             <FormControl variant="outlined" className="w-100">
                                                                 <TextField
+                                                                    inputProps={{
+                                                                        "aria-label": `${t("aria.otras-areas")}`
+                                                                    }}
                                                                     variant="outlined"
                                                                     required
                                                                     fullWidth
@@ -910,7 +932,7 @@ class Configuracion extends Component {
                                                 <Typography variant="h6" className="mr-4">
                                                     {t("configuracion.parametros-plataforma")}
                                                 </Typography>
-                                                <IconButton color="primary" onClick={this.toggleEditingPlatformData}>
+                                                <IconButton aria-label={t("aria.activar-edicion")} color="primary" onClick={this.toggleEditingPlatformData}>
                                                     <Edit color="primary"/>
                                                 </IconButton>
                                             </div>
@@ -926,6 +948,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl className="w-100">
                                                         <OutlinedInput
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nuevo-formato")}`
+                                                            }}
                                                             className="mb-3"
                                                             name="nuevoFormato"
                                                             required
@@ -936,6 +961,7 @@ class Configuracion extends Component {
                                                             endAdornment={
                                                                 <InputAdornment position="end">
                                                                     <IconButton
+                                                                        aria-label={t("aria.agregar-elemento")}
                                                                         hidden={!this.state.isEditandoInfoPlataforma}
                                                                         onClick={this.agregarFormato}
                                                                     >
@@ -949,7 +975,7 @@ class Configuracion extends Component {
                                                     {
                                                         this.state.parametrosPlataforma.formatosActuales.map((formato, i) => {
                                                             return <Chip
-                                                                deleteIcon={<Cancel hidden={!this.state.isEditandoInfoPlataforma} />}
+                                                                deleteIcon={<Cancel aria-label={t("aria.eliminar-elemento")} hidden={!this.state.isEditandoInfoPlataforma} />}
                                                                 key={i}
                                                                 label={formato}
                                                                 onDelete={() => {this.borrarFormato(i)}}
@@ -968,6 +994,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.tamanio-archivos")}`
+                                                            }}
                                                             disabled={!this.state.isEditandoInfoPlataforma}
                                                             type="number"
                                                             variant="outlined"
@@ -989,6 +1018,9 @@ class Configuracion extends Component {
                                                 <Grid item xs={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <OutlinedInput
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.key-recaptcha")}`
+                                                            }}
                                                             id="recaptchaSitekey"
                                                             type={this.state.mostrarRecaptchaSitekey ? 'text' : 'password'}
                                                             value={this.state.parametrosPlataforma.recaptchaSitekey}
@@ -997,6 +1029,7 @@ class Configuracion extends Component {
                                                             endAdornment={
                                                                 <InputAdornment position="end">
                                                                     <IconButton
+                                                                        aria-label={t("aria.switch-visibilidad")}
                                                                         hidden={!this.state.isEditandoInfoPlataforma}
                                                                         onClick={this.handleClickMostrarRecaptchaSitekey}
                                                                         onMouseDown={this.handleMouseDownMostrarRecaptchaSitekey}
@@ -1032,7 +1065,7 @@ class Configuracion extends Component {
                                                 <Typography variant="h6" className="mr-4">
                                                     {t("configuracion.parametros-plataforma")}
                                                 </Typography>
-                                                <IconButton color="primary" onClick={this.toggleEditingPlatformData}>
+                                                <IconButton aria-label={t("aria.activar-edicion")} color="primary" onClick={this.toggleEditingPlatformData}>
                                                     <Edit color="primary"/>
                                                 </IconButton>
                                             </div>

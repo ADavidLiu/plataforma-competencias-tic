@@ -280,7 +280,7 @@ class DashboardEvaluador extends Component {
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12} className="mb-4">
-                                            <Typography variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
+                                            <Typography component="h1" variant="h5">{t("calificaciones.titulo-actividad")}</Typography>
                                             <hr/>
                                         </Grid>
                                         <Grid item xs={12}>

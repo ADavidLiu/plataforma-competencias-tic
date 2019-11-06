@@ -152,7 +152,7 @@ class EntrevistaRevision extends Component {
                                             <div className="d-flex align-items-center justify-content-start">
                                                 <Avatar alt={t("imagen-perfil")} src={this.state.docenteImg} className="mr-3" style={{height: "60px", width: "60px"}} />
                                                 <div>
-                                                    <Typography variant="h5" className="mb-2">{t("revision.entrevista-titulo")}</Typography>
+                                                    <Typography component="h1" variant="h5" className="mb-2">{t("revision.entrevista-titulo")}</Typography>
                                                     <Typography variant="body1">{t("revision.nombre-evaluado")}: <strong>{this.state.docenteNombre}</strong></Typography>
                                                 </div>
                                             </div>

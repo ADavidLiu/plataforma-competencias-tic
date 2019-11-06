@@ -18,6 +18,9 @@ const InstitucionesForm = props => {
                         <Grid item xs={12} md={4}>
                             <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-nacional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -30,6 +33,9 @@ const InstitucionesForm = props => {
                         <Grid item xs={12} md={8}>
                             <Typography variant="body1">{t("usuarios.registro-nombre-ie")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.nombres")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required

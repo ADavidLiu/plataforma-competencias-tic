@@ -374,6 +374,9 @@ class Calificaciones extends Component {
                             </Grid>
                             <Grid item xs={12} md={6} className="pb-0">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.buscar")}`
+                                    }}
                                     placeholder={t("buscar")}
                                     fullWidth
                                     variant="outlined"
@@ -463,7 +466,7 @@ class Calificaciones extends Component {
                                                                                                     values.map((val, j) => <TableCell key={j}>{val}</TableCell>)
                                                                                                 }
                                                                                                 <TableCell>
-                                                                                                    <Link to={{
+                                                                                                    <Link aria-label={t("aria.ver-revision")} to={{
                                                                                                         pathname: `/${t(`link.${this.state.categoriaDivisionMostrada.slice(0, -1)}-revision`)}`,
                                                                                                         state: {
                                                                                                             tipoUsuario: "EVALUADOR",
@@ -489,6 +492,12 @@ class Calificaciones extends Component {
                                             <TablePagination
                                                 labelDisplayedRows={({from, to, count}) => {
                                                     return `${from}-${to} / ${count}`;
+                                                }}
+                                                backIconButtonProps={{
+                                                    "aria-label": `${t("aria.pagina-anterior")}`
+                                                }}
+                                                nextIconButtonProps={{
+                                                    "aria-label": `${t("aria.pagina-siguiente")}`
                                                 }}
                                                 labelRowsPerPage={t("filasPorPagina")}
                                                 rowsPerPageOptions={[10, 25, 100]}

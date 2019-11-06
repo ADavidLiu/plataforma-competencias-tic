@@ -23,6 +23,9 @@ const AdminsForm = props => {
                         <Grid item xs={12} md={4}>
                             <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-nacional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -35,6 +38,9 @@ const AdminsForm = props => {
                         <Grid item xs={12} md={4}>
                             <Typography variant="body1">{t("usuarios.registro-ee-nombre")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.nombres")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -47,6 +53,9 @@ const AdminsForm = props => {
                         <Grid item xs={12} md={4}>
                             <Typography variant="body1">{t("usuarios.registro-ee-telefono")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.telefono")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -59,6 +68,9 @@ const AdminsForm = props => {
                         <Grid item xs={12}>
                             <Typography variant="body1">{t("registro.email")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.email")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -114,6 +126,9 @@ const AdminsForm = props => {
                         <Grid item xs={12}>
                             <Typography variant="body1">{t("usuarios.registro-ee-direccion")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.direccion")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required

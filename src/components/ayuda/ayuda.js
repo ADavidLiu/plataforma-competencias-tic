@@ -23,7 +23,7 @@ const Ayuda = (props) => {
                         </Helmet>
                         <Grid container spacing={5} justify="center">
                             <Grid item xs={12} sm={8} lg={6} className="my-5 py-5 text-center">
-                                <Typography variant="h4" className="mb-4">{t("ayuda.title")}</Typography>
+                                <Typography component="h1" variant="h4" className="mb-4">{t("ayuda.title")}</Typography>
                                 <Typography className="mb-5" variant="body1">{t("ayuda.text")}</Typography>
                                 <div className="d-md-flex align-items-center justify-content-center">
                                     <a rel="noopener noreferrer" style={{"textDecoration": "none"}} href="https://portalrequerimientos.javerianacali.edu.co/PortalRequerimientos/login.xhtml" target="_blank">

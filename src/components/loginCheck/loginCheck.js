@@ -68,7 +68,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "SUPERADMIN";
+        this.tipoPerfil = "GOBIERNO";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -517,7 +517,7 @@ class LoginCheck extends Component {
                             </StickyContainer>
                             <Link to={t("link.ayuda")}>
                                 <Tooltip title={t("titulo.ayuda")} placement="left">
-                                    <Fab color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
+                                    <Fab aria-label={t("aria.ayuda")} color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
                                         <Help/>
                                     </Fab>
                                 </Tooltip>

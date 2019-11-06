@@ -24,6 +24,9 @@ const Descriptores = props => {
                                         <Paper className="p-4">
                                             <div className="d-flex align-items-center justify-content-between">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.codigo-descriptor")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     className="w-100 w-md-auto"
@@ -33,6 +36,9 @@ const Descriptores = props => {
                                                     onChange={e => { props.handleChange(e, "descriptores", i) }}
                                                 />
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.contenido-descriptor")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     className="w-100 w-md-auto flex-grow-1 mx-4"
@@ -42,7 +48,7 @@ const Descriptores = props => {
                                                     onChange={e => { props.handleChange(e, "descriptores", i) }}
                                                 />
                                                 <div className="d-flex align-items-center justify-content-end">
-                                                    <IconButton color="primary" onClick={() => { props.confirmarDelete("descriptores", i); }}>
+                                                    <IconButton aria-label={t("aria.eliminar-elemento")} color="primary" onClick={() => { props.confirmarDelete("descriptores", i); }}>
                                                         <DeleteOutlined color="primary"/>
                                                     </IconButton>
                                                 </div>
@@ -52,7 +58,7 @@ const Descriptores = props => {
                                 ))
                             }
                             <Grid item xs={12}>
-                                <Button variant="contained" color="primary" fullWidth size="large" onClick={() => { props.addElement("descriptores"); }}>
+                                <Button aria-label={t("aria.agregar-elemento")} variant="contained" color="primary" fullWidth size="large" onClick={() => { props.addElement("descriptores"); }}>
                                     <Add className="d-block mx-auto"/>
                                 </Button>
                             </Grid>

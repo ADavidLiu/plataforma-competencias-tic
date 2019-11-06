@@ -40,6 +40,9 @@ const Preentrevista = props => {
                                                                 <Grid container spacing={3}>
                                                                     <Grid item xs={4} md={2}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.id")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -51,6 +54,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={4} md={2}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.group")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -62,6 +68,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={4} md={2}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.subgrupo")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -103,6 +112,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={12} md={6}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.iniciado-por")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -114,6 +126,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={12} md={6}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.inicia-a")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -125,6 +140,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={12}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.pregunta")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -136,6 +154,9 @@ const Preentrevista = props => {
                                                                     </Grid>
                                                                     <Grid item xs={12}>
                                                                         <TextField
+                                                                            inputProps={{
+                                                                                "aria-label": `${t("aria.evidencia")}`
+                                                                            }}
                                                                             variant="outlined"
                                                                             fullWidth
                                                                             className="w-100"
@@ -157,7 +178,7 @@ const Preentrevista = props => {
                                                                                                     <div className="w-100 d-block d-flex align-items-center justify-content-between" key={k}>
                                                                                                         <Typography variant="body1">{opcion}</Typography>
                                                                                                         <div className="ml-3">
-                                                                                                            <IconButton color="primary" onClick={() => { props.deleteRespuestaOption("preentrevista", { i: i, j: index, k: k }); }}>
+                                                                                                            <IconButton aria-label={t("aria.eliminar-elemento")} color="primary" onClick={() => { props.deleteRespuestaOption("preentrevista", { i: i, j: index, k: k }); }}>
                                                                                                                 <Cancel color="primary"/>
                                                                                                             </IconButton>
                                                                                                         </div>
@@ -173,7 +194,7 @@ const Preentrevista = props => {
                                                                     }
                                                                     <Grid item xs={12}>
                                                                         <hr className="mt-0 mb-4"/>
-                                                                        <Button fullWidth className="w-100" variant="outlined" color="primary" onClick={() => { props.confirmarDelete("preentrevista", {i: i, j: index}); }}>
+                                                                        <Button aria-label={t("aria.eliminar-elemento")} fullWidth className="w-100" variant="outlined" color="primary" onClick={() => { props.confirmarDelete("preentrevista", {i: i, j: index}); }}>
                                                                             <DeleteOutlined color="primary" className="mr-1" fontSize="small"/>
                                                                             {t("instrumento.preentrevista-borrar-pregunta")}
                                                                         </Button>
@@ -185,11 +206,11 @@ const Preentrevista = props => {
                                                 }}
                                             />
                                             <div className="d-flex align-items-stretch justify-content-between mt-3">
-                                                <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { props.confirmarDelete("preentrevista-grupo", i); }}>
+                                                <Button aria-label={t("aria.eliminar-elemento")} variant="contained" color="primary" size="large" className="w-100 w-md-auto" onClick={() => { props.confirmarDelete("preentrevista-grupo", i); }}>
                                                     <DeleteOutlined style={{color: "#ffffff"}} className="mr-1" fontSize="small"/>
                                                     {t("instrumento.borrar-grupo")}
                                                 </Button>
-                                                <Button variant="contained" color="primary" size="large" className="w-100 w-md-auto ml-5 ml-md-0" onClick={() => { props.addElement("preentrevista", i); }}>
+                                                <Button aria-label={t("aria.agregar-elemento")} variant="contained" color="primary" size="large" className="w-100 w-md-auto ml-5 ml-md-0" onClick={() => { props.addElement("preentrevista", i); }}>
                                                     <Add className="d-block mx-auto mr-1" fontSize="small"/>
                                                     {t("instrumento.nueva-pregunta")}
                                                 </Button>
@@ -198,7 +219,7 @@ const Preentrevista = props => {
                                         </React.Fragment>
                                     ))
                                 }
-                                <Button variant="contained" color="primary" size="large" className="w-100" onClick={() => { props.addElement("preentrevista-grupo"); }}>
+                                <Button aria-label={t("aria.agregar-elemento")} variant="contained" color="primary" size="large" className="w-100" onClick={() => { props.addElement("preentrevista-grupo"); }}>
                                     <Add className="d-block mr-1" fontSize="small"/>
                                     {t("instrumento.nuevo-grupo")}
                                 </Button>

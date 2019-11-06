@@ -477,7 +477,7 @@ class DashboardGobierno extends Component {
                                 <React.Fragment>
                                     <Grid item xs={12}>
                                         <div className="d-flex align-items-center justify-content-start">
-                                            <Typography variant="body1" className="mr-3">{t("dashboardGobierno.division")}</Typography>
+                                            <Typography component="h1" variant="body1" className="mr-3">{t("dashboardGobierno.division")}</Typography>
                                             <FormControl variant="filled" className="col-6 col-md-auto">
                                                 <Select
                                                     value={this.state.subdivisionSeleccionada}

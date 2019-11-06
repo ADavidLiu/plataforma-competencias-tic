@@ -83,6 +83,9 @@ class RecuperacionDatos extends Component {
                                             <Grid container className="text-center">
                                                 <Grid item xs={12}>
                                                     <OutlinedInput
+                                                        inputProps={{
+                                                            "aria-label": `${t("aria.email")}`
+                                                        }}
                                                         placeholder={t("registro.email")}
                                                         id="email"
                                                         name="email"

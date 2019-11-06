@@ -33,6 +33,9 @@ const Prueba = props => {
                                             <Paper className="p-4 mb-4 no-scrollbar" key={key}>
                                                 <div className="d-flex align-items-center justify-content-between">
                                                     <TextField
+                                                        inputProps={{
+                                                            "aria-label": `${t("aria.codigo-descriptor")}`
+                                                        }}
                                                         variant="outlined"
                                                         margin="normal"
                                                         className="w-100 w-md-auto"
@@ -44,6 +47,9 @@ const Prueba = props => {
                                                         onChange={e => { props.handleChange(e, "prueba", index) }}
                                                     />
                                                     <TextField
+                                                        inputProps={{
+                                                            "aria-label": `${t("aria.pregunta")}`
+                                                        }}
                                                         variant="outlined"
                                                         margin="normal"
                                                         multiline
@@ -55,7 +61,7 @@ const Prueba = props => {
                                                         onChange={e => { props.handleChange(e, "prueba", index) }}
                                                     />
                                                     <div className="d-flex align-items-center justify-content-end">
-                                                        <IconButton color="primary" onClick={() => { props.confirmarDelete("prueba", index); }}>
+                                                        <IconButton aria-label={t("aria.eliminar-elemento")} color="primary" onClick={() => { props.confirmarDelete("prueba", index); }}>
                                                             <DeleteOutlined color="primary"/>
                                                         </IconButton>
                                                     </div>
@@ -73,7 +79,7 @@ const Prueba = props => {
                                                                             labelPlacement="end"
                                                                         />
                                                                         <div className="ml-3">
-                                                                            <IconButton color="primary" onClick={() => { props.deleteRespuestaOption("prueba", { i: index, j: j }); }}>
+                                                                            <IconButton aria-label={t("aria.eliminar-elemento")} color="primary" onClick={() => { props.deleteRespuestaOption("prueba", { i: index, j: j }); }}>
                                                                                 <Cancel color="primary"/>
                                                                             </IconButton>
                                                                         </div>
@@ -88,7 +94,7 @@ const Prueba = props => {
                                         )}
                                     />
                                 </div>
-                                <Button className="mt-4" variant="contained" color="primary" fullWidth size="large" onClick={() => { props.addElement("prueba"); }}>
+                                <Button aria-label={t("aria.agregar-elemento")} className="mt-4" variant="contained" color="primary" fullWidth size="large" onClick={() => { props.addElement("prueba"); }}>
                                     <Add className="d-block mx-auto"/>
                                 </Button>
                             </Grid>

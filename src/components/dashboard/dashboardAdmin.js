@@ -258,7 +258,7 @@ class DashboardAdmin extends Component {
                                     <Grid container spacing={5}>
 
                                     <Grid item xs={12}>
-                                        <Typography variant="h5" className="mb-4">{t("dashboardSuperadmin.datos")}</Typography>
+                                        <Typography component="h1" variant="h5" className="mb-4">{t("dashboardSuperadmin.datos")}</Typography>
                                         <div className="d-flex align-items-center justify-content-start">
                                             <Typography variant="body1" className="mr-3">{t("dashboardGobierno.division")}</Typography>
                                             <FormControl variant="filled" className="col-6 col-md-auto">

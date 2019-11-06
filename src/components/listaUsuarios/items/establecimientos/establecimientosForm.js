@@ -19,6 +19,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-ee-id")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-nacional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -31,6 +34,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-ee-nombre")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.nombres")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -44,6 +50,9 @@ const EstablecimientosForm = props => {
                             <Typography variant="body1">{t("usuarios.registro-idInstitucion")}</Typography>
                             {/* Este valor debe actualizarse cuando se seleccione otra IE de la lista */}
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-institucion")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -102,6 +111,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-ee-direccion")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.direccion")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -128,6 +140,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-ee-nombre-ubicacion")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.nombre-ubicacion")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -165,6 +180,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-ee-telefono")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.telefono")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -178,6 +196,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={6}>
                             <Typography variant="body1">{t("usuarios.registro-ee-email")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.email-institucional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -191,6 +212,9 @@ const EstablecimientosForm = props => {
                         <Grid item xs={12} md={6}>
                             <Typography variant="body1">{t("usuarios.registro-ee-web")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.web-institucional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required

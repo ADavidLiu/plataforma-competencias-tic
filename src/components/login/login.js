@@ -124,6 +124,9 @@ class Login extends Component {
                                         <Grid item xs={12}>
                                             <form className="mb-3" onSubmit={this.login}>
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.usuario")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -135,6 +138,9 @@ class Login extends Component {
                                                     onChange={this.handleChange}
                                                 />
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.contrasenia")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required

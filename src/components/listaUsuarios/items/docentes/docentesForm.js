@@ -22,6 +22,9 @@ const DocentesForm = props => {
                         <Grid item xs={12} md={3}>
                             <Typography variant="body1">{t("usuarios.registro-idNacional")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-nacional")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -34,6 +37,9 @@ const DocentesForm = props => {
                         <Grid item xs={12} md={4}>
                             <Typography variant="body1">{t("usuarios.registro-nombre-docente")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.nombre-completo")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -46,6 +52,9 @@ const DocentesForm = props => {
                         <Grid item xs={12} md={5}>
                             <Typography variant="body1">{t("usuarios.registro-idEstablecimiento")}</Typography>
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.id-establecimiento")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 required
@@ -65,7 +74,11 @@ const DocentesForm = props => {
                                 name="tiempoRestantePrueba"
                                 value={props.editingForm.tiempoRestantePrueba}
                                 onChange={props.handleEdicionChange}
-                                inputProps={{min: 0, step: 1}}
+                                inputProps={{
+                                    min: 0,
+                                    step: 1,
+                                    "aria-label": `${t("aria.tiempo-restante")}`
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>

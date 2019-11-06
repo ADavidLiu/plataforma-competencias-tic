@@ -600,6 +600,9 @@ class Territorios extends Component{
                                                         <Typography className="mb-3" variant="body1"><strong>{t("territorios.nombre")}</strong></Typography>
                                                     </div>
                                                     <TextField
+                                                        inputProps={{
+                                                            "aria-label": `${t("aria.nombres")}`
+                                                        }}
                                                         variant="outlined"
                                                         margin="none"
                                                         required
@@ -676,6 +679,9 @@ class Territorios extends Component{
                                                             <div className="text-center">
                                                                 <Typography variant="body2" className="mb-2"><strong>{t("territorios.clasificacion-crear")}</strong></Typography>
                                                                 <TextField
+                                                                    inputProps={{
+                                                                        "aria-label": `${t("aria.clasificacion-territorio")}`
+                                                                    }}
                                                                     variant="outlined"
                                                                     margin="none"
                                                                     required
@@ -809,6 +815,9 @@ class Territorios extends Component{
                                         <Grid item xs={12} md={4}>
                                             <Typography variant="body1">{t("territorios.nombre")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.nombres")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -840,6 +849,9 @@ class Territorios extends Component{
                                         <Grid item xs={12} md={4}>
                                             <Typography variant="body1">{t("territorios.lista-fecha-creacion")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.fecha-creacion")}`
+                                                }}
                                                 type="date"
                                                 variant="outlined"
                                                 margin="normal"
@@ -865,6 +877,9 @@ class Territorios extends Component{
                                         <Grid item xs={12} md={4}>
                                             <Typography variant="body1">{t("ID")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.id")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -878,6 +893,9 @@ class Territorios extends Component{
                                         <Grid item xs={12} md={8}>
                                             <Typography variant="body1">{t("territorios.nombre-clasificacion")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.nombres")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required

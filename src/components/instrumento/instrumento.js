@@ -510,7 +510,7 @@ class Instrumento extends PureComponent {
                             </Helmet>
                             <Grid container spacing={5} className="pb-5">
                                 <Grid item xs={12}>
-                                    <Typography variant="h5">{t("instrumento.titulo")}</Typography>
+                                    <Typography component="h1" variant="h5">{t("instrumento.titulo")}</Typography>
                                     <hr className="mb-4"/>
                                     <Paper>
                                         <Tabs
@@ -573,6 +573,9 @@ class Instrumento extends PureComponent {
                                 <DialogTitle>{t("instrumento.crear-opcion-respuesta")}</DialogTitle>
                                 <DialogContent>
                                     <TextField
+                                        inputProps={{
+                                            "aria-label": `${t("aria.respuesta")}`
+                                        }}
                                         variant="outlined"
                                         margin="normal"
                                         fullWidth

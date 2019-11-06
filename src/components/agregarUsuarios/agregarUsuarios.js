@@ -456,6 +456,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-nacional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -467,6 +470,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombres")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -478,6 +484,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-telefono")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.telefono")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -489,6 +498,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("registro.email")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.email")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -543,6 +555,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-direccion")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.direccion")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -574,6 +589,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={3}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-nacional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -585,6 +603,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={9}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombres")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -664,6 +685,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-nacional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -675,6 +699,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={3}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-ie")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombres")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -749,6 +776,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4} lg={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-id")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-nacional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -760,6 +790,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4} lg={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-nombre")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombres")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -771,6 +804,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idInstitucion")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-institucion")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -782,6 +818,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombreInstitucion")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombre-institucion")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -825,6 +864,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4} lg={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-direccion")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.direccion")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -850,6 +892,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4} lg={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-nombre-ubicacion")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombre-ubicacion")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -886,6 +931,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4} lg={2}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-telefono")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.telefono")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -897,6 +945,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-email")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.email-institucional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -908,6 +959,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-ee-web")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.web-institucional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -939,6 +993,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idNacional")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-nacional")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -950,6 +1007,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={6} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-nombre-docente")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.nombre-completo")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -961,6 +1021,9 @@ class AgregarUsuarios extends Component {
                                                     <Grid item xs={12} md={4}>
                                                         <Typography variant="body1" className="mb-3 text-center"><strong>{t("usuarios.registro-idEstablecimiento")}</strong></Typography>
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.id-establecimiento")}`
+                                                            }}
                                                             variant="outlined"
                                                             required
                                                             fullWidth
@@ -1011,10 +1074,10 @@ class AgregarUsuarios extends Component {
                                         <Grid item xs={6} className="mt-4">
                                             {
                                                 this.state.numNuevosUsuarios > 1 ? (
-                                                    <Button color="primary" variant="outlined" size="large" className="mr-3" onClick={this.eliminarPosicion}><Remove/></Button>
+                                                    <Button aria-label={t("aria.eliminar-elemento")} color="primary" variant="outlined" size="large" className="mr-3" onClick={this.eliminarPosicion}><Remove/></Button>
                                                 ) : ""
                                             }
-                                            <Button color="primary" variant="outlined" size="large" onClick={this.agregarPosicion}><Add/></Button>
+                                            <Button aria-label={t("aria.agregar-elemento")} color="primary" variant="outlined" size="large" onClick={this.agregarPosicion}><Add/></Button>
                                         </Grid>
                                         <Grid item xs={6} className="text-right mt-4">
                                             <Button color="primary" variant="contained" size="large" onClick={() => { this.crearUsuarios("MANUAL"); }}>{t("usuarios.registro-btn-agregar")}</Button>
@@ -1024,8 +1087,9 @@ class AgregarUsuarios extends Component {
                                     <Grid container spacing={5} className="mt-4">
                                         <Grid item xs={12} className="pb-0">
                                             <div className="d-flex align-items-center justify-content-between">
-                                                <Typography variant="h6">{t("usuarios.label-archivos-seleccionados")}</Typography>
+                                                <Typography component="h2" variant="h6">{t("usuarios.label-archivos-seleccionados")}</Typography>
                                                 <Button
+                                                    aria-label={t("aria.agregar-elemento")}
                                                     variant="contained"
                                                     component="label"
                                                     color="primary"

@@ -53,6 +53,7 @@ class Auditoria extends Component {
             usuarioSeleccionado: selected.value,
             didSelectUser: true
         });
+        /* t4l3ntum2019 */
     }
 
     render() {
@@ -71,6 +72,7 @@ class Auditoria extends Component {
                                     <Paper className="p-4">
                                         <Typography variant="body1" className="mb-3"><strong>{t("auditoria.buscar")}</strong></Typography>
                                         <AsyncSelect
+                                            aria-label={t("aria.buscar-usuario")}
                                             classNamePrefix="dropdown"
                                             cacheOptions
                                             loadOptions={this.loadOptions}
