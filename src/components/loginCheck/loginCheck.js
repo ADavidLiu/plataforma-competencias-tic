@@ -232,7 +232,7 @@ class LoginCheck extends Component {
                                                     <div className="d-flex align-items-center justify-content-end flex-grow-1 flex-md-column justify-content-md-center navbar-icons">
                                                         <Tooltip title="Inicio" placement="right">
                                                             <Link to="/">
-                                                                <IconButton style={{ color: "#ffffff" }}>
+                                                                <IconButton aria-label="Ir a página de inicio" style={{ color: "#ffffff" }}>
                                                                     <Home/>
                                                                 </IconButton>
                                                             </Link>
@@ -241,7 +241,7 @@ class LoginCheck extends Component {
                                                             !this.state.isInViewingMode ? (
                                                                 <Tooltip title="Configuración" placement="right">
                                                                     <Link to={`/${t("link.configuracion")}`}>
-                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                        <IconButton aria-label="Ir a página de configuración" style={{ color: "#ffffff" }}>
                                                                             <SettingsApplications />
                                                                         </IconButton>
                                                                     </Link>
@@ -252,7 +252,7 @@ class LoginCheck extends Component {
                                                             this.state.tipo === "SUPERADMIN" ? (
                                                                 <Tooltip title={t("instrumento.titulo-alt")} placement="right">
                                                                     <Link to={`/${t("link.instrumento")}`}>
-                                                                        <IconButton style={{
+                                                                        <IconButton aria-label="Ir a página del instrumento" style={{
                                                                             color: "#ffffff"
                                                                         }}>
                                                                             <LibraryBooks fontSize="small"/>
@@ -266,7 +266,7 @@ class LoginCheck extends Component {
                                                                 <React.Fragment>
                                                                     <Tooltip title={t("auditoria.titulo-alt")} placement="right">
                                                                         <Link to={`/${t("link.auditoria")}`}>
-                                                                            <IconButton style={{
+                                                                            <IconButton aria-label="Ir a página de auditoría" style={{
                                                                                 color: "#ffffff"
                                                                             }}>
                                                                                 <YoutubeSearchedFor/>
@@ -275,7 +275,7 @@ class LoginCheck extends Component {
                                                                     </Tooltip>
                                                                     <Tooltip title={t("cursos.titulo")} placement="right">
                                                                         <Link to={`/${t("link.cursos")}`}>
-                                                                            <IconButton style={{
+                                                                            <IconButton aria-label="Ir a página de cursos" style={{
                                                                                 color: "#ffffff"
                                                                             }}>
                                                                                 <CollectionsBookmark fontSize="small"/>
@@ -295,7 +295,7 @@ class LoginCheck extends Component {
                                                                             userID: this.state.id
                                                                         }
                                                                     }}>
-                                                                        <IconButton style={{
+                                                                        <IconButton aria-label="Ir a página de procesos" style={{
                                                                             color: "#ffffff"
                                                                         }}>
                                                                             <Assignment/>
@@ -314,7 +314,7 @@ class LoginCheck extends Component {
                                                                             userID: this.state.id
                                                                         }
                                                                     }}>
-                                                                        <IconButton style={{color: "#ffffff"}}>
+                                                                        <IconButton aria-label="Ir a página de territorios" style={{color: "#ffffff"}}>
                                                                             <Layers/>
                                                                         </IconButton>
                                                                     </Link>
@@ -325,7 +325,7 @@ class LoginCheck extends Component {
                                                             this.state.tipo === "SUPERADMIN" || this.state.tipo === "ADMIN" || this.state.tipo === "GOBIERNO" || this.state.tipo === "INSTITUCION" || this.state.tipo === "ESTABLECIMIENTO" ? (
                                                                 <Tooltip title={tituloLabelUsuarios} placement="right">
                                                                     <Link to={`/${t("link.usuarios")}`}>
-                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                        <IconButton aria-label="Ir a página de usuarios" style={{ color: "#ffffff" }}>
                                                                             { iconUsers }
                                                                         </IconButton>
                                                                     </Link>
@@ -343,7 +343,7 @@ class LoginCheck extends Component {
                                                                             isInViewingMode: this.state.isInViewingMode
                                                                         }
                                                                     }}>
-                                                                        <IconButton style={{ color: "#ffffff" }}>
+                                                                        <IconButton aria-label="Ir a página de calificaciones" style={{ color: "#ffffff" }}>
                                                                             <PlaylistAddCheck />
                                                                         </IconButton>
                                                                     </Link>
@@ -353,7 +353,7 @@ class LoginCheck extends Component {
                                                     </div>
                                                     <Tooltip title="Cerrar sesión" placement="right">
                                                         <Link to="/">
-                                                            <IconButton style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
+                                                            <IconButton aria-label="Cerrar sesión" style={{ color: "#ffffff" }} onClick={() => this.actualizarLogeado(false)}>
                                                                 <ExitToApp />
                                                             </IconButton>
                                                         </Link>

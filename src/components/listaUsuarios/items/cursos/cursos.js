@@ -97,6 +97,12 @@ const Cursos = props => {
                             labelDisplayedRows={({from, to, count}) => {
                                 return `${from}-${to} / ${count}`;
                             }}
+                            backIconButtonProps={{
+                                "aria-label": `${t("aria.pagina-anterior")}`
+                            }}
+                            nextIconButtonProps={{
+                                "aria-label": `${t("aria.pagina-siguiente")}`
+                            }}
                             labelRowsPerPage={t("filasPorPagina")}
                             rowsPerPageOptions={[10, 25, 100]}
                             component="div"

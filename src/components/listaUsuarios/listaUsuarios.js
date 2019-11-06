@@ -4,8 +4,6 @@ import { Translation } from "react-i18next";
 import locationData from "countrycitystatejson";
 import sortBy from "sort-by";
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -17,37 +15,17 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import TablePagination from '@material-ui/core/TablePagination';
-
-import Tooltip from "@material-ui/core/Tooltip";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import Edit from "@material-ui/icons/EditOutlined";
-import DeleteOutlined from "@material-ui/icons/DeleteOutlined";
-import OpenInNew from "@material-ui/icons/OpenInNewOutlined";
 import Search from "@material-ui/icons/Search";
-import Warning from "@material-ui/icons/Warning";
-import OpenInBrowser from "@material-ui/icons/OpenInBrowser";
-import Add from "@material-ui/icons/Add";
-
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormGroup from "@material-ui/core/FormGroup";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
 
 import cursos from "../../models/cursos";
 
@@ -1690,8 +1668,11 @@ class ListaUsuarios extends Component {
                                                     variant="outlined"
                                                     onChange={this.handleSearch}
                                                     value={this.state.searchTerm}
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.buscar")}`
+                                                    }}
                                                     InputProps={{
-                                                        endAdornment: (
+                                                        "endAdornment": (
                                                             <InputAdornment position="start">
                                                                 <Search color="primary" />
                                                             </InputAdornment>

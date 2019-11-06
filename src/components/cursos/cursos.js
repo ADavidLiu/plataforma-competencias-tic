@@ -258,6 +258,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${t("aria.nombre")}`}}
                                                             variant="outlined"
                                                             fullWidth
                                                             label={t("cursos.new-nombre")}
@@ -270,6 +271,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${t("aria.resumen")}`}}
                                                             variant="outlined"
                                                             fullWidth
                                                             label={t("cursos.new-resumen")}
@@ -312,7 +314,8 @@ class Cursos extends Component {
                                                             label={t("cursos.new-dedicacion")}
                                                             fullWidth
                                                             inputProps={{
-                                                                type: "number"
+                                                                "type": "number",
+                                                                "aria-label": `${t("aria.horas-dedicacion")}`
                                                             }}
                                                             name="dedicacion"
                                                             value={curso.dedicacion}
@@ -323,6 +326,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12} md={4}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${t("aria.ubicacion")}`}}
                                                             variant="outlined"
                                                             label={t("cursos.new-ubicacion")}
                                                             fullWidth
@@ -335,6 +339,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12} md={4}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${"aria.institucion"}`}}
                                                             variant="outlined"
                                                             label={t("cursos.new-institucion")}
                                                             fullWidth
@@ -347,6 +352,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12} md={6}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${t("aria.enlace")}`}}
                                                             variant="outlined"
                                                             label={t("cursos.new-enlace")}
                                                             fullWidth
@@ -428,6 +434,7 @@ class Cursos extends Component {
                                                 <Grid item xs={12}>
                                                     <FormControl variant="outlined" className="w-100">
                                                         <TextField
+                                                            inputProps={{"aria-label": `${t("aria.descripcion")}`}}
                                                             variant="outlined"
                                                             label={t("cursos.new-descripcion")}
                                                             fullWidth
@@ -442,7 +449,10 @@ class Cursos extends Component {
                                                 <Grid item xs={12} md={6}>
                                                     <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                                         <TextField
-                                                            inputProps={{className: "h-100"}}
+                                                            inputProps={{
+                                                                "className": "h-100",
+                                                                "aria-label": `${t("aria.objetivo-general")}`
+                                                            }}
                                                             className="h-100"
                                                             variant="outlined"
                                                             label={t("cursos.new-objetivo-general")}
@@ -462,19 +472,20 @@ class Cursos extends Component {
                                                             curso.objetivo.especificos.map((objetivo, j) => (
                                                                 <div key={j} className="d-flex align-items-center justify-content-between mb-2">
                                                                     <TextField
+                                                                        inputProps={{"aria-label": `${t("aria.objetivo-especifico")}`}}
                                                                         variant="outlined"
                                                                         fullWidth
                                                                         name="objetivo.especificos"
                                                                         value={curso.objetivo.especificos[j]}
                                                                         onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                     />
-                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ i: i, j: j }); }}>
+                                                                    <IconButton aria-label={`${t("aria.eliminar-elemento")}`} className="ml-3" color="primary" onClick={() => { this.deleteObjetivoEspecifico({ i: i, j: j }); }}>
                                                                         <DeleteOutlined color="primary"/>
                                                                     </IconButton>
                                                                 </div>
                                                             ))
                                                         }
-                                                        <Button className="w-auto mt-3"
+                                                        <Button aria-label={`${t("aria.agregar-elemento")}`} className="w-auto mt-3"
                                                         size="small" variant="outlined" color="primary" onClick={() => { this.createNewObjetivoEspecifico(i); }}>
                                                             <Add className="d-block mx-auto"/>
                                                         </Button>
@@ -486,6 +497,7 @@ class Cursos extends Component {
                                                         curso.descriptores.map((descriptor, j) => (
                                                             <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                                                 <TextField
+                                                                    inputProps={{"aria-label": `${t("aria.descriptor")}`}}
                                                                     variant="outlined"
                                                                     label={t("instrumento.descriptores-codigo")}
                                                                     fullWidth
@@ -493,13 +505,13 @@ class Cursos extends Component {
                                                                     value={descriptor}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("descriptores", { i: i, j: j }); }}>
+                                                                <IconButton aria-label={`${t("aria.eliminar-elemento")}`} className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("descriptores", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("descriptores", i); }}>
+                                                    <Button aria-label={`${t("aria.agregar-elemento")}`} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("descriptores", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
@@ -508,21 +520,23 @@ class Cursos extends Component {
                                                         {
                                                             curso.contenidos.map((contenido, j) => (
                                                                 <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                                    <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                                    <Typography
+                                                                    component="p" variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                                                     <TextField
+                                                                        inputProps={{"aria-label": `${t("aria.contenido")}`}}
                                                                         variant="outlined"
                                                                         fullWidth
                                                                         name="contenidos"
                                                                         value={contenido}
                                                                         onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                     />
-                                                                    <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("contenidos", { i: i, j: j }); }}>
+                                                                    <IconButton aria-label={`${t("aria.eliminar-elemento")}`} className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("contenidos", { i: i, j: j }); }}>
                                                                         <DeleteOutlined color="primary"/>
                                                                     </IconButton>
                                                                 </div>
                                                             ))
                                                         }
-                                                        <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("contenidos", i); }}>
+                                                        <Button aria-label={`${t("aria.agregar-elemento")}`} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("contenidos", i); }}>
                                                             <Add className="d-block mx-auto"/>
                                                         </Button>
                                                 </Grid>
@@ -532,7 +546,10 @@ class Cursos extends Component {
                                                             className="h-100"
                                                             variant="outlined"
                                                             label={t("cursos.new-metodologia")}
-                                                            inputProps={{className:"h-100"}}
+                                                            inputProps={{
+                                                                "className":"h-100",
+                                                                "aria-label": `${t("aria.metodologia")}`
+                                                            }}
                                                             fullWidth
                                                             multiline
                                                             rows={5}
@@ -547,21 +564,22 @@ class Cursos extends Component {
                                                     {
                                                         curso.procedimiento.map((procedimiento, j) => (
                                                             <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                                <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                                <Typography component="p" variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                                                 <TextField
+                                                                    inputProps={{"aria-label": `${t("aria.procedimiento")}`}}
                                                                     variant="outlined"
                                                                     fullWidth
                                                                     name="procedimiento"
                                                                     value={procedimiento}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("procedimiento", { i: i, j: j }); }}>
+                                                                <IconButton aria-label={`${t("aria.eliminar-elemento")}`} className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("procedimiento", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("procedimiento", i); }}>
+                                                    <Button aria-label={`${t("aria.agregar-elemento")}`} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("procedimiento", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
@@ -569,7 +587,10 @@ class Cursos extends Component {
                                                     <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                                         <TextField
                                                             className="h-100"
-                                                            inputProps={{className: "h-100"}}
+                                                            inputProps={{
+                                                                "className": "h-100",
+                                                                "aria-label": `${t("aria.evidencias")}`
+                                                            }}
                                                             variant="outlined"
                                                             label={t("cursos.new-evidencias")}
                                                             fullWidth
@@ -586,21 +607,22 @@ class Cursos extends Component {
                                                     {
                                                         curso.criterios.map((criterio, j) => (
                                                             <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
-                                                                <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
+                                                                <Typography component="p" variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                                                 <TextField
+                                                                    inputProps={{"aria-label": `${t("aria.criterio")}`}}
                                                                     variant="outlined"
                                                                     fullWidth
                                                                     name="criterios"
                                                                     value={criterio}
                                                                     onInput={e => { this.handleInputChange(e, "nuevos", {i: i, j: j}) }}
                                                                 />
-                                                                <IconButton className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("criterios", { i: i, j: j }); }}>
+                                                                <IconButton aria-label={`${t("aria.eliminar-elemento")}`} className="ml-3" color="primary" onClick={() => { this.deleteNewCourseElement("criterios", { i: i, j: j }); }}>
                                                                     <DeleteOutlined color="primary"/>
                                                                 </IconButton>
                                                             </div>
                                                         ))
                                                     }
-                                                    <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("criterios", i); }}>
+                                                    <Button aria-label={`${t("aria.agregar-elemento")}`} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { this.createNewCourseElement("criterios", i); }}>
                                                         <Add className="d-block mx-auto"/>
                                                     </Button>
                                                 </Grid>
@@ -608,7 +630,10 @@ class Cursos extends Component {
                                                     <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                                         <TextField
                                                             className="h-100"
-                                                            inputProps={{className: "h-100"}}
+                                                            inputProps={{
+                                                                "className": "h-100",
+                                                                "aria-label": `${t("aria.observaciones")}`
+                                                            }}
                                                             variant="outlined"
                                                             label={t("cursos.new-observaciones")}
                                                             fullWidth
@@ -647,7 +672,7 @@ class Cursos extends Component {
                             </Helmet>
                             <Grid container spacing={3} justify="center">
                                 <Grid item xs={12}>
-                                    <Typography variant="h5">{t("cursos.title")}</Typography>
+                                    <Typography component="h1" variant="h5">{t("cursos.title")}</Typography>
                                     <hr className="mb-4"/>
                                     <Paper>
                                         <Tabs

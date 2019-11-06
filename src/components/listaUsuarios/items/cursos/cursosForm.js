@@ -32,6 +32,9 @@ const Cursos = props => {
                         <Grid item xs={12}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.nombre")}`
+                                    }}
                                     variant="outlined"
                                     fullWidth
                                     label={t("cursos.new-nombre")}
@@ -44,6 +47,9 @@ const Cursos = props => {
                         <Grid item xs={12}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.resumen")}`
+                                    }}
                                     variant="outlined"
                                     fullWidth
                                     label={t("cursos.new-resumen")}
@@ -86,7 +92,8 @@ const Cursos = props => {
                                     label={t("cursos.new-dedicacion")}
                                     fullWidth
                                     inputProps={{
-                                        type: "number"
+                                        "type": "number",
+                                        "aria-label": `${t("aria.horas-dedicacion")}`
                                     }}
                                     name="dedicacion"
                                     value={props.editingForm.dedicacion}
@@ -97,6 +104,9 @@ const Cursos = props => {
                         <Grid item xs={12} md={4}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.ubicacion")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-ubicacion")}
                                     fullWidth
@@ -109,6 +119,9 @@ const Cursos = props => {
                         <Grid item xs={12} md={4}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.institucion")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-institucion")}
                                     fullWidth
@@ -121,6 +134,9 @@ const Cursos = props => {
                         <Grid item xs={12} md={6}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.enlace")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-enlace")}
                                     fullWidth
@@ -202,6 +218,9 @@ const Cursos = props => {
                         <Grid item xs={12}>
                             <FormControl variant="outlined" className="w-100">
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.descripcion")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-descripcion")}
                                     fullWidth
@@ -216,7 +235,10 @@ const Cursos = props => {
                         <Grid item xs={12} md={6}>
                             <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                 <TextField
-                                    inputProps={{className: "h-100"}}
+                                    inputProps={{
+                                        "className": "h-100",
+                                        "aria-label": `${t("aria.objetivo-general")}`
+                                    }}
                                     className="h-100"
                                     variant="outlined"
                                     label={t("cursos.new-objetivo-general")}
@@ -236,19 +258,22 @@ const Cursos = props => {
                                     props.editingForm.objetivo.especificos.map((objetivo, j) => (
                                         <div key={j} className="d-flex align-items-center justify-content-between mb-2">
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.objetivo-especifico")}`
+                                                }}
                                                 variant="outlined"
                                                 fullWidth
                                                 name="objetivo.especificos"
                                                 value={props.editingForm.objetivo.especificos[j]}
                                                 onInput={e => { props.handleInputChange(e, {j: j}) }}
                                             />
-                                            <IconButton className="ml-3" color="primary" onClick={() => { props.deleteObjetivoEspecifico({ j: j }); }}>
+                                            <IconButton aria-label={t("aria.eliminar-elemento")} className="ml-3" color="primary" onClick={() => { props.deleteObjetivoEspecifico({ j: j }); }}>
                                                 <DeleteOutlined color="primary"/>
                                             </IconButton>
                                         </div>
                                     ))
                                 }
-                                <Button className="w-auto mt-3"
+                                <Button aria-label={t("aria.agregar-elemento")} className="w-auto mt-3"
                                 size="small" variant="outlined" color="primary" onClick={() => { props.createNewObjetivoEspecifico(); }}>
                                     <Add className="d-block mx-auto"/>
                                 </Button>
@@ -260,6 +285,9 @@ const Cursos = props => {
                                 props.editingForm.descriptores.map((descriptor, j) => (
                                     <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.descriptor")}`
+                                            }}
                                             variant="outlined"
                                             label={t("instrumento.descriptores-codigo")}
                                             fullWidth
@@ -267,13 +295,13 @@ const Cursos = props => {
                                             value={descriptor}
                                             onInput={e => { props.handleInputChange(e, "nuevos", {j: j}) }}
                                         />
-                                        <IconButton className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("descriptores", { j: j }); }}>
+                                        <IconButton aria-label={t("aria.eliminar-elemento")} className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("descriptores", { j: j }); }}>
                                             <DeleteOutlined color="primary"/>
                                         </IconButton>
                                     </div>
                                 ))
                             }
-                            <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("descriptores"); }}>
+                            <Button aria-label={t("aria.agregar-elemento")} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("descriptores"); }}>
                                 <Add className="d-block mx-auto"/>
                             </Button>
                         </Grid>
@@ -284,19 +312,22 @@ const Cursos = props => {
                                         <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                             <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.contenido")}`
+                                                }}
                                                 variant="outlined"
                                                 fullWidth
                                                 name="contenidos"
                                                 value={contenido}
                                                 onInput={e => { props.handleInputChange(e, {j: j}) }}
                                             />
-                                            <IconButton className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("contenidos", { j: j }); }}>
+                                            <IconButton aria-label={t("aria.eliminar-elemento")} className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("contenidos", { j: j }); }}>
                                                 <DeleteOutlined color="primary"/>
                                             </IconButton>
                                         </div>
                                     ))
                                 }
-                                <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("contenidos"); }}>
+                                <Button aria-label={t("aria.agregar-elemento")} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("contenidos"); }}>
                                     <Add className="d-block mx-auto"/>
                                 </Button>
                         </Grid>
@@ -306,7 +337,10 @@ const Cursos = props => {
                                     className="h-100"
                                     variant="outlined"
                                     label={t("cursos.new-metodologia")}
-                                    inputProps={{className:"h-100"}}
+                                    inputProps={{
+                                        "className":"h-100",
+                                        "aria-label": `${t("aria.metodologia")}`
+                                    }}
                                     fullWidth
                                     multiline
                                     rows={5}
@@ -323,19 +357,22 @@ const Cursos = props => {
                                     <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                         <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.procedimiento")}`
+                                            }}
                                             variant="outlined"
                                             fullWidth
                                             name="procedimiento"
                                             value={procedimiento}
                                             onInput={e => { props.handleInputChange(e, {j: j}) }}
                                         />
-                                        <IconButton className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("procedimiento", { j: j }); }}>
+                                        <IconButton aria-label={t("aria.eliminar-elemento")} className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("procedimiento", { j: j }); }}>
                                             <DeleteOutlined color="primary"/>
                                         </IconButton>
                                     </div>
                                 ))
                             }
-                            <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("procedimiento"); }}>
+                            <Button aria-label={t("aria.agregar-elemento")} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("procedimiento"); }}>
                                 <Add className="d-block mx-auto"/>
                             </Button>
                         </Grid>
@@ -343,7 +380,10 @@ const Cursos = props => {
                             <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                 <TextField
                                     className="h-100"
-                                    inputProps={{className: "h-100"}}
+                                    inputProps={{
+                                        "className": "h-100",
+                                        "aria-label": `${t("aria.evidencias")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-evidencias")}
                                     fullWidth
@@ -362,19 +402,22 @@ const Cursos = props => {
                                     <div className="mb-2 d-flex align-items-center justify-content-between" key={j}>
                                         <Typography variant="subtitle1" className="mr-3"><strong>{j + 1}</strong></Typography>
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.criterio")}`
+                                            }}
                                             variant="outlined"
                                             fullWidth
                                             name="criterios"
                                             value={criterio}
                                             onInput={e => { props.handleInputChange(e, {j: j}) }}
                                         />
-                                        <IconButton className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("criterios", { j: j }); }}>
+                                        <IconButton aria-label={t("aria.eliminar-elemento")} className="ml-3" color="primary" onClick={() => { props.deleteNewCourseElement("criterios", { j: j }); }}>
                                             <DeleteOutlined color="primary"/>
                                         </IconButton>
                                     </div>
                                 ))
                             }
-                            <Button fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("criterios"); }}>
+                            <Button aria-label={t("aria.agregar-elemento")} fullWidth className="w-100 mt-3" size="small" variant="outlined" color="primary" onClick={() => { props.createNewCourseElement("criterios"); }}>
                                 <Add className="d-block mx-auto"/>
                             </Button>
                         </Grid>
@@ -382,7 +425,10 @@ const Cursos = props => {
                             <FormControl variant="outlined" className="w-100 h-100 cursos-full-height">
                                 <TextField
                                     className="h-100"
-                                    inputProps={{className: "h-100"}}
+                                    inputProps={{
+                                        "className": "h-100",
+                                        "aria-label": `${t("aria.observaciones")}`
+                                    }}
                                     variant="outlined"
                                     label={t("cursos.new-observaciones")}
                                     fullWidth
