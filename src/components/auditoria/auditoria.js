@@ -53,7 +53,6 @@ class Auditoria extends Component {
             usuarioSeleccionado: selected.value,
             didSelectUser: true
         });
-        /* t4l3ntum2019 */
     }
 
     render() {

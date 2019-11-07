@@ -154,7 +154,7 @@ class Encuesta extends Component {
                             }
                             <Grid container spacing={5} justify="center">
                                 <Grid item xs={12} md={8}>
-                                    <Typography variant="h5" className="mb-4 text-center">{t("encuestas.titulo")}</Typography>
+                                    <Typography component="h1" variant="h5" className="mb-4 text-center">{t("encuestas.titulo")}</Typography>
                                     <Typography variant="body1">{t("encuestas.ayuda")}</Typography>
                                     <hr className="my-4"/>
                                     {

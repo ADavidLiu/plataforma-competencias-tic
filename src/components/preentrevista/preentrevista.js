@@ -413,18 +413,27 @@ class Preentrevista extends Component {
                     break;
                 case "INPUT":
                     opcionesRespuesta = (
-                        <TextField
-                            key={pregunta.label}
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            multiline
-                            inputProps={{ maxLength: 400 }}
-                            rows="5"
-                            label="Escriba su respuesta..."
-                            name={pregunta.label}
-                            onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.subgroup, pregunta.typeOfLevel, triggeredBy, i)}
-                        />
+                        <Translation>
+                            {
+                                t => (
+                                    <TextField
+                                        key={pregunta.label}
+                                        variant="outlined"
+                                        margin="normal"
+                                        fullWidth
+                                        multiline
+                                        inputProps={{
+                                            maxLength: 400,
+                                            "aria-label": `${t("aria.escriba-respuesta")}`
+                                        }}
+                                        rows="5"
+                                        label="Escriba su respuesta..."
+                                        name={pregunta.label}
+                                        onChange={e => this.handlePreguntaChange(e, pregunta.id, pregunta.group, pregunta.subgroup, pregunta.typeOfLevel, triggeredBy, i)}
+                                    />
+                                )
+                            }
+                        </Translation>
                     );
                     break;
                 default:
@@ -507,7 +516,7 @@ class Preentrevista extends Component {
                                 <Grid item xs={12} md={8}>
                                     <form onSubmit={this.handleSubmit}>
                                         <div className="mb-5">
-                                            <Typography variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
+                                            <Typography component="h1" variant="h5" className="mb-5 text-center">{t("preentrevista.titulo")}</Typography>
                                             <Typography variant="body1" className="mb-3">{t("preentrevista.ayuda")}</Typography>
                                         </div>
                                         {

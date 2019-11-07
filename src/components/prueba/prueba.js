@@ -390,7 +390,7 @@ class Prueba extends Component {
                                         {!this.state.isPruebaIniciada ? (
                                             <React.Fragment>
                                                 <Grid item xs={12}>
-                                                    <Typography variant="h5" className="mb-5 text-center">{t("prueba.titulo")}</Typography>
+                                                    <Typography component="h1" variant="h5" className="mb-5 text-center">{t("prueba.titulo")}</Typography>
                                                     <Typography variant="h6" className="mb-2">{t("prueba.label-introduccion")}</Typography>
                                                     <Typography variant="body1" className="mb-4">{t("prueba.introduccion")}</Typography>
                                                     <Typography variant="h6" className="mb-2">{t("prueba.label-instrucciones")}</Typography>
@@ -490,7 +490,7 @@ class Prueba extends Component {
                             {
                                 this.state.isPruebaIniciada && !this.props[0].location.state.shouldActivateViewingMode ? (
                                     <Tooltip title={t("prueba.pausar")} placement="left">
-                                        <Fab color="primary" onClick={this.pausarPrueba} className="prueba-fab fab">
+                                        <Fab aria-label={t("aria.guardar-pausar-prueba")} color="primary" onClick={this.pausarPrueba} className="prueba-fab fab">
                                             <Save fontSize="small"/>
                                         </Fab>
                                     </Tooltip>

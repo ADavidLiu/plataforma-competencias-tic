@@ -118,7 +118,7 @@ class DashboardInstitucionEducativa extends Component {
                     t => (
                         <Grid container spacing={5}>
                             <Grid item xs={12}>
-                                <Typography variant="h5" className="mb-4">{t("dashboardGobierno.general")}</Typography>
+                                <Typography component="h1" variant="h5" className="mb-4">{t("dashboardGobierno.general")}</Typography>
                                 <Grid container spacing={5}>
                                     <Grid item xs={12} sm={4}>
                                         <Paper className="p-4 text-center">

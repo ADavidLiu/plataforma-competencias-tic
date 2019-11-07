@@ -435,6 +435,9 @@ class Practica extends Component {
                     {
                         t => (
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.elemento")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 fullWidth
@@ -455,6 +458,9 @@ class Practica extends Component {
                     {
                         t => (
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.elemento")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 fullWidth
@@ -475,6 +481,9 @@ class Practica extends Component {
                     {
                         t => (
                             <TextField
+                                inputProps={{
+                                    "aria-label": `${t("aria.elemento")}`
+                                }}
                                 variant="outlined"
                                 margin="normal"
                                 fullWidth
@@ -510,6 +519,9 @@ class Practica extends Component {
                                     ) : ""
                                 }
                                 <TextField
+                                    inputProps={{
+                                        "aria-label": `${t("aria.descripcion-contenido")}`
+                                    }}
                                     variant="outlined"
                                     margin="normal"
                                     required
@@ -552,6 +564,9 @@ class Practica extends Component {
                                         <Grid container>
                                             <Grid item xs={12}>
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.nombres")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -570,7 +585,10 @@ class Practica extends Component {
                                                     required
                                                     fullWidth
                                                     multiline
-                                                    inputProps={{ maxLength: 400 }}
+                                                    inputProps={{
+                                                        maxLength: 400,
+                                                        "aria-label": `${t("aria.resenia")}`
+                                                    }}
                                                     rows="5"
                                                     id="resenia"
                                                     label={t("practicas.resenia")}
@@ -584,6 +602,9 @@ class Practica extends Component {
                                             </Grid>
                                             <Grid item xs={12} className="mt-2">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.palabras-clave")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     fullWidth
@@ -646,6 +667,9 @@ class Practica extends Component {
                                             </Grid>
                                             <Grid item xs={12} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.num-personas")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -661,6 +685,9 @@ class Practica extends Component {
                                             </Grid>
                                             <Grid item xs={6} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.num-grupos")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -676,6 +703,9 @@ class Practica extends Component {
                                             </Grid>
                                             <Grid item xs={6} className="py-0">
                                                 <TextField
+                                                    inputProps={{
+                                                        "aria-label": `${t("aria.num-personas-grupo")}`
+                                                    }}
                                                     variant="outlined"
                                                     margin="normal"
                                                     required
@@ -758,6 +788,9 @@ class Practica extends Component {
                                                 this.state.selectedNecesidadesEspeciales === "Otras" ? (
                                                     <Grid item xs={12} className="py-0">
                                                         <TextField
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.otras-necesidades-especiales")}`
+                                                            }}
                                                             variant="outlined"
                                                             margin="normal"
                                                             required
@@ -798,6 +831,9 @@ class Practica extends Component {
                                         <FormGroup className="mb-4">
                                             <Typography variant="body1">{t("practicas.necesidad-problema")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.necesidad-problema")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -816,6 +852,9 @@ class Practica extends Component {
                                         <FormGroup className="mb-4">
                                             <Typography variant="body1">{t("practicas.principal-objetivo")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.principal-pbjetivo")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -834,6 +873,9 @@ class Practica extends Component {
                                         <FormGroup className="mb-4">
                                             <Typography variant="body1">{t("practicas.label-resultados")}</Typography>
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.resultados-esperados")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
@@ -898,6 +940,9 @@ class Practica extends Component {
                                     <DialogContent>
                                         <DialogContentText>{t("practicas.ayuda-detalles-actividad")}</DialogContentText>
                                         <TextField
+                                            inputProps={{
+                                                "aria-label": `${t("aria.nombre-actividad")}`
+                                            }}
                                             variant="outlined"
                                             margin="normal"
                                             required
@@ -915,7 +960,10 @@ class Practica extends Component {
                                             required
                                             multiline
                                             rows={5}
-                                            inputProps={{ maxLength: 400 }}
+                                            inputProps={{
+                                                maxLength: 400,
+                                                "aria-label": `${t("aria.proposito-actividad")}`
+                                            }}
                                             fullWidth
                                             id="propositoActividad"
                                             label={t("practicas.actividad-proposito")}
@@ -968,7 +1016,10 @@ class Practica extends Component {
                                                 required
                                                 multiline
                                                 rows={5}
-                                                inputProps={{ maxLength: 400 }}
+                                                inputProps={{
+                                                    maxLength: 400,
+                                                    "aria-label": `${t("aria.consigna-actividad")}`
+                                                }}
                                                 fullWidth
                                                 id="consignaActividad"
                                                 label={t("practicas.actividad-consigna")}
@@ -1011,7 +1062,10 @@ class Practica extends Component {
                                                             required
                                                             multiline
                                                             rows={5}
-                                                            inputProps={{ maxLength: 400 }}
+                                                            inputProps={{
+                                                                maxLength: 400,
+                                                                "aria-label": `${t("aria.como-evalua-actividad")}`
+                                                            }}
                                                             fullWidth
                                                             id="comoEvaluaActividad"
                                                             label={t("practicas.actividad-describa-proceso")}
@@ -1053,6 +1107,9 @@ class Practica extends Component {
                                                 ) : ""
                                             }
                                             <TextField
+                                                inputProps={{
+                                                    "aria-label": `${t("aria.descripcion-retroalimentacion")}`
+                                                }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 fullWidth

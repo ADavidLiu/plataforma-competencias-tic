@@ -427,7 +427,7 @@ class DashboardDocente extends Component {
                                     ) : null
                                 }
                                 <Grid item xs={12}>
-                                    <Typography variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
+                                    <Typography component="h1" variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
                                     <Paper className="my-4" style={{
                                         overflow: "hidden"
                                     }}>
@@ -616,7 +616,8 @@ class DashboardDocente extends Component {
                                         pathname: `/${t("link.registro")}`,
                                         state: {
                                             tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false,
+                                            forceShow: true
                                         }
                                     }} style={{textDecoration: "none"}}>
                                         <Button

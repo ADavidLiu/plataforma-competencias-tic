@@ -77,6 +77,7 @@ class Entrevista extends Component {
 										{this.state.isEvaluada ? (
 											<React.Fragment>
 												<Typography
+													component="h1"
 													variant="h5"
 													className="mb-4"
 												>

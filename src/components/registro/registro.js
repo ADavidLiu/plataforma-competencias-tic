@@ -249,7 +249,9 @@ class Registro extends Component {
 
     render() {
         if (this.props.isLogeado) {
-            return <Redirect to="/"/>
+            if (!this.props[0].location.state.forceShow) {
+                return <Redirect to="/"/>
+            }
         }
         if (this.props.location && this.props.location.state === undefined) {
             return <Redirect to="/" />

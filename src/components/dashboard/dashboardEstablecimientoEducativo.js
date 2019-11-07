@@ -209,7 +209,7 @@ class DashboardEstablecimientoEducativo extends Component {
                                 ) : null
                             }
                             <Grid item xs={12}>
-                                <Typography variant="h5">
+                                <Typography component="h1" variant="h5">
                                     {t("dashboardEE.label-docentes")}
                                 </Typography>
                                 <hr/>
