@@ -68,7 +68,7 @@ const Establecimientos = props => {
                                                                                     if (keys[j] === "pais") {
                                                                                         return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                     } else {
-                                                                                        if (keys[j] === "2") {
+                                                                                        if (keys[j] === "4") {
                                                                                             return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                         } else {
                                                                                             return <TableCell key={j}>{val}</TableCell>;

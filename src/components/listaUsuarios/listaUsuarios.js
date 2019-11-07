@@ -1333,9 +1333,16 @@ class ListaUsuarios extends Component {
             });
 
             let maxLength = 0;
+            let offset = 1;
             switch (this.props.userType) {
                 case "CURSOS":
                     maxLength = 4;
+                    break;
+                case "SUPERADMIN":
+                case "ADMIN":
+                case "ESTABLECIMIENTO":
+                    maxLength = this.headCells[this.props.userType.toLowerCase()].length;
+                    offset = 0;
                     break;
                 default:
                     maxLength = this.headCells[this.props.userType.toLowerCase()].length - 1;
@@ -1343,7 +1350,7 @@ class ListaUsuarios extends Component {
             }
 
             for (let i = 0; i < rawValuesToSearchFrom.length; i += maxLength) {
-                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.headCells[this.props.userType.toLowerCase()].length - 1));
+                arraysValuesToSearchFrom.push(rawValuesToSearchFrom.slice(i, i + this.headCells[this.props.userType.toLowerCase()].length - offset));
             }
             arraysValuesToSearchFrom.forEach(array => {
                 array.forEach(val => {
