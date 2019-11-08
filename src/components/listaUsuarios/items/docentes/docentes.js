@@ -108,7 +108,7 @@ const Docentes = props => {
                                         ) : (
                                             <TableBody>
                                                 <TableRow>
-                                                    <TableCell colSpan="4" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                    <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
                                                 </TableRow>
                                             </TableBody>
                                         )

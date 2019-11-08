@@ -101,7 +101,7 @@ const Establecimientos = props => {
                                         ) : (
                                             <TableBody>
                                                 <TableRow>
-                                                    <TableCell colSpan="12" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                    <TableCell colSpan="15" align="center">{t("usuarios.no-datos")}</TableCell>
                                                 </TableRow>
                                             </TableBody>
                                         )

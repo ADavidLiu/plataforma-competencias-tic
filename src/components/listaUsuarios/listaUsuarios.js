@@ -740,6 +740,7 @@ class ListaUsuarios extends Component {
         newUsuarios = newUsuarios.filter(usuario => usuario[key] !== this.state.activeID);
 
         this.setState({
+            searchTerm: "",
             usuarios: {
                 ...this.state.usuarios,
                 [this.props.tipoUsuariosMostrados]: newUsuarios

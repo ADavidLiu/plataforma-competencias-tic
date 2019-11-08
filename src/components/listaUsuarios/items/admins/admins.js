@@ -101,7 +101,7 @@ const Admins = props => {
                                         ) : (
                                             <TableBody>
                                                 <TableRow>
-                                                    <TableCell colSpan="6" align="center">{t("usuarios.no-datos")}</TableCell>
+                                                    <TableCell colSpan="9" align="center">{t("usuarios.no-datos")}</TableCell>
                                                 </TableRow>
                                             </TableBody>
                                         )
