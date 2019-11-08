@@ -441,17 +441,111 @@ class DashboardDocente extends Component {
                                 <Grid item xs={12}>
                                     <hr className="my-3"/>
                                 </Grid>
-                                <Grid item xs={12} sm={8} lg={9}>
+                                <Grid item xs={12}>
                                     <Typography variant="h5" className="mb-4">{t("dashboardDocente.diagnostico")}</Typography>
                                     <hr/>
-                                    <div className="d-lg-flex align-items-center justify-content-start">
-                                        <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto" style={{textDecoration: "none"}}>
-                                            <Button className="w-100 w-lg-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
-                                        </a>
-                                        <a href="#" className="d-block d-lg-inline-block w-100 w-lg-auto mt-3 mt-lg-0 ml-lg-3" style={{textDecoration: "none"}}>
-                                            <Button className="w-100 w-lg-auto" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
-                                        </a>
-                                    </div>
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} lg={4}>
+                                            <div className="d-md-flex align-items-center justify-content-between dashboard-docente-btns">
+                                                <a href="#" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
+                                                <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
+                                            </a>
+                                                <a href="#" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
+                                                <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                            </a>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={12} lg={8}>
+                                            <Grid container spacing={3}>
+                                                <Grid item xs={12} sm={6} md={4}>
+                                                    <Link to={{
+                                                        pathname: `/${t("link.registro")}`,
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE",
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false,
+                                                            forceShow: true
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="outlined"
+                                                            color="primary"
+                                                            size="medium"
+                                                        >{t("dashboardDocente.btn-registro")}</Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={4}>
+                                                    <Link to={{
+                                                        pathname: `/${t("link.prueba")}`,
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE",
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="outlined"
+                                                            color="primary"
+                                                            size="medium"
+                                                        >{t("dashboardDocente.btn-prueba")}</Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={4}>
+                                                    <Link to={{
+                                                        pathname: `/${t("link.practica")}`,
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE",
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="outlined"
+                                                            color="primary"
+                                                            size="medium"
+                                                        >{t("dashboardDocente.btn-practica")}</Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={4}>
+                                                    <Link to={{
+                                                        pathname: `/${t("link.preentrevista")}`,
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE",
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="outlined"
+                                                            color="primary"
+                                                            size="medium"
+                                                        >{t("dashboardDocente.btn-preentrevista")}</Button>
+                                                    </Link>
+                                                </Grid>
+                                                <Grid item xs={12} sm={6} md={4}>
+                                                    <Link to={{
+                                                        pathname: `/${t("link.entrevista")}`,
+                                                        state: {
+                                                            tipoUsuario: "DOCENTE",
+                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                        }
+                                                    }} style={{textDecoration: "none"}}>
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="outlined"
+                                                            color="primary"
+                                                            size="medium"
+                                                        >{t("dashboardDocente.btn-entrevista")}</Button>
+                                                    </Link>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
                                     <hr/>
                                     {
                                         this.state.pasoActual > 1 ? (
@@ -459,7 +553,7 @@ class DashboardDocente extends Component {
                                                 {
                                                     this.state.didEstadisticasLoad ? (
                                                         <Grid container spacing={2}>
-                                                            <Grid item xs={12}>
+                                                            <Grid item xs={12} md={6}>
                                                                 <Typography variant="h6" className="mb-4">{t("dashboardDocente.resultados-pruebas")}</Typography>
                                                                 <Bar height={80} data={{
                                                                     labels: ["Prueba de conocimiento"],
@@ -492,7 +586,7 @@ class DashboardDocente extends Component {
                                                                     }
                                                                 }} />
                                                             </Grid>
-                                                            <Grid item xs={12} md={6}>
+                                                            <Grid item xs={12} sm={6} md={3}>
                                                                 <Radar height={200} data={() => {
                                                                     const dimensionesLabels = [];
                                                                     const dimensionesDatasets = [];
@@ -528,7 +622,7 @@ class DashboardDocente extends Component {
                                                                     }
                                                                 }} />
                                                             </Grid>
-                                                            <Grid item xs={12} md={6}>
+                                                            <Grid item xs={12} sm={6} md={3}>
                                                                 <Radar height={200} data={() => {
                                                                     const perfilesLabels = [];
                                                                     const perfilesDatasets = [];
@@ -584,90 +678,6 @@ class DashboardDocente extends Component {
                                             <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
                                         )
                                     }
-                                </Grid>
-                                <Grid item xs={12} sm={4} lg={3}>
-                                    <Typography variant="h5" className="mb-1">{t("dashboardDocente.acciones")}</Typography>
-                                    <Link to={{
-                                        pathname: `/${t("link.registro")}`,
-                                        state: {
-                                            tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false,
-                                            forceShow: true
-                                        }
-                                    }} style={{textDecoration: "none"}}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >{t("dashboardDocente.btn-registro")}</Button>
-                                    </Link>
-                                    <Link to={{
-                                        pathname: `/${t("link.prueba")}`,
-                                        state: {
-                                            tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                        }
-                                    }} style={{textDecoration: "none"}}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >{t("dashboardDocente.btn-prueba")}</Button>
-                                    </Link>
-                                    <Link to={{
-                                        pathname: `/${t("link.practica")}`,
-                                        state: {
-                                            tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                        }
-                                    }} style={{textDecoration: "none"}}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >{t("dashboardDocente.btn-practica")}</Button>
-                                    </Link>
-                                    <Link to={{
-                                        pathname: `/${t("link.preentrevista")}`,
-                                        state: {
-                                            tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                        }
-                                    }} style={{textDecoration: "none"}}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >{t("dashboardDocente.btn-preentrevista")}</Button>
-                                    </Link>
-                                    <Link to={{
-                                        pathname: `/${t("link.entrevista")}`,
-                                        state: {
-                                            tipoUsuario: "DOCENTE",
-                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                        }
-                                    }} style={{textDecoration: "none"}}>
-                                        <Button
-                                            type="submit"
-                                            fullWidth
-                                            variant="outlined"
-                                            color="primary"
-                                            className="mt-3"
-                                            size="medium"
-                                        >{t("dashboardDocente.btn-entrevista")}</Button>
-                                    </Link>
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.shouldAlertProcessCancellation} onClose={this.confirmarCancelacion}>
