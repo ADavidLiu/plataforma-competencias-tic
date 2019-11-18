@@ -324,14 +324,14 @@ class Registro extends Component {
                                     <Grid item xs={12} className="py-0">
                                         <TextField
                                             inputProps={{
-                                                "aria-label": `${t("aria.descripcion-personal")}`
+                                                "aria-label": `${t("aria.descripcion-personal")}`,
+                                                "maxLength": 400
                                             }}
                                             variant="outlined"
                                             margin="normal"
                                             required
                                             fullWidth
                                             multiline
-                                            inputProps={{ maxLength: 400 }}
                                             rows="5"
                                             id="descripcionPersonal"
                                             label={t("registro.descripcion-personal")}

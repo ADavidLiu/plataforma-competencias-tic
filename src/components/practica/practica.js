@@ -668,7 +668,8 @@ class Practica extends Component {
                                             <Grid item xs={12} className="py-0">
                                                 <TextField
                                                     inputProps={{
-                                                        "aria-label": `${t("aria.num-personas")}`
+                                                        "aria-label": `${t("aria.num-personas")}`,
+                                                        "min": 1
                                                     }}
                                                     variant="outlined"
                                                     margin="normal"
@@ -678,7 +679,6 @@ class Practica extends Component {
                                                     label={t("practicas.num-personas")}
                                                     name="cantidadPersonas"
                                                     type="number"
-                                                    inputProps={{"min": 1}}
                                                     value={this.state.cantidadPersonas}
                                                     onInput={this.handleTextChange}
                                                 />
@@ -686,7 +686,8 @@ class Practica extends Component {
                                             <Grid item xs={6} className="py-0">
                                                 <TextField
                                                     inputProps={{
-                                                        "aria-label": `${t("aria.num-grupos")}`
+                                                        "aria-label": `${t("aria.num-grupos")}`,
+                                                        "min": 1
                                                     }}
                                                     variant="outlined"
                                                     margin="normal"
@@ -696,7 +697,6 @@ class Practica extends Component {
                                                     label={t("practicas.num-grupos")}
                                                     name="cantidadGrupos"
                                                     type="number"
-                                                    inputProps={{"min": 1}}
                                                     value={this.state.cantidadGrupos}
                                                     onInput={this.handleTextChange}
                                                 />
@@ -704,7 +704,8 @@ class Practica extends Component {
                                             <Grid item xs={6} className="py-0">
                                                 <TextField
                                                     inputProps={{
-                                                        "aria-label": `${t("aria.num-personas-grupo")}`
+                                                        "aria-label": `${t("aria.num-personas-grupo")}`,
+                                                        "min": 1
                                                     }}
                                                     variant="outlined"
                                                     margin="normal"
@@ -714,7 +715,6 @@ class Practica extends Component {
                                                     label={t("practicas.num-personas-grupo")}
                                                     name="personasPorGrupo"
                                                     type="number"
-                                                    inputProps={{"min": 1}}
                                                     value={this.state.personasPorGrupo}
                                                     onInput={this.handleTextChange}
                                                 />
@@ -832,14 +832,14 @@ class Practica extends Component {
                                             <Typography variant="body1">{t("practicas.necesidad-problema")}</Typography>
                                             <TextField
                                                 inputProps={{
-                                                    "aria-label": `${t("aria.necesidad-problema")}`
+                                                    "aria-label": `${t("aria.necesidad-problema")}`,
+                                                    "maxLength": 400
                                                 }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
                                                 multiline
-                                                inputProps={{ maxLength: 400 }}
                                                 rows="5"
                                                 id="necesidadOProblema"
                                                 label={t("practicas.ayuda-necesidad-problema")}
@@ -853,14 +853,14 @@ class Practica extends Component {
                                             <Typography variant="body1">{t("practicas.principal-objetivo")}</Typography>
                                             <TextField
                                                 inputProps={{
-                                                    "aria-label": `${t("aria.principal-pbjetivo")}`
+                                                    "aria-label": `${t("aria.principal-pbjetivo")}`,
+                                                    "maxLength": 400
                                                 }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
                                                 multiline
-                                                inputProps={{ maxLength: 400 }}
                                                 rows="5"
                                                 id="objetivoPrincipal"
                                                 label={t("practicas.ayuda-principal-objetivo")}
@@ -874,14 +874,14 @@ class Practica extends Component {
                                             <Typography variant="body1">{t("practicas.label-resultados")}</Typography>
                                             <TextField
                                                 inputProps={{
-                                                    "aria-label": `${t("aria.resultados-esperados")}`
+                                                    "aria-label": `${t("aria.resultados-esperados")}`,
+                                                    "maxLength": 400
                                                 }}
                                                 variant="outlined"
                                                 margin="normal"
                                                 required
                                                 fullWidth
                                                 multiline
-                                                inputProps={{ maxLength: 400 }}
                                                 rows="5"
                                                 id="resultadosEsperados"
                                                 label={t("practicas.resultados")}

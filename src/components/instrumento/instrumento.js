@@ -553,8 +553,8 @@ class Instrumento extends PureComponent {
                                     </DialogContentText>
                                 </DialogContent>
                                 <DialogActions className="p-3 pt-0 d-block d-md-flex">
-                                    <Button color="primary" variant="outlined" onClick={this.confirmarCrearVersion} className="w-100 w-md-auto">{t("instrumento.crear-si")}</Button>
-                                    <Button color="primary" variant="contained" onClick={this.crearVersion} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-no")}</Button>
+                                    <Button color="primary" variant="outlined" onClick={this.confirmarCrearVersion} className="w-100 w-md-auto">{t("instrumento.crear-agregar")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.crearVersion} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-cancelar")}</Button>
                                 </DialogActions>
                             </Dialog>
                             <Dialog open={this.state.shouldConfirmDelete} onClose={this.toggleDelete}>
@@ -588,8 +588,8 @@ class Instrumento extends PureComponent {
                                     />
                                 </DialogContent>
                                 <DialogActions className="p-3 pt-0 d-block d-md-flex">
-                                    <Button color="primary" variant="outlined" onClick={this.toggleNewRespuestaOption} className="w-100 w-md-auto">{t("instrumento.crear-no")}</Button>
-                                    <Button color="primary" variant="contained" onClick={this.addRespuestaOption} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-si")}</Button>
+                                    <Button color="primary" variant="outlined" onClick={this.toggleNewRespuestaOption} className="w-100 w-md-auto">{t("instrumento.crear-cancelar")}</Button>
+                                    <Button color="primary" variant="contained" onClick={this.addRespuestaOption} className="ml-0 ml-md-3 mt-3 mt-md-0 w-100 w-md-auto">{t("instrumento.crear-agregar")}</Button>
                                 </DialogActions>
                             </Dialog>
                         </React.Fragment>

@@ -1652,7 +1652,7 @@ class ListaUsuarios extends Component {
                 formularioEdicion = <EstablecimientosForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} handleChangeLocationDropdown={this.handleChangeLocationDropdown} departamentos={this.state.departamentos} municipios={this.state.municipios} />;
                 break;
             case "ESTABLECIMIENTO":
-                tabla = <Docentes headCells={this.headCells} usuarios={this.state.usuarios} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
+                tabla = <Docentes headCells={this.headCells} usuarios={this.state.usuarios} isFiltering={this.state.isFiltering} userType={this.props.userType} elementosMostrados={this.state.elementosMostrados} tipoUsuariosMostrados={this.props.tipoUsuariosMostrados} page={this.state.page} rowsPerPage={this.state.rowsPerPage} editUser={this.editUser} deleteUser={this.deleteUser} handleChangePage={this.handleChangePage} handleChangeRowsPerPage={this.handleChangeRowsPerPage} />;
 
                 formularioEdicion = <DocentesForm editingForm={this.state.editingForm} handleEdicionChange={this.handleEdicionChange} updateRoles={this.updateRoles} originalRole={this.props.tipoUsuariosMostrados} accountType={this.props.accountType} />;
                 break;
