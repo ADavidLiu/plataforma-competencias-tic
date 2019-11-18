@@ -383,7 +383,7 @@ class Configuracion extends Component {
         return (
             <Translation>
                 {
-                    (t, i18n) => (
+                    t => (
                         <Grid container>
                             <Helmet>
                                 <title>{`${t("titulo.configuracion")} | ${this.props.userProfile.nombre}`}</title>
