@@ -66,6 +66,8 @@ const Auditoria = props => {
                                                                                         } else {
                                                                                             if (typeof val !== "object") {
                                                                                                 return <TableCell key={j}>{val}</TableCell>;
+                                                                                            } else {
+                                                                                                return null;
                                                                                             }
                                                                                         }
                                                                                     })

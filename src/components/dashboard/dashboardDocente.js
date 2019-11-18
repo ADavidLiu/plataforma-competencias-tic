@@ -448,11 +448,11 @@ class DashboardDocente extends Component {
                                         <Grid item xs={12} lg={4}>
                                             <div className="d-md-flex align-items-center justify-content-between dashboard-docente-btns">
                                                 <a href="https://www.google.com" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
-                                                <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
-                                            </a>
+                                                    <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
+                                                </a>
                                                 <a href="https://www.google.com" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
-                                                <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
-                                            </a>
+                                                    <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                                </a>
                                             </div>
                                         </Grid>
                                         <Grid item xs={12} lg={8}>

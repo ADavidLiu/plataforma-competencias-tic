@@ -403,6 +403,8 @@ class Calificaciones extends Component {
                                             this.state.headCells[this.state.categoriaDivisionMostrada].map((cellLabel, i) => {
                                                 if (i < this.state.headCells[this.state.categoriaDivisionMostrada].length - 1) {
                                                     return <MenuItem value={cellLabel} key={i}>{t(cellLabel)}</MenuItem>
+                                                } else {
+                                                    return null;
                                                 }
                                             })
                                         }

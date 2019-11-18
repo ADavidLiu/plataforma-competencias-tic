@@ -65,7 +65,11 @@ const Cursos = props => {
                                                                                         if (typeof val !== "object") {
                                                                                             if (keys[j] === "id" || keys[j] === "nombre" || keys[j] === "fechaCreacion" || keys[j] === "0" || keys[j] === "1" || keys[j] === "2") {
                                                                                                 return <TableCell key={j}>{val}</TableCell>;
+                                                                                            } else {
+                                                                                                return null;
                                                                                             }
+                                                                                        } else {
+                                                                                            return null;
                                                                                         }
                                                                                     })
                                                                                 }

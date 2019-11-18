@@ -58,6 +58,8 @@ const ListaTerritorios = props => {
                                         props.headCells.map((cellLabel, i) => {
                                             if (i < props.headCells.length - 1) {
                                                 return <MenuItem value={cellLabel} key={i}>{t(cellLabel)}</MenuItem>
+                                            } else {
+                                                return null;
                                             }
                                         })
                                     }

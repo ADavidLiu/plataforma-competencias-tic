@@ -72,6 +72,8 @@ const Admins = props => {
                                                                                                 return <TableCell key={j}>{val.split("-")[1]}</TableCell>;
                                                                                             } else if (typeof val !== "object") {
                                                                                                 return <TableCell key={j}>{val}</TableCell>;
+                                                                                            } else {
+                                                                                                return null;
                                                                                             }
                                                                                         }
                                                                                     })

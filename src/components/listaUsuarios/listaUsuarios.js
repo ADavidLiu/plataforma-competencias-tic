@@ -1702,6 +1702,8 @@ class ListaUsuarios extends Component {
                                                     this.headCells[this.props.userType.toLowerCase()].map((cellLabel, i) => {
                                                         if (i < this.headCells[this.props.userType.toLowerCase()].length - 1) {
                                                             return <MenuItem value={cellLabel} key={i}>{t(cellLabel)}</MenuItem>
+                                                        } else {
+                                                            return null;
                                                         }
                                                     })
                                                 }
