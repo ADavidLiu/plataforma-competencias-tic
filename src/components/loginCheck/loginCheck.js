@@ -68,7 +68,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "SUPERADMIN";
+        this.tipoPerfil = "ADMIN";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -166,6 +166,12 @@ class LoginCheck extends Component {
             tipo: this.tipoPerfil,
             isInViewingMode: false,
             viewingModeUserType: ""
+        });
+    }
+
+    actualizarRol = nuevoRol => {
+        this.setState({
+            tipo: nuevoRol
         });
     }
 
@@ -441,7 +447,8 @@ class LoginCheck extends Component {
                                                             <Route path={`/${t("link.practica")}`} render={(...routeProps) => <Practica {...routeProps} userProfile={this.datosPerfil}/>} />
                                                             <Route path={`/${t("link.preentrevista")}`} render={(...routeProps) => <Preentrevista {...routeProps} userProfile={this.datosPerfil} />} />
                                                             <Route path={`/${t("link.entrevista")}`} render={(...routeProps) => <Entrevista {...routeProps} userProfile={this.datosPerfil} />} />
-                                                            <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion isInViewingMode={this.state.isInViewingMode} userProfile={this.datosPerfil} {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
+                                                            <Route path={`/${t("link.configuracion")}`} render={(...routeProps) => <Configuracion isInViewingMode={this.state.isInViewingMode} userProfile={this.datosPerfil} {...routeProps}
+                                                            actualizarRol={this.actualizarRol} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} roles={this.state.roles} />}/>
                                                             {
                                                                 this.state.tipo !== "DOCENTE" && this.state.tipo !== "EVALUADOR" ? (
                                                                     <Route path={`/${t("link.usuarios")}`} render={(...routeProps) => <Usuarios userProfile={this.datosPerfil} {...routeProps} userType={this.state.tipo} userID={this.state.id} />} />

@@ -34,6 +34,7 @@ class Configuracion extends Component {
 
         /* Conectarse al backend para traer la información verdadera de la configuración actual */
         this.state = {
+            rolActual: props.userType,
             rolSeleccionado: props.userType,
             versionActual: "1.0.0",
             versionSeleccionada: "1.0.0",
@@ -164,7 +165,7 @@ class Configuracion extends Component {
         /* Actualizar el backend de acuerdo con la configuración cambiada */
         switch (e.target.name) {
             case "rolSeleccionado":
-
+                this.props.actualizarRol(e.target.value);
                 break;
             case "versionSeleccionada":
 
@@ -374,6 +375,9 @@ class Configuracion extends Component {
         if (this.state.isCuentaEliminada) {
             this.props.actualizarLogeado(false);
             return <Redirect to="/"/>
+        }
+        if (this.state.rolSeleccionado !== this.state.rolActual) {
+            return <Redirect to="/"/>;
         }
 
         return (

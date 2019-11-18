@@ -239,7 +239,7 @@ class DashboardSuperadmin extends Component {
                             {!this.state.isLoading ? (
                                 <React.Fragment>
                                     <Grid item xs={12}>
-                                    <Paper className="p-3 p-md-5">
+                                    
                                     <Grid container spacing={5}>
 
                                     <Grid item xs={12}>
@@ -316,7 +316,7 @@ class DashboardSuperadmin extends Component {
                                                 }
                                             })
                                         }
-                                        <div className="mt-5">
+                                        <Paper className="mt-5 p-4">
                                             <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-absoluta")}</strong></Typography>
                                             <Bar 
                                                 data={{
@@ -353,8 +353,8 @@ class DashboardSuperadmin extends Component {
                                                     }
                                                 }}
                                             />
-                                        </div>
-                                        <div className="mt-5">
+                                        </Paper>
+                                        <Paper className="mt-5 p-4">
                                             <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-relativa")}</strong></Typography>
                                             <Doughnut
                                                 data={() => {
@@ -387,7 +387,7 @@ class DashboardSuperadmin extends Component {
                                                     }
                                                 }}
                                             />
-                                        </div>
+                                        </Paper>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <Typography variant="h6" className="mb-3">{t("dashboardGobierno.niveles")}</Typography>
@@ -420,7 +420,7 @@ class DashboardSuperadmin extends Component {
                                                 }
                                             })
                                         }
-                                        <div className="mt-5">
+                                        <Paper className="mt-5 p-4">
                                             <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.distribucion-relativa")}</strong></Typography>
                                             <Radar height={300} data={{
                                                 labels: [`${t("integracion")}`, `${t("reorientacion")}`, `${t("evolucion")}`],
@@ -450,11 +450,11 @@ class DashboardSuperadmin extends Component {
                                                     }
                                                 }
                                             }} />
-                                        </div>
+                                        </Paper>
                                     </Grid>
                                     
                                     </Grid>
-                                    </Paper>
+                                    
                                     </Grid>
 
                                     <Grid item xs={12}>
