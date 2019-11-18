@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
@@ -304,10 +304,10 @@ class Procesos extends Component {
                                                 <Typography variant="h6" className="mb-2">{t("indice-tic")}: {proceso.reporte.indiceTic}</Typography>
                                                 <Typography variant="body1" className="mb-3">{proceso.reporte.descripcion}</Typography>
                                                 <div className="d-md-flex align-items-center justify-content-start">
-                                                    <a href="#" className="d-block d-lg-inline-block w-100 w-md-auto" style={{textDecoration: "none"}}>
+                                                    <a href="https://www.google.com" className="d-block d-lg-inline-block w-100 w-md-auto" style={{textDecoration: "none"}}>
                                                         <Button className="w-100 w-md-auto" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
                                                     </a>
-                                                    <a href="#" className="d-block d-md-inline-block w-100 w-md-auto mt-3 mt-md-0 ml-md-3" style={{textDecoration: "none"}}>
+                                                    <a href="https://www.google.com" className="d-block d-md-inline-block w-100 w-md-auto mt-3 mt-md-0 ml-md-3" style={{textDecoration: "none"}}>
                                                         <Button className="w-100 w-md-auto" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
                                                     </a>
                                                 </div>

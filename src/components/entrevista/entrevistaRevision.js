@@ -15,7 +15,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Select from "@material-ui/core/Select";
 
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Link, Redirect } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";

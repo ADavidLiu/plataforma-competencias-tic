@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -174,15 +174,15 @@ class VisorPerfiles extends Component {
                                 variant="outlined"
                                 onChange={this.handleSearch}
                                 value={this.state.searchTerm}
-                                inputProps={{
-                                    "aria-label": `${t("aria.buscar")}`
-                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="start">
                                             <Search color="primary" />
                                         </InputAdornment>
-                                    )
+                                    ),
+                                    inputProps: {
+                                        "aria-label": `${t("aria.buscar")}`
+                                    }
                                 }}
                             />
                             {

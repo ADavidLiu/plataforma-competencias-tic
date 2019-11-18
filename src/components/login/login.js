@@ -14,7 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 

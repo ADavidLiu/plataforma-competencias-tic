@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut, Radar } from "react-chartjs-2";

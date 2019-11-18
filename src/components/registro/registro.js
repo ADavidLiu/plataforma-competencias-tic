@@ -18,7 +18,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import Reaptcha from "reaptcha";
 import CircularProgress from "@material-ui/core/CircularProgress";

@@ -29,9 +29,6 @@ const Clasificaciones = props => {
                     <Grid container spacing={5}>
                         <Grid item xs={12} md={6} className="pb-0">
                             <TextField
-                                inputProps={{
-                                    "aria-label": `${t("aria.buscar")}`
-                                }}
                                 placeholder={t("buscar")}
                                 fullWidth
                                 variant="outlined"
@@ -42,7 +39,10 @@ const Clasificaciones = props => {
                                         <InputAdornment position="start">
                                             <Search color="primary" />
                                         </InputAdornment>
-                                    )
+                                    ),
+                                    inputProps: {
+                                        "aria-label": `${t("aria.buscar")}`
+                                    }
                                 }}
                             />
                         </Grid>

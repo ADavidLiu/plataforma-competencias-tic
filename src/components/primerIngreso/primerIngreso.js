@@ -14,7 +14,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { BrowserRouter as Redirect } from "react-router-dom";
 
 class PrimerIngreso extends Component {
     constructor() {
@@ -83,6 +83,9 @@ class PrimerIngreso extends Component {
                                                 <form onSubmit={this.cambiarContrasenia}>
                                                     <FormControl className="w-100">
                                                         <OutlinedInput
+                                                            inputProps={{
+                                                                "aria-label": `${t("aria.label-nueva-contrasenia")}`,
+                                                            }}
                                                             id="contrasenia"
                                                             name="contrasenia"
                                                             required

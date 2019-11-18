@@ -27,7 +27,7 @@ import Button from "@material-ui/core/Button";
 import Tooltip from '@material-ui/core/Tooltip';
 import Fab from "@material-ui/core/Fab";
 
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import NavigationPrompt from "react-router-navigation-prompt";
 import ConfirmacionSalir from "../modales/confirmacionSalir";

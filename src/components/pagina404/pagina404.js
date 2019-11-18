@@ -6,9 +6,9 @@ import { Translation } from "react-i18next";
 import Button from "@material-ui/core/Button";
 
 import { Typography } from "@material-ui/core";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Pagina404 = props => {
+const Pagina404 = () => {
     return (
         <Translation>
             {

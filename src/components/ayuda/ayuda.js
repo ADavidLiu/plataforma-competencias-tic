@@ -2,7 +2,6 @@ import React from "react";
 
 import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";

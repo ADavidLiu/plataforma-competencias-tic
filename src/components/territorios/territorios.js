@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

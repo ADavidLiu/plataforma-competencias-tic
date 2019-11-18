@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 import Stepper from '@material-ui/core/Stepper';
@@ -176,7 +176,7 @@ class DashboardDocente extends Component {
     componentDidMount = () => {
         /* Conexión al backend para almacenar timestamp del último ingreso */
         const timestamp = moment.now();
-        /* console.log(timestamp); */
+        console.log(timestamp);
 
         let infoCargada = {};
 
@@ -447,10 +447,10 @@ class DashboardDocente extends Component {
                                     <Grid container spacing={3}>
                                         <Grid item xs={12} lg={4}>
                                             <div className="d-md-flex align-items-center justify-content-between dashboard-docente-btns">
-                                                <a href="#" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
+                                                <a href="https://www.google.com" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
                                                 <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
                                             </a>
-                                                <a href="#" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
+                                                <a href="https://www.google.com" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
                                                 <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
                                             </a>
                                             </div>

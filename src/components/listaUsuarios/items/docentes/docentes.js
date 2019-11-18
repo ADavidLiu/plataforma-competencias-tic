@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Translation } from "react-i18next";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";

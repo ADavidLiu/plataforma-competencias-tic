@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import sortBy from "sort-by";
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { Translation } from "react-i18next";
 
@@ -374,9 +374,6 @@ class Calificaciones extends Component {
                             </Grid>
                             <Grid item xs={12} md={6} className="pb-0">
                                 <TextField
-                                    inputProps={{
-                                        "aria-label": `${t("aria.buscar")}`
-                                    }}
                                     placeholder={t("buscar")}
                                     fullWidth
                                     variant="outlined"
@@ -387,7 +384,10 @@ class Calificaciones extends Component {
                                             <InputAdornment position="start">
                                                 <Search color="primary" />
                                             </InputAdornment>
-                                        )
+                                        ),
+                                        inputProps: {
+                                            "aria-label": `${t("aria.buscar")}`
+                                        }
                                     }}
                                 />
                             </Grid>

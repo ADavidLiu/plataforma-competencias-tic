@@ -6,11 +6,10 @@ import { Translation } from "react-i18next";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import FormControl from "@material-ui/core/FormControl";
 
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 
-import { BrowserRouter as Router, Redirect, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";

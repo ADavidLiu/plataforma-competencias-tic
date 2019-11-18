@@ -759,6 +759,7 @@ const es = {
         "aria.como-evalua-actividad": "¿Cómo evalúa la actividad?",
         "aria.descripcion-retroalimentacion": "Descripción de la retroalimentación",
         "aria.escriba-respuesta": "Escriba su respuesta...",
+        "aria.label-nueva-contrasenia": "Nueva contraseña",
     }
 }
 

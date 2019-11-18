@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Translation } from "react-i18next";
 import { StickyContainer, Sticky } from "react-sticky";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import { isMobile } from "react-device-detect";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -68,7 +68,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "SUPERADMIN";
+        this.tipoPerfil = "EVALUADOR";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -411,7 +411,7 @@ class LoginCheck extends Component {
                                         <Switch>
                                             <Route path="/" exact render={(...routeProps) => {
                                                 if (this.state.isLogeado) {
-                                                    if (this.state.isPrimerIngreso) {
+                                                    if (this.state.isPrimerIngreso && this.state.tipo !== "SUPERADMIN") {
                                                         return <PrimerIngreso actualizarIsPrimerIngreso={this.actualizarIsPrimerIngreso} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil}/>;
                                                     } else {
                                                         return <Dashboard {...routeProps} actualizarLogeado={this.actualizarLogeado} userType={this.state.tipo} userID={this.state.id} userProfile={this.datosPerfil} />;

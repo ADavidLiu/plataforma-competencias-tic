@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 
 import { Translation } from "react-i18next";
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import { Bar, Pie } from "react-chartjs-2";
 

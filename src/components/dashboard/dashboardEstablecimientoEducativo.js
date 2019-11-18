@@ -15,7 +15,7 @@ import Select from "@material-ui/core/Select";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Bar, Doughnut } from "react-chartjs-2";
 
-import { BrowserRouter as Router, Redirect, Route, Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 import RutaAprendizaje from "../rutaAprendizaje/rutaAprendizaje";
 import VisorPerfiles from "../visorPerfiles/visorperfiles";

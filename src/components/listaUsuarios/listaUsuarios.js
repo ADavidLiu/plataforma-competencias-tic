@@ -1676,15 +1676,15 @@ class ListaUsuarios extends Component {
                                                     variant="outlined"
                                                     onChange={this.handleSearch}
                                                     value={this.state.searchTerm}
-                                                    inputProps={{
-                                                        "aria-label": `${t("aria.buscar")}`
-                                                    }}
                                                     InputProps={{
                                                         "endAdornment": (
                                                             <InputAdornment position="start">
                                                                 <Search color="primary" />
                                                             </InputAdornment>
-                                                        )
+                                                        ),
+                                                        inputProps: {
+                                                            "aria-label": `${t("aria.buscar")}`
+                                                        }
                                                     }}
                                                 />
                                             </Grid>
