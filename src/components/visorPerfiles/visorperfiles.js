@@ -69,28 +69,30 @@ class VisorPerfiles extends Component {
         const copiaPerfiles = [...perfiles];
         const numDivisiones = Math.ceil(perfiles.length/this.props.numPorPagina);
         let backupArray = [];
-        this.state.perfilesDivididos = [];
-
-        for (let i = 0; i < numDivisiones; i++) {
-            const divisionArray = copiaPerfiles.slice(0, this.props.numPorPagina);
-            this.state.perfilesDivididos.push(divisionArray);
-            backupArray.push(divisionArray);
-            copiaPerfiles.splice(0, this.props.numPorPagina);
-        }
-
-        if (this.state.perfilesDivididos.length === 1) {
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[0],
-                perfilesDivididos: []
-            });
-        } else {
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[0],
-                perfilesDivididos: backupArray
-            });
-        }
-
-        backupArray = [];
+        this.setState({
+            perfilesDivididos: []
+        }, () => {
+            for (let i = 0; i < numDivisiones; i++) {
+                const divisionArray = copiaPerfiles.slice(0, this.props.numPorPagina);
+                this.state.perfilesDivididos.push(divisionArray);
+                backupArray.push(divisionArray);
+                copiaPerfiles.splice(0, this.props.numPorPagina);
+            }
+    
+            if (this.state.perfilesDivididos.length === 1) {
+                this.setState({
+                    perfilesMostrados: this.state.perfilesDivididos[0],
+                    perfilesDivididos: []
+                });
+            } else {
+                this.setState({
+                    perfilesMostrados: this.state.perfilesDivididos[0],
+                    perfilesDivididos: backupArray
+                });
+            }
+    
+            backupArray = [];
+        });
     }
 
     calcularNumDivisionesPerfiles = perfiles => {
@@ -129,22 +131,24 @@ class VisorPerfiles extends Component {
 
     cargarAnterioresPerfiles = () => {
         if (this.state.currentDivisionPerfiles > 0) {
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles -= 1],
+            this.setState((state, props) => ({
+                perfilesMostrados: state.perfilesDivididos[state.currentDivisionPerfiles - 1],
+                currentDivisionPerfiles: state.currentDivisionPerfiles - 1
+            }), () => {
+                this.checkCurrentDivisionPerfiles();
             });
         }
-
-        this.checkCurrentDivisionPerfiles();
     }
     
     cargarSiguientesPerfiles = () => {
         if (this.state.currentDivisionPerfiles < this.state.numDivisionesPerfiles - 1) {
-            this.setState({
-                perfilesMostrados: this.state.perfilesDivididos[this.state.currentDivisionPerfiles += 1]
+            this.setState((state, props) => ({
+                perfilesMostrados: state.perfilesDivididos[state.currentDivisionPerfiles + 1],
+                currentDivisionPerfiles: state.currentDivisionPerfiles + 1
+            }), () => {
+                this.checkCurrentDivisionPerfiles();
             });
         }
-
-        this.checkCurrentDivisionPerfiles();
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {

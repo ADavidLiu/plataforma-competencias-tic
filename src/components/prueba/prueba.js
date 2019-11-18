@@ -121,38 +121,52 @@ class Prueba extends Component {
         /* Se renderizan las preguntas de cada sección */
         this.dividedQuestions.forEach((section, i) => {
             this.finalJSXquestions[i] = [];
-            this.state.respuestas[i] = [];
+            const newRespuestas = [...this.state.respuestas];
+            newRespuestas[i] = [];
 
-            section.forEach((question, j) => {
-                this.state.respuestas[i][j] = {
-                    id: question.id,
-                    respuestaSeleccionada: ""
-                };
+            this.setState({
+                respuestas: newRespuestas
+            }, () => {
+                section.forEach((question, j) => {
+                    newRespuestas[i][j] = {
+                        id: question.id,
+                        respuestaSeleccionada: ""
+                    };
 
-                this.finalJSXquestions[i].push(
-                    <React.Fragment key={question.id}>
-                        <Typography variant="body1" className="mb-4"><strong>{question.enunciado}</strong></Typography>
-                        <FormControl component="fieldset" className="mb-4">
-                            <RadioGroup
-                                ref={elem => { this.domPreguntas.push(elem); }}
-                                aria-label="Respuesta Seleccionada"
-                                name={`respuestaSeleccionada-${question.codigoDescriptor}-${question.id}-${i}-${j}`}
-                                onChange={this.actualizarRespuestas}
-                            >
-                                {shuffleArray(question.opciones).map((opcion, k) => {
-                                    return <FormControlLabel
-                                        ref={elem => { this.domRadios.push(elem); }}
-                                        key={k}
-                                        value={opcion}
-                                        control={<Radio color="primary" />}
-                                        label={opcion}
-                                    />;
-                                })}
-                            </RadioGroup>
-                        </FormControl>
-                        <hr className="mb-5"/>
-                    </React.Fragment>
-                );
+                    this.setState({
+                        respuestas: newRespuestas
+                    }, () => {
+                        this.finalJSXquestions[i].push(
+                            <React.Fragment key={question.id}>
+                                <Typography variant="body1" className="mb-4"><strong>{question.enunciado}</strong></Typography>
+                                <FormControl component="fieldset" className="mb-4">
+                                    <RadioGroup
+                                        ref={elem => { this.domPreguntas.push(elem); }}
+                                        aria-label="Respuesta Seleccionada"
+                                        name={`respuestaSeleccionada-${question.codigoDescriptor}-${question.id}-${i}-${j}`}
+                                        onChange={this.actualizarRespuestas}
+                                    >
+                                        {shuffleArray(question.opciones).map((opcion, k) => {
+                                            return <FormControlLabel
+                                                ref={elem => { this.domRadios.push(elem); }}
+                                                key={k}
+                                                value={opcion}
+                                                control={<Radio color="primary" />}
+                                                label={opcion}
+                                            />;
+                                        })}
+                                    </RadioGroup>
+                                </FormControl>
+                                <hr className="mb-5"/>
+                            </React.Fragment>
+                        );
+                    });
+
+                    /* this.state.respuestas[i][j] = {
+                        id: question.id,
+                        respuestaSeleccionada: ""
+                    }; */
+                });
             });
         });
 
