@@ -10,7 +10,11 @@ import { Link } from "react-router-dom";
 
 import Error from "@material-ui/icons/Error";
 
-const Pagina404 = () => {
+const Pagina404 = props => {
+    function regresar() {
+        props.history.goBack();
+    }
+
     return (
         <Translation>
             {
@@ -23,9 +27,7 @@ const Pagina404 = () => {
                             <Error className="d-block mx-auto mb-5" style={{width: "100px", height: "100px"}} color="primary" />
                             <Typography variant="h2" className="mb-2">{t("404.subtitulo")}</Typography>
                             <Typography variant="h4">{t("404.titulo")}</Typography>
-                            <Link to="/" style={{textDecoration: "none"}}>
-                                <Button type="button" className="mt-5" color="primary" variant="contained" size="large">{t("404.btn")}</Button>
-                            </Link>
+                            <Button type="button" className="mt-5" color="primary" variant="contained" size="large" onClick={regresar}>{t("404.btn")}</Button>
                         </div>
                     </React.Fragment>
                 )

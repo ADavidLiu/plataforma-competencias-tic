@@ -235,7 +235,7 @@ const es = {
         "preentrevista.enviada-ayuda": "La información de su pre-entrevista ha sido cargada exitosamente.",
         "404.subtitulo": "404",
         "404.titulo": "Página no encontrada",
-        "404.btn": "Regresar a inicio",
+        "404.btn": "Regresar",
         "prueba.titulo": "Prueba de conocimientos previos",
         "prueba.pausar": "Guardar y pausar prueba",
         "prueba.label-introduccion": "Introducción",
