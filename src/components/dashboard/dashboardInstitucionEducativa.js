@@ -163,7 +163,7 @@ class DashboardInstitucionEducativa extends Component {
                                         </Paper>
                                     ))
                                 }
-                                <div className="mt-5">
+                                <Paper className="mt-5  p-4">
                                     <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-absoluta")}</strong></Typography>
                                     <Bar 
                                         data={{
@@ -200,8 +200,8 @@ class DashboardInstitucionEducativa extends Component {
                                             }
                                         }}
                                     />
-                                </div>
-                                <div className="mt-5">
+                                </Paper>
+                                <Paper className="mt-5 p-4">
                                     <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.frecuencia-relativa")}</strong></Typography>
                                     <Doughnut
                                         data={() => {
@@ -234,7 +234,7 @@ class DashboardInstitucionEducativa extends Component {
                                             }
                                         }}
                                     />
-                                </div>
+                                </Paper>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="h6" className="mb-3">{t("dashboardGobierno.niveles")}</Typography>
@@ -259,7 +259,7 @@ class DashboardInstitucionEducativa extends Component {
                                         </Paper>
                                     ))
                                 }
-                                <div className="mt-5">
+                                <Paper className="p-4">
                                     <Typography variant="body1" className="mb-3"><strong>{t("dashboardGobierno.distribucion-relativa")}</strong></Typography>
                                     <Radar height={300} data={{
                                         labels: [`${t("integracion")}`, `${t("reorientacion")}`, `${t("evolucion")}`],
@@ -289,7 +289,7 @@ class DashboardInstitucionEducativa extends Component {
                                             }
                                         }
                                     }} />
-                                </div>
+                                </Paper>
                             </Grid>
                             <Grid item xs={12}>
                                 <hr className="mb-5" />

@@ -249,86 +249,90 @@ class DashboardEstablecimientoEducativo extends Component {
                                         <Typography variant="h6" className="mb-3">{t("dashboardEE.label-estado-general")}</Typography>
                                         <Typography variant="body1"><strong>{t("dashboardEE.label-frecuencia-absoluta")}</strong></Typography>
                                         <hr className="mt-2 mb-4"/>
-                                        <Bar
-                                            data={() => {
-                                                const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
+                                        <Paper className="p-4 p-lg-2 p-xl-4">
+                                            <Bar
+                                                data={() => {
+                                                    const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
 
-                                                this.state.perfiles.forEach((perfil, i) => {
-                                                    numPerfilesPasos[perfil.pasoActual] += 1;
-                                                });
-
-                                                const barDatasets = [];
-                                                pasos.avanzado.forEach(paso => {
-                                                    barDatasets.push({
-                                                        label: paso.nombre,
-                                                        data: [numPerfilesPasos[paso.index]],
-                                                        borderWidth: 0,
-                                                        backgroundColor: ["#009A9C"]
+                                                    this.state.perfiles.forEach((perfil, i) => {
+                                                        numPerfilesPasos[perfil.pasoActual] += 1;
                                                     });
-                                                });
 
-                                                return {
-                                                    labels: ["Paso actual"],
-                                                    datasets: barDatasets
-                                                }
-                                            }}
-                                            options={{
-                                                scales: {
-                                                    yAxes: [
-                                                        {
-                                                            ticks: {
-                                                                beginAtZero: true,
-                                                                stepSize: 5
+                                                    const barDatasets = [];
+                                                    pasos.avanzado.forEach(paso => {
+                                                        barDatasets.push({
+                                                            label: paso.nombre,
+                                                            data: [numPerfilesPasos[paso.index]],
+                                                            borderWidth: 0,
+                                                            backgroundColor: ["#009A9C"]
+                                                        });
+                                                    });
+
+                                                    return {
+                                                        labels: ["Paso actual"],
+                                                        datasets: barDatasets
+                                                    }
+                                                }}
+                                                options={{
+                                                    scales: {
+                                                        yAxes: [
+                                                            {
+                                                                ticks: {
+                                                                    beginAtZero: true,
+                                                                    stepSize: 5
+                                                                }
                                                             }
-                                                        }
-                                                    ]
-                                                }
-                                            }}
-                                        />
+                                                        ]
+                                                    }
+                                                }}
+                                            />
+                                        </Paper>
                                         <div className="mt-4">
                                             <Typography variant="body1"><strong>{t("dashboardEE.label-frecuencia-relativa")}</strong></Typography>
                                             <hr className="mt-2 mb-4"/>
-                                            <Doughnut height={200} data={() => {
-                                                const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
-                                                this.state.perfiles.forEach((perfil, i) => {
-                                                    numPerfilesPasos[perfil.pasoActual] += 1;
-                                                });
+                                            <Paper className="p-4 p-lg-2 p-xl-4">
+                                                <Doughnut height={200} data={() => {
+                                                    const numPerfilesPasos = [0, 0, 0, 0, 0, 0];
+                                                    this.state.perfiles.forEach((perfil, i) => {
+                                                        numPerfilesPasos[perfil.pasoActual] += 1;
+                                                    });
 
-                                                const doughnutDatasets = [{
-                                                    data: [],
-                                                    backgroundColor: ["#00e8eb", "#00dcde", "#00cfd1", "#00bdbf", "#00a9ab", "#009A9C"]
-                                                }];
-                                                pasos.avanzado.forEach(paso => {
-                                                    doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);
-                                                });
+                                                    const doughnutDatasets = [{
+                                                        data: [],
+                                                        backgroundColor: ["#00e8eb", "#00dcde", "#00cfd1", "#00bdbf", "#00a9ab", "#009A9C"]
+                                                    }];
+                                                    pasos.avanzado.forEach(paso => {
+                                                        doughnutDatasets[0].data.push(numPerfilesPasos[paso.index]);
+                                                    });
 
-                                                const labelsArray = [];
-                                                pasos.avanzado.forEach(paso => {
-                                                    labelsArray.push(paso.nombre);
-                                                });
+                                                    const labelsArray = [];
+                                                    pasos.avanzado.forEach(paso => {
+                                                        labelsArray.push(paso.nombre);
+                                                    });
 
-                                                return {
-                                                    labels: labelsArray,
-                                                    datasets: [doughnutDatasets[0]]
-                                                }
-                                            }} options={{
-                                                tooltips: {
-                                                    callbacks: {
-                                                        label: (tooltipItem, data) => {
-                                                            const dataset = data.datasets[tooltipItem.datasetIndex];
-                                                            const label = data.labels[tooltipItem.index];
-                                                            const absoluteValue = dataset.data[tooltipItem.index];
-                                                            const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                                                return previousValue + currentValue;
-                                                            });
-                                                            const currentValue = dataset.data[tooltipItem.index];
-                                                            const percentage = Math.floor(((currentValue/total) * 100)+0.5);
+                                                    return {
+                                                        labels: labelsArray,
+                                                        datasets: [doughnutDatasets[0]]
+                                                    }
+                                                }} options={{
+                                                    tooltips: {
+                                                        callbacks: {
+                                                            label: (tooltipItem, data) => {
+                                                                const dataset = data.datasets[tooltipItem.datasetIndex];
+                                                                const label = data.labels[tooltipItem.index];
+                                                                const absoluteValue = dataset.data[tooltipItem.index];
+                                                                const total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                                    return previousValue + currentValue;
+                                                                });
+                                                                const currentValue = dataset.data[tooltipItem.index];
+                                                                const percentage = Math.floor(((currentValue/total) * 100)+0.5);
 
-                                                            return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                                return `${label}: ${absoluteValue} (${percentage}%)`;
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }} />
+                                                }} />
+                                            </Paper>
                                         </div>
                                     </React.Fragment>
                                 ) : (

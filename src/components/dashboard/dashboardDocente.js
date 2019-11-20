@@ -553,110 +553,118 @@ class DashboardDocente extends Component {
                                                 {
                                                     this.state.didEstadisticasLoad ? (
                                                         <Grid container spacing={2}>
-                                                            <Grid item xs={12} md={6}>
-                                                                <Typography variant="h6" className="mb-4">{t("dashboardDocente.resultados-pruebas")}</Typography>
-                                                                <Bar height={80} data={{
-                                                                    labels: ["Prueba de conocimiento"],
-                                                                    datasets: [
-                                                                        {
-                                                                            label: "Correctas",
-                                                                            data: [this.state.estadisticas.pruebaConocimiento.correctas],
-                                                                            borderWidth: 0,
-                                                                            backgroundColor: [
-                                                                                "#009A9C"
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            label: "Incorrectas",
-                                                                            data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
-                                                                            borderWidth: 0,
-                                                                            backgroundColor: [
-                                                                                "#e53935"
-                                                                            ]
+                                                            <Grid item xs={12} className="mt-4">
+                                                                <Typography variant="h6">{t("dashboardDocente.resultados-pruebas")}</Typography>
+                                                            </Grid>
+                                                            <Grid item xs={12} md={6} lg={4}>
+                                                                <Paper className="p-4 p-lg-2 p-xl-4">
+                                                                    <Bar height={150} data={{
+                                                                        labels: ["Prueba de conocimiento"],
+                                                                        datasets: [
+                                                                            {
+                                                                                label: "Correctas",
+                                                                                data: [this.state.estadisticas.pruebaConocimiento.correctas],
+                                                                                borderWidth: 0,
+                                                                                backgroundColor: [
+                                                                                    "#009A9C"
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                label: "Incorrectas",
+                                                                                data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
+                                                                                borderWidth: 0,
+                                                                                backgroundColor: [
+                                                                                    "#e53935"
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }} options={{
+                                                                        scales: {
+                                                                            yAxes: [{
+                                                                                ticks: {
+                                                                                    beginAtZero: true,
+                                                                                    stepSize: 5
+                                                                                }
+                                                                            }]
                                                                         }
-                                                                    ]
-                                                                }} options={{
-                                                                    scales: {
-                                                                        yAxes: [{
+                                                                    }} />
+                                                                </Paper>
+                                                            </Grid>
+                                                            <Grid item xs={12} md={6} lg={4}>
+                                                                <Paper className="p-4 p-lg-2 p-xl-4">
+                                                                    <Radar height={150} data={() => {
+                                                                        const dimensionesLabels = [];
+                                                                        const dimensionesDatasets = [];
+
+                                                                        this.state.estadisticas.dimensiones.forEach(dimension => {
+                                                                            dimensionesLabels.push(dimension.nombre);
+                                                                            dimensionesDatasets.push(dimension.porcentajeAfinidad);
+                                                                        });
+
+                                                                        return {
+                                                                            labels: dimensionesLabels,
+                                                                            datasets: [{
+                                                                                label: "Porcentaje de afinidad a dimensiones",
+                                                                                data: dimensionesDatasets,
+                                                                                backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                                pointBackgroundColor: "#009A9C",
+                                                                                borderColor: "#009A9C"
+                                                                            }]
+                                                                        }
+                                                                    }} options={{
+                                                                        scale: {
                                                                             ticks: {
-                                                                                beginAtZero: true,
-                                                                                stepSize: 5
+                                                                                stepSize: 20
                                                                             }
-                                                                        }]
-                                                                    }
-                                                                }} />
+                                                                        },
+                                                                        tooltips: {
+                                                                            enabled: true,
+                                                                            callbacks: {
+                                                                                label: (tooltipItem, data) => {
+                                                                                    return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }} />
+                                                                </Paper>
                                                             </Grid>
-                                                            <Grid item xs={12} sm={6} md={3}>
-                                                                <Radar height={200} data={() => {
-                                                                    const dimensionesLabels = [];
-                                                                    const dimensionesDatasets = [];
+                                                            <Grid item xs={12} md={6} lg={4}>
+                                                                <Paper className="p-4 p-lg-2 p-xl-4">    
+                                                                    <Radar height={150} data={() => {
+                                                                        const perfilesLabels = [];
+                                                                        const perfilesDatasets = [];
 
-                                                                    this.state.estadisticas.dimensiones.forEach(dimension => {
-                                                                        dimensionesLabels.push(dimension.nombre);
-                                                                        dimensionesDatasets.push(dimension.porcentajeAfinidad);
-                                                                    });
+                                                                        this.state.estadisticas.perfiles.forEach(perfil => {
+                                                                            perfilesLabels.push(perfil.nombre);
+                                                                            perfilesDatasets.push(perfil.porcentajeAfinidad);
+                                                                        });
 
-                                                                    return {
-                                                                        labels: dimensionesLabels,
-                                                                        datasets: [{
-                                                                            label: "Porcentaje de afinidad a dimensiones",
-                                                                            data: dimensionesDatasets,
-                                                                            backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                            pointBackgroundColor: "#009A9C",
-                                                                            borderColor: "#009A9C"
-                                                                        }]
-                                                                    }
-                                                                }} options={{
-                                                                    scale: {
-                                                                        ticks: {
-                                                                            stepSize: 20
+                                                                        return {
+                                                                            labels: perfilesLabels,
+                                                                            datasets: [{
+                                                                                label: "Porcentaje de afinidad a perfiles",
+                                                                                data: perfilesDatasets,
+                                                                                backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                                pointBackgroundColor: "#009A9C",
+                                                                                borderColor: "#009A9C"
+                                                                            }]
                                                                         }
-                                                                    },
-                                                                    tooltips: {
-                                                                        enabled: true,
-                                                                        callbacks: {
-                                                                            label: (tooltipItem, data) => {
-                                                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                    }} options={{
+                                                                        scale: {
+                                                                            ticks: {
+                                                                                stepSize: 20
+                                                                            }
+                                                                        },
+                                                                        tooltips: {
+                                                                            enabled: true,
+                                                                            callbacks: {
+                                                                                label: (tooltipItem, data) => {
+                                                                                    return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                                }
                                                                             }
                                                                         }
-                                                                    }
-                                                                }} />
-                                                            </Grid>
-                                                            <Grid item xs={12} sm={6} md={3}>
-                                                                <Radar height={200} data={() => {
-                                                                    const perfilesLabels = [];
-                                                                    const perfilesDatasets = [];
-
-                                                                    this.state.estadisticas.perfiles.forEach(perfil => {
-                                                                        perfilesLabels.push(perfil.nombre);
-                                                                        perfilesDatasets.push(perfil.porcentajeAfinidad);
-                                                                    });
-
-                                                                    return {
-                                                                        labels: perfilesLabels,
-                                                                        datasets: [{
-                                                                            label: "Porcentaje de afinidad a perfiles",
-                                                                            data: perfilesDatasets,
-                                                                            backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                            pointBackgroundColor: "#009A9C",
-                                                                            borderColor: "#009A9C"
-                                                                        }]
-                                                                    }
-                                                                }} options={{
-                                                                    scale: {
-                                                                        ticks: {
-                                                                            stepSize: 20
-                                                                        }
-                                                                    },
-                                                                    tooltips: {
-                                                                        enabled: true,
-                                                                        callbacks: {
-                                                                            label: (tooltipItem, data) => {
-                                                                                return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }} />
+                                                                    }} />
+                                                                </Paper>
                                                             </Grid>
                                                         </Grid>
                                                     ) : (
