@@ -6,7 +6,6 @@ import { Translation } from "react-i18next";
 import Button from "@material-ui/core/Button";
 
 import { Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
 
 import Error from "@material-ui/icons/Error";
 
