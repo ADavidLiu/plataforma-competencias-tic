@@ -161,11 +161,6 @@ class Prueba extends Component {
                             </React.Fragment>
                         );
                     });
-
-                    /* this.state.respuestas[i][j] = {
-                        id: question.id,
-                        respuestaSeleccionada: ""
-                    }; */
                 });
             });
         });

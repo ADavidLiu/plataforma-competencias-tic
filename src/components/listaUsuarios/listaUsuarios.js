@@ -1391,49 +1391,49 @@ class ListaUsuarios extends Component {
                 {
                     t => (
                         <Paper>
-                        <div className="scrolling-table-outer">
-                            <div className="scrolling-table-wrapper">
-                                <Table className="scrolling-table">
-                                    <TableHead>
-                                        <TableRow>
-                                            {
-                                                Object.keys(data).map(key => <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>)
-                                            }
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        <TableRow>
-                                            {
-                                                Object.values(data).map((val, i) => {
-                                                    return <TableCell key={i}>
-                                                        <Table>
-                                                            <TableHead>
-                                                                <TableRow>
-                                                                    {
-                                                                        Object.keys(val).map(key => (
-                                                                            <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>
-                                                                        ))
-                                                                    }
-                                                                </TableRow>
-                                                            </TableHead>
-                                                            <TableBody>
-                                                                <TableRow>
-                                                                    {
-                                                                        Object.values(val).map((val, i) => (
-                                                                            <TableCell className="text-center" key={i}>{val}</TableCell>
-                                                                        ))
-                                                                    }
-                                                                </TableRow>
-                                                            </TableBody>
-                                                        </Table>
-                                                    </TableCell>
-                                                })
-                                            }
-                                        </TableRow>
-                                    </TableBody>
-                                </Table>
+                            <div className="scrolling-table-outer">
+                                <div className="scrolling-table-wrapper">
+                                    <Table className="scrolling-table">
+                                        <TableHead>
+                                            <TableRow>
+                                                {
+                                                    Object.keys(data).map(key => <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>)
+                                                }
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            <TableRow>
+                                                {
+                                                    Object.values(data).map((val, i) => {
+                                                        return <TableCell key={i}>
+                                                            <Table>
+                                                                <TableHead>
+                                                                    <TableRow>
+                                                                        {
+                                                                            Object.keys(val).map(key => (
+                                                                                <TableCell className="text-center" key={key}>{t("auditoria." + key)}</TableCell>
+                                                                            ))
+                                                                        }
+                                                                    </TableRow>
+                                                                </TableHead>
+                                                                <TableBody>
+                                                                    <TableRow>
+                                                                        {
+                                                                            Object.values(val).map((val, i) => (
+                                                                                <TableCell className="text-center" key={i}>{val}</TableCell>
+                                                                            ))
+                                                                        }
+                                                                    </TableRow>
+                                                                </TableBody>
+                                                            </Table>
+                                                        </TableCell>
+                                                    })
+                                                }
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </div>
                             </div>
-                        </div>
                         </Paper>
                     )
                 }
