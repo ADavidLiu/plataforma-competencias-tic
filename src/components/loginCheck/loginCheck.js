@@ -68,7 +68,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "DOCENTE";
+        this.tipoPerfil = "GOBIERNO";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
