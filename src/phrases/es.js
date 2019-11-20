@@ -265,7 +265,7 @@ const es = {
         "registro.educacion-especialista": "Especialista",
         "registro.educacion-magister": "Magister",
         "registro.educacion-doctorado": "Doctorado",
-        "registro.educacion-postdoctorado": "Posdtoctorado",
+        "registro.educacion-postdoctorado": "Postdoctorado",
         "registro.label-anios-experiencia": "¿Cuántos años tiene de experiencia docente?",
         "registro.experiencia-0": "No tengo experiencia",
         "registro.experiencia-1": "Entre 1 y 5",
