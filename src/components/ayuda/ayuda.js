@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
+import Help from "@material-ui/icons/Help";
+
 const Ayuda = (props) => {
     function regresar() {
         props.history.goBack();
@@ -22,6 +24,7 @@ const Ayuda = (props) => {
                         </Helmet>
                         <Grid container spacing={5} justify="center">
                             <Grid item xs={12} sm={8} lg={6} className="my-5 py-5 text-center">
+                                <Help className="d-block mx-auto mb-5" style={{width: "100px", height: "100px"}} color="primary" />
                                 <Typography component="h1" variant="h4" className="mb-4">{t("ayuda.title")}</Typography>
                                 <Typography className="mb-5" variant="body1">{t("ayuda.text")}</Typography>
                                 <div className="d-md-flex align-items-center justify-content-center">
