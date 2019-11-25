@@ -63,6 +63,8 @@ import Encuesta from "../encuesta/encuesta";
 import Cursos from "../cursos/cursos";
 import RecuperacionDatos from "../recuperacionDatos/recuperacionDatos";
 
+import { withRouter } from "react-router-dom";
+
 class LoginCheck extends Component {
     constructor() {
         super();
@@ -522,13 +524,17 @@ class LoginCheck extends Component {
                                     </div>
                                 </Container>
                             </StickyContainer>
-                            <Link to={t("link.ayuda")}>
-                                <Tooltip title={t("titulo.ayuda")} placement="left">
-                                    <Fab aria-label={t("aria.ayuda")} color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
-                                        <Help/>
-                                    </Fab>
-                                </Tooltip>
-                            </Link>
+                            {
+                                this.props.location.pathname.split("/")[1] !== t("link.ayuda") ? (
+                                    <Link to={t("link.ayuda")}>
+                                        <Tooltip title={t("link.ayuda")} placement="left">
+                                            <Fab aria-label={t("aria.ayuda")} color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
+                                                <Help/>
+                                            </Fab>
+                                        </Tooltip>
+                                    </Link>
+                                ) : null
+                            }
                         </React.Fragment>
                     )
                 }
@@ -537,4 +543,4 @@ class LoginCheck extends Component {
     };
 }
 
-export default LoginCheck;
+export default withRouter(LoginCheck);
