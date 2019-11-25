@@ -473,7 +473,7 @@ class DashboardAdmin extends Component {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                    <Paper className="p-3 p-md-5">
+                                    
                                     <Grid container spacing={5}>
 
                                     <Grid item xs={12}>
@@ -538,7 +538,7 @@ class DashboardAdmin extends Component {
                                     </Grid>
 
                                     </Grid>
-                                    </Paper>
+                                    
                                     </Grid>
                                 </React.Fragment>
                             ) : (
