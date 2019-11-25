@@ -525,10 +525,10 @@ class LoginCheck extends Component {
                                 </Container>
                             </StickyContainer>
                             {
-                                this.props.location.pathname.split("/")[1] !== t("link.ayuda") ? (
+                                this.props.location.pathname !== `/${t("link.ayuda")}` ? (
                                     <Link to={t("link.ayuda")}>
                                         <Tooltip title={t("link.ayuda")} placement="left">
-                                            <Fab aria-label={t("aria.ayuda")} color="primary" className={window.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
+                                            <Fab aria-label={t("aria.ayuda")} color="primary" className={this.props.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
                                                 <Help/>
                                             </Fab>
                                         </Tooltip>
