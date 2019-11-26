@@ -38,6 +38,8 @@ class DashboardDocente extends Component {
         this.state = {
             datosID: "",
             pasoActual: 2,
+            hasActiveProcess: true,
+            isFirstProcess: false,
             irSiguientePaso: false,
             didEstadisticasLoad: false,
             estadisticas: {
@@ -357,7 +359,19 @@ class DashboardDocente extends Component {
     cancelarProcesoActual = () => {
         /* Conectarse al backend para cancelar el proceso actual */
         console.log("Cancelado!");
+        this.setState({
+            pasoActual: 0,
+            hasActiveProcess: false
+        });
         this.confirmarCancelacion();
+    }
+
+    iniciarNuevoProceso = () => {
+        /* Conectarse al backend para crear el nuevo proceso */
+        console.log("Iniciado!");
+        this.setState({
+            hasActiveProcess: true
+        });
     }
 
     render() {
@@ -403,39 +417,50 @@ class DashboardDocente extends Component {
                                 }
                                 <Grid item xs={12}>
                                     <Typography component="h1" variant="h5">{t("dashboardDocente.proceso-actual")}</Typography>
-                                    <Paper className="my-4" style={{
-                                        overflow: "hidden"
-                                    }}>
-                                        <Stepper activeStep={this.state.pasoActual} alternativeLabel>
-                                            <Step key="Prueba de conocimiento">
-                                                <StepLabel>{this.pasosNames[1]}</StepLabel>
-                                            </Step>
-                                            <Step key="Práctica educativa">
-                                                <StepLabel>{this.pasosNames[2]}</StepLabel>
-                                            </Step>
-                                            <Step key="Preentrevista">
-                                                <StepLabel>{this.pasosNames[3]}</StepLabel>
-                                            </Step>
-                                            <Step key="Entrevista">
-                                                <StepLabel>{this.pasosNames[4]}</StepLabel>
-                                            </Step>
-                                        </Stepper>
-                                    </Paper>
                                     {
-                                        this.state.pasoActual < 5 ? (
-                                            <div className="d-md-flex align-items-center justify-content-between">
-                                                <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion} className="w-100 w-md-auto">{t("dashboardDocente.cancelar-proceso-actual")}</Button>
-                                                <Link to={{
-                                                    pathname: `${t(`link.${this.pasosRoutes[this.state.pasoActual + 1]}`)}`,
-                                                    state: {
-                                                        tipoUsuario: "DOCENTE"
-                                                    }
-                                                }} style={{textDecoration: "none"}}>
-                                                    <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso} className="mt-3 mt-md-0 w-100 w-md-auto">{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual + 1]}</strong></Button>
-                                                </Link>
+                                        this.state.hasActiveProcess ? (
+                                            <React.Fragment>
+                                                <Paper className="my-4" style={{
+                                                    overflow: "hidden"
+                                                }}>
+                                                    <Stepper activeStep={this.state.pasoActual} alternativeLabel>
+                                                        <Step key="Prueba de conocimiento">
+                                                            <StepLabel>{this.pasosNames[1]}</StepLabel>
+                                                        </Step>
+                                                        <Step key="Práctica educativa">
+                                                            <StepLabel>{this.pasosNames[2]}</StepLabel>
+                                                        </Step>
+                                                        <Step key="Preentrevista">
+                                                            <StepLabel>{this.pasosNames[3]}</StepLabel>
+                                                        </Step>
+                                                        <Step key="Entrevista">
+                                                            <StepLabel>{this.pasosNames[4]}</StepLabel>
+                                                        </Step>
+                                                    </Stepper>
+                                                </Paper>
+                                                {
+                                                    this.state.pasoActual < 5 ? (
+                                                        <div className="d-md-flex align-items-center justify-content-between">
+                                                            <Button size="large" variant="outlined" color="primary" onClick={this.confirmarCancelacion} className="w-100 w-md-auto">{t("dashboardDocente.cancelar-proceso-actual")}</Button>
+                                                            <Link to={{
+                                                                pathname: `${t(`link.${this.pasosRoutes[this.state.pasoActual + 1]}`)}`,
+                                                                state: {
+                                                                    tipoUsuario: "DOCENTE"
+                                                                }
+                                                            }} style={{textDecoration: "none"}}>
+                                                                <Button variant="contained" size="large" color="primary" onClick={this.siguientePaso} className="mt-3 mt-md-0 w-100 w-md-auto">{t("dashboardDocente.label-continuar")}&nbsp;<strong>{this.pasosNames[this.state.pasoActual + 1]}</strong></Button>
+                                                            </Link>
+                                                        </div>
+                                                    )
+                                                    : <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.mensaje-terminado")}</strong></Typography>
+                                                }
+                                            </React.Fragment>
+                                        ) : (
+                                            <div className="text-center mt-4">
+                                                <Typography className="mb-3" variant="h6">{t("dashboardDocente.vacio-titulo")}</Typography>
+                                                <Button variant="contained"  color="primary" onClick={this.iniciarNuevoProceso}>{t("dashboardDocente.vacio-btn")}</Button>
                                             </div>
                                         )
-                                        : <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.mensaje-terminado")}</strong></Typography>
                                     }
                                 </Grid>
                                 <Grid item xs={12}>
@@ -443,249 +468,265 @@ class DashboardDocente extends Component {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Typography variant="h5" className="mb-4">{t("dashboardDocente.diagnostico")}</Typography>
-                                    <hr/>
-                                    <Grid container spacing={3}>
-                                        <Grid item xs={12} lg={4}>
-                                            <div className="d-md-flex align-items-center justify-content-between dashboard-docente-btns">
-                                                <a href="https://www.google.com" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
-                                                    <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
-                                                </a>
-                                                <a href="https://www.google.com" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
-                                                    <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
-                                                </a>
-                                            </div>
-                                        </Grid>
-                                        <Grid item xs={12} lg={8}>
-                                            <Grid container spacing={3}>
-                                                <Grid item xs={12} sm={6} md={4}>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.registro")}`,
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE",
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false,
-                                                            forceShow: true
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="medium"
-                                                        >{t("dashboardDocente.btn-registro")}</Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={12} sm={6} md={4}>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.prueba")}`,
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE",
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="medium"
-                                                        >{t("dashboardDocente.btn-prueba")}</Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={12} sm={6} md={4}>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.practica")}`,
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE",
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="medium"
-                                                        >{t("dashboardDocente.btn-practica")}</Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={12} sm={6} md={4}>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.preentrevista")}`,
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE",
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="medium"
-                                                        >{t("dashboardDocente.btn-preentrevista")}</Button>
-                                                    </Link>
-                                                </Grid>
-                                                <Grid item xs={12} sm={6} md={4}>
-                                                    <Link to={{
-                                                        pathname: `/${t("link.entrevista")}`,
-                                                        state: {
-                                                            tipoUsuario: "DOCENTE",
-                                                            shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
-                                                        }
-                                                    }} style={{textDecoration: "none"}}>
-                                                        <Button
-                                                            type="submit"
-                                                            fullWidth
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="medium"
-                                                        >{t("dashboardDocente.btn-entrevista")}</Button>
-                                                    </Link>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <hr/>
                                     {
-                                        this.state.pasoActual > 1 ? (
-                                            <Grid container>
-                                                {
-                                                    this.state.didEstadisticasLoad ? (
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={12} className="mt-4">
-                                                                <Typography variant="h6">{t("dashboardDocente.resultados-pruebas")}</Typography>
+                                        !this.state.isFirstProcess ? (
+                                            <React.Fragment>
+                                                <hr/>
+                                                <Grid container spacing={3}>
+                                                    <Grid item xs={12} lg={4}>
+                                                        <div className="d-md-flex align-items-center justify-content-between dashboard-docente-btns">
+                                                            <a href="https://www.google.com" className="d-block d-lg-inline-block w-100" style={{textDecoration: "none"}}>
+                                                                <Button className="w-100" variant="contained" color="primary"><Stars className="mr-2" fontSize="small"/>{t("descargar-certificado")}</Button>
+                                                            </a>
+                                                            <a href="https://www.google.com" className="d-block d-lg-inline-block w-100 mt-4 mt-md-0 ml-md-4" style={{textDecoration: "none"}}>
+                                                                <Button className="w-100" variant="contained" color="primary"><InsertChartOutlined className="mr-2" fontSize="small"/>{t("descargar-resultados")}</Button>
+                                                            </a>
+                                                        </div>
+                                                    </Grid>
+                                                    <Grid item xs={12} lg={8}>
+                                                        <Grid container spacing={3}>
+                                                            <Grid item xs={12} sm={6} md={4}>
+                                                                <Link to={{
+                                                                    pathname: `/${t("link.registro")}`,
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false,
+                                                                        forceShow: true
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button
+                                                                        type="submit"
+                                                                        fullWidth
+                                                                        variant="outlined"
+                                                                        color="primary"
+                                                                        size="medium"
+                                                                    >{t("dashboardDocente.btn-registro")}</Button>
+                                                                </Link>
                                                             </Grid>
-                                                            <Grid item xs={12} md={6} lg={4}>
-                                                                <Paper className="p-4 p-lg-2 p-xl-4">
-                                                                    <Bar height={150} data={{
-                                                                        labels: ["Prueba de conocimiento"],
-                                                                        datasets: [
-                                                                            {
-                                                                                label: "Correctas",
-                                                                                data: [this.state.estadisticas.pruebaConocimiento.correctas],
-                                                                                borderWidth: 0,
-                                                                                backgroundColor: [
-                                                                                    "#009A9C"
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                label: "Incorrectas",
-                                                                                data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
-                                                                                borderWidth: 0,
-                                                                                backgroundColor: [
-                                                                                    "#e53935"
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }} options={{
-                                                                        scales: {
-                                                                            yAxes: [{
-                                                                                ticks: {
-                                                                                    beginAtZero: true,
-                                                                                    stepSize: 5
-                                                                                }
-                                                                            }]
-                                                                        }
-                                                                    }} />
-                                                                </Paper>
+                                                            <Grid item xs={12} sm={6} md={4}>
+                                                                <Link to={{
+                                                                    pathname: `/${t("link.prueba")}`,
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button
+                                                                        type="submit"
+                                                                        fullWidth
+                                                                        variant="outlined"
+                                                                        color="primary"
+                                                                        size="medium"
+                                                                    >{t("dashboardDocente.btn-prueba")}</Button>
+                                                                </Link>
                                                             </Grid>
-                                                            <Grid item xs={12} md={6} lg={4}>
-                                                                <Paper className="p-4 p-lg-2 p-xl-4">
-                                                                    <Radar height={150} data={() => {
-                                                                        const dimensionesLabels = [];
-                                                                        const dimensionesDatasets = [];
-
-                                                                        this.state.estadisticas.dimensiones.forEach(dimension => {
-                                                                            dimensionesLabels.push(dimension.nombre);
-                                                                            dimensionesDatasets.push(dimension.porcentajeAfinidad);
-                                                                        });
-
-                                                                        return {
-                                                                            labels: dimensionesLabels,
-                                                                            datasets: [{
-                                                                                label: "Porcentaje de afinidad a dimensiones",
-                                                                                data: dimensionesDatasets,
-                                                                                backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                                pointBackgroundColor: "#009A9C",
-                                                                                borderColor: "#009A9C"
-                                                                            }]
-                                                                        }
-                                                                    }} options={{
-                                                                        scale: {
-                                                                            ticks: {
-                                                                                stepSize: 20
-                                                                            }
-                                                                        },
-                                                                        tooltips: {
-                                                                            enabled: true,
-                                                                            callbacks: {
-                                                                                label: (tooltipItem, data) => {
-                                                                                    return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }} />
-                                                                </Paper>
+                                                            <Grid item xs={12} sm={6} md={4}>
+                                                                <Link to={{
+                                                                    pathname: `/${t("link.practica")}`,
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button
+                                                                        type="submit"
+                                                                        fullWidth
+                                                                        variant="outlined"
+                                                                        color="primary"
+                                                                        size="medium"
+                                                                    >{t("dashboardDocente.btn-practica")}</Button>
+                                                                </Link>
                                                             </Grid>
-                                                            <Grid item xs={12} md={6} lg={4}>
-                                                                <Paper className="p-4 p-lg-2 p-xl-4">    
-                                                                    <Radar height={150} data={() => {
-                                                                        const perfilesLabels = [];
-                                                                        const perfilesDatasets = [];
-
-                                                                        this.state.estadisticas.perfiles.forEach(perfil => {
-                                                                            perfilesLabels.push(perfil.nombre);
-                                                                            perfilesDatasets.push(perfil.porcentajeAfinidad);
-                                                                        });
-
-                                                                        return {
-                                                                            labels: perfilesLabels,
-                                                                            datasets: [{
-                                                                                label: "Porcentaje de afinidad a perfiles",
-                                                                                data: perfilesDatasets,
-                                                                                backgroundColor: "rgba(0, 154, 156, .5)",
-                                                                                pointBackgroundColor: "#009A9C",
-                                                                                borderColor: "#009A9C"
-                                                                            }]
-                                                                        }
-                                                                    }} options={{
-                                                                        scale: {
-                                                                            ticks: {
-                                                                                stepSize: 20
-                                                                            }
-                                                                        },
-                                                                        tooltips: {
-                                                                            enabled: true,
-                                                                            callbacks: {
-                                                                                label: (tooltipItem, data) => {
-                                                                                    return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }} />
-                                                                </Paper>
+                                                            <Grid item xs={12} sm={6} md={4}>
+                                                                <Link to={{
+                                                                    pathname: `/${t("link.preentrevista")}`,
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button
+                                                                        type="submit"
+                                                                        fullWidth
+                                                                        variant="outlined"
+                                                                        color="primary"
+                                                                        size="medium"
+                                                                    >{t("dashboardDocente.btn-preentrevista")}</Button>
+                                                                </Link>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={6} md={4}>
+                                                                <Link to={{
+                                                                    pathname: `/${t("link.entrevista")}`,
+                                                                    state: {
+                                                                        tipoUsuario: "DOCENTE",
+                                                                        shouldActivateViewingMode: this.props[0] && this.props[0].location.state.shouldActivateViewingMode  ? true : false
+                                                                    }
+                                                                }} style={{textDecoration: "none"}}>
+                                                                    <Button
+                                                                        type="submit"
+                                                                        fullWidth
+                                                                        variant="outlined"
+                                                                        color="primary"
+                                                                        size="medium"
+                                                                    >{t("dashboardDocente.btn-entrevista")}</Button>
+                                                                </Link>
                                                             </Grid>
                                                         </Grid>
-                                                    ) : (
-                                                        <CircularProgress color="primary" className="mx-auto" />
-                                                    )
-                                                }
-                                                {
-                                                    this.state.didRutaLoad ? (
-                                                        <Grid item xs={12} className="mt-5">
-                                                            <Typography variant="h6" className="mb-4">{t("dashboardDocente.ruta")}</Typography>
-                                                            <RutaAprendizaje cursos={this.state.cursosSugeridos} />
-                                                        </Grid>
-                                                    ) : (
-                                                        <CircularProgress color="primary" className="mx-auto" />
-                                                    )
-                                                }
-                                            </Grid>
-                                        ) : (
-                                            <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
-                                        )
+                                                    </Grid>
+                                                </Grid>
+                                                <hr/>
+                                            </React.Fragment>
+                                        ) : null
                                     }
+                                    <Grid container>
+                                        {
+                                            this.state.didEstadisticasLoad ? (
+                                                <Grid container spacing={2}>
+                                                    <Grid item xs={12} className="mt-4">
+                                                        <Typography variant="h6">{t("dashboardDocente.resultados-pruebas")}</Typography>
+                                                    </Grid>
+                                                    {
+                                                        this.state.pasoActual > 0 ? (
+                                                            <React.Fragment>
+                                                                <Grid item xs={12} md={6} lg={4}>
+                                                                    <Paper className="p-4 p-lg-2 p-xl-4">
+                                                                        <Bar height={150} data={{
+                                                                            labels: ["Prueba de conocimiento"],
+                                                                            datasets: [
+                                                                                {
+                                                                                    label: "Correctas",
+                                                                                    data: [this.state.estadisticas.pruebaConocimiento.correctas],
+                                                                                    borderWidth: 0,
+                                                                                    backgroundColor: [
+                                                                                        "#009A9C"
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    label: "Incorrectas",
+                                                                                    data: [this.state.estadisticas.pruebaConocimiento.incorrectas],
+                                                                                    borderWidth: 0,
+                                                                                    backgroundColor: [
+                                                                                        "#e53935"
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }} options={{
+                                                                            scales: {
+                                                                                yAxes: [{
+                                                                                    ticks: {
+                                                                                        beginAtZero: true,
+                                                                                        stepSize: 5
+                                                                                    }
+                                                                                }]
+                                                                            }
+                                                                        }} />
+                                                                    </Paper>
+                                                                </Grid>
+                                                                <Grid item xs={12} md={6} lg={4}>
+                                                                    <Paper className="p-4 p-lg-2 p-xl-4">
+                                                                        <Radar height={150} data={() => {
+                                                                            const dimensionesLabels = [];
+                                                                            const dimensionesDatasets = [];
+
+                                                                            this.state.estadisticas.dimensiones.forEach(dimension => {
+                                                                                dimensionesLabels.push(dimension.nombre);
+                                                                                dimensionesDatasets.push(dimension.porcentajeAfinidad);
+                                                                            });
+
+                                                                            return {
+                                                                                labels: dimensionesLabels,
+                                                                                datasets: [{
+                                                                                    label: "Porcentaje de afinidad a dimensiones",
+                                                                                    data: dimensionesDatasets,
+                                                                                    backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                                    pointBackgroundColor: "#009A9C",
+                                                                                    borderColor: "#009A9C"
+                                                                                }]
+                                                                            }
+                                                                        }} options={{
+                                                                            scale: {
+                                                                                ticks: {
+                                                                                    stepSize: 20
+                                                                                }
+                                                                            },
+                                                                            tooltips: {
+                                                                                enabled: true,
+                                                                                callbacks: {
+                                                                                    label: (tooltipItem, data) => {
+                                                                                        return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }} />
+                                                                    </Paper>
+                                                                </Grid>
+                                                                <Grid item xs={12} md={6} lg={4}>
+                                                                    <Paper className="p-4 p-lg-2 p-xl-4">
+                                                                        <Radar height={150} data={() => {
+                                                                            const perfilesLabels = [];
+                                                                            const perfilesDatasets = [];
+
+                                                                            this.state.estadisticas.perfiles.forEach(perfil => {
+                                                                                perfilesLabels.push(perfil.nombre);
+                                                                                perfilesDatasets.push(perfil.porcentajeAfinidad);
+                                                                            });
+
+                                                                            return {
+                                                                                labels: perfilesLabels,
+                                                                                datasets: [{
+                                                                                    label: "Porcentaje de afinidad a perfiles",
+                                                                                    data: perfilesDatasets,
+                                                                                    backgroundColor: "rgba(0, 154, 156, .5)",
+                                                                                    pointBackgroundColor: "#009A9C",
+                                                                                    borderColor: "#009A9C"
+                                                                                }]
+                                                                            }
+                                                                        }} options={{
+                                                                            scale: {
+                                                                                ticks: {
+                                                                                    stepSize: 20
+                                                                                }
+                                                                            },
+                                                                            tooltips: {
+                                                                                enabled: true,
+                                                                                callbacks: {
+                                                                                    label: (tooltipItem, data) => {
+                                                                                        return data.datasets[tooltipItem.datasetIndex].label + ": " + data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] + "%";
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }} />
+                                                                    </Paper>
+                                                                </Grid>
+                                                            </React.Fragment>
+                                                        ) : (
+                                                            <Grid item xs={12}>
+                                                                <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
+                                                            </Grid>
+                                                        )
+                                                    }
+                                                </Grid>
+                                            ) : (
+                                                <CircularProgress color="primary" className="mx-auto" />
+                                            )
+                                        }
+                                        {
+                                            this.state.didRutaLoad ? (
+                                                <Grid item xs={12} className="mt-5">
+                                                    <Typography variant="h6" className="mb-4">{t("dashboardDocente.ruta")}</Typography>
+                                                    {
+                                                        this.state.pasoActual > 0 ? (
+                                                            <RutaAprendizaje cursos={this.state.cursosSugeridos} />
+                                                        ) : (
+                                                            <Typography variant="body1" color="primary"><strong>{t("dashboardDocente.no-data")}</strong></Typography>
+                                                        )
+                                                    }
+                                                </Grid>
+                                            ) : (
+                                                <CircularProgress color="primary" className="mx-auto" />
+                                            )
+                                        }
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Dialog open={this.state.shouldAlertProcessCancellation} onClose={this.confirmarCancelacion}>
