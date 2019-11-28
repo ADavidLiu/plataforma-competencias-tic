@@ -70,7 +70,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "DOCENTE";
+        this.tipoPerfil = "SUPERADMIN";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -145,7 +145,7 @@ class LoginCheck extends Component {
 
     actualizarIsInViewingMode = (nuevoEstado, nuevoViewingModeUserType) => {
         if (!nuevoEstado) {
-            switch (window.location.pathname) {
+            switch (this.props.location.pathname) {
                 case "/":
                     nuevoEstado = false;
                     nuevoViewingModeUserType = this.tipoPerfil;
