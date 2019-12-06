@@ -361,7 +361,7 @@ class Prueba extends Component {
     }
 
     pausarPrueba = () => {
-        /* Conectarse al backend para guardar el estado de la prueba */
+        /* Conectarse al backend para guardar el estado actual de la prueba */
         console.log("Prueba guardada!");
         this.scroller.to("#top");
         this.setState({

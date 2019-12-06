@@ -3,12 +3,16 @@ import React, { Component } from "react";
 import Helmet from "react-helmet";
 import { Translation } from "react-i18next";
 
+import SweetScroll from "sweet-scroll";
+
 import { Redirect, Link } from "react-router-dom";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
+import Tooltip from "@material-ui/core/Tooltip";
+import Fab from "@material-ui/core/Fab";
 
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from "@material-ui/core/TextField";
@@ -31,9 +35,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import NavigationPrompt from "react-router-navigation-prompt";
 import ConfirmacionSalir from "../modales/confirmacionSalir";
 
+import Save from "@material-ui/icons/Save";
+
 class Practica extends Component {
     constructor() {
         super();
+
+        this.scroller = new SweetScroll();
 
         this.initialState = {
             tipoUsuario: "",
@@ -86,7 +94,8 @@ class Practica extends Component {
                     descripcion: ""
                 }
             },
-            isEnviado: false
+            isEnviado: false,
+            shouldRedirect: false
         };
 
         this.state = this.initialState;
@@ -420,8 +429,17 @@ class Practica extends Component {
         }
     }
 
+    pausarPractica = () => {
+        /* Conectarse al backend para guardar el estado actual de la práctica */
+        console.log("Práctica guardada!");
+        this.scroller.to("#top");
+        this.setState({
+            shouldRedirect: true
+        });
+    }
+
     render() {
-        if (this.props.location && this.props.location.state === undefined) {
+        if ((this.props.location && this.props.location.state === undefined) || this.state.shouldRedirect) {
             return <Redirect to="/" />
         }
 
@@ -548,13 +566,17 @@ class Practica extends Component {
                             <Helmet>
                                 <title>{`${t("procesoPaso.2")} | ${this.props.userProfile.nombre}`}</title>
                             </Helmet>
-                            <NavigationPrompt when={!this.state.isEnviado}>
-                                {
-                                    ({ onConfirm, onCancel }) => (
-                                        <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
-                                    )
-                                }
-                            </NavigationPrompt>
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <NavigationPrompt when={!this.state.isEnviado}>
+                                        {
+                                            ({ onConfirm, onCancel }) => (
+                                                <ConfirmacionSalir onConfirm={onConfirm} onCancel={onCancel}/>
+                                            )
+                                        }
+                                    </NavigationPrompt>
+                                ) : null
+                            }
                             <Grid container justify="center">
                                 <Grid item xs={12} md={8}>
                                     <form onSubmit={this.handleSubmit}>
@@ -853,7 +875,7 @@ class Practica extends Component {
                                             <Typography variant="body1">{t("practicas.principal-objetivo")}</Typography>
                                             <TextField
                                                 inputProps={{
-                                                    "aria-label": `${t("aria.principal-pbjetivo")}`,
+                                                    "aria-label": `${t("aria.principal-objetivo")}`,
                                                     "maxLength": 400
                                                 }}
                                                 variant="outlined"
@@ -933,6 +955,16 @@ class Practica extends Component {
                                     </form>
                                 </Grid>
                             </Grid>
+
+                            {
+                                !this.props[0].location.state.shouldActivateViewingMode ? (
+                                    <Tooltip title={t("aria.guardar-pausar-practica")} placement="left">
+                                        <Fab aria-label={t("aria.guardar-pausar-practica")} color="primary" onClick={this.pausarPractica} className="prueba-fab fab">
+                                            <Save fontSize="small"/>
+                                        </Fab>
+                                    </Tooltip>
+                                ) : ""
+                            }
 
                             <Dialog open={this.state.isFormActividadOpen} onClose={this.cerrarFormActividad} fullWidth>
                                 <form onSubmit={this.guardarActividad}>
