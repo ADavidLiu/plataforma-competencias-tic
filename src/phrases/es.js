@@ -301,7 +301,7 @@ const es = {
         "registro.areas-otras": "¿Cuál(es)?",
         "registro.label-datos-perfil": "Datos de perfil",
         "registro.usuario": "Usuario",
-        "registro.contrasenia": "Contrasenia",
+        "registro.contrasenia": "Contraseña",
         "registro.label-img-perfil": "Adjunte una imagen de perfil",
         "registro.email": "Correo electrónico",
         "registro.num-contacto": "Número de contacto",
