@@ -492,7 +492,7 @@ class PracticaRevision extends Component {
                                     <Typography variant="h6" className="mb-3">{t("revision.produccion-asignar-calificacion")}</Typography>
                                     <Typography variant="body1" className="mb-2"><strong>1: {t("revision.calificacion-nulo-titulo")}</strong> - {t("revision.calificacion-nulo-ayuda")}.</Typography>
                                     <Typography variant="body1" className="mb-2"><strong>2: {t("revision.calificacion-parcial-titulo")}</strong> - {t("revision.calificacion-parcial-ayuda")}.</Typography>
-                                    <Typography variant="body1"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
+                                    <Typography variant="body1" className="mb-2"><strong>3: {t("revision.calificacion-totalmente-titulo")}</strong> - {t("revision.calificacion-totalmente-ayuda")}.</Typography>
                                     <Typography variant="body1"><strong>4: {t("revision.calificacion-entrevista")}</strong> - {t("revision.calificacion-entrevista-ayuda")}.</Typography>
                                     <hr/>
                                     {

@@ -70,7 +70,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "DOCENTE";
+        this.tipoPerfil = "SUPERADMIN";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -90,7 +90,7 @@ class LoginCheck extends Component {
             id: ""
         } */
 
-        /* Conectarse al backend para obtener los datos personales del usuario, IE o EE */
+        /* Conectarse al backend para obtener los verdaderos datos personales del usuario */
         this.datosPerfil = {};
 
         switch (this.state.tipo) {
