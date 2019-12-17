@@ -119,10 +119,10 @@ class Prueba extends Component {
         }
 
         /* Se renderizan las preguntas de cada sección */
+        const newRespuestas = [...this.state.respuestas];
         this.dividedQuestions.forEach((section, i) => {
             this.finalJSXquestions[i] = [];
-            const newRespuestas = [...this.state.respuestas];
-            newRespuestas[i] = [];
+            newRespuestas[i] = [...section];
 
             this.setState({
                 respuestas: newRespuestas
@@ -335,28 +335,32 @@ class Prueba extends Component {
 
         this.scroller.to("#top");
 
+        /* Restaurar el estado visual de las selecciones hechas en la página actual */
         const timeout = setTimeout(() => {
             const seccionRespuestasSeleccionadas = [...this.state.respuestas[this.state.seccionActual]];
-            this.domPreguntas = this.domPreguntas.filter(pregunta => pregunta !== null);
-            this.domRadios = this.domRadios.filter(radio => radio !== null);
-            
-            const radiosArray = [];
-            for (let i = 0; i < this.domRadios.length; i+=4) {
-                radiosArray.push(this.domRadios.slice(i, i+4));
-            }
-            /* console.log(seccionRespuestasSeleccionadas);
-            console.log(radiosArray); */
-            radiosArray.forEach((labels, i) => {
-                labels.forEach((label, j) => {
-                    const respuestaLabel = label.lastChild.textContent;
-                    if (seccionRespuestasSeleccionadas[i].respuestaSeleccionada !== "" && seccionRespuestasSeleccionadas[i].respuestaSeleccionada === respuestaLabel) {
-                        label.firstChild.classList.add("Mui-checked")
-                        label.firstChild.firstChild.firstChild.lastChild.style.transform = "none";
-                    }
-                });
-            });
 
-            clearTimeout(timeout);
+            if (seccionRespuestasSeleccionadas !== undefined) {
+                this.domPreguntas = this.domPreguntas.filter(pregunta => pregunta !== null);
+                this.domRadios = this.domRadios.filter(radio => radio !== null);
+                
+                const radiosArray = [];
+                for (let i = 0; i < this.domRadios.length; i+=4) {
+                    radiosArray.push(this.domRadios.slice(i, i+4));
+                }
+                /* console.log(seccionRespuestasSeleccionadas);
+                console.log(radiosArray); */
+                radiosArray.forEach((labels, i) => {
+                    labels.forEach((label, j) => {
+                        const respuestaLabel = label.lastChild.textContent;
+                        if (seccionRespuestasSeleccionadas[i].respuestaSeleccionada !== "" && seccionRespuestasSeleccionadas[i].respuestaSeleccionada === respuestaLabel) {
+                            label.firstChild.classList.add("Mui-checked")
+                            label.firstChild.firstChild.firstChild.lastChild.style.transform = "none";
+                        }
+                    });
+                });
+    
+                clearTimeout(timeout);
+            }
         }, 500);
     }
 
