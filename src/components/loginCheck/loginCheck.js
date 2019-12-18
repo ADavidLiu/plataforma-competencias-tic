@@ -70,7 +70,7 @@ class LoginCheck extends Component {
         super();
 
         /* Aquí se debe verificar el login pasado y la configuración del usuario */
-        this.tipoPerfil = "DOCENTE";
+        this.tipoPerfil = "INSTITUCION";
         this.state = {
             isLogeado: true,
             isPrimerIngreso: false,
@@ -527,7 +527,7 @@ class LoginCheck extends Component {
                             {
                                 this.props.location.pathname !== `/${t("link.ayuda")}` ? (
                                     <Link to={t("link.ayuda")}>
-                                        <Tooltip title={t("link.ayuda")} placement="left">
+                                        <Tooltip title={t("titulo.ayuda")} placement="left">
                                             <Fab aria-label={t("aria.ayuda")} color="primary" className={this.props.location.pathname === `/${t("link.prueba")}` ? "fab fab--alt" : "fab"}>
                                                 <Help/>
                                             </Fab>
