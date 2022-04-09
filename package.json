@@ -14,7 +14,7 @@
     "deeply-freeze": "^1.0.9",
     "equally": "^0.4.1",
     "i18next": "^17.0.14",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-polyglot": "^2.3.1",
     "react": "^16.8.6",
     "react-axe": "^3.3.0",
